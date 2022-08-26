@@ -6,7 +6,6 @@ import { DepPaths } from './modules/dependencies_paths';
 import path from 'path';
 const app = express();
 const PORT: number = 3000;
-const public_path: string = path.join('dist','public');
 
 console.log(DepPaths.JQUERY_UI_CSS);
 
@@ -17,7 +16,7 @@ app.set('views', __dirname+'/views');
 app.use('/css',express.static(StaticPaths.PUBLIC_PATH_CSS));
 
 app.get('/',(req,res)=>{
-    res.send('Accedi al tuo account');
+    res.render('index',{jquery_ui_css: DepPaths.JQUERY_UI_CSS});
 });
 
 app.listen(PORT,()=>{
