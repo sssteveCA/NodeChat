@@ -3,11 +3,11 @@ import express from 'express';
 import mustacheExpress from 'mustache-express';
 import { StaticPaths } from './modules/static_paths';
 import { DepPaths } from './modules/dependencies_paths';
-import path from 'path';
+import { styles_router } from './css/styles';
 const app = express();
 const PORT: number = 3000;
 
-console.log(DepPaths.JQUERY_UI_CSS);
+app.use('/css2',styles_router);
 
 app.engine('mustache',mustacheExpress());
 app.set('view engine','mustache');
