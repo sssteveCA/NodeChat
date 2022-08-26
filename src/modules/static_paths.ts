@@ -2,8 +2,8 @@
 import path from "path";
 
 export namespace StaticPaths{
-    export const public_path: string = path.join('dist','public');
-    export const public_path_css: string = path.join('dist','public','css');
+    export const PUBLIC_PATH: string = path.join('dist','public');
+    export const PUBLIC_PATH_CSS: string = path.join('dist','public','css');
 }
 
 
