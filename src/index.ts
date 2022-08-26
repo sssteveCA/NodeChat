@@ -5,6 +5,7 @@ import path from 'path';
 const app = express();
 const PORT: number = 3000;
 const public_path: string = path.join('dist','public');
+console.log(StaticPaths.public_path_css);
 
 
 app.use(express.static(StaticPaths.public_path));
