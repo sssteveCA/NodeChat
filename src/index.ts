@@ -20,10 +20,13 @@ app.set('view engine','mustache');
 app.set('views', Paths.ROOTPATH+'/views');
 //app.use(express.static(StaticPaths.public_path));
 app.use('/css',express.static(StaticPaths.PUBLIC_PATH_CSS));
+app.use('/img', express.static(StaticPaths.PUBLIC_PATH_IMG));
 app.use('/js',express.static(StaticPaths.PUBLIC_PATH_JS));
 
 app.get('/',(req,res)=>{
-    res.render('index');
+    res.render('index',{
+        container: Constants.CONTAINER
+    });
 });
 
 app.listen(Constants.PORT,Constants.HOSTNAME,()=>{
