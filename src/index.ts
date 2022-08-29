@@ -16,7 +16,14 @@ app.set('views', __dirname+'/views');
 app.use('/css',express.static(StaticPaths.PUBLIC_PATH_CSS));
 
 app.get('/',(req,res)=>{
-    res.render('index',{jquery_ui_css: Paths.JQUERY_UI_CSS});
+    res.render('index',{
+        jquery_ui_css: Paths.JQUERY_UI_CSS,
+        subscribe: Paths.SUBSCRIBE
+    });
+});
+
+app.get('/subscribe',(req,res)=>{
+
 });
 
 app.listen(PORT,()=>{

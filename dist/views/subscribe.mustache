@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <title>Registrati</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="/css/subscribe">
+        <link rel="stylesheet" href="/css/jQueryUI">
+        <script src="/js/constants"></script>
+        <script src="/js/jQuery"></script>
+        <script src="/js/jQueryUI"></script>
+        <script src="/js/classes/dialog"></script>
+        <script src="/js/classes/usernew"></script>
+        <script src="/js/functions"></script>
+        <script src="/js/subscribe"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="subscribeDiv">
+                <form id="fSubscribe" method="post" action="/newAccount">
+                    <fieldset>
+                        <legend>Crea un nuovo account</legend>
+                        <div>
+                            <label for="username">Nome utente</label>
+                            <input type="text" id="username" name="username">
+                        </div>
+                        <div>
+                            <label>Email</label>
+                            <input type="email" id="email" name="email">
+                        </div>
+                        <div>
+                            <label>Password</label>
+                            <input type="password" id="password" name="password">
+                        </div>
+                        <div>
+                            <label>Conferma password</label>
+                            <input type="password" id="confPass" name="confPass">
+                        </div>
+                        <div>
+                            <input type="checkbox" id="showPass">
+                            <label for="showPass">Mostra password</label>
+                        </div>
+                        <div>
+                            <button type="submit" id="bLogin">REGISTRATI</button>
+                            <button type="reset" id="bReset">ANNULLA</button>
+                        </div>
+                    </fieldset>
+                </form>  
+            </div>
+        </div>
+    </body>
+</html>
