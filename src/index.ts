@@ -2,8 +2,8 @@
 import express from 'express';
 import mustacheExpress from 'mustache-express';
 import { StaticPaths } from './modules/static_paths';
-import { DepPaths } from './modules/dependencies_paths';
 import { styles_router } from './css/styles';
+import { Paths } from './paths';
 const app = express();
 const PORT: number = 3000;
 
@@ -16,7 +16,7 @@ app.set('views', __dirname+'/views');
 app.use('/css',express.static(StaticPaths.PUBLIC_PATH_CSS));
 
 app.get('/',(req,res)=>{
-    res.render('index',{jquery_ui_css: DepPaths.JQUERY_UI_CSS});
+    res.render('index',{jquery_ui_css: Paths.JQUERY_UI_CSS});
 });
 
 app.listen(PORT,()=>{
