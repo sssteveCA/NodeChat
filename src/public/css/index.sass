@@ -3,7 +3,9 @@
 $div-margin: 20px auto
 $description-class-style: (text-align: center, margin: $div-margin)
 $header-class-style: (font-size: 24px, text-align: center, margin: $div-margin )
-$menu-item-style: 1px solid black
+$hover-li-background: linear-gradient(0deg, rgba(6,242,184,1) 0%, rgba(0,138,255,1) 100%)
+$nav-border: 1px solid black
+$nav-background: linear-gradient(90deg, rgba(242,128,6,1) 0%, rgba(224,255,0,1) 76%, rgba(78,255,0,1) 100%)
 
 @mixin description-class()
     .description
@@ -20,21 +22,26 @@ $menu-item-style: 1px solid black
     nav
         display: flex
         justify-content: space-between
-        ul
-            list-style-type: none
-            display: flex
-            li
-                padding: 20px
-                border-top: $menu-item-style
-                border-bottom: $menu-item-style
-                border-right: $menu-item-style
-            $li-hover: selector.nest("li","&:hover")
-            #{$li-hover}
-                background-color: yellow
-                border: 2px solid red
-            $li-first: selector.nest("li","&:first-child")
-            #{$li-first}
-                border-left: $menu-item-style
+        background: $nav-background
+        border: $nav-border
+        @include ul-li-style()
+    $nav-ul-sel: selector.nest("nav","ul")
+    #{$nav-ul-sel}
+        padding: 0
+        margin: 0
+
+@mixin ul-li-style()
+    ul
+        list-style-type: none
+        display: flex
+        li
+            font-size: 18px
+            font-weight: bold
+            padding: 20px
+        $li-hover: selector.nest("li","&:hover")
+        #{$li-hover}
+            background: $hover-li-background
+            border: 2px solid red
 
 
 @include description-class()
