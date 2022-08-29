@@ -1,5 +1,7 @@
 
 import express from 'express';
+import fs from 'fs';
+import mustache from 'mustache';
 import mustacheExpress from 'mustache-express';
 import { StaticPaths } from './modules/static_paths';
 import { styles_router } from './routes/css/styles';
@@ -12,6 +14,7 @@ app.use('/css2',styles_router);
 app.use('/',authentication_routes);
 
 app.engine('mustache',mustacheExpress());
+app.engine('mustache', mustacheExpress(__dirname+'/views/partials','.mustache'));
 app.set('view engine','mustache');
 app.set('views', __dirname+'/views');
 //app.use(express.static(StaticPaths.public_path));
