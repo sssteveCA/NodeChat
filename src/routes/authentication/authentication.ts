@@ -7,10 +7,6 @@ import { Paths } from '../../paths';
 const app = express();
 export const authentication_routes = express.Router();
 
-app.engine('mustache',mustacheExpress());
-app.set('view engine','mustache');
-app.set('views',Paths.ROOTPATH+'/views');
-
 authentication_routes.get('/login',(req,res)=>{
     res.render('login',{
         jquery_ui_css: Paths.JQUERY_UI_CSS,
