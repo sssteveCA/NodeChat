@@ -18,6 +18,9 @@ app.set('views', __dirname+'/views');
 app.use('/css',express.static(StaticPaths.PUBLIC_PATH_CSS));
 app.use('/js',express.static(StaticPaths.PUBLIC_PATH_JS));
 
+app.get('/',(req,res)=>{
+    res.render('index');
+});
 
 app.listen(PORT,()=>{
     console.log(`Server in esecuzione sulla porta ${PORT}`);

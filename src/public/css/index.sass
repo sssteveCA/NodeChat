@@ -1,0 +1,25 @@
+
+$div-margin: 20px auto
+$description-class-style: (text-align: center, margin: $div-margin)
+$header-class-style: (font-size: 24px, text-align: center, margin: $div-margin )
+
+@mixin description-class()
+    .description
+        @each $prop,$val in $description-class-style
+            #{$prop}: #{$val}
+
+@mixin header-class()
+    .header
+        h1
+            @each $prop,$val in $header-class-style
+                #{$prop}: #{$val}
+
+@include description-class()
+@include header-class()
+
+
+
+
+
+
+        
