@@ -16,6 +16,7 @@ app.set('view engine','mustache');
 app.set('views', __dirname+'/views');
 //app.use(express.static(StaticPaths.public_path));
 app.use('/css',express.static(StaticPaths.PUBLIC_PATH_CSS));
+app.use('/js',express.static(StaticPaths.PUBLIC_PATH_JS));
 
 
 app.listen(PORT,()=>{
