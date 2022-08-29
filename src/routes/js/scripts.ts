@@ -4,7 +4,7 @@ import express from 'express';
 import path from 'path';
 import { Paths } from '../../paths';
 
-const scripts_router = express.Router();
+export const scripts_router = express.Router();
 
 scripts_router.get('/jquery_ui_js',(req,res)=>{
     const jquery_ui_js: string = path.join('node_modules','jquery-ui-dist','jquery-ui.min.js');

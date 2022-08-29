@@ -5,10 +5,11 @@ import mustache from 'mustache';
 import mustacheExpress from 'mustache-express';
 import { StaticPaths } from './modules/static_paths';
 import { styles_router } from './routes/css/styles';
+import { scripts_router } from './routes/js/scripts';
 import { authentication_routes } from './routes/authentication/authentication';
 import { Paths } from './paths';
+import { Constants } from './constants';
 const app = express();
-const PORT: number = 3000;
 
 app.use('/css2',styles_router);
 app.use('/',authentication_routes);
@@ -25,6 +26,6 @@ app.get('/',(req,res)=>{
     res.render('index');
 });
 
-app.listen(PORT,()=>{
-    console.log(`Server in esecuzione sulla porta ${PORT}`);
+app.listen(Constants.PORT,Constants.HOSTNAME,()=>{
+    console.log(`Server in esecuzione su ${Constants.MAIN_URL}`);
 });
