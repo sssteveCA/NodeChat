@@ -1,1 +1,42 @@
-
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <title>Contatti</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="css/contacts.css">
+        <link rel="stylesheet" href="css/menu.css">
+        <link rel="stylesheet" href="{{jquery_ui_css}}">
+    </head>
+    <body>
+        {{> menu}}
+        <div class="container">
+            <div class="contactsDiv">
+                <form id="fContacts" method="post" action="#">
+                    <fieldset>
+                        <legend>Contatti</legend>
+                        <div>
+                            <label for="name">Il tuo nome</label>
+                            <input type="text" id="name" name="name">
+                        </div>
+                        <div>
+                            <label for="email">Il tuo indirizzo email</label>
+                            <input type="email" id="email" name="email">
+                        </div>
+                        <div>
+                            <label for="subject">Oggetto</label>
+                            <input type="text" id="subject" name="subject">
+                        </div>
+                        <div>
+                            <label for="message">Messaggio</label>
+                            <textarea id="message" name="message"></textarea>
+                        </div>
+                        <div>
+                            <button type="submit" id="bSend">INVIA</button>
+                            <button type="reset" id="bReset">ANNULLA</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
