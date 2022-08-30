@@ -52,6 +52,34 @@ export class MySqlManager{
     get connLimit(){return this._connLimit;}
     get queueLimit(){return this._queueLimit;}
 
+    set query(query: string){this._query = query;}
+    set values(values: Array<any>){this._values = values;}
+
+    public async readQuery(): Promise<object>{
+        let response: object = {};
+        await this._pool.query(this._query,this._values,(err,result,fields) => {
+            if(err){
+                console.error(err);
+                response = {
+                    done: false,
+                    message: err.message
+                };
+            }
+            else{
+                response = {
+                    done: true,
+                    data: result
+                };
+            }
+        });
+        return response;
+    }
+
+
+    /**
+     * Execute a write query
+     * @returns Promise<object>
+     */
     public async writeQuery(): Promise<object>{
         let response: object = {};
         await this._pool.query(this._query,this._values,(err, result, fields)=>{
