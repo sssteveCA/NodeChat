@@ -1,4 +1,5 @@
 
+import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
 import fs from 'fs';
@@ -13,6 +14,8 @@ import { Paths } from './paths';
 import { Constants } from './constants';
 const app = express();
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
 app.use(cors());
 app.use('/css2',styles_router);
 app.use('/',authentication_routes);
