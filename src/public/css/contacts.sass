@@ -1,4 +1,31 @@
 
 @import "partials/_background"
+@import "partials/_global"
+
+$fSetChildren: 5
+
+@mixin fieldset-style()
+    fieldset
+        @for $i from 1 through $fSetChildren
+            div:nth-of-type(#{$i})
+                margin: $FormDiv_margin
+                @if $i >= 1 and $i <= 4
+                    display: $FormDiv_display
+                    flex-direction: $FormDiv_fDir
+                    label
+                        margin: $FormLabelText_margin
+                    input
+                        height: $FormTextInput_height
+                        width: $FormTextInput_width
+                @else if $i == 5
+                    display: flex
+                    justify-content: space-between
+                    button
+                        padding: $FormButton_padding
+
+.contactsDiv
+    background-color: rgb(6,242,184,0.75)
 
 @include main-background($bk-url)
+@include fieldset-style()
+
