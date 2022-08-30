@@ -40,3 +40,8 @@ app.get('/',(req,res)=>{
 app.listen(Constants.PORT,Constants.HOSTNAME,()=>{
     console.log(`Server in esecuzione su ${Constants.MAIN_URL}`);
 });
+
+process.on('uncaughtException',(err) => {
+    console.error("UncaughtException");
+    console.error(err);
+});
