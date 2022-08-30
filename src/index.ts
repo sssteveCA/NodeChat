@@ -25,7 +25,8 @@ app.use('/js',express.static(StaticPaths.PUBLIC_PATH_JS));
 
 app.get('/',(req,res)=>{
     res.render('index',{
-        container: Constants.CONTAINER
+        container: Constants.CONTAINER,
+        background: Constants.BACKGROUND
     });
 });
 
