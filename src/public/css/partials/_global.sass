@@ -3,7 +3,7 @@
 //container style
 $cont_margin: 20px auto
 $cont_minWidth: 400px
-$cont_width: 50%
+$cont_width: 100%
 
 //fieldset div childs style
 $FormDiv_margin: 50px auto 50px auto
@@ -26,10 +26,11 @@ $FormButton_padding: 10px
 //header
 $header-class-style: (font-size: 24px, text-align: center, margin: 20px auto )
 
-@mixin container-style()
-    width: $cont_width
-    min-width: $cont_minWidth
-    margin: $cont_margin
+@mixin container-style($container-class)
+    #{$container-class}
+        width: $cont_width
+        min-width: $cont_minWidth
+        margin: $cont_margin
 
 @mixin header-class()
     .header
