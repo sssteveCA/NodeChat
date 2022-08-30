@@ -23,7 +23,16 @@ $FormCb_margin: auto 10px auto 2px
 //form button style
 $FormButton_padding: 10px
 
+//header
+$header-class-style: (font-size: 24px, text-align: center, margin: 20px auto )
+
 @mixin container-style()
     width: $cont_width
     min-width: $cont_minWidth
     margin: $cont_margin
+
+@mixin header-class()
+    .header
+        h1
+            @each $prop,$val in $header-class-style
+                #{$prop}: #{$val}
