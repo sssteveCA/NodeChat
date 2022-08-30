@@ -1,4 +1,5 @@
 
+import cors from 'cors';
 import express from 'express';
 import fs from 'fs';
 import mustache from 'mustache';
@@ -12,6 +13,7 @@ import { Paths } from './paths';
 import { Constants } from './constants';
 const app = express();
 
+app.use(cors());
 app.use('/css2',styles_router);
 app.use('/',authentication_routes);
 app.use('/',menu_items_routes);
