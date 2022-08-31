@@ -1,13 +1,15 @@
 
 import mysql from 'mysql2';
 import mysqlPromise from 'mysql2/promise';
+import dotenv from 'dotenv';
 
 export interface MySqlManagerInterface{
-     host: string;
-     user: string;
-     password: string
-     database: string;
+     host?: string;
+     user?: string;
+     password?: string
+     database?: string;
      query: string;
+     values?: Array<any>;
      connLimit?: number;
      queueLimit?: number;
 }
@@ -21,7 +23,6 @@ export class MySqlManager{
     private _connLimit: number;
     private _queueLimit: number;
     private _pool: mysql.Pool;
-    private _poolPromise: mysqlPromise.Pool;
     private _errno: number = 0;
     private _error: string|null = null;
 
@@ -30,28 +31,20 @@ export class MySqlManager{
     public static QUERY_ERROR_MSG: string = "Impossibile ottenere i dati dal database;"
 
     constructor(data: MySqlManagerInterface){
-        this._host = data.host;
-        this._user = data.user;
-        this._database = data.database;
-        this._query = data.query;
-        if(data.connLimit)
-            this._connLimit = data.connLimit;
-        else
-            this._connLimit = 10;
-        if(data.queueLimit)
-            this._queueLimit = data.queueLimit;
-        else
-            this._queueLimit = 0;
+        dotenv.config({path: '../../../.env'});
+        this.assingValues(data);
+        let password: string = '';
+        if(data.password)password = data.password;
+        else password = process.env.MYSQL_PASSWORD as string;
         this._pool = mysql.createPool({
             host: this._host,
             user: this._user,
-            password: data.password,
+            password: password,
             database: this._database,
             waitForConnections: true,
             connectionLimit: this._connLimit,
             queueLimit: this._queueLimit
         });
-        this._poolPromise = this._pool.promise();
     }
 
     get host(){return this._host;}
@@ -76,6 +69,26 @@ export class MySqlManager{
 
     set query(query: string){this._query = query;}
     set values(values: Array<any>){this._values = values;}
+
+    /**
+     * Set the class properties
+     * @param data 
+     */
+    private assingValues(data: MySqlManagerInterface): void{
+        if(data.host)this._host = data.host;
+        else this._host = process.env.MYSQL_HOSTNAME as string;
+        if(data.user)this._user = data.user;
+        else this._user = process.env.MYSQL_USERNAME as string;
+        if(data.database)this._database = data.database;
+        else this._database = process.env.MYSQL_DATABASE as string;
+        this._query = data.query;
+        if(data.values)this._values = data.values;
+        else this._values = [];
+        if(data.connLimit)this._connLimit = data.connLimit;
+        else this._connLimit = 10;
+        if(data.queueLimit)this._queueLimit = data.queueLimit;
+        else this._queueLimit = 0;
+    }
 
     /**
      * Execute a read query

@@ -15,7 +15,7 @@ import { Constants } from './constants';
 const app = express();
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 app.use('/css2',styles_router);
 app.use('/',authentication_routes);
