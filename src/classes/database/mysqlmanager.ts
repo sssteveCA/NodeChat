@@ -105,7 +105,7 @@ export class MySqlManager{
     }
 
     private async readQueryPromise(): Promise<object>{
-        return await new Promise<any>((resolve,reject)=>{
+        return await new Promise<object>((resolve,reject)=>{
             this._pool.query(this._query, this._values, (err,result,fields) => {
                 if(err){
                     reject(err);
@@ -126,22 +126,38 @@ export class MySqlManager{
     public async writeQuery(): Promise<object>{
         let response: object = {};
         this._errno = 0;
-        await this._pool.query(this._query,this._values,(err, result, fields)=>{
-            if(err){
-                console.log(err);
-                response = {
-                    done: false,
-                    message: err.message
-                };
-            }
-            else{
+        try{
+            await this.writeQueryPromise().then(res => {
                 response = {
                     done: true,
-                    message: result.toString()
-                }
-            }
-        });
+                    result: res
+                };
+            }).catch(err =>{
+                throw err;
+            });
+        }catch(e){
+            console.error(e);
+            this._errno = MySqlManager.QUERY_ERROR;
+            response = {
+                done: false,
+                message: MySqlManager.QUERY_ERROR_MSG
+            };
+        }
         return response;
+    }
+
+    private async writeQueryPromise(): Promise<object>{
+        return await new Promise<object>((resolve,reject)=>{
+            this._pool.query(this._query,this._values,(err, result, fields)=>{
+                if(err){
+                    reject(err);
+                }   
+                resolve({
+                    fields: fields,
+                    result: result
+                });
+            });
+        });
     }
 }
 
