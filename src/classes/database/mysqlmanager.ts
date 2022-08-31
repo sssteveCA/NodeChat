@@ -1,4 +1,6 @@
+
 import mysql from 'mysql2';
+import mysqlPromise from 'mysql2/promise';
 
 export interface MySqlManagerInterface{
      host: string;
@@ -19,6 +21,13 @@ export class MySqlManager{
     private _connLimit: number;
     private _queueLimit: number;
     private _pool: mysql.Pool;
+    private _poolPromise: mysqlPromise.Pool;
+    private _errno: number = 0;
+    private _error: string|null = null;
+
+    public static QUERY_ERROR: number = 1;
+
+    public static QUERY_ERROR_MSG: string = "Impossibile ottenere i dati dal database;"
 
     constructor(data: MySqlManagerInterface){
         this._host = data.host;
@@ -42,6 +51,7 @@ export class MySqlManager{
             connectionLimit: this._connLimit,
             queueLimit: this._queueLimit
         });
+        this._poolPromise = this._pool.promise();
     }
 
     get host(){return this._host;}
@@ -51,37 +61,71 @@ export class MySqlManager{
     get values(){return this._values;}
     get connLimit(){return this._connLimit;}
     get queueLimit(){return this._queueLimit;}
+    get errno(){return this._errno;}
+    get error(){
+        switch(this._errno){
+            default:
+                case MySqlManager.QUERY_ERROR:
+                    this._error = MySqlManager.QUERY_ERROR_MSG;
+                    break;
+                this._error = null;
+                break;
+        }
+        return this._errno;
+    }
 
     set query(query: string){this._query = query;}
     set values(values: Array<any>){this._values = values;}
 
+    /**
+     * Execute a read query
+     * @returns Promise
+     */
     public async readQuery(): Promise<object>{
         let response: object = {};
-        await this._pool.query(this._query,this._values,(err,result,fields) => {
-            if(err){
-                console.error(err);
-                response = {
-                    done: false,
-                    message: err.message
-                };
-            }
-            else{
+        this._errno = 0;
+        try{
+            await this.readQueryPromise().then(res => {
                 response = {
                     done: true,
-                    data: result
+                    data: res
                 };
-            }
-        });
+            }).catch(err => {
+                throw err;
+            });
+        }catch(e){
+            console.error(e);
+            this._errno = MySqlManager.QUERY_ERROR;
+            response = {
+                done: false,
+                message: MySqlManager.QUERY_ERROR_MSG
+            };
+        }
         return response;
+    }
+
+    private async readQueryPromise(): Promise<object>{
+        return await new Promise<any>((resolve,reject)=>{
+            this._pool.query(this._query, this._values, (err,result,fields) => {
+                if(err){
+                    reject(err);
+                }
+                resolve({
+                    fields: fields,
+                    result: result
+                });
+            });
+        });
     }
 
 
     /**
      * Execute a write query
-     * @returns Promise<object>
+     * @returns Promise
      */
     public async writeQuery(): Promise<object>{
         let response: object = {};
+        this._errno = 0;
         await this._pool.query(this._query,this._values,(err, result, fields)=>{
             if(err){
                 console.log(err);
