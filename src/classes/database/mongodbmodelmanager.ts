@@ -1,5 +1,5 @@
 import { rejects } from "assert";
-import mongoose, { Document, HydratedDocument, Model, Query } from "mongoose";
+import mongoose, { Document, HydratedDocument, Model, Query, Schema } from "mongoose";
 
 
 //Single collection MongoDB manager
@@ -7,7 +7,9 @@ import mongoose, { Document, HydratedDocument, Model, Query } from "mongoose";
 export abstract class MongoDbModelManager<T extends Document>{
     private _mongodb_string: string;
     private _environment: Environment = Environment.local;
-    private readonly _model: Model<T>;
+    private _model_name: string;
+    private _schema: Schema;
+    private _model: Model<any>;
     private _errno: number = 0;
     private _error:string|null = null;
 
@@ -28,6 +30,8 @@ export abstract class MongoDbModelManager<T extends Document>{
     public static DELETE_ERROR_MSG: string = "Errore durante la rimozione dei dati";
 
     get mongodb_string(){return this._mongodb_string;}
+    get model_name(){return this._model_name;}
+    get schema(){return this._schema;}
     get environment(){return this._environment;}
     get errno(){return this._errno;}
     get error(){
@@ -60,6 +64,11 @@ export abstract class MongoDbModelManager<T extends Document>{
      * @param data 
      */
     private assignValues(data: MongoDbModelManagerInterface){
+        this._model_name = data.model_name;
+        this._schema = data.schema;
+        this._model = mongoose.model(this._model_name,this._schema);
+        if(data.environment)
+            this._environment = data.environment;
         if(data.mongodb_string)
             this._mongodb_string = data.mongodb_string;
         else
@@ -162,6 +171,9 @@ export abstract class MongoDbModelManager<T extends Document>{
 
 export interface MongoDbModelManagerInterface{
     mongodb_string?: string;
+    environment?: Environment;
+    model_name: string;
+    schema: Schema;
 }
 
 enum Environment{
