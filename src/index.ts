@@ -1,6 +1,7 @@
 
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import dotenv from 'dotenv';
 import express from 'express';
 import fs from 'fs';
 import mustache from 'mustache';
@@ -12,6 +13,10 @@ import { authentication_routes } from './routes/authentication/authentication';
 import { menu_items_routes } from './routes/menu_items/menu_items';
 import { Paths } from './paths';
 import { Constants } from './constants';
+import { loadavg } from 'os';
+
+dotenv.config(); //Load .env file
+
 const app = express();
 
 app.use(bodyParser.json());
