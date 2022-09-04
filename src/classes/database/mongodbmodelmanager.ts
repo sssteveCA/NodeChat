@@ -14,8 +14,14 @@ export abstract class MongoDbModelManager<T extends Document>{
     }
 
     public static CONNECTION_ERROR: number = 1;
+    public static GET_ERROR: number = 2;
+    public static INSERT_ERROR: number = 3;
+    public static UPDATE_ERROR: number = 4;
 
     private static CONNECTION_ERROR_MSG: string = "Errore durante la connessione al database";
+    public static GET_ERROR_MSG: string = "Errore durante la lettura dei dati";
+    public static INSERT_ERROR_MSG: string = "Errore durante l'inserimento dei dati";
+    public static UPDATE_ERROR_MSG: string = "Errore durante l'aggiornamento dei dati";
 
     get mongodb_string(){return this._mongodb_string;}
     get environment(){return this._environment;}
@@ -24,6 +30,15 @@ export abstract class MongoDbModelManager<T extends Document>{
         switch(this._errno){
             case MongoDbModelManager.CONNECTION_ERROR:
                 this._error = MongoDbModelManager.CONNECTION_ERROR_MSG;
+                break;
+            case MongoDbModelManager.GET_ERROR:
+                this._error = MongoDbModelManager.GET_ERROR_MSG;
+                break;
+            case MongoDbModelManager.INSERT_ERROR:
+                this._error = MongoDbModelManager.INSERT_ERROR_MSG;
+                break;
+            case MongoDbModelManager.UPDATE_ERROR:
+                this._error = MongoDbModelManager.UPDATE_ERROR_MSG;
                 break;
             default:
                 this._error = null;
@@ -68,13 +83,14 @@ export abstract class MongoDbModelManager<T extends Document>{
     }
 
     /**
-     * Get one document with provided params
-     * @param params 
+     * Get one document with provided filter
+     * @param filter 
      * @returns 
      */
-    public async get(params: object): Promise<any>{
+    public async get(filter: object): Promise<any>{
+        this._errno = 0;
         return await new Promise<any>((resolve,reject)=>{
-            this._model.findOne(params).then(res => {
+            this._model.findOne(filter).then(res => {
                 resolve(res);
             }).catch(err => {
                 reject(err);
@@ -82,18 +98,49 @@ export abstract class MongoDbModelManager<T extends Document>{
         });
     }
 
-    public async insert(params: object): Promise<boolean>{
+    /**
+     * Insert new document in the collection
+     * @param document
+     * @returns 
+     */
+    public async insert(document: object): Promise<boolean>{
         this._errno = 0;
         return await new Promise<boolean>((resolve,reject)=>{
-            let result = this._model.collection.insertOne(params);
+            let result = this._model.collection.insertOne(document);
             result.then(res => {
                 if(res.insertedId)
                     resolve(true);
                 else{
-                    resolve(false);
+                    this._errno = MongoDbModelManager.INSERT_ERROR;
+                    reject(this.error);
                 }
                     
             }).catch(err => {
+                this._errno = MongoDbModelManager.INSERT_ERROR;
+                reject(err);
+            });
+        });
+    }
+
+    /**
+     * Update one document that match with filter with set object data
+     * @param filter 
+     * @param set 
+     * @returns 
+     */
+    public async update(filter: object, set: object): Promise<boolean>{
+        return await new Promise<boolean>((resolve, reject)=>{
+            let update_query = this._model.updateOne(filter, set);
+            update_query.then(res => {
+                if((res.matchedCount > 0 && res.modifiedCount > 0) || (res.upsertedCount > 0)){
+                    resolve(true);
+                }
+                else{
+                    this._errno = MongoDbModelManager.UPDATE_ERROR;
+                    reject(this.error);
+                }
+            }).catch(err => {
+                this._errno = MongoDbModelManager.UPDATE_ERROR;
                 reject(err);
             });
         });
