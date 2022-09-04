@@ -14,7 +14,7 @@ export interface MySqlManagerInterface{
      queueLimit?: number;
 }
 
-export class MySqlManager{
+export abstract class MySqlManager{
     private _host: string;
     private _user: string;
     private _database: string;
@@ -31,7 +31,6 @@ export class MySqlManager{
     public static QUERY_ERROR_MSG: string = "Impossibile ottenere i dati dal database;"
 
     constructor(data: MySqlManagerInterface){
-        dotenv.config({path: '../../../.env'});
         this.assingValues(data);
         let password: string = '';
         if(data.password)password = data.password;
