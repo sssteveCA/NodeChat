@@ -1,10 +1,11 @@
-import mongoose from "mongoose";
+import mongoose, { HydratedDocument, Model, Query } from "mongoose";
 
 //Single collection MongoDB manager
 
-export abstract class MongoDbModelManager{
+export abstract class MongoDbModelManager<T extends Document>{
     private _mongodb_string: string;
     private _environment: Environment = Environment.local;
+    private readonly _model: Model<T>;
     private _errno: number = 0;
     private _error:string|null = null;
 
@@ -32,6 +33,10 @@ export abstract class MongoDbModelManager{
     }
 
 
+    /**
+     * Assign the values to properties 
+     * @param data 
+     */
     private assignValues(data: MongoDbModelManagerInterface){
         if(data.mongodb_string)
             this._mongodb_string = data.mongodb_string;
@@ -42,6 +47,10 @@ export abstract class MongoDbModelManager{
                 this._mongodb_string = process.env.MONGODB_LOCAL_URL as string;
     }
 
+    /**
+     * Connect to MongoDB database
+     * @returns 
+     */
     public async connect(): Promise<boolean>{
         let connected: boolean = false;
         this._errno = 0;
@@ -56,6 +65,21 @@ export abstract class MongoDbModelManager{
             this._errno = MongoDbModelManager.CONNECTION_ERROR;
         }
         return connected;
+    }
+
+    /**
+     * Get one document with provided params
+     * @param params 
+     * @returns 
+     */
+    public async get(params: object): Promise<any>{
+        return await new Promise<any>((resolve,reject)=>{
+            this._model.findOne(params).then(res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err);
+            })
+        });
     }
 
 }
