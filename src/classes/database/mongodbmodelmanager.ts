@@ -1,4 +1,4 @@
-import mongoose, { HydratedDocument, Model, Query } from "mongoose";
+import mongoose, { Document, HydratedDocument, Model, Query } from "mongoose";
 
 //Single collection MongoDB manager
 
@@ -79,6 +79,23 @@ export abstract class MongoDbModelManager<T extends Document>{
             }).catch(err => {
                 reject(err);
             })
+        });
+    }
+
+    public async insert(params: object): Promise<boolean>{
+        this._errno = 0;
+        return await new Promise<boolean>((resolve,reject)=>{
+            let result = this._model.collection.insertOne(params);
+            result.then(res => {
+                if(res.insertedId)
+                    resolve(true);
+                else{
+                    resolve(false);
+                }
+                    
+            }).catch(err => {
+                reject(err);
+            });
         });
     }
 
