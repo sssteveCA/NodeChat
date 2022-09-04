@@ -1,4 +1,6 @@
+import { rejects } from "assert";
 import mongoose, { Document, HydratedDocument, Model, Query } from "mongoose";
+
 
 //Single collection MongoDB manager
 
@@ -17,11 +19,13 @@ export abstract class MongoDbModelManager<T extends Document>{
     public static GET_ERROR: number = 2;
     public static INSERT_ERROR: number = 3;
     public static UPDATE_ERROR: number = 4;
+    public static DELETE_ERROR: number = 5;
 
     private static CONNECTION_ERROR_MSG: string = "Errore durante la connessione al database";
     public static GET_ERROR_MSG: string = "Errore durante la lettura dei dati";
     public static INSERT_ERROR_MSG: string = "Errore durante l'inserimento dei dati";
     public static UPDATE_ERROR_MSG: string = "Errore durante l'aggiornamento dei dati";
+    public static DELETE_ERROR_MSG: string = "Errore durante la rimozione dei dati";
 
     get mongodb_string(){return this._mongodb_string;}
     get environment(){return this._environment;}
@@ -39,6 +43,9 @@ export abstract class MongoDbModelManager<T extends Document>{
                 break;
             case MongoDbModelManager.UPDATE_ERROR:
                 this._error = MongoDbModelManager.UPDATE_ERROR_MSG;
+                break;
+            case MongoDbModelManager.DELETE_ERROR:
+                this._error = MongoDbModelManager.DELETE_ERROR_MSG;
                 break;
             default:
                 this._error = null;
@@ -83,6 +90,23 @@ export abstract class MongoDbModelManager<T extends Document>{
     }
 
     /**
+     * Delete one document with provided filter
+     * @param filter 
+     * @returns 
+     */
+    public async delete(filter: object): Promise<any>{
+        return await new Promise<any>((resolve, reject) => {
+            let delete_query = this._model.deleteOne(filter);
+            delete_query.then(res => {
+                resolve(res);
+            }).catch(err => {
+                this._errno = MongoDbModelManager.DELETE_ERROR;
+                reject(err);
+            });
+        });
+    }
+
+    /**
      * Get one document with provided filter
      * @param filter 
      * @returns 
@@ -103,18 +127,12 @@ export abstract class MongoDbModelManager<T extends Document>{
      * @param document
      * @returns 
      */
-    public async insert(document: object): Promise<boolean>{
+    public async insert(document: object): Promise<any>{
         this._errno = 0;
-        return await new Promise<boolean>((resolve,reject)=>{
+        return await new Promise<any>((resolve,reject)=>{
             let result = this._model.collection.insertOne(document);
             result.then(res => {
-                if(res.insertedId)
-                    resolve(true);
-                else{
-                    this._errno = MongoDbModelManager.INSERT_ERROR;
-                    reject(this.error);
-                }
-                    
+                resolve(res);  
             }).catch(err => {
                 this._errno = MongoDbModelManager.INSERT_ERROR;
                 reject(err);
@@ -128,17 +146,11 @@ export abstract class MongoDbModelManager<T extends Document>{
      * @param set 
      * @returns 
      */
-    public async update(filter: object, set: object): Promise<boolean>{
-        return await new Promise<boolean>((resolve, reject)=>{
+    public async update(filter: object, set: object): Promise<any>{
+        return await new Promise<any>((resolve, reject)=>{
             let update_query = this._model.updateOne(filter, set);
             update_query.then(res => {
-                if((res.matchedCount > 0 && res.modifiedCount > 0) || (res.upsertedCount > 0)){
-                    resolve(true);
-                }
-                else{
-                    this._errno = MongoDbModelManager.UPDATE_ERROR;
-                    reject(this.error);
-                }
+                resolve(res);
             }).catch(err => {
                 this._errno = MongoDbModelManager.UPDATE_ERROR;
                 reject(err);
