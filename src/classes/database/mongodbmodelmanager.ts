@@ -44,10 +44,16 @@ export abstract class MongoDbModelManager{
 
     public async connect(): Promise<boolean>{
         let connected: boolean = false;
+        this._errno = 0;
         try{
-            
+            await mongoose.connect(this._mongodb_string).then(conn => {
+                console.log(conn);
+                connected = true;
+            }).catch(err => {
+                throw err;
+            });
         }catch(e){
-
+            this._errno = MongoDbModelManager.CONNECTION_ERROR;
         }
         return connected;
     }
