@@ -8,10 +8,11 @@ export const menu_items_routes = express.Router();
 menu_items_routes.get('/about_us',(req,res)=>{
     res.render('about_us',{
         container: Constants.CONTAINER
-    })
+    });
 });
 
 menu_items_routes.get('/contacts',(req,res)=>{
+    console.log("contacts");
     res.render('contacts',{
         container: Constants.CONTAINER
     });
