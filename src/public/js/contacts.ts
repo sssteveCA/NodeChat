@@ -1,4 +1,3 @@
-import { Email } from "../../classes/email/email";
 import { EmailRequest, EmailRequestInterface } from "./classes/request/emailrequest.js";
 
 $(()=>{
