@@ -14,9 +14,16 @@ $fSetChildren: 5
                     flex-direction: $FormDiv_fDir
                     label
                         margin: $FormLabelText_margin
-                    input
-                        height: $FormTextInput_height
-                        width: $FormTextInput_width
+                    @if $i >=1 and $i <=3
+                        input
+                            height: $FormTextInput_height
+                            width: $FormTextInput_width
+                    @else if $i == 4
+                        textarea
+                            width: $FormTextarea_width
+                            min-width: $FormTextArea_minWidth
+                            height: $FormTextArea_height
+                            resize: $FormTextArea_resize
                 @else if $i == 5
                     display: flex
                     justify-content: space-between
