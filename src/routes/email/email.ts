@@ -6,7 +6,7 @@ import { EmailInterface, Email } from '../../classes/email/email';
 
 export const email_routes = express.Router();
 
-//Validate email contact values
+//Middleware for validate email contact values
 const contact_validator = (req: Request, res: Response ,next: NextFunction) => {
     console.log(req.body);
     let body: object = req.body as object;
