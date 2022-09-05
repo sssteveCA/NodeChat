@@ -66,6 +66,7 @@ export class EmailRequest{
                 console.log(res);
                 response = JSON.parse(res);
             }).catch(err => {
+                console.warn(err);
                 throw err;
             });
         }catch(e){
