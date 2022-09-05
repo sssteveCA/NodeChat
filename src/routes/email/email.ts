@@ -35,7 +35,8 @@ const contact_validator = (req: Request, res: Response ,next: NextFunction) => {
                 res.status(400).send({done: false, msg: "I dati inseriti non sono nel formato corretto, riprova"});
         }//if(body.hasOwnProperty('name') && body.hasOwnProperty('email') && body.hasOwnProperty('subject') && body.hasOwnProperty('message')){ 
     }//if(body != null){
-    res.status(400).send({done: false, msg: "Inserisci i dati richiesti per continuare"});
+    else
+        res.status(400).send({done: false, msg: "Inserisci i dati richiesti per continuare"});
 };
 
 email_routes.post('/send_email',contact_validator,async (req,res)=>{
@@ -48,11 +49,11 @@ email_routes.post('/send_email',contact_validator,async (req,res)=>{
     console.log("em_data");
     console.log(em_data);
     let em: Email = new Email(em_data);
-    await em.sendMail().then(obj => {
+    em.sendMail().then(obj => {
         if(obj['done'] == true)
-            res.status(200).end(obj);
+            res.status(200).send(obj);
         else
-            res.status(500).end(obj);
+            res.status(500).send(obj);
     });
 });
 
