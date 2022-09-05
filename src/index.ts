@@ -11,6 +11,7 @@ import { styles_router } from './routes/css/styles';
 import { scripts_router } from './routes/js/scripts';
 import { authentication_routes } from './routes/authentication/authentication';
 import { menu_items_routes } from './routes/menu_items/menu_items';
+import { email_routes } from './routes/email/email';
 import { Paths } from './paths';
 import { Constants } from './constants';
 import { loadavg } from 'os';
@@ -25,6 +26,7 @@ app.use(cors());
 app.use('/css2',styles_router);
 app.use('/',authentication_routes);
 app.use('/',menu_items_routes);
+app.use('/',email_routes);
 
 app.engine('mustache',mustacheExpress());
 app.engine('mustache', mustacheExpress(Paths.ROOTPATH+'/views/partials','.mustache')); //Partials directory

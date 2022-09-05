@@ -3,11 +3,7 @@
 import bodyParser from 'body-parser';
 import express, { NextFunction, Request, Response } from 'express';
 
-const email_routes = express.Router();
-
-email_routes.post('/send_email',async (req,res)=>{
-    
-});
+export const email_routes = express.Router();
 
 //Validate email contact values
 const contact_validator = (req: Request, res: Response ,next: NextFunction) => {
@@ -37,3 +33,8 @@ const contact_validator = (req: Request, res: Response ,next: NextFunction) => {
     }//if(body != null){
     res.status(400).send({done: false, msg: "Inserisci i dati richiesti per continuare"});
 };
+
+email_routes.post('/send_email',contact_validator,async (req,res)=>{
+    
+});
+
