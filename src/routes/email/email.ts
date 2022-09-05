@@ -27,6 +27,8 @@ const contact_validator = (req: Request, res: Response ,next: NextFunction) => {
                     }
                 }//if(key == 'email'){
             }//for(const [key,value] of Object.entries(body)){
+            console.log("valid");
+            console.log(valid);
             if(valid == true)
                next();
             else

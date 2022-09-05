@@ -61,7 +61,7 @@ export class EmailRequest{
         this._errno = 0;
         try{
             await this.sendEmailPromise().then(res => {
-                console.log(res);
+                //console.log(res);
                 response = JSON.parse(res);
             }).catch(err => {
                 console.warn(err);
