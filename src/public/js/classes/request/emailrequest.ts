@@ -54,6 +54,30 @@ export class EmailRequest{
         else this._message = "";
     }
 
+    /**
+     * Perform the send email request and get the response
+     * @returns 
+     */
+    public async sendEmail(): Promise<object>{
+        let response: object = {};
+        this._errno = 0;
+        try{
+            await this.sendEmailPromise().then(res => {
+                console.log(res);
+                response = JSON.parse(res);
+            }).catch(err => {
+                throw err;
+            });
+        }catch(e){
+            this._errno = EmailRequest.ERR_FETCH;
+            response = {
+                done: false,
+                msg: this.error
+            }
+        }
+        return response;
+    }
+
     private async sendEmailPromise(): Promise<string>{
         return await new Promise<string>((resolve,reject) => {
             axios.post(EmailRequest.FETCH_URL,{

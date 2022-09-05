@@ -1,4 +1,4 @@
-import { EmailRequest } from "./classes/request/emailrequest";
+import { EmailRequest, EmailRequestInterface } from "./classes/request/emailrequest";
 
 $(()=>{
     $('#fContacts').on('submit', (ev)=>{
