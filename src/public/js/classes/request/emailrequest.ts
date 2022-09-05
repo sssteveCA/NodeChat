@@ -1,4 +1,3 @@
-import { Paths } from "../../../../paths";
 
 export interface EmailRequestInterface{
     name: string;
@@ -40,7 +39,7 @@ export class EmailRequest{
 
     private static ERR_FETCH_MSG:string = "Errore durante l'invio della mail";
 
-    private static FETCH_URL:string = Paths.SEND_EMAIL;
+    private static FETCH_URL:string =  "/send_email";
 
     private assignValues(data: EmailRequestInterface): void{
         if(data.name)this._name = data.name;

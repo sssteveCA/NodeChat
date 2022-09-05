@@ -5,7 +5,6 @@ $(()=>{
     $('#fContacts').on('submit', (ev)=>{
         //User send an email to help center
         ev.preventDefault();
-        console.log("submit");
         let er_data: EmailRequestInterface = {
             name: $('#name').val() as string,
             email: $('#email').val() as string,
