@@ -5,7 +5,7 @@ import express, { NextFunction, Request, Response } from 'express';
 
 const email_routes = express.Router();
 
-email_routes.post('/send_email',(req,res)=>{
+email_routes.post('/send_email',async (req,res)=>{
     
 });
 
