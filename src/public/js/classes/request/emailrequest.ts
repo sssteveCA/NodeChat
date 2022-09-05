@@ -1,5 +1,4 @@
 import { Paths } from "../../../../paths";
-import axios from '../../../../../node_modules/axios/index';
 
 export interface EmailRequestInterface{
     name: string;
@@ -80,14 +79,19 @@ export class EmailRequest{
     }
 
     private async sendEmailPromise(): Promise<string>{
+        let body: object = {
+            name: this._name,
+            email: this._email,
+            subject: this._subject,
+            message: this._message
+        };
         return await new Promise<string>((resolve,reject) => {
-            axios.post(EmailRequest.FETCH_URL,{
-                name: this._name, email: this._email, subject: this._subject, message: this._message
-            },{
+            fetch(EmailRequest.FETCH_URL,{
+                method: 'POST',
                 headers: {"Accept": "application/json","Content-Type": "application/json"},
-                responseType: "text"
+                body: JSON.stringify(body)
             }).then(res => {
-                resolve(res.data);
+                resolve(res.text());
             }).catch(err => {
                 reject(err);
             });
