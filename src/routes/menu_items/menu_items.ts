@@ -2,6 +2,7 @@
 
 import express from 'express';
 import { Constants } from '../../constants';
+import { Paths } from '../../paths';
 
 export const menu_items_routes = express.Router();
 
@@ -12,9 +13,9 @@ menu_items_routes.get('/about_us',(req,res)=>{
 });
 
 menu_items_routes.get('/contacts',(req,res)=>{
-    console.log("contacts");
     res.render('contacts',{
-        container: Constants.CONTAINER
+        container: Constants.CONTAINER,
+        jquery_js: Paths.JQUERY_JS
     });
 });
 

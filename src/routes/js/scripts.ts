@@ -8,7 +8,7 @@ export const scripts_router = express.Router();
 
 scripts_router.get('/jquery_js',(req,res)=>{
     const jquery_js: string = path.join('node_modules','jquery','dist','jquery.min.js');
-    res.sendFile(jquery_js,{root: Paths.ROOTPATH+'../'});
+    res.sendFile(jquery_js,{root: Paths.ROOTPATH+'/../'});
 });
 
 scripts_router.get('/jquery_ui_js',(req,res)=>{

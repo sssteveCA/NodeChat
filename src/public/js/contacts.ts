@@ -1,6 +1,3 @@
-import { Email, EmailInterface } from "../../classes/email/email";
-import $ from "jquery";
-
 $(()=>{
     console.log("contacts");
     $('#fContacts').on('submit', (ev)=>{

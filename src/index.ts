@@ -24,6 +24,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 app.use('/css2',styles_router);
+app.use('/js2',scripts_router);
 app.use('/',authentication_routes);
 app.use('/',menu_items_routes);
 app.use('/',email_routes);
