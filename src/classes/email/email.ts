@@ -66,7 +66,6 @@ export class Email{
      * Set the nodemailer transporter
      */
     private setTransport(): void{
-        console.log("setTransport");
         this._transport = nodemailer.createTransport({
             host: process.env.EMAIL_HOST,
             port: process.env.EMAIL_PORT as unknown as number,
@@ -75,14 +74,12 @@ export class Email{
                 pass: process.env.EMAIL_PASSWORD,
             }
         });
-        console.log(this._transport);
     }
 
     /**
      * Set the nodemailer message object
      */
     private setMessage(): void{
-        console.log("setMessage");
         this._message_object = {
             from: this._email,
             to: process.env.EMAIL_ADMIN as string,
@@ -93,14 +90,11 @@ export class Email{
     }
 
     public async sendMail(): Promise<object>{
-        console.log("sendMail");
-        console.log(this._message_object);
         let response: object = {};
         this._errno = 0;
         try{
             await this._transport.sendMail(this._message_object).then(res => {
-                console.log("sendMail response");
-                console.log(res);
+                //console.log(res);
                 response = {
                     done: true,
                     msg: "La tua richiesta è stata inviata. Riceverai una risposta nel minor tempo possibile"
@@ -110,7 +104,6 @@ export class Email{
                 throw err;
             });
         }catch(e){
-            console.log("sendMail catch");
             console.warn(e);
             this._errno = Email.ERR_SEND;
             response = {
