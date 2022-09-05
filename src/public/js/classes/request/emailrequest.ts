@@ -1,5 +1,5 @@
 import { Paths } from "../../../../paths";
-import axios from 'axios';
+import axios from '../../../../../node_modules/axios/index';
 
 export interface EmailRequestInterface{
     name: string;
