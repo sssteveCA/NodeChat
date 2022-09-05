@@ -15,7 +15,9 @@ menu_items_routes.get('/about_us',(req,res)=>{
 menu_items_routes.get('/contacts',(req,res)=>{
     res.render('contacts',{
         container: Constants.CONTAINER,
-        jquery_js: Paths.JQUERY_JS
+        jquery_js: Paths.JQUERY_JS,
+        jquery_ui_css: Paths.JQUERY_UI_CSS,
+        jquery_ui_js: Paths.JQUERY_UI_JS
     });
 });
 
