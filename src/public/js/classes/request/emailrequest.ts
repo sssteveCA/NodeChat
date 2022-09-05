@@ -1,3 +1,5 @@
+import { Paths } from "../../../../paths";
+import axios from 'axios';
 
 export interface EmailRequestInterface{
     name: string;
@@ -25,6 +27,9 @@ export class EmailRequest{
     get errno(){return this._errno;}
     get error(){
         switch(this._errno){
+            case EmailRequest.ERR_FETCH:
+                this._error = EmailRequest.ERR_FETCH_MSG;
+                break;
             default:
                 this._error = null;
                 break;
@@ -32,7 +37,13 @@ export class EmailRequest{
         return this._error;
     }
 
-    private assignValues(data: EmailRequestInterface){
+    public static ERR_FETCH:number = 1;
+
+    private static ERR_FETCH_MSG:string = "Errore durante l'invio della mail";
+
+    private static FETCH_URL:string = Paths.SEND_EMAIL;
+
+    private assignValues(data: EmailRequestInterface): void{
         if(data.name)this._name = data.name;
         else this._name = "";
         if(data.email)this._email = data.email;
@@ -42,4 +53,20 @@ export class EmailRequest{
         if(data.message)this._message = data.message;
         else this._message = "";
     }
+
+    private async sendEmailPromise(): Promise<string>{
+        return await new Promise<string>((resolve,reject) => {
+            axios.post(EmailRequest.FETCH_URL,{
+                name: this._name, email: this._email, subject: this._subject, message: this._message
+            },{
+                headers: {"Accept": "application/json","Content-Type": "application/json"},
+                responseType: "text"
+            }).then(res => {
+                resolve(res.data);
+            }).catch(err => {
+                reject(err);
+            });
+        });
+    }
+
 }
