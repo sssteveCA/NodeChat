@@ -11,7 +11,7 @@ export interface MessageInterface{
     from: string;
     to: string;
     subject: string;
-    text: string;
+    html: string;
 }
 
 export class Email{
@@ -29,6 +29,7 @@ export class Email{
     private static ERR_SEND_MSG:string = "Errore durante l'invio della mail";
 
     constructor(data: EmailInterface){
+        this.assignValues(data);
         this.setTransport();
         this.setMessage();
     }
@@ -48,6 +49,17 @@ export class Email{
                 break;
         }
         return this._error;
+    }
+
+    /**
+     * Assign the entry data to class properties 
+     * @param data 
+     */
+    private assignValues(data: EmailInterface){
+        this._name = data.name;
+        this._email = data.email;
+        this._subject = data.subject;
+        this._message = data.message;
     }
 
     /**
@@ -75,12 +87,14 @@ export class Email{
             from: this._email,
             to: process.env.EMAIL_ADMIN as string,
             subject: this._subject,
-            text: this._message
+            html: this._message
         };
+        
     }
 
     public async sendMail(): Promise<object>{
         console.log("sendMail");
+        console.log(this._message_object);
         let response: object = {};
         this._errno = 0;
         try{
