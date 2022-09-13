@@ -3,35 +3,36 @@
 
 $div2_margin: 10px
 $div2_padding: 30px
+$login-div-id: "fLogin"
+
+$bs-breakpoint-md: 768px
 
 //number of fieldset children
 $fsetChildren: 4
 
-@mixin logindiv-style()
-    margin: $div2_margin
-    padding: $div2_padding
-    background-color: rgba(60, 179, 113, 0.4)
+@function button-margin($breakpoint)
+    @if $breakpoint == 768px
+        @return 175px
+    @else 
+        @return 75px
 
-@mixin fieldset-style()
-    @for $i from 1 through $fsetChildren
-        div:nth-of-type(#{$i})
-            margin: $FormDiv_margin
-            @if $i == 1 or $i == 2
-                display: $FormDiv_display
-                flex-direction: $FormDiv_fDir
-                label
-                    margin: $FormLabelText_margin
-                input
-                    height: $FormTextInput_height
-                    width: $FormTextInput_width
-            @else if $i == 3  
-                input
-                    margin: $FormCb_margin  
-            @else
-                display: flex
-                justify-content: space-around
-                button
-                    padding: $FormButton_padding
+@mixin login-div()
+    ##{$login-div-id}
+        fieldset
+            legend
+                text-align: center
+            .container-fluid
+                .row:last-child
+                    @media only screen and(min-width: 0px)
+                        #bLogin
+                            margin-right: button-margin(0px)
+                        #bReset
+                            margin-left: button-margin(0px)
+                    @media only screen and(min-width: #{$bs-breakpoint-md})
+                        #bLogin
+                            margin-right: button-margin($bs-breakpoint-md)
+                        #bReset
+                            margin-left: button-margin($bs-breakpoint-md)
 
 @mixin notsubscribed-style()
     margin: $div2_margin
@@ -41,12 +42,7 @@ $fsetChildren: 4
 
 
 @include container-style('.container')
-
-/* .loginDiv
-    @include logindiv-style() */
-
-/* fieldset
-    @include fieldset-style() */
+@include login-div()
 
 .notSubscribed
     @include notsubscribed-style()
