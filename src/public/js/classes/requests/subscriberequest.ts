@@ -23,6 +23,11 @@ export class SubscribeRequest{
         this._confPass = data.confPass;
     }
 
+    private static regex_list = {
+        email: "^[a-z][a-z_\d]{2,30}@([a-z]{3,30}\.){1,10}[a-z]{2,8}$"
+    };
+
+    //Errors
     public static INVALID_DATA:number = 1;
 
     private static INVALID_DATA_MSG:string = "I dati inseriti non sono validi";
@@ -51,8 +56,10 @@ export class SubscribeRequest{
     private validate(data: SubscribeRequestInterface): void{
         if(data.username != "" && data.email != "" && data.password != "" && data.confPass != ""){
             if(data.password == data.confPass){
-
-            }//if(data.password == data.confPass){
+                let email_regex: RegExp = new RegExp(SubscribeRequest.regex_list['email']);
+                if(email_regex.test(data.email))
+                    return;
+            }//if(data.password == data.confPass)
         }//if(data.username != "" && data.email != "" && data.password != "" && data.confPass != ""){
         throw new ValidationError(SubscribeRequest.INVALID_DATA_MSG);
     }
