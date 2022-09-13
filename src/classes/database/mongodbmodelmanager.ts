@@ -5,6 +5,7 @@ import mongoose, {Document, HydratedDocument, Model, Query, Schema } from "mongo
 //Single collection MongoDB manager
 
 export abstract class MongoDbModelManager{
+    protected _connected: boolean = false;
     protected _mongodb_string: string;
     protected _environment: Environment = Environment.local;
     protected _model_name: string;
@@ -22,17 +23,20 @@ export abstract class MongoDbModelManager{
     public static INSERT_ERROR: number = 3;
     public static UPDATE_ERROR: number = 4;
     public static DELETE_ERROR: number = 5;
+    public static DISCONNECTION_ERROR: number = 6;
 
     private static CONNECTION_ERROR_MSG: string = "Errore durante la connessione al database";
-    public static GET_ERROR_MSG: string = "Errore durante la lettura dei dati";
-    public static INSERT_ERROR_MSG: string = "Errore durante l'inserimento dei dati";
-    public static UPDATE_ERROR_MSG: string = "Errore durante l'aggiornamento dei dati";
-    public static DELETE_ERROR_MSG: string = "Errore durante la rimozione dei dati";
+    private static GET_ERROR_MSG: string = "Errore durante la lettura dei dati";
+    private static INSERT_ERROR_MSG: string = "Errore durante l'inserimento dei dati";
+    private static UPDATE_ERROR_MSG: string = "Errore durante l'aggiornamento dei dati";
+    private static DELETE_ERROR_MSG: string = "Errore durante la rimozione dei dati";
+    private static DISCONNECTION_ERROR_MSG: string = "Errore durante la chiusura della connessione al database";
 
     get mongodb_string(){return this._mongodb_string;}
     get model_name(){return this._model_name;}
     get schema(){return this._schema;}
     get environment(){return this._environment;}
+    get isConnected(){return this._connected;}
     get errno(){return this._errno;}
     get error(){
         switch(this._errno){
@@ -50,6 +54,9 @@ export abstract class MongoDbModelManager{
                 break;
             case MongoDbModelManager.DELETE_ERROR:
                 this._error = MongoDbModelManager.DELETE_ERROR_MSG;
+                break;
+            case MongoDbModelManager.DISCONNECTION_ERROR:
+                this._error = MongoDbModelManager.DISCONNECTION_ERROR_MSG;
                 break;
             default:
                 this._error = null;
@@ -83,19 +90,39 @@ export abstract class MongoDbModelManager{
      * @returns 
      */
     public async connect(): Promise<boolean>{
-        let connected: boolean = false;
         this._errno = 0;
         try{
             await mongoose.connect(this._mongodb_string).then(conn => {
                 console.log(conn);
-                connected = true;
+                this._connected = true;
             }).catch(err => {
                 throw err;
             });
         }catch(e){
             this._errno = MongoDbModelManager.CONNECTION_ERROR;
         }
-        return connected;
+        return this._connected;
+    }
+
+    /**
+     * Close the MongoDB connection
+     * @returns true is close is done successfully otherwise false
+     */
+    public async close(): Promise<boolean>{
+        let disconnected: boolean = false;
+        try{
+            if(mongoose.connection.readyState == 1){
+                await mongoose.connection.close().then(close => {
+                    disconnected = true;
+                    this._connected = false;
+                }).catch(err => {
+                   throw err; 
+                });
+            } //if(mongoose.connection.readyState == 1){  
+        }catch(e){
+            this._errno = MongoDbModelManager.DISCONNECTION_ERROR;
+        }
+        return disconnected;
     }
 
     /**

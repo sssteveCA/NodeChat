@@ -1,9 +1,11 @@
+import { rejects } from "assert";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import { Constants } from "../../namespaces/constants";
 import { Schemas } from "../../namespaces/schemas";
 import { Account, AccountInterface } from "../database/models/account";
 import { MongoDbModelManager, MongoDbModelManagerInterface } from "../database/mongodbmodelmanager";
+import { MissingDataError } from "../errors/missingdataerror";
 
 
 export interface SubscribeInterface{
@@ -62,11 +64,12 @@ export class Subscribe{
 
     public async insertNewAccount(): Promise<object>{
         let response: object = {};
-        let mongodb_mmi: MongoDbModelManagerInterface = {
-            model_name: Constants.MONGODB_ACCOUNTS_COLLECTION,
-            schema: Schemas.ACCOUNTS
-        };
-        try{   
+        try{ 
+            if(!this._username || !this._email)throw new MissingDataError("Mancano uno o più dati richiesti");
+            let mongodb_mmi: MongoDbModelManagerInterface = {
+                model_name: Constants.MONGODB_ACCOUNTS_COLLECTION,
+                schema: Schemas.ACCOUNTS
+            }; 
             await this.passwordHashPromise().then(hash => {
                 let emailCode: string = this.emailVerifCode();
                 let account_data: AccountInterface= {
@@ -76,6 +79,8 @@ export class Subscribe{
                     activationCode: emailCode
                 };
                 let account: Account = new Account(mongodb_mmi,account_data);
+                return account.insertAccount();
+            }).then(res => {
             }).catch(err => {
                 throw(err);
             });
@@ -92,6 +97,10 @@ export class Subscribe{
     private async passwordHashPromise(): Promise<string>{
         const saltRounds: number = 10;
         return await new Promise<string>((resolve,reject)=>{
+            if(!this._password){
+                let mde: MissingDataError =  new MissingDataError("Mancano uno o più dati richiesti");
+                reject(mde);
+            }
             bcrypt.genSalt(saltRounds).then(salt => {
                 return bcrypt.hash(this._password, salt);
             }).then(hash => {

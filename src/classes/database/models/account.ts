@@ -1,4 +1,4 @@
-import { Date} from "mongoose";
+import mongoose, { Date} from "mongoose";
 import { MongoDbModelManager, MongoDbModelManagerInterface } from "../mongodbmodelmanager";
 
 export interface AccountInterface{
@@ -42,10 +42,14 @@ export class Account extends MongoDbModelManager{
      */
     public async deleteAccount(filter: object): Promise<object>{
         let response: object = {};
-        await super.delete(filter).then(res => {
+        await super.connect().then(conn => {
+            return super.delete(filter);
+        }).then(res => {
             console.log(res);
         }).catch(err => {
             console.warn(err);
+        }).finally(()=>{
+            super.close();
         });
         return response;
     }
@@ -57,10 +61,14 @@ export class Account extends MongoDbModelManager{
      */
     public async getAccount(filter: object): Promise<object>{
         let response: object = {};
-        await super.get(filter).then(res => {
+        await super.connect().then(conn => {
+            return super.get(filter);
+        }).then(res => {
             console.log(res);
         }).catch(err => {
             console.warn(err);
+        }).finally(()=>{
+            super.close();
         });
         return response;
     }
@@ -78,10 +86,14 @@ export class Account extends MongoDbModelManager{
             activationCode: this._activationCode
         };
         let response: object = {};
-        await super.insert(document).then(res => {
+        await super.connect().then(conn => {
+            return super.insert(document);
+        }).then(res => {
             console.log(res);
         }).catch(err => {
             console.warn(err);
+        }).finally(()=>{
+            super.close();
         });
         return response;
     }
@@ -94,10 +106,14 @@ export class Account extends MongoDbModelManager{
      */
     public async updateAccount(filter: object, set: object): Promise<object>{
         let response: object = {};
-        await super.update(filter,set).then(res => {
+        await super.connect().then(conn => {
+            return super.update(filter,set);
+        }).then(res => {
             console.log(res);
         }).catch(err => {
             console.warn(err);
+        }).finally(()=>{
+            super.close();
         });
         return response;
     }
