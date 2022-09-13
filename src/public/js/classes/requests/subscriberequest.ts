@@ -1,3 +1,4 @@
+import { ValidationError } from "../../errors/validationerror";
 
 export interface SubscribeRequestInterface{
     username:string;
@@ -15,11 +16,16 @@ export class SubscribeRequest{
     private _error:string|null = null;
 
     constructor(data: SubscribeRequestInterface){
+        this.validate(data);
         this._username = data.username;
         this._email = data.email;
         this._password = data.password;
         this._confPass = data.confPass;
     }
+
+    public static INVALID_DATA:number = 1;
+
+    private static INVALID_DATA_MSG:string = "I dati inseriti non sono validi";
 
     get username(){return this._username; }
     get email(){return this._email; }
@@ -28,6 +34,9 @@ export class SubscribeRequest{
     get errno(){return this._errno; }
     get error(){
         switch(this._errno){
+            case SubscribeRequest.INVALID_DATA:
+                this._error = SubscribeRequest.INVALID_DATA_MSG;
+                break;
             default:
                 this._error = null;
                 break;
@@ -35,5 +44,16 @@ export class SubscribeRequest{
         return this._error;
     }
 
-    
+    /**
+     * Validate the data before make the request
+     * @param data the user subscribe data
+     */
+    private validate(data: SubscribeRequestInterface): void{
+        if(data.username != "" && data.email != "" && data.password != "" && data.confPass != ""){
+            if(data.password == data.confPass){
+
+            }//if(data.password == data.confPass){
+        }//if(data.username != "" && data.email != "" && data.password != "" && data.confPass != ""){
+        throw new ValidationError(SubscribeRequest.INVALID_DATA_MSG);
+    }
 }
