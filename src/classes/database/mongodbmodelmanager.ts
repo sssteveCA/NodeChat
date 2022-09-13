@@ -65,7 +65,7 @@ export abstract class MongoDbModelManager<T extends Document>{
      */
     private assignValues(data: MongoDbModelManagerInterface){
         this._model_name = data.model_name;
-        this._schema = data.schema;
+        this._schema = new mongoose.Schema(data.schema);
         this._model = mongoose.model(this._model_name,this._schema);
         if(data.environment)
             this._environment = data.environment;
@@ -173,7 +173,7 @@ export interface MongoDbModelManagerInterface{
     mongodb_string?: string;
     environment?: Environment;
     model_name: string;
-    schema: Schema;
+    schema: object;
 }
 
 enum Environment{
