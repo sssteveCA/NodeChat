@@ -8,10 +8,10 @@ export namespace Schemas{
         email: {type: String, index: {unique: true}},
         password: String,
         creationDate: {type: Date, default: new Date()},
-        activationCode: {type: String, index: {unique: true}},
-        resetCode: {type: String, index: {unique: true}},
-        verified: Boolean,
-        resetted: Boolean
+        activationCode: {type: String, index: {unique: true}, default: null},
+        resetCode: {type: String, index: {unique: true}, default: null},
+        verified: {type: Boolean, default: false},
+        resetted: {type: Boolean, default: false}
     });
 
 }

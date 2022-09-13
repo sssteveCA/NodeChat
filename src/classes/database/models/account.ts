@@ -4,7 +4,8 @@ import { MongoDbModelManager, MongoDbModelManagerInterface } from "../mongodbmod
 export interface AccountInterface{
     username?: string,
     email?: string,
-    password?: string,
+    password_hash?: string,
+    activationCode?: string
 }
 
 export class Account extends MongoDbModelManager{
@@ -69,7 +70,13 @@ export class Account extends MongoDbModelManager{
      * @param document the document to be added
      * @returns 
      */
-    public async insertAccount(document: object): Promise<object>{
+    public async insertAccount(): Promise<object>{
+        let document: object = {
+            username: this._username,
+            email: this._email,
+            password: this._password_hash,
+            activationCode: this._activationCode
+        };
         let response: object = {};
         await super.insert(document).then(res => {
             console.log(res);
@@ -98,6 +105,7 @@ export class Account extends MongoDbModelManager{
     private setValues(data: AccountInterface){
         if(data.username)this._username = data.username;
         if(data.email)this._email = data.email;
-        if(data.password)this._password = data.password;
+        if(data.password_hash)this._password_hash = data.password_hash;
+        if(data.activationCode)this._activationCode = data.activationCode;
     }
 }

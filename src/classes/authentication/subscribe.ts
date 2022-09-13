@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import { Constants } from "../../namespaces/constants";
 import { Schemas } from "../../namespaces/schemas";
+import { Account, AccountInterface } from "../database/models/account";
 import { MongoDbModelManager, MongoDbModelManagerInterface } from "../database/mongodbmodelmanager";
 
 
@@ -65,6 +66,22 @@ export class Subscribe{
             model_name: Constants.MONGODB_ACCOUNTS_COLLECTION,
             schema: Schemas.ACCOUNTS
         };
+        try{   
+            await this.passwordHashPromise().then(hash => {
+                let emailCode: string = this.emailVerifCode();
+                let account_data: AccountInterface= {
+                    username: this._username,
+                    email: this._email,
+                    password_hash: hash,
+                    activationCode: emailCode
+                };
+                let account: Account = new Account(mongodb_mmi,account_data);
+            }).catch(err => {
+                throw(err);
+            });
+        }catch(e){
+
+        }
         return response;
     }
 
