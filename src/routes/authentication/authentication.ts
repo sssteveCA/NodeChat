@@ -22,6 +22,9 @@ authentication_routes.get('/subscribe',(req,res)=>{
     res.render('subscribe',{
         bootstrap_css: Paths.BOOTSTRAP_CSS,
         bootstrap_js: Paths.BOOTSTRAP_JS,
+        jquery_js: Paths.JQUERY_JS,
+        jquery_ui_css: Paths.JQUERY_UI_CSS,
+        jquery_ui_js: Paths.JQUERY_UI_JS,
         container: Constants.CONTAINER,
         newAccount: Paths.NEWACCOUNT
     });
