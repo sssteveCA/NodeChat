@@ -1,5 +1,5 @@
 import { rejects } from "assert";
-import mongoose, { Document, HydratedDocument, Model, Query, Schema } from "mongoose";
+import mongoose, {Document, HydratedDocument, Model, Query, Schema } from "mongoose";
 
 
 //Single collection MongoDB manager

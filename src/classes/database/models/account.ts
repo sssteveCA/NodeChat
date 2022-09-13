@@ -24,4 +24,44 @@ export class Account extends MongoDbModelManager{
     get resetCode(){return this._resetCode;}
     get verified(){return this._verified;}
     get resetted(){return this._resetted;}
+
+    public async deleteAccount(filter: object): Promise<object>{
+        let response: object = {};
+        await super.delete(filter).then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.warn(err);
+        });
+        return response;
+    }
+
+    public async getAccount(filter: object): Promise<object>{
+        let response: object = {};
+        await super.get(filter).then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.warn(err);
+        });
+        return response;
+    }
+
+    public async insertAccount(document: object): Promise<object>{
+        let response: object = {};
+        await super.insert(document).then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.warn(err);
+        });
+        return response;
+    }
+
+    public async updateAccount(filter: object, set: object): Promise<object>{
+        let response: object = {};
+        await super.update(filter,set).then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.warn(err);
+        });
+        return response;
+    }
 }
