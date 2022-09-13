@@ -10,6 +10,8 @@ export const authentication_routes = express.Router();
 
 authentication_routes.get('/login',(req,res)=>{
     res.render('login',{
+        bootstrap_css: Paths.BOOTSTRAP_CSS,
+        bootstrap_js: Paths.BOOTSTRAP_JS,
         container: Constants.CONTAINER,
         login: Paths.LOGIN,
         subscribe: Paths.SUBSCRIBE
