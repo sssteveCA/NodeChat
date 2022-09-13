@@ -21,6 +21,7 @@
     "@types/jqueryui": "^1.12.16",
     "@types/nodemailer": "^6.4.5",
     "body-parser": "^1.20.0",
+    "bootstrap": "^5.2.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.2",
     "express": "^4.18.1",
