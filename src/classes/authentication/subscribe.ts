@@ -13,7 +13,7 @@ export class Subscribe{
     private _error:string|null = null;
 
     constructor(data: SubscribeInterface){
-        
+        this.assignValues(data);
     }
 
     get username(){return this._username; }
@@ -27,6 +27,12 @@ export class Subscribe{
                 break;
         }
         return this._error;
+    }
+
+    private assignValues(data: SubscribeInterface): void{
+        this._username = data.username;
+        this._email = data.email;
+        this._password = data.password;
     }
 
 }
