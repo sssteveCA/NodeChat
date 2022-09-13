@@ -17,6 +17,11 @@ export class SubscribeRequest{
 
     private static FETCH_URL: string = "/newAccount";
 
+    //Errors
+    public static ERR_SUBSCRIBE:number = 1;
+
+    private static ERR_SUBSCRIBE_MSG:string = "Errore durante la registrazione";
+
     constructor(data: SubscribeRequestInterface){
         this._username = data.username;
         this._email = data.email;
@@ -31,11 +36,43 @@ export class SubscribeRequest{
     get errno(){return this._errno; }
     get error(){
         switch(this._errno){
+            case SubscribeRequest.ERR_SUBSCRIBE:
+                this._error = SubscribeRequest.ERR_SUBSCRIBE_MSG;
+                break;
             default:
                 this._error = null;
                 break;
         }
         return this._error;
+    }
+
+    /**
+     * Execute the request to create new account
+     * @returns Promise
+     */
+    private async subscribe(): Promise<object>{
+        let response: object = {};
+        this._errno = 0;
+        try{
+            await this.subscribePromise().then(res => {
+                console.log(res);
+                let obj = JSON.parse(res);
+                response = {
+                    done: obj['done'],
+                    msg: obj['msg']
+                };
+            }).catch(err => {
+                console.warn(err);
+                throw err;
+            });
+        }catch(e){
+            this._errno = SubscribeRequest.ERR_SUBSCRIBE;
+            response = {
+                done: false,
+                msg: this.error
+            };
+        }
+        return response;
     }
 
     private async subscribePromise(): Promise<string>{
