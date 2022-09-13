@@ -15,6 +15,8 @@ export class SubscribeRequest{
     private _errno:number = 0;
     private _error:string|null = null;
 
+    private static FETCH_URL: string = "/newAccount";
+
     constructor(data: SubscribeRequestInterface){
         this._username = data.username;
         this._email = data.email;
@@ -34,6 +36,29 @@ export class SubscribeRequest{
                 break;
         }
         return this._error;
+    }
+
+    private async subscribePromise(): Promise<string>{
+        return await new Promise<string>((resolve, reject) => {
+            let post_data: SubscribeRequestInterface = {
+                username: this._username,
+                email: this._email,
+                password: this._password,
+                confPass: this._confPass
+            }
+            fetch(SubscribeRequest.FETCH_URL,{
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(post_data)
+            }).then(res => {
+                resolve(res.text());
+            }).catch(err => {
+                reject(err);
+            });
+        });
     }
 
 }
