@@ -1,3 +1,5 @@
 $(()=>{
-    console.log("subscribe");
+    $('#bSubscribe').on('click', ()=>{
+
+    });
 });
