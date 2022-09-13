@@ -27,6 +27,17 @@ $(()=>{
             }
             
         }
+    });//$('#bSubscribe').on('click', (e)=>{
+    $('#showPass').on('change',(e)=>{
+        let this_checkbox = $(e.target);
+        if(this_checkbox.is(":checked")){
+            $('#password').attr('type','text');
+            $('#confPass').attr('type','text');
+        }
+        else{
+            $('#password').attr('type','password');
+            $('#confPass').attr('type','password');
+        }
     });
 });
 
