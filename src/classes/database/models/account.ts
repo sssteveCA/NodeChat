@@ -25,6 +25,11 @@ export class Account extends MongoDbModelManager{
     get verified(){return this._verified;}
     get resetted(){return this._resetted;}
 
+    /**
+     * Delete the first account from the collection that match with a filter
+     * @param filter the filter to search the first document to delete
+     * @returns 
+     */
     public async deleteAccount(filter: object): Promise<object>{
         let response: object = {};
         await super.delete(filter).then(res => {
@@ -35,6 +40,11 @@ export class Account extends MongoDbModelManager{
         return response;
     }
 
+    /**
+     * Get the first account from the collection that match with a filter
+     * @param filter the filter to search the first document to get
+     * @returns 
+     */
     public async getAccount(filter: object): Promise<object>{
         let response: object = {};
         await super.get(filter).then(res => {
@@ -45,6 +55,11 @@ export class Account extends MongoDbModelManager{
         return response;
     }
 
+    /**
+     * Add an account to the collection
+     * @param document the document to be added
+     * @returns 
+     */
     public async insertAccount(document: object): Promise<object>{
         let response: object = {};
         await super.insert(document).then(res => {
@@ -55,6 +70,12 @@ export class Account extends MongoDbModelManager{
         return response;
     }
 
+    /**
+     * Updated the first account from the collection that match with a filter with the set data
+     * @param filter the filter to search the first document to update
+     * @param set the data to updated the matched document
+     * @returns 
+     */
     public async updateAccount(filter: object, set: object): Promise<object>{
         let response: object = {};
         await super.update(filter,set).then(res => {
