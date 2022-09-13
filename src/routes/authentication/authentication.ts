@@ -20,6 +20,8 @@ authentication_routes.get('/login',(req,res)=>{
 
 authentication_routes.get('/subscribe',(req,res)=>{
     res.render('subscribe',{
+        bootstrap_css: Paths.BOOTSTRAP_CSS,
+        bootstrap_js: Paths.BOOTSTRAP_JS,
         container: Constants.CONTAINER,
         newAccount: Paths.NEWACCOUNT
     });

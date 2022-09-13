@@ -18,10 +18,13 @@ $fsetChildren: 4
 
 @mixin login-div()
     ##{$login-div-id}
+        margin-top: 30px
         fieldset
             legend
                 text-align: center
             .container-fluid
+                .row
+                    margin-top: 25px
                 .row:last-child
                     @media only screen and(min-width: 0px)
                         #bLogin
