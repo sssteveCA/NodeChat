@@ -5,13 +5,13 @@ import mongoose, { Document, HydratedDocument, Model, Query, Schema } from "mong
 //Single collection MongoDB manager
 
 export abstract class MongoDbModelManager{
-    private _mongodb_string: string;
-    private _environment: Environment = Environment.local;
-    private _model_name: string;
-    private _schema: Schema;
-    private _model: Model<any>;
-    private _errno: number = 0;
-    private _error:string|null = null;
+    protected _mongodb_string: string;
+    protected _environment: Environment = Environment.local;
+    protected _model_name: string;
+    protected _schema: Schema;
+    protected _model: Model<any>;
+    protected _errno: number = 0;
+    protected _error:string|null = null;
 
     constructor(data: MongoDbModelManagerInterface){
         this.assignValues(data);

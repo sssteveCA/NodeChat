@@ -10,8 +10,8 @@ export namespace Schemas{
         creationDate: {type: Date, default: new Date()},
         activationCode: {type: String, index: {unique: true}},
         resetCode: {type: String, index: {unique: true}},
-        isVerified: Boolean,
-        isResetted: Boolean
+        verified: Boolean,
+        resetted: Boolean
     });
 
 }
