@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
-import { Constants } from "../../constants";
-import { Schemas } from "../../schemas";
+import { Constants } from "../../namespaces/constants";
+import { Schemas } from "../../namespaces/schemas";
 import { MongoDbModelManager, MongoDbModelManagerInterface } from "../database/mongodbmodelmanager";
 
 

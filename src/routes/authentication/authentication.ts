@@ -2,9 +2,9 @@
 
 import express, { NextFunction, Request, Response } from 'express';
 import mustacheExpress from 'mustache-express';
-import { Constants } from '../../constants';
-import { Paths } from '../../paths';
-import { Regexs } from '../../regex';
+import { Constants } from '../../namespaces/constants';
+import { Paths } from '../../namespaces/paths';
+import { Regexs } from '../../namespaces/regex';
 
 const app = express();
 export const authentication_routes = express.Router();

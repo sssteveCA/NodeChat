@@ -1,8 +1,8 @@
 //Menu items routes
 
 import express from 'express';
-import { Constants } from '../../constants';
-import { Paths } from '../../paths';
+import { Constants } from '../../namespaces/constants';
+import { Paths } from '../../namespaces/paths';
 
 export const menu_items_routes = express.Router();
 

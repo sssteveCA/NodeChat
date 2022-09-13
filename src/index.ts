@@ -12,8 +12,8 @@ import { scripts_router } from './routes/js/scripts';
 import { authentication_routes } from './routes/authentication/authentication';
 import { menu_items_routes } from './routes/menu_items/menu_items';
 import { email_routes } from './routes/email/email';
-import { Paths } from './paths';
-import { Constants } from './constants';
+import { Paths } from './namespaces/paths';
+import { Constants } from './namespaces/constants';
 import { loadavg } from 'os';
 
 dotenv.config(); //Load .env file

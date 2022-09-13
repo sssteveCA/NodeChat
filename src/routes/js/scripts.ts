@@ -2,7 +2,7 @@
 //JS files request for frontend
 import express from 'express';
 import path from 'path';
-import { Paths } from '../../paths';
+import { Paths } from '../../namespaces/paths';
 
 export const scripts_router = express.Router();
 

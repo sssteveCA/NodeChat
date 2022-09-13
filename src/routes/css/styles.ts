@@ -1,7 +1,7 @@
 //CSS files requests for frontend
 import express from "express";
 import path from "path";
-import { Paths } from "../../paths";
+import { Paths } from "../../namespaces/paths";
 export const styles_router = express.Router();
 
 styles_router.get('/bootstrap_css', (req,res)=>{
