@@ -4,7 +4,7 @@ import mongoose, { Document, HydratedDocument, Model, Query, Schema } from "mong
 
 //Single collection MongoDB manager
 
-export abstract class MongoDbModelManager<T extends Document>{
+export abstract class MongoDbModelManager{
     private _mongodb_string: string;
     private _environment: Environment = Environment.local;
     private _model_name: string;

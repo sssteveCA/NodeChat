@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import { Constants } from "../../constants";
 import { Schemas } from "../../schemas";
-import { MongoDbModelManagerInterface } from "../database/mongodbmodelmanager";
+import { MongoDbModelManager, MongoDbModelManagerInterface } from "../database/mongodbmodelmanager";
 
 
 export interface SubscribeInterface{
