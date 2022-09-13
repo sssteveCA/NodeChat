@@ -95,11 +95,7 @@ export abstract class MongoDbModelManager{
         console.log("mmm connect");
         this._errno = 0;
         try{
-            await mongoose.connect(this._mongodb_string,{
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-                useCreateIndex: true
-            }).then(conn => {
+            await mongoose.connect(this._mongodb_string).then(conn => {
                 console.log(conn);
                 this._connected = true;
             }).catch(err => {
