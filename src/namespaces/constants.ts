@@ -8,5 +8,5 @@ export namespace Constants{
     export const MAIN_URL: string = SCHEME+'://'+HOSTNAME+':'+PORT;
 
     //MongoDB
-    export const MONGODB_ACCOUNTS_COLLECTION = 'Accounts';
+    export const MONGODB_ACCOUNTS_COLLECTION = 'accounts';
 }

@@ -64,6 +64,7 @@ authentication_routes.get('/subscribe',(req,res)=>{
 });
 
 authentication_routes.post('/newAccount',subscribe_validator,(req,res)=> {
+    console.log("authentication route newAccount");
     let body: object = req.body as object;
     let subscribe_data: SubscribeInterface = {
         username: body['username'],
@@ -72,8 +73,10 @@ authentication_routes.post('/newAccount',subscribe_validator,(req,res)=> {
     };
     let subscribe: Subscribe = new Subscribe(subscribe_data);
     subscribe.insertNewAccount().then(obj => {
+        console.log("authentication route newAccount insertNewAccount then");
         res.status(201).send(obj);
     }).catch(err => {
+        console.log("authentication route newAccount insertNewAccount error");
         res.send(500).send(err);
     });
 });

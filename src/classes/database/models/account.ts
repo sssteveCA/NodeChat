@@ -1,4 +1,5 @@
 import mongoose, { Date} from "mongoose";
+import { DatabaseConnectionError } from "../../errors/databaseconnectionerror";
 import { MongoDbModelManager, MongoDbModelManagerInterface } from "../mongodbmodelmanager";
 
 export interface AccountInterface{
@@ -79,6 +80,7 @@ export class Account extends MongoDbModelManager{
      * @returns 
      */
     public async insertAccount(): Promise<object>{
+        console.log("account insert");
         let document: object = {
             username: this._username,
             email: this._email,
@@ -87,8 +89,13 @@ export class Account extends MongoDbModelManager{
         };
         let response: object = {};
         await super.connect().then(conn => {
-            return super.insert(document);
+            if(conn == true){
+                console.log("account insert connect then");
+                return super.insert(document);
+            }
+            else throw new DatabaseConnectionError('Errore durante la connessione al Database');
         }).then(res => {
+            console.log("account insert document then");
             console.log(res);
         }).catch(err => {
             console.warn(err);

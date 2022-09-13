@@ -79,10 +79,12 @@ export abstract class MongoDbModelManager{
         if(data.mongodb_string)
             this._mongodb_string = data.mongodb_string;
         else
-            if(this._environment = Environment.production)
+            if(this._environment == Environment.production)
                 this._mongodb_string = process.env.MONGODB_PRODUCTION_URL as string;
             else
                 this._mongodb_string = process.env.MONGODB_LOCAL_URL as string;
+        console.log(`mongoDB string => ${this._mongodb_string}`);
+        console.log(`model name => ${this._model_name}`);
     }
 
     /**
@@ -90,9 +92,14 @@ export abstract class MongoDbModelManager{
      * @returns 
      */
     public async connect(): Promise<boolean>{
+        console.log("mmm connect");
         this._errno = 0;
         try{
-            await mongoose.connect(this._mongodb_string).then(conn => {
+            await mongoose.connect(this._mongodb_string,{
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+                useCreateIndex: true
+            }).then(conn => {
                 console.log(conn);
                 this._connected = true;
             }).catch(err => {
@@ -164,6 +171,7 @@ export abstract class MongoDbModelManager{
      * @returns 
      */
     public async insert(document: object): Promise<any>{
+        console.log("mmm insert");
         this._errno = 0;
         return await new Promise<any>((resolve,reject)=>{
             let result = this._model.collection.insertOne(document);
