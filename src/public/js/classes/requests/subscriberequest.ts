@@ -1,4 +1,4 @@
-import { ValidationError } from "../../errors/validationerror";
+import { ValidationError } from "../../errors/validationerror.js";
 
 export interface SubscribeRequestInterface{
     username:string;
@@ -16,7 +16,6 @@ export class SubscribeRequest{
     private _error:string|null = null;
 
     constructor(data: SubscribeRequestInterface){
-        this.validate(data);
         this._username = data.username;
         this._email = data.email;
         this._password = data.password;
@@ -49,18 +48,4 @@ export class SubscribeRequest{
         return this._error;
     }
 
-    /**
-     * Validate the data before make the request
-     * @param data the user subscribe data
-     */
-    private validate(data: SubscribeRequestInterface): void{
-        if(data.username != "" && data.email != "" && data.password != "" && data.confPass != ""){
-            if(data.password == data.confPass){
-                let email_regex: RegExp = new RegExp(SubscribeRequest.regex_list['email']);
-                if(email_regex.test(data.email))
-                    return;
-            }//if(data.password == data.confPass)
-        }//if(data.username != "" && data.email != "" && data.password != "" && data.confPass != ""){
-        throw new ValidationError(SubscribeRequest.INVALID_DATA_MSG);
-    }
 }

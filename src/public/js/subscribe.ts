@@ -1,8 +1,9 @@
-import { MessageDialog, MessageDialogInterface } from "./classes/dialogs/messagedialog";
-import { SubscribeRequest, SubscribeRequestInterface } from "./classes/requests/subscriberequest";
+import { MessageDialog, MessageDialogInterface } from "./classes/dialogs/messagedialog.js";
+import { SubscribeRequest, SubscribeRequestInterface } from "./classes/requests/subscriberequest.js";
 
 $(()=>{
-    $('#bSubscribe').on('click', ()=>{
+    $('#bSubscribe').on('click', (e)=>{
+        e.preventDefault();
         let sr_data: SubscribeRequestInterface = {
             username: $('#username').val() as string,
             email: $('#email').val() as string,
@@ -12,11 +13,14 @@ $(()=>{
         try{
             let sr: SubscribeRequest = new SubscribeRequest(sr_data);
         }catch(e){
-            let md_data: MessageDialogInterface = {
-                title: "Registrazione",
-                message: e as string
-            };
-            messageDialog(md_data);
+            if(e instanceof Error){
+                let md_data: MessageDialogInterface = {
+                    title: "Registrazione",
+                    message: e.message as string
+                };
+                messageDialog(md_data);
+            }
+            
         }
     });
 });
