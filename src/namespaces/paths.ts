@@ -1,6 +1,6 @@
 
 export namespace Paths{
-    export const ROOTPATH = __dirname;
+    export const ROOTPATH = __dirname+'/../';
     export const CSS2 = "css2/";
     export const JS2 = "js2/";
     export const BOOTSTRAP_CSS = CSS2+"/bootstrap_css";
