@@ -1,28 +1,27 @@
 @import 'partials/global'
 @import "partials/background"
 
-$fsetChildren: 6
+$subscribe-form-id: "fSubscribe"
 
-@mixin fieldset-style()
-    @for $i from 1 through $fsetChildren
-        div:nth-of-type(#{$i})
-            margin: $FormDiv_margin
-            @if $i >= 1 and $i <= 4
-                display: $FormDiv_display
-                flex-direction: $FormDiv_fDir
-                label
-                    margin: $FormLabelText_margin
-                input
-                    height: $FormTextInput_height
-                    width: $FormTextInput_width
-            @else if $i == 5
-                input
-                    margin: $FormCb_margin
-            @else
-                display: flex
-                justify-content: space-around
-                button
-                    padding: $FormButton_padding
+@mixin subscribe-form()
+    ##{$subscribe-form-id}
+        fieldset
+            legend
+                text-align: center
+            .container-fluid
+                .row
+                    margin-top: 25px
+                .row:last-child
+                    @media only screen and (min-width: 0px)
+                        #bSubscribe
+                            margin-left: button-margin(0px)
+                        #bReset
+                            margin-left: button-margin(0px)
+                    @media only screen and (min-width: #{$bs-breakpoint-md})
+                        #bSubscribe
+                            margin-left: button-margin($bs-breakpoint-md)
+                        #bReset
+                            margin-left: button-margin($bs-breakpoint-md)
 
 @include container-style('.container')
 
@@ -33,3 +32,4 @@ $fsetChildren: 6
     @include fieldset-style() */
 
 @include main-background($bk-url)
+@include subscribe-form()

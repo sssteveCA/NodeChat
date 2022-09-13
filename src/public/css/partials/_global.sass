@@ -1,4 +1,5 @@
-
+//Bootstrap breakpoints
+$bs-breakpoint-md: 768px
     
 //container style
 $cont_margin: 20px auto
@@ -31,6 +32,12 @@ $FormButton_padding: 10px
 
 //header
 $header-class-style: (font-size: 24px, text-align: center, margin: 20px auto )
+
+@function button-margin($breakpoint)
+    @if $breakpoint == 768px
+        @return 175px
+    @else 
+        @return 75px
 
 @mixin container-style($container-class)
     #{$container-class}
