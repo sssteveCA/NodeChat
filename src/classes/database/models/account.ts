@@ -1,10 +1,17 @@
-import { Date } from "mongoose";
+import { Date} from "mongoose";
 import { MongoDbModelManager, MongoDbModelManagerInterface } from "../mongodbmodelmanager";
+
+export interface AccountInterface{
+    username?: string,
+    email?: string,
+    password?: string,
+}
 
 export class Account extends MongoDbModelManager{
 
     private _username:string;
     private _email:string;
+    private _password: string;
     private _password_hash: string;
     private _creationDate: Date;
     private _activationCode: string;
@@ -12,8 +19,9 @@ export class Account extends MongoDbModelManager{
     private _verified: boolean;
     private _resetted: boolean;
 
-    constructor(data_parent: MongoDbModelManagerInterface){
+    constructor(data_parent: MongoDbModelManagerInterface, data: AccountInterface){
         super(data_parent);
+        this.setValues(data);
     }
 
     get username(){return this._username;}
@@ -24,6 +32,7 @@ export class Account extends MongoDbModelManager{
     get resetCode(){return this._resetCode;}
     get verified(){return this._verified;}
     get resetted(){return this._resetted;}
+
 
     /**
      * Delete the first account from the collection that match with a filter
@@ -84,5 +93,11 @@ export class Account extends MongoDbModelManager{
             console.warn(err);
         });
         return response;
+    }
+
+    private setValues(data: AccountInterface){
+        if(data.username)this._username = data.username;
+        if(data.email)this._email = data.email;
+        if(data.password)this._password = data.password;
     }
 }
