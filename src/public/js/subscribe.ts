@@ -12,6 +12,11 @@ $(()=>{
         }
         try{
             let sr: SubscribeRequest = new SubscribeRequest(sr_data);
+            sr.subscribe().then(obj => {
+
+            }).catch(err => {
+
+            });
         }catch(e){
             if(e instanceof Error){
                 let md_data: MessageDialogInterface = {

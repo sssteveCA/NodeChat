@@ -2,6 +2,7 @@
 
 import express, { NextFunction, Request, Response } from 'express';
 import mustacheExpress from 'mustache-express';
+import { Subscribe, SubscribeInterface } from '../../classes/authentication/subscribe';
 import { Constants } from '../../namespaces/constants';
 import { Paths } from '../../namespaces/paths';
 import { Regexs } from '../../namespaces/regex';
@@ -63,5 +64,16 @@ authentication_routes.get('/subscribe',(req,res)=>{
 });
 
 authentication_routes.post('/newAccount',subscribe_validator,(req,res)=> {
-
+    let body: object = req.body as object;
+    let subscribe_data: SubscribeInterface = {
+        username: body['username'],
+        email: body['email'],
+        password: body['password']
+    };
+    let subscribe: Subscribe = new Subscribe(subscribe_data);
+    subscribe.insertNewAccount().then(obj => {
+        res.status(201).send(obj);
+    }).catch(err => {
+        res.send(500).send(err);
+    });
 });

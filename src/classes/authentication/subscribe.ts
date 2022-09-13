@@ -22,6 +22,11 @@ export class Subscribe{
     private _errno:number = 0;
     private _error:string|null = null;
 
+    //Errors
+    public static ERR_SUBSCRIBE:number = 1;
+
+    private static ERR_SUBSCRIBE_MSG:string = "Errore durante la registrazione";
+
     constructor(data: SubscribeInterface){
         this.assignValues(data);
     }
@@ -32,6 +37,9 @@ export class Subscribe{
     get errno(){return this._errno; }
     get error(){
         switch(this._errno){
+            case Subscribe.ERR_SUBSCRIBE:
+                this._error = Subscribe.ERR_SUBSCRIBE_MSG;
+                break;
             default:
                 this._error = null;
                 break;
@@ -64,6 +72,7 @@ export class Subscribe{
 
     public async insertNewAccount(): Promise<object>{
         let response: object = {};
+        this._errno = 0;
         try{ 
             if(!this._username || !this._email)throw new MissingDataError("Mancano uno o più dati richiesti");
             let mongodb_mmi: MongoDbModelManagerInterface = {
@@ -81,11 +90,19 @@ export class Subscribe{
                 let account: Account = new Account(mongodb_mmi,account_data);
                 return account.insertAccount();
             }).then(res => {
+                response = {
+                    done: true,
+                    msg: "Per completare la registrazione, verifica l'account nella tua casella di posta",
+                };
             }).catch(err => {
                 throw(err);
             });
         }catch(e){
-
+            this._errno = Subscribe.ERR_SUBSCRIBE;
+            response = {
+                done: false,
+                msg: Subscribe.ERR_SUBSCRIBE_MSG
+            };
         }
         return response;
     }

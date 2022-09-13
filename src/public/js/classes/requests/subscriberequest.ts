@@ -50,7 +50,7 @@ export class SubscribeRequest{
      * Execute the request to create new account
      * @returns Promise
      */
-    private async subscribe(): Promise<object>{
+    public async subscribe(): Promise<object>{
         let response: object = {};
         this._errno = 0;
         try{
