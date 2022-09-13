@@ -1,5 +1,5 @@
 import { MessageDialog, MessageDialogInterface } from "./classes/dialogs/messagedialog.js";
-import { EmailRequest, EmailRequestInterface } from "./classes/request/emailrequest.js";
+import { EmailRequest, EmailRequestInterface } from "./classes/requests/emailrequest.js";
 
 $(()=>{
     $('#fContacts').on('submit', (ev)=>{

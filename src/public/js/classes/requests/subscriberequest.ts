@@ -11,6 +11,8 @@ export class SubscribeRequest{
     private _email:string;
     private _password:string;
     private _confPass:string;
+    private _errno:number = 0;
+    private _error:string|null = null;
 
     constructor(data: SubscribeRequestInterface){
         this._username = data.username;
@@ -23,4 +25,15 @@ export class SubscribeRequest{
     get email(){return this._email; }
     get password(){return this._password; }
     get confPass(){return this._confPass; }
+    get errno(){return this._errno; }
+    get error(){
+        switch(this._errno){
+            default:
+                this._error = null;
+                break;
+        }
+        return this._error;
+    }
+
+    
 }
