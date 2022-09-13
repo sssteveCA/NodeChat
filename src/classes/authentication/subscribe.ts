@@ -1,4 +1,8 @@
 import bcrypt from "bcrypt";
+import mongoose from "mongoose";
+import { Constants } from "../../constants";
+import { Schemas } from "../../schemas";
+import { MongoDbModelManagerInterface } from "../database/mongodbmodelmanager";
 
 
 export interface SubscribeInterface{
@@ -36,6 +40,15 @@ export class Subscribe{
         this._username = data.username;
         this._email = data.email;
         this._password = data.password;
+    }
+
+    public async insertNewAccount(): Promise<object>{
+        let response: object = {};
+        let mongodb_mmi: MongoDbModelManagerInterface = {
+            model_name: Constants.MONGODB_ACCOUNTS_COLLECTION,
+            schema: Schemas.ACCOUNTS
+        };
+        return response;
     }
 
     /**

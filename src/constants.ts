@@ -6,4 +6,7 @@ export namespace Constants{
     export const HOSTNAME: string = 'localhost';
     const SCHEME:string = 'http';
     export const MAIN_URL: string = SCHEME+'://'+HOSTNAME+':'+PORT;
+
+    //MongoDB
+    export const MONGODB_ACCOUNTS_COLLECTION = 'Accounts';
 }
