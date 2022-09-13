@@ -44,7 +44,10 @@ export class Account extends MongoDbModelManager{
     public async deleteAccount(filter: object): Promise<object>{
         let response: object = {};
         await super.connect().then(conn => {
-            return super.delete(filter);
+            if(conn == true){
+                return super.delete(filter);
+            }
+            else throw new DatabaseConnectionError('Errore durante la connessione al Database');
         }).then(res => {
             console.log(res);
         }).catch(err => {
@@ -63,7 +66,10 @@ export class Account extends MongoDbModelManager{
     public async getAccount(filter: object): Promise<object>{
         let response: object = {};
         await super.connect().then(conn => {
-            return super.get(filter);
+            if(conn == true){
+                return super.get(filter);
+            }
+            else throw new DatabaseConnectionError('Errore durante la connessione al Database');      
         }).then(res => {
             console.log(res);
         }).catch(err => {
@@ -114,7 +120,10 @@ export class Account extends MongoDbModelManager{
     public async updateAccount(filter: object, set: object): Promise<object>{
         let response: object = {};
         await super.connect().then(conn => {
-            return super.update(filter,set);
+            if(conn == true){
+                return super.update(filter,set);
+            }
+            else throw new DatabaseConnectionError('Errore durante la connessione al Database');
         }).then(res => {
             console.log(res);
         }).catch(err => {
