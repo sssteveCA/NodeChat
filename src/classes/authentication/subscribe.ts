@@ -42,6 +42,23 @@ export class Subscribe{
         this._password = data.password;
     }
 
+    /**
+     * Generate an email verification code
+     * @returns 
+     */
+    private emailVerifCode(): string{
+        let emailCode: string = "";
+        let now: number = Date.now();
+        let characters: string = "aAbBcCdDeEfFGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
+        let times:number = 80;
+        for(let i = 0; i < 80; i++){
+            let random_character = Math.floor(Math.random()* times);
+            emailCode += characters[random_character];
+        }
+        emailCode += now;
+        return emailCode;
+    }
+
     public async insertNewAccount(): Promise<object>{
         let response: object = {};
         let mongodb_mmi: MongoDbModelManagerInterface = {
