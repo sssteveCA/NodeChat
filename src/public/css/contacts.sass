@@ -3,36 +3,34 @@
 @import "partials/global"
 
 $fSetChildren: 5
+$contacts-form-id: "fContacts"
 
-@mixin fieldset-style()
-    fieldset
-        @for $i from 1 through $fSetChildren
-            div:nth-of-type(#{$i})
-                margin: $FormDiv_margin
-                @if $i >= 1 and $i <= 4
-                    display: $FormDiv_display
-                    flex-direction: $FormDiv_fDir
-                    label
-                        margin: $FormLabelText_margin
-                    @if $i >=1 and $i <=3
-                        input
-                            height: $FormTextInput_height
-                            width: $FormTextInput_width
-                    @else if $i == 4
-                        textarea
-                            width: $FormTextarea_width
-                            min-width: $FormTextArea_minWidth
-                            height: $FormTextArea_height
-                            resize: $FormTextArea_resize
-                @else if $i == 5
-                    display: flex
-                    justify-content: space-between
-                    button
-                        padding: $FormButton_padding
-
-.contactsDiv
-    background-color: rgb(6,242,184,0.4)
+@mixin contacts-form()
+    ##{$contacts-form-id}
+        fieldset
+            legend
+                text-align: center
+            .container-fluid
+                .row
+                    margin-top: $bs-row-margin-top
+                    textarea
+                        width: 100%
+                        height: 150px
+                        resize: vertical
+                .row:nth-last-child(2)
+                    @media only screen and(min-width: 0px)
+                        #bSend
+                            margin-right: button-margin(0px)
+                        #bReset
+                            margin-left: button-margin(0px)
+                    @media only screen and(min-width: #{$bs-breakpoint-md})
+                        #bSend
+                            margin-right: button-margin($bs-breakpoint-md)
+                        #bReset
+                            margin-left: button-margin($bs-breakpoint-md)
+/* .contactsDiv
+    background-color: rgb(6,242,184,0.4) */
 
 @include main-background($bk-url)
-@include fieldset-style()
+@include contacts-form()
 
