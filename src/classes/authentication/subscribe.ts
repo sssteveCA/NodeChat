@@ -72,6 +72,7 @@ export class Subscribe{
 
     public async insertNewAccount(): Promise<object>{
         let response: object = {};
+        let account: Account;
         this._errno = 0;
         try{ 
             if(!this._username || !this._email)throw new MissingDataError("Mancano uno o più dati richiesti");
@@ -87,7 +88,7 @@ export class Subscribe{
                     password_hash: hash,
                     activationCode: emailCode
                 };
-                let account: Account = new Account(mongodb_mmi,account_data);
+                account = new Account(mongodb_mmi,account_data);
                 return account.insertAccount();
             }).then(res => {
                 response = {

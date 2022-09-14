@@ -71,6 +71,7 @@ export class Account extends MongoDbModelManager{
             }
             else throw new DatabaseConnectionError('Errore durante la connessione al Database');      
         }).then(res => {
+            console.log("getAccount");
             console.log(res);
         }).catch(err => {
             console.warn(err);
@@ -96,10 +97,13 @@ export class Account extends MongoDbModelManager{
         let response: object = {};
         await super.connect().then(conn => {
             if(conn == true){
-                console.log("account insert connect then");
-                return super.insert(document);
+                console.log("account get connect then");
+                return super.get({$or: [{username: this._username},{email: this._email}]});
             }
             else throw new DatabaseConnectionError('Errore durante la connessione al Database');
+        }).then(result => {
+            console.log(`Account get before insert => ${result} `);
+            return super.insert(document);
         }).then(res => {
             console.log("account insert document then");
             console.log(res);
