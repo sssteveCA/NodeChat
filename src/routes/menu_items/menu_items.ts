@@ -14,6 +14,8 @@ menu_items_routes.get('/about_us',(req,res)=>{
 
 menu_items_routes.get('/contacts',(req,res)=>{
     res.render('contacts',{
+        bootstrap_css: Paths.BOOTSTRAP_CSS,
+        bootstrap_js: Paths.BOOTSTRAP_JS,
         container: Constants.CONTAINER,
         jquery_js: Paths.JQUERY_JS,
         jquery_ui_css: Paths.JQUERY_UI_CSS,
