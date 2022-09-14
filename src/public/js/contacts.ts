@@ -2,9 +2,11 @@ import { MessageDialog, MessageDialogInterface } from "./classes/dialogs/message
 import { EmailRequest, EmailRequestInterface } from "./classes/requests/emailrequest.js";
 
 $(()=>{
+    let spinner = $('#contacts-spinner');
     $('#fContacts').on('submit', (ev)=>{
         //User send an email to help center
         ev.preventDefault();
+        spinner.removeClass('d-none');
         let er_data: EmailRequestInterface = {
             name: $('#name').val() as string,
             email: $('#email').val() as string,
@@ -13,6 +15,7 @@ $(()=>{
         };
         let er: EmailRequest = new EmailRequest(er_data);
         er.sendEmail().then(obj => {
+            spinner.addClass('d-none');
             let md_data:MessageDialogInterface = {
                 title: 'Richiesta assistenza',
                 message: obj['msg']
