@@ -3,7 +3,7 @@
 import bodyParser from 'body-parser';
 import express, { NextFunction, Request, Response } from 'express';
 import { EmailInterface, Email } from '../../classes/email/email';
-import { Regexs } from '../../regex';
+import { Regexs } from '../../namespaces/regex';
 
 export const email_routes = express.Router();
 

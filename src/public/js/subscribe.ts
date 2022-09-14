@@ -13,9 +13,17 @@ $(()=>{
         try{
             let sr: SubscribeRequest = new SubscribeRequest(sr_data);
             sr.subscribe().then(obj => {
-
+                let md_data: MessageDialogInterface = {
+                    title: "Registrazione",
+                    message: obj['msg']
+                };
+                messageDialog(md_data);
             }).catch(err => {
-
+                let md_data: MessageDialogInterface = {
+                    title: "Registrazione",
+                    message: err.message 
+                };
+                messageDialog(md_data);
             });
         }catch(e){
             if(e instanceof Error){
@@ -24,8 +32,7 @@ $(()=>{
                     message: e.message as string
                 };
                 messageDialog(md_data);
-            }
-            
+            }   
         }
     });//$('#bSubscribe').on('click', (e)=>{
     $('#showPass').on('change',(e)=>{

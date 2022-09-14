@@ -3,6 +3,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import mustacheExpress from 'mustache-express';
 import { Subscribe, SubscribeInterface } from '../../classes/authentication/subscribe';
+import { Account } from '../../classes/database/models/account';
 import { Constants } from '../../namespaces/constants';
 import { Paths } from '../../namespaces/paths';
 import { Regexs } from '../../namespaces/regex';
@@ -74,7 +75,7 @@ authentication_routes.post('/newAccount',subscribe_validator,(req,res)=> {
     let subscribe: Subscribe = new Subscribe(subscribe_data);
     subscribe.insertNewAccount().then(obj => {
         console.log("authentication route newAccount insertNewAccount then");
-        res.status(201).send(obj);
+        res.status(obj['code']).send(obj);
     }).catch(err => {
         console.log("authentication route newAccount insertNewAccount error");
         res.send(500).send(err);

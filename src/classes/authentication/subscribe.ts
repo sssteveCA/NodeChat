@@ -95,14 +95,19 @@ export class Subscribe{
                     response = {
                         done: true,
                         msg: "Per completare la registrazione, verifica l'account nella tua casella di posta",
+                        code: 201
                     };
                 }//if(res['errno'] == 0){
                 else{
                     response['done'] = false;
-                    if(res['errno'] == Account.DUPLICATEKEYS_ERROR)
+                    if(res['errno'] == Account.DUPLICATEKEYS_ERROR){
                         response['msg'] = account.error;
-                    else
+                        response['code'] = 400;
+                    }          
+                    else{
                         response['msg'] = Subscribe.ERR_SUBSCRIBE_MSG;
+                        response['code'] = 500;
+                    }        
                 }//else di if(res['errno'] == 0){
             }).catch(err => {
                 throw(err);
