@@ -94,7 +94,6 @@ export abstract class MongoDbModelManager{
      * @returns 
      */
     public async connect(): Promise<boolean>{
-        console.log("mmm connect");
         this._errno = 0;
         try{
             await mongoose.connect(this._mongodb_string).then(conn => {
