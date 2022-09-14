@@ -91,10 +91,19 @@ export class Subscribe{
                 account = new Account(mongodb_mmi,account_data);
                 return account.insertAccount();
             }).then(res => {
-                response = {
-                    done: true,
-                    msg: "Per completare la registrazione, verifica l'account nella tua casella di posta",
-                };
+                if(res['errno'] == 0){
+                    response = {
+                        done: true,
+                        msg: "Per completare la registrazione, verifica l'account nella tua casella di posta",
+                    };
+                }//if(res['errno'] == 0){
+                else{
+                    response['done'] = false;
+                    if(res['errno'] == Account.DUPLICATEKEYS_ERROR)
+                        response['msg'] = account.error;
+                    else
+                        response['msg'] = Subscribe.ERR_SUBSCRIBE_MSG;
+                }//else di if(res['errno'] == 0){
             }).catch(err => {
                 throw(err);
             });

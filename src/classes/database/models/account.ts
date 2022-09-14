@@ -121,17 +121,24 @@ export class Account extends MongoDbModelManager{
                 console.log("account get connect then");
                 return super.get({$or: [{username: this._username},{email: this._email}]});
             }
-            else throw new DatabaseConnectionError('Errore durante la connessione al Database');
+            else{
+                this._errno = MongoDbModelManager.CONNECTION_ERROR;
+                throw new DatabaseConnectionError(this.error as string);
+            } 
         }).then(result => {
             console.log(`Account get before insert => ${result} `);
-            if(result['username'] == this._username || result['email'] == this._email)
-                throw new DuplicateKeysError("Esiste già un account con questo nome o con questo indirizzo email");
+            if(result['username'] == this._username || result['email'] == this._email){
+                this._errno = Account.DUPLICATEKEYS_ERROR;
+                throw new DuplicateKeysError(this.error as string);
+            }
             return super.insert(document);
         }).then(res => {
             console.log("account insert document then");
             console.log(res);
+            response['errno'] = 0;
         }).catch(err => {
             console.warn(err);
+            response['errno'] = this._errno;
         }).finally(()=>{
             super.close();
         });

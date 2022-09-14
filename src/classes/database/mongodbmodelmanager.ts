@@ -25,12 +25,12 @@ export abstract class MongoDbModelManager{
     public static DELETE_ERROR: number = 5;
     public static DISCONNECTION_ERROR: number = 6;
 
-    private static CONNECTION_ERROR_MSG: string = "Errore durante la connessione al database";
-    private static GET_ERROR_MSG: string = "Errore durante la lettura dei dati";
-    private static INSERT_ERROR_MSG: string = "Errore durante l'inserimento dei dati";
-    private static UPDATE_ERROR_MSG: string = "Errore durante l'aggiornamento dei dati";
-    private static DELETE_ERROR_MSG: string = "Errore durante la rimozione dei dati";
-    private static DISCONNECTION_ERROR_MSG: string = "Errore durante la chiusura della connessione al database";
+    protected static CONNECTION_ERROR_MSG: string = "Errore durante la connessione al database";
+    protected static GET_ERROR_MSG: string = "Errore durante la lettura dei dati";
+    protected static INSERT_ERROR_MSG: string = "Errore durante l'inserimento dei dati";
+    protected static UPDATE_ERROR_MSG: string = "Errore durante l'aggiornamento dei dati";
+    protected static DELETE_ERROR_MSG: string = "Errore durante la rimozione dei dati";
+    protected static DISCONNECTION_ERROR_MSG: string = "Errore durante la chiusura della connessione al database";
 
     get mongodb_string(){return this._mongodb_string;}
     get model_name(){return this._model_name;}
