@@ -1,9 +1,22 @@
 
-@mixin animation($name, $duration, $delay, $direction. $fill-mode, $iteration-count, $timing-function)
+$move-appareance: "move-appareance"
+
+@mixin animation($name, $duration, $delay, $direction, $fill-mode, $iteration-count, $timing-function)
     animation-name: $name
-    animation-duration: $duration,
+    animation-duration: $duration
     animation-delay: $delay
     animation-direction: $direction
     animation-fill-mode: $fill-mode
     animation-iteration-count: $iteration-count
     animation-timing-function: $timing-function
+
+@mixin move-appareance($selector)
+    @keyframes #{$move-appareance} 
+        0%
+            opacity:0
+            top: -20px
+        100%
+            opacity:1
+            top: 0px
+    #{$selector}  
+        @include animation($move-appareance, 1.5s, 0s, normal, forwards, 1, linear)

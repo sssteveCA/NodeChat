@@ -1,6 +1,7 @@
 
 @import "partials/background"
 @import "partials/global"
+@import "partials/_animations"
 
 $fSetChildren: 5
 $contacts-form-id: "fContacts"
@@ -33,5 +34,6 @@ $contacts-form-id: "fContacts"
 
 @include main-background($bk-url)
 @include container-style('.container')
+@include move-appareance('.container')
 @include contacts-form()
 
