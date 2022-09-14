@@ -65,6 +65,8 @@ export abstract class MongoDbModelManager{
         return this._error = null;
     }
 
+    set error(error: string|null){this._error = error;}
+
 
     /**
      * Assign the values to properties 

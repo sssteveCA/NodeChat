@@ -1,5 +1,6 @@
 import mongoose, { Date} from "mongoose";
 import { DatabaseConnectionError } from "../../errors/databaseconnectionerror";
+import { DuplicateKeysError } from "../../errors/duplicatekeyserror";
 import { MongoDbModelManager, MongoDbModelManagerInterface } from "../mongodbmodelmanager";
 
 export interface AccountInterface{
@@ -21,6 +22,11 @@ export class Account extends MongoDbModelManager{
     private _verified: boolean;
     private _resetted: boolean;
 
+    //Errors
+    public static DUPLICATEKEYS_ERROR:number = 50;
+
+    private static DUPLICATEKEYS_ERROR_MSG:string = "Esiste già un account con questo nome o con questo indirizzo email";
+
     constructor(data_parent: MongoDbModelManagerInterface, data: AccountInterface){
         super(data_parent);
         this.setValues(data);
@@ -34,6 +40,20 @@ export class Account extends MongoDbModelManager{
     get resetCode(){return this._resetCode;}
     get verified(){return this._verified;}
     get resetted(){return this._resetted;}
+    get error(){
+        if(this._errno < 50){
+            return super.error;
+        }
+        switch(this._errno){
+            case Account.DUPLICATEKEYS_ERROR:
+                this._error = Account.DUPLICATEKEYS_ERROR_MSG;
+                break;
+            default:
+                this._error = null;
+                return this._error;
+        }
+        return this._error;
+    }
 
 
     /**
@@ -87,6 +107,7 @@ export class Account extends MongoDbModelManager{
      * @returns 
      */
     public async insertAccount(): Promise<object>{
+        this._errno = 0;
         console.log("account insert");
         let document: object = {
             username: this._username,
@@ -103,6 +124,8 @@ export class Account extends MongoDbModelManager{
             else throw new DatabaseConnectionError('Errore durante la connessione al Database');
         }).then(result => {
             console.log(`Account get before insert => ${result} `);
+            if(result['username'] == this._username || result['email'] == this._email)
+                throw new DuplicateKeysError("Esiste già un account con questo nome o con questo indirizzo email");
             return super.insert(document);
         }).then(res => {
             console.log("account insert document then");
