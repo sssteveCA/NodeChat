@@ -74,10 +74,8 @@ authentication_routes.post('/newAccount',subscribe_validator,(req,res)=> {
     };
     let subscribe: Subscribe = new Subscribe(subscribe_data);
     subscribe.insertNewAccount().then(obj => {
-        console.log("authentication route newAccount insertNewAccount then");
         res.status(obj['code']).send(obj);
     }).catch(err => {
-        console.log("authentication route newAccount insertNewAccount error");
         res.send(500).send(err);
     });
 });

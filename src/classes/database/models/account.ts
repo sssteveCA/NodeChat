@@ -62,12 +62,16 @@ export class Account extends MongoDbModelManager{
      * @returns 
      */
     public async deleteAccount(filter: object): Promise<object>{
+        this._errno = 0;
         let response: object = {};
         await super.connect().then(conn => {
             if(conn == true){
                 return super.delete(filter);
             }
-            else throw new DatabaseConnectionError('Errore durante la connessione al Database');
+            else{
+                this._errno = MongoDbModelManager.CONNECTION_ERROR;
+                throw new DatabaseConnectionError(this.error as string);
+            }
         }).then(res => {
             console.log(res);
         }).catch(err => {
@@ -84,12 +88,16 @@ export class Account extends MongoDbModelManager{
      * @returns 
      */
     public async getAccount(filter: object): Promise<object>{
+        this._errno = 0;
         let response: object = {};
         await super.connect().then(conn => {
             if(conn == true){
                 return super.get(filter);
             }
-            else throw new DatabaseConnectionError('Errore durante la connessione al Database');      
+            else{
+                this._errno = MongoDbModelManager.CONNECTION_ERROR;
+                throw new DatabaseConnectionError(this.error as string);
+            }       
         }).then(res => {
             console.log("getAccount");
             console.log(res);
@@ -108,7 +116,6 @@ export class Account extends MongoDbModelManager{
      */
     public async insertAccount(): Promise<object>{
         this._errno = 0;
-        console.log("account insert");
         let document: object = {
             username: this._username,
             email: this._email,
@@ -118,7 +125,6 @@ export class Account extends MongoDbModelManager{
         let response: object = {};
         await super.connect().then(conn => {
             if(conn == true){
-                console.log("account get connect then");
                 return super.get({$or: [{username: this._username},{email: this._email}]});
             }
             else{
@@ -126,14 +132,13 @@ export class Account extends MongoDbModelManager{
                 throw new DatabaseConnectionError(this.error as string);
             } 
         }).then(result => {
-            console.log(`Account get before insert => ${result} `);
+            //console.log(`Account get before insert => ${result} `);
             if(result['username'] == this._username || result['email'] == this._email){
                 this._errno = Account.DUPLICATEKEYS_ERROR;
                 throw new DuplicateKeysError(this.error as string);
             }
             return super.insert(document);
         }).then(res => {
-            console.log("account insert document then");
             console.log(res);
             response['errno'] = 0;
         }).catch(err => {
@@ -152,6 +157,7 @@ export class Account extends MongoDbModelManager{
      * @returns 
      */
     public async updateAccount(filter: object, set: object): Promise<object>{
+        this._errno = 0;
         let response: object = {};
         await super.connect().then(conn => {
             if(conn == true){

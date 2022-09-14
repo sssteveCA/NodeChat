@@ -2,6 +2,7 @@ import { MessageDialog, MessageDialogInterface } from "./classes/dialogs/message
 import { SubscribeRequest, SubscribeRequestInterface } from "./classes/requests/subscriberequest.js";
 
 $(()=>{
+    let spinner = $('#subscribe-spinner');
     $('#bSubscribe').on('click', (e)=>{
         e.preventDefault();
         let sr_data: SubscribeRequestInterface = {
@@ -12,7 +13,9 @@ $(()=>{
         }
         try{
             let sr: SubscribeRequest = new SubscribeRequest(sr_data);
+            spinner.removeClass("d-none");
             sr.subscribe().then(obj => {
+                spinner.addClass("d-none");
                 let md_data: MessageDialogInterface = {
                     title: "Registrazione",
                     message: obj['msg']

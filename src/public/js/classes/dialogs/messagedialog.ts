@@ -39,6 +39,7 @@ export class MessageDialog{
     get btOk(){return this._btOk;}
 
     private setDialog(): void{
+        console.log("MessageDialog setDialog");
         let message = this._message;
         this._dialog = $('<div>');
         this._dialog.attr('id',this._id);
