@@ -1,7 +1,8 @@
 @import 'partials/global'
 @import "partials/background"
+@import "partials/_animations"
 
-$div2_margin: 10px
+$div2_margin: 40px 10px 10px 10px
 $div2_padding: 30px
 $login-form-id: "fLogin"
 
@@ -41,4 +42,8 @@ $fsetChildren: 4
 .notSubscribed
     @include notsubscribed-style()
 
+.loginDiv
+    position: relative
+
 @include main-background($bk-url)
+@include move-appareance('.loginDiv')

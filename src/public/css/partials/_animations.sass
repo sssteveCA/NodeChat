@@ -1,5 +1,5 @@
 
-$move-appareance: "move-appareance"
+$move-appareance: move-appareance
 
 @mixin animation($name, $duration, $delay, $direction, $fill-mode, $iteration-count, $timing-function)
     animation-name: $name
@@ -19,4 +19,4 @@ $move-appareance: "move-appareance"
             opacity:1
             top: 0px
     #{$selector}  
-        @include animation($move-appareance, 1.5s, 0s, normal, forwards, 1, linear)
+        @include animation($move-appareance, 1s, 0s, normal, forwards, 1, linear)

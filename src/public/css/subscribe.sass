@@ -1,5 +1,6 @@
 @import 'partials/global'
 @import "partials/background"
+@import "partials/_animations"
 
 $subscribe-form-id: "fSubscribe"
 
@@ -25,11 +26,9 @@ $subscribe-form-id: "fSubscribe"
 
 @include container-style('.container')
 
-/* .subscribeDiv
-    background-color: rgba(106, 90, 205, 0.5) //purple */
-
-/* fieldset
-    @include fieldset-style() */
+.subscribeDiv
+    position: relative
 
 @include main-background($bk-url)
 @include subscribe-form()
+@include move-appareance('.subscribeDiv')
