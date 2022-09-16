@@ -3,12 +3,22 @@
 @import "partials/_animations"
 
 $verify-form-id: "fVerify"
+$verify-container: ".verifyDiv"
 
 @mixin verify-form()
     ##{$verify-form-id}
         fieldset
             legend
                 text-align: center
+            .container-fluid
+                margin-top: 75px
+                .row
+                    margin-top: $bs-row-margin-top
 
+#{$verify-container}
+    position: relative
+
+@include main-background($bk-url)
 @include container-style('.container')
 @include verify-form()
+@include move-appareance(#{$verify-container})
