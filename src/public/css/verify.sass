@@ -1,0 +1,14 @@
+@import 'partials/global'
+@import "partials/background"
+@import "partials/_animations"
+
+$verify-form-id: "fVerify"
+
+@mixin verify-form()
+    ##{$verify-form-id}
+        fieldset
+            legend
+                text-align: center
+
+@include container-style('.container')
+@include verify-form()

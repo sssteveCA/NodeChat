@@ -38,6 +38,7 @@ authentication_routes.get('/verify',(req,res)=>{
     res.render('verify',{
         bootstrap_css: '../'+Paths.BOOTSTRAP_CSS,
         bootstrap_js: '../'+Paths.BOOTSTRAP_JS,
+        container: Constants.CONTAINER,
         jquery_js: '../'+Paths.JQUERY_JS,
         jquery_ui_css: '../'+Paths.JQUERY_UI_CSS,
         jquery_ui_js: '../'+Paths.JQUERY_UI_JS,
@@ -47,7 +48,7 @@ authentication_routes.get('/verify',(req,res)=>{
 
 authentication_routes.post('/newAccount',subscribe_validator,(req,res)=> {
     let body: object = req.body as object;
-    let home_url: string = process.env.MAIN_URL+'/'+Paths.VERIFY as string;
+    let home_url: string = process.env.MAIN_URL+Paths.VERIFY as string;
     console.log("home_url => "+home_url);
     let subscribe_data: SubscribeInterface = {
         username: body['username'],

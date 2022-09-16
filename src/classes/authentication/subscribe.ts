@@ -68,9 +68,10 @@ export class Subscribe{
         let emailCode: string = "";
         let now: number = Date.now();
         let characters: string = "aAbBcCdDeEfFGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
+        let length: number = characters.length;
         let times:number = 80;
-        for(let i = 0; i < 80; i++){
-            let random_character = Math.floor(Math.random()* times);
+        for(let i = 0; i < times; i++){
+            let random_character = Math.floor(Math.random()* length);
             emailCode += characters[random_character];
         }
         emailCode += now;
@@ -100,6 +101,8 @@ export class Subscribe{
                         username: account.username, email: account.email, email_verify_url: this._home_url,
                         activation_code: account.activationCode
                     }
+                    console.log("ev_data => ");
+                    console.log(ev_data);
                     let ev: EmailVerify = new EmailVerify(ev_data);
                     return ev.sendEmailVerify();
                 }//if(res['errno'] == 0){

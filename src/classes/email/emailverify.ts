@@ -27,6 +27,7 @@ export class EmailVerify{
         this._activation_code = data.activation_code;
         this._email_verify_url = data.email_verify_url;
         this._full_activation_link = `${this._email_verify_url}/${this._activation_code}`;
+        console.log("EMailVerify full activation link => "+this._full_activation_link);
         this.setHtmlMail();
     }
 

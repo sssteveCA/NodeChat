@@ -111,7 +111,6 @@ export class Account extends MongoDbModelManager{
 
     /**
      * Add an account to the collection
-     * @param document the document to be added
      * @returns 
      */
     public async insertAccount(): Promise<object>{
