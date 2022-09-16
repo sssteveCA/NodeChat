@@ -47,7 +47,7 @@ authentication_routes.get('/verify',(req,res)=>{
 
 authentication_routes.post('/newAccount',subscribe_validator,(req,res)=> {
     let body: object = req.body as object;
-    let home_url: string = `${req.protocol}://${req.hostname}`;
+    let home_url: string = process.env.MAIN_URL+'/'+Paths.VERIFY as string;
     console.log("home_url => "+home_url);
     let subscribe_data: SubscribeInterface = {
         username: body['username'],

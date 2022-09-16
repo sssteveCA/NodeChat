@@ -51,15 +51,19 @@ export class EmailVerify{
     private setHtmlMail(): void{
         this._mail_body = `
 <div>
-    <div class="thank-you">
-        Grazie per esserti iscritto al nostro servizio di chat. <br>
-        Per completare l'attivazione clicca su <a href="${this._full_activation_link}">questo link</a>
+    <div class="header" style="padding: 20px; margin: 20px;">
+        <h3 style="text-align: center;">Benvenuto ${this._username}</h3>
     </div>
-    <div class="otherwise">
-        In alternativa puoi incollare questo codice: ${this._activation_code} <br>,
-        a <a href="${this._email_verify_url}">questo link</a>
+    <div class="thank-you" style="padding: 20px; margin: 20px; background-color: yellow;">
+        <p> Grazie per esserti iscritto al nostro servizio di chat. </p>
+        Per completare l'attivazione clicca su <a href="${this._full_activation_link}">questo link</a>.
     </div>
-    <div class="staff">
+    <div class="otherwise" style="padding: 20px; margin: 20px; background-color: moccasin;">
+        <p> In alternativa puoi incollare questo codice: </p> 
+        <p> <strong style="word-wrap: break-word;">${this._activation_code}<strong>,  </p>
+        <p> a <a href="${this._email_verify_url}">questo link</a>. </p>
+    </div>
+    <div class="staff" style="padding: 20px; text-align: center; font-style: italic;">
         Lo staff di NodeChat
     </div>
 </div>
