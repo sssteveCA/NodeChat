@@ -3,7 +3,10 @@
     <head>
         <title>Verifica il tuo account</title>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="css/code_verify.css">
+        <link rel="stylesheet" href="{{bootstrap_css}}">
+        <link rel="stylesheet" href="../css/menu.css">
+        <link rel="stylesheet" href="../css/code_verify.css">
+        <script src="{{bootstrap_js}}"></script>
     </head>
     <body>
         {{> menu}}
@@ -13,7 +16,7 @@
                     <h2>Verifica il tuo account</h2>
                 </div>
                 <div class="response">
-                    {{verify_response}}
+                    <p class="lead fw-bold">{{verify_response}}</p>
                 </div>
             </div>
         </div>

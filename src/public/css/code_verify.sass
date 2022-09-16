@@ -1,0 +1,15 @@
+@import 'partials/global'
+@import "partials/background"
+
+@mixin code-verify-div()
+    .codeVerifyDiv
+        >div
+            margin: 40px auto
+            h2, p
+                text-align: center
+
+
+@include main-background($bk-url)
+@include container-style('.container')
+@include code-verify-div()
+

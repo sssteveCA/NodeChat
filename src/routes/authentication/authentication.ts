@@ -48,7 +48,12 @@ authentication_routes.get('/verify',(req,res)=>{
 authentication_routes.get('/verify/:code',(req,res)=>{
     let code = req.params.code;
     let verify_response: string = "";
-    
+    res.render('code_verify',{
+        bootstrap_css: '../'+Paths.BOOTSTRAP_CSS,
+        bootstrap_js: '../'+Paths.BOOTSTRAP_JS,
+        container: Constants.CONTAINER,
+        verify_response: verify_response
+    });
 });
 
 authentication_routes.post('/newAccount',subscribe_validator,(req,res)=> {
