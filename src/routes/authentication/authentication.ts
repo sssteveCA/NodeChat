@@ -34,18 +34,13 @@ authentication_routes.get('/subscribe',(req,res)=>{
     });
 });
 
-authentication_routes.get('/verify/:code',(req,res)=>{
-    let code = req.params.code;
-    if(code != null)
-        console.log("Activation code => "+code);
-    else
-        console.log("Activation code = null");
+authentication_routes.get('/verify',(req,res)=>{
     res.render('verify',{
-        bootstrap_css: Paths.BOOTSTRAP_CSS,
-        bootstrap_js: Paths.BOOTSTRAP_JS,
-        jquery_js: Paths.JQUERY_JS,
-        jquery_ui_css: Paths.JQUERY_UI_CSS,
-        jquery_ui_js: Paths.JQUERY_UI_JS,
+        bootstrap_css: '../'+Paths.BOOTSTRAP_CSS,
+        bootstrap_js: '../'+Paths.BOOTSTRAP_JS,
+        jquery_js: '../'+Paths.JQUERY_JS,
+        jquery_ui_css: '../'+Paths.JQUERY_UI_CSS,
+        jquery_ui_js: '../'+Paths.JQUERY_UI_JS,
     });
 
 });
@@ -53,10 +48,13 @@ authentication_routes.get('/verify/:code',(req,res)=>{
 authentication_routes.post('/newAccount',subscribe_validator,(req,res)=> {
     console.log("authentication route newAccount");
     let body: object = req.body as object;
+    let home_url: string = `${req.protocol}://${req.hostname}`;
+    console.log("home_url => "+home_url);
     let subscribe_data: SubscribeInterface = {
         username: body['username'],
         email: body['email'],
-        password: body['password']
+        password: body['password'],
+        home_url: home_url
     };
     let subscribe: Subscribe = new Subscribe(subscribe_data);
     subscribe.insertNewAccount().then(obj => {

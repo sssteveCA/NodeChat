@@ -15,6 +15,7 @@ export interface SubscribeInterface{
     username: string;
     email: string;
     password: string;
+    home_url: string;
 }
 
 export class Subscribe{
@@ -22,6 +23,7 @@ export class Subscribe{
     private _email:string;
     private _password:string;
     private _password_hash: string;
+    private _home_url: string;
     private _errno:number = 0;
     private _error:string|null = null;
 
@@ -37,6 +39,7 @@ export class Subscribe{
     get username(){return this._username; }
     get email(){return this._email; }
     get password_hash(){return this._password_hash;}
+    get home_url(){return this._home_url;}
     get errno(){return this._errno; }
     get error(){
         switch(this._errno){
@@ -54,6 +57,7 @@ export class Subscribe{
         this._username = data.username;
         this._email = data.email;
         this._password = data.password;
+        this._home_url = data.home_url;
     }
 
     /**
@@ -99,7 +103,7 @@ export class Subscribe{
                     let ev_data: EmailVerifyInterface = {
                         username: account.username,
                         email: account.email,
-                        email_verify_url: '',
+                        email_verify_url: this._home_url,
                         activation_code: account.activationCode
                     }
                     let ev: EmailVerify = new EmailVerify(ev_data);
