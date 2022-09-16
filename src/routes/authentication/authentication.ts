@@ -43,7 +43,12 @@ authentication_routes.get('/verify',(req,res)=>{
         jquery_ui_css: '../'+Paths.JQUERY_UI_CSS,
         jquery_ui_js: '../'+Paths.JQUERY_UI_JS,
     });
+});
 
+authentication_routes.get('/verify/:code',(req,res)=>{
+    let code = req.params.code;
+    let verify_response: string = "";
+    
 });
 
 authentication_routes.post('/newAccount',subscribe_validator,(req,res)=> {
