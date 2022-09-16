@@ -81,8 +81,8 @@ export class Email{
      */
     private setMessage(): void{
         this._message_object = {
-            from: this._email,
-            to: process.env.EMAIL_ADMIN as string,
+            from: process.env.EMAIL_ADMIN as string,
+            to: this._email,
             subject: this._subject,
             html: this._message
         };
@@ -97,7 +97,6 @@ export class Email{
                 //console.log(res);
                 response = {
                     done: true,
-                    msg: "La tua richiesta è stata inviata. Riceverai una risposta nel minor tempo possibile"
                 };
             }).catch(err => {
                 console.warn(err);
@@ -108,7 +107,6 @@ export class Email{
             this._errno = Email.ERR_SEND;
             response = {
                 done: false,
-                msg: this.error
             };
         }
         return response;
