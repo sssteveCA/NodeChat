@@ -5,6 +5,7 @@ import { Constants } from "../../namespaces/constants";
 import { Schemas } from "../../namespaces/schemas";
 import { Account, AccountInterface } from "../database/models/account";
 import { MongoDbModelManager, MongoDbModelManagerInterface } from "../database/mongodbmodelmanager";
+import { EmailVerify, EmailVerifyInterface } from "../email/emailverify";
 import { MissingDataError } from "../errors/missingdataerror";
 
 
@@ -90,6 +91,15 @@ export class Subscribe{
                 };
                 account = new Account(mongodb_mmi,account_data);
                 return account.insertAccount();
+            }).then(res => {
+                //User added in DB
+                let ev_data: EmailVerifyInterface = {
+                    username: account.username,
+                    email: account.email,
+                    email_verify_url: '',
+                    activation_code: account.activationCode
+                }
+                let ev: EmailVerify = new EmailVerify(ev_data);
             }).then(res => {
                 if(res['errno'] == 0){
                     response = {
