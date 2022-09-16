@@ -84,16 +84,12 @@ export class Subscribe{
         try{ 
             if(!this._username || !this._email)throw new MissingDataError("Mancano uno o più dati richiesti");
             let mongodb_mmi: MongoDbModelManagerInterface = {
-                model_name: Constants.MONGODB_ACCOUNTS_COLLECTION,
-                schema: Schemas.ACCOUNTS
+                model_name: Constants.MONGODB_ACCOUNTS_COLLECTION, schema: Schemas.ACCOUNTS
             }; 
             await this.passwordHashPromise().then(hash => {
                 let emailCode: string = this.emailVerifCode();
                 let account_data: AccountInterface= {
-                    username: this._username,
-                    email: this._email,
-                    password_hash: hash,
-                    activationCode: emailCode
+                    username: this._username, email: this._email,password_hash: hash, activationCode: emailCode
                 };
                 account = new Account(mongodb_mmi,account_data);
                 return account.insertAccount();
@@ -101,9 +97,7 @@ export class Subscribe{
                 if(res['errno'] == 0){
                     //User added in DB
                     let ev_data: EmailVerifyInterface = {
-                        username: account.username,
-                        email: account.email,
-                        email_verify_url: this._home_url,
+                        username: account.username, email: account.email, email_verify_url: this._home_url,
                         activation_code: account.activationCode
                     }
                     let ev: EmailVerify = new EmailVerify(ev_data);
@@ -116,11 +110,10 @@ export class Subscribe{
                       throw new Error(Subscribe.ERR_SUBSCRIBE_MSG);
                 }//else of if(res['errno'] == 0){
             }).then(res => {
-                if(res['errno'] == 0){
+                if(res['done'] == true){
                     //Verification email sent
                     response = {
-                        done: true,
-                        msg: "Per completare la registrazione, verifica l'account nella tua casella di posta",
+                        done: true, msg: "Per completare la registrazione, verifica l'account nella tua casella di posta",
                         code: 201
                     };
                 }//if(res['errno'] == 0){

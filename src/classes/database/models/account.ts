@@ -132,10 +132,12 @@ export class Account extends MongoDbModelManager{
                 throw new DatabaseConnectionError(this.error as string);
             } 
         }).then(result => {
-            //console.log(`Account get before insert => ${result} `);
-            if(result['username'] == this._username || result['email'] == this._email){
-                this._errno = Account.DUPLICATEKEYS_ERROR;
-                throw new DuplicateKeysError(this.error as string);
+            if(result != null){
+                //console.log(`Account get before insert => ${result} `);
+                if(result['username'] == this._username || result['email'] == this._email){
+                    this._errno = Account.DUPLICATEKEYS_ERROR;
+                    throw new DuplicateKeysError(this.error as string);
+                }
             }
             return super.insert(document);
         }).then(res => {

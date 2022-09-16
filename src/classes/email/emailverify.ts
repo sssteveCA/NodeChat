@@ -27,6 +27,7 @@ export class EmailVerify{
         this._activation_code = data.activation_code;
         this._email_verify_url = data.email_verify_url;
         this._full_activation_link = `${this._email_verify_url}/${this._activation_code}`;
+        this.setHtmlMail();
     }
 
     get username(){return this._username;}
@@ -78,8 +79,7 @@ export class EmailVerify{
         await emailSender.sendMail().then(res => {
             if(res['done'] == true)
                 response = {
-                    done: true,
-                    msg: "La tua richiesta è stata inviata. Riceverai una risposta nel minor tempo possibile"
+                    done: true
                 };
             else{
                 this._errno = EmailVerify.ERR_SENDMAIL;
@@ -89,6 +89,7 @@ export class EmailVerify{
                 };
             }
         }).catch(err => {
+            console.log("sendMail catch => "+err);
             this._errno = EmailVerify.ERR_SENDMAIL;
             response = {
                 done: false,

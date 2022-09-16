@@ -4,14 +4,14 @@ import { Schema } from "mongoose";
 
 export namespace Schemas{
     export const ACCOUNTS: Schema = new Schema({
-        username: {type: String, index: {unique: true}},
-        email: {type: String, index: {unique: true}},
-        password: String,
+        username: {type: String, required: true, index: {unique: true}},
+        email: {type: String, required: true, index: {unique: true}},
+        password: {type: String, required: true},
         creationDate: {type: Date, default: new Date()},
-        activationCode: {type: String, index: {unique: true}, default: null},
-        resetCode: {type: String, index: {unique: true}, default: null},
-        verified: {type: Boolean, default: false},
-        resetted: {type: Boolean, default: false}
+        activationCode: {type: String, required: false, index: {unique: true, sparse: true }},
+        resetCode: {type: String, required: false, index: {unique: true, sparse: true }},
+        verified: {type: Boolean, required: false, default: false},
+        resetted: {type: Boolean, required: false, default: false}
     });
 
 }
