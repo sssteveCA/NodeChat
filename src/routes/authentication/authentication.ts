@@ -34,6 +34,10 @@ authentication_routes.get('/subscribe',(req,res)=>{
     });
 });
 
+authentication_routes.get('/verify',(req,res)=>{
+
+});
+
 authentication_routes.post('/newAccount',subscribe_validator,(req,res)=> {
     console.log("authentication route newAccount");
     let body: object = req.body as object;

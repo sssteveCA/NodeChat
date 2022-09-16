@@ -12,4 +12,5 @@ export namespace Paths{
     export const NEWACCOUNT = "/newAccount";
     export const SEND_EMAIL = "/send_email";
     export const SUBSCRIBE = "/subscribe";
+    export const VERIFY = "/verify"; //Email verification route
 }
