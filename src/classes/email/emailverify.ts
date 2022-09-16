@@ -19,7 +19,7 @@ export class EmailVerify{
 
     public static ERR_SENDMAIL:number = 0;
 
-    private static ERR_SENDMAIL_MSG: string = "Errore durante l'invio della mail per la verifica dell'account";
+    public static ERR_SENDMAIL_MSG: string = "Errore durante l'invio della mail per la verifica dell'account";
 
     constructor(data: EmailVerifyInterface){
         this._username = data.username;

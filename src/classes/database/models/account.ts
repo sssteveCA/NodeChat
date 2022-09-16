@@ -25,7 +25,7 @@ export class Account extends MongoDbModelManager{
     //Errors
     public static DUPLICATEKEYS_ERROR:number = 50;
 
-    private static DUPLICATEKEYS_ERROR_MSG:string = "Esiste già un account con questo nome o con questo indirizzo email";
+    public static DUPLICATEKEYS_ERROR_MSG:string = "Esiste già un account con questo nome o con questo indirizzo email";
 
     constructor(data_parent: MongoDbModelManagerInterface, data: AccountInterface){
         super(data_parent);

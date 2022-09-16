@@ -6,7 +6,9 @@ import { Schemas } from "../../namespaces/schemas";
 import { Account, AccountInterface } from "../database/models/account";
 import { MongoDbModelManager, MongoDbModelManagerInterface } from "../database/mongodbmodelmanager";
 import { EmailVerify, EmailVerifyInterface } from "../email/emailverify";
+import { DuplicateKeysError } from "../errors/duplicatekeyserror";
 import { MissingDataError } from "../errors/missingdataerror";
+import { SendEmailError } from "../errors/sendemailerror";
 
 
 export interface SubscribeInterface{
@@ -26,7 +28,7 @@ export class Subscribe{
     //Errors
     public static ERR_SUBSCRIBE:number = 1;
 
-    private static ERR_SUBSCRIBE_MSG:string = "Errore durante la registrazione";
+    public static ERR_SUBSCRIBE_MSG:string = "Errore durante la registrazione";
 
     constructor(data: SubscribeInterface){
         this.assignValues(data);
@@ -92,42 +94,48 @@ export class Subscribe{
                 account = new Account(mongodb_mmi,account_data);
                 return account.insertAccount();
             }).then(res => {
-                //User added in DB
-                let ev_data: EmailVerifyInterface = {
-                    username: account.username,
-                    email: account.email,
-                    email_verify_url: '',
-                    activation_code: account.activationCode
-                }
-                let ev: EmailVerify = new EmailVerify(ev_data);
+                if(res['errno'] == 0){
+                    //User added in DB
+                    let ev_data: EmailVerifyInterface = {
+                        username: account.username,
+                        email: account.email,
+                        email_verify_url: '',
+                        activation_code: account.activationCode
+                    }
+                    let ev: EmailVerify = new EmailVerify(ev_data);
+                    return ev.sendEmailVerify();
+                }//if(res['errno'] == 0){
+                else{
+                    if(res['errno'] == Account.DUPLICATEKEYS_ERROR)
+                        throw new DuplicateKeysError(Account.DUPLICATEKEYS_ERROR_MSG);
+                    else
+                      throw new Error(Subscribe.ERR_SUBSCRIBE_MSG);
+                }//else of if(res['errno'] == 0){
             }).then(res => {
                 if(res['errno'] == 0){
+                    //Verification email sent
                     response = {
                         done: true,
                         msg: "Per completare la registrazione, verifica l'account nella tua casella di posta",
                         code: 201
                     };
                 }//if(res['errno'] == 0){
-                else{
-                    response['done'] = false;
-                    if(res['errno'] == Account.DUPLICATEKEYS_ERROR){
-                        response['msg'] = account.error;
-                        response['code'] = 400;
-                    }          
-                    else{
-                        response['msg'] = Subscribe.ERR_SUBSCRIBE_MSG;
-                        response['code'] = 500;
-                    }        
-                }//else di if(res['errno'] == 0){
+                else
+                    throw new SendEmailError(EmailVerify.ERR_SENDMAIL_MSG);
             }).catch(err => {
-                throw(err);
+                throw err;
             });
-        }catch(e){
+        }catch(e: any){
             this._errno = Subscribe.ERR_SUBSCRIBE;
-            response = {
-                done: false,
-                msg: Subscribe.ERR_SUBSCRIBE_MSG
-            };
+            response['done'] = false; 
+            if(e instanceof MissingDataError || e instanceof DuplicateKeysError){
+                response['msg'] = e.message as string;
+                response['code'] = 400;
+            }    
+            else{
+                response['msg'] = this.error;
+                response['code'] = 500;
+            }   
         }
         return response;
     }
