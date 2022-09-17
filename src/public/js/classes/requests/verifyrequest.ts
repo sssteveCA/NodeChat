@@ -1,7 +1,6 @@
 
 export interface VerifyRequestInterface{
     activation_code: string;
-    verify_url: string;
 }
 
 export class VerifyRequest{
@@ -10,7 +9,7 @@ export class VerifyRequest{
 
     constructor(data: VerifyRequestInterface){
         this._activation_code = data.activation_code;
-        this._verify_url = data.verify_url;
+        this._verify_url = window.location.href;
         this.gotoActivationLink();
     }
 
@@ -19,6 +18,7 @@ export class VerifyRequest{
      */
     private gotoActivationLink(): void{
         let full_link: string = `${this._verify_url}/${this._activation_code}`;
+        console.log(full_link);
         console.log(window.location);
         //window.location.href = full_link;
     }
