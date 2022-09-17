@@ -45,15 +45,26 @@ authentication_routes.get('/verify',(req,res)=>{
     });
 });
 
-authentication_routes.get('/verify/:code',(req,res)=>{
+authentication_routes.get('/verify/:code',async(req,res)=>{
     let code = req.params.code;
+    let status_code: number = 200;
     let verify_response: string = "";
-    res.render('code_verify',{
-        bootstrap_css: '../'+Paths.BOOTSTRAP_CSS,
-        bootstrap_js: '../'+Paths.BOOTSTRAP_JS,
-        container: Constants.CONTAINER,
-        verify_response: verify_response
+    let sb_data: SubscribeInterface = {
+        activation_code: code
+    };
+    let sb: Subscribe = new Subscribe(sb_data);
+    await sb.activateAccount().then(obj => {
+        verify_response = obj['msg'];
+        status_code = obj['code']; 
+        console.log("activateAccount promise");
     });
+    console.log("activateAccount render");
+    res.status(status_code).render('code_verify',{
+            bootstrap_css: '../'+Paths.BOOTSTRAP_CSS,
+            bootstrap_js: '../'+Paths.BOOTSTRAP_JS,
+            container: Constants.CONTAINER,
+            verify_response: verify_response
+        });
 });
 
 authentication_routes.post('/newAccount',subscribe_validator,(req,res)=> {
