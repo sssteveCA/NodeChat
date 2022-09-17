@@ -1,19 +1,19 @@
 import { Email, EmailInterface } from "./email";
 
 export interface EmailVerifyInterface{
-    username: string;
-    email: string;
-    email_verify_url: string;
-    activation_code: string;
+    username?: string;
+    email?: string;
+    email_verify_url?: string;
+    activation_code?: string;
 }
 
 export class EmailVerify{
-    private _username: string;
-    private _email: string;
-    private _activation_code: string;
+    private _username: string = "";
+    private _email: string = "";
+    private _activation_code: string = "";
     private _mail_body: string = "";
-    private _email_verify_url: string;
-    private _full_activation_link: string;
+    private _email_verify_url: string = "";
+    private _full_activation_link: string = "";
     private _errno: number = 0;
     private _error: string|null = null;
 
@@ -22,12 +22,7 @@ export class EmailVerify{
     public static ERR_SENDMAIL_MSG: string = "Errore durante l'invio della mail per la verifica dell'account";
 
     constructor(data: EmailVerifyInterface){
-        this._username = data.username;
-        this._email = data.email;
-        this._activation_code = data.activation_code;
-        this._email_verify_url = data.email_verify_url;
-        this._full_activation_link = `${this._email_verify_url}/${this._activation_code}`;
-        console.log("EMailVerify full activation link => "+this._full_activation_link);
+        this.assingValues(data);
         this.setHtmlMail();
     }
 
@@ -47,6 +42,15 @@ export class EmailVerify{
                 break;
         }
         return this._error;
+    }
+
+    private assingValues(data: EmailVerifyInterface): void{
+        if(data.username)this._username = data.username;
+        if(data.email)this._email = data.email;
+        if(data.activation_code)this._activation_code = data.activation_code;
+        if(data.email_verify_url)this._email_verify_url = data.email_verify_url;
+        this._full_activation_link = `${this._email_verify_url}/${this._activation_code}`;
+        console.log("EMailVerify full activation link => "+this._full_activation_link);
     }
 
     private setHtmlMail(): void{
