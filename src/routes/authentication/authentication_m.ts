@@ -2,7 +2,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { Regexs } from '../../namespaces/regex';
 
-
 /**
  * Subscribe form validator middleware
  */

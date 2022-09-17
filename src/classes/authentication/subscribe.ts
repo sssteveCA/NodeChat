@@ -21,12 +21,12 @@ export interface SubscribeInterface{
 }
 
 export class Subscribe{
-    private _username:string = "";
-    private _email:string = "";
-    private _password:string = "";
-    private _password_hash: string = "";
-    private _home_url: string = "";
-    private _activation_code: string = "";
+    private _username:string;
+    private _email:string;
+    private _password:string;
+    private _password_hash: string;
+    private _home_url: string;
+    private _activation_code: string;
     private _errno:number = 0;
     private _error:string|null = null;
 
@@ -66,6 +66,7 @@ export class Subscribe{
     public async activateAccount(): Promise<object>{
         let response: object = {};
         try{
+            if(!this._activation_code)throw new MissingDataError("Mancano uno o più dati richiesti");
             let mongodb_mmi: MongoDbModelManagerInterface = {
                 collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
                 schema: Schemas.ACCOUNTS
