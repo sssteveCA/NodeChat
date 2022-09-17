@@ -13,11 +13,14 @@ const app = express();
 export const authentication_routes = express.Router();
 
 authentication_routes.get('/login',(req,res)=>{
+    let message: string|null = (req.query.message != null) ? req.query.message as string : null;
+    console.log("Message => "+message);
     res.render('login',{
         bootstrap_css: Paths.BOOTSTRAP_CSS,
         bootstrap_js: Paths.BOOTSTRAP_JS,
         container: Constants.CONTAINER,
         login: Paths.LOGIN,
+        message: message,
         subscribe: Paths.SUBSCRIBE
     });
 });
