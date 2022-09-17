@@ -24,6 +24,7 @@ export abstract class MongoDbModelManager{
     public static UPDATE_ERROR: number = 4;
     public static DELETE_ERROR: number = 5;
     public static DISCONNECTION_ERROR: number = 6;
+    public static DROPINDEXES_ERROR: number = 7;
 
     protected static CONNECTION_ERROR_MSG: string = "Errore durante la connessione al database";
     protected static GET_ERROR_MSG: string = "Errore durante la lettura dei dati";
@@ -31,6 +32,7 @@ export abstract class MongoDbModelManager{
     protected static UPDATE_ERROR_MSG: string = "Errore durante l'aggiornamento dei dati";
     protected static DELETE_ERROR_MSG: string = "Errore durante la rimozione dei dati";
     protected static DISCONNECTION_ERROR_MSG: string = "Errore durante la chiusura della connessione al database";
+    protected static DROPINDEXES_ERROR_MSG: string = "Errore durante la cancellazione degli indici";
 
     get mongodb_string(){return this._mongodb_string;}
     get collection_name(){return this._collection_name;}
@@ -57,6 +59,9 @@ export abstract class MongoDbModelManager{
                 break;
             case MongoDbModelManager.DISCONNECTION_ERROR:
                 this._error = MongoDbModelManager.DISCONNECTION_ERROR_MSG;
+                break;
+            case MongoDbModelManager.DROPINDEXES_ERROR:
+                this._error = MongoDbModelManager.DROPINDEXES_ERROR_MSG;
                 break;
             default:
                 this._error = null;
@@ -93,7 +98,7 @@ export abstract class MongoDbModelManager{
      * Connect to MongoDB database
      * @returns 
      */
-    public async connect(): Promise<boolean>{
+    protected async connect(): Promise<boolean>{
         this._errno = 0;
         try{
             await mongoose.connect(this._mongodb_string).then(conn => {
@@ -112,7 +117,7 @@ export abstract class MongoDbModelManager{
      * Close the MongoDB connection
      * @returns true is close is done successfully otherwise false
      */
-    public async close(): Promise<boolean>{
+    protected async close(): Promise<boolean>{
         let disconnected: boolean = false;
         try{
             if(mongoose.connection.readyState == 1){
@@ -134,13 +139,26 @@ export abstract class MongoDbModelManager{
      * @param filter 
      * @returns 
      */
-    public async delete(filter: object): Promise<any>{
+    protected async delete(filter: object): Promise<any>{
         return await new Promise<any>((resolve, reject) => {
-            let delete_query = this._model.deleteOne(filter);
-            delete_query.then(res => {
+            this._model.deleteOne(filter).then(res => {
                 resolve(res);
             }).catch(err => {
                 this._errno = MongoDbModelManager.DELETE_ERROR;
+                reject(err);
+            });
+        });
+    }
+
+    /**
+     * Remove all indexes from collection
+     * @returns 
+     */
+    protected async dropIndexes(): Promise<any>{
+        return await new Promise<any>((resolve,reject)=>{
+            this._model.collection.dropIndexes().then(res => {
+                resolve(res);
+            }).catch(err => {
                 reject(err);
             });
         });
@@ -151,7 +169,7 @@ export abstract class MongoDbModelManager{
      * @param filter 
      * @returns 
      */
-    public async get(filter: object): Promise<any>{
+    protected async get(filter: object): Promise<any>{
         this._errno = 0;
         return await new Promise<any>((resolve,reject)=>{
             this._model.findOne(filter).then(res => {
@@ -167,12 +185,11 @@ export abstract class MongoDbModelManager{
      * @param document
      * @returns 
      */
-    public async insert(document: object): Promise<any>{
+    protected async insert(document: object): Promise<any>{
         console.log("mmm insert");
         this._errno = 0;
         return await new Promise<any>((resolve,reject)=>{
-            let result = this._model.collection.insertOne(document);
-            result.then(res => {
+            this._model.collection.insertOne(document).then(res => {
                 resolve(res);  
             }).catch(err => {
                 this._errno = MongoDbModelManager.INSERT_ERROR;
@@ -187,10 +204,9 @@ export abstract class MongoDbModelManager{
      * @param set 
      * @returns 
      */
-    public async update(filter: object, set: object): Promise<any>{
+    protected async update(filter: object, set: object): Promise<any>{
         return await new Promise<any>((resolve, reject)=>{
-            let update_query = this._model.updateOne(filter, set);
-            update_query.then(res => {
+            this._model.updateOne(filter, set).then(res => {
                 resolve(res);
             }).catch(err => {
                 this._errno = MongoDbModelManager.UPDATE_ERROR;

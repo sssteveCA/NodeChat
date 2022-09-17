@@ -56,9 +56,7 @@ authentication_routes.get('/verify/:code',async(req,res)=>{
     await sb.activateAccount().then(obj => {
         verify_response = obj['msg'];
         status_code = obj['code']; 
-        console.log("activateAccount promise");
     });
-    console.log("activateAccount render");
     res.status(status_code).render('code_verify',{
             bootstrap_css: '../'+Paths.BOOTSTRAP_CSS,
             bootstrap_js: '../'+Paths.BOOTSTRAP_JS,
