@@ -65,6 +65,10 @@ authentication_routes.get('/verify/:code',async(req,res)=>{
         });
 });
 
+authentication_routes.post('/login',(req,res)=>{
+
+});
+
 authentication_routes.post('/newAccount',subscribe_validator,(req,res)=> {
     let body: object = req.body as object;
     let home_url: string = process.env.MAIN_URL+Paths.VERIFY as string;

@@ -1,4 +1,6 @@
 
+
+
 export interface LoginRequestInterface{
     username: string;
     password: string;
@@ -25,5 +27,11 @@ export class LoginRequest{
                 break;
         }
         return this._errno;
+    }
+
+    public async login(): Promise<object>{
+        let response: object = {};
+        this._errno = 0;
+        return response;
     }
 }

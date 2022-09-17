@@ -1,6 +1,21 @@
 
 import express, { NextFunction, Request, Response } from 'express';
+import { Messages } from '../../namespaces/messages';
 import { Regexs } from '../../namespaces/regex';
+
+
+export const login_validator = (req: Request, res: Response, next: NextFunction) => {
+    let body: object = {};
+    if(body.hasOwnProperty("username") && body.hasOwnProperty("password")){
+        if(body['username'] != "" && body['password']){
+
+        }//if(body['username'] != "" && body['password']){
+    }//if(body.hasOwnProperty("username") && body.hasOwnProperty("password")){
+    res.status(400).send({
+        done: false,
+        msg: Messages.ERROR_MISSINGDATA
+    })
+};
 
 /**
  * Subscribe form validator middleware
@@ -32,6 +47,6 @@ export const subscribe_validator = (req: Request, res: Response, next: NextFunct
     }//if(body.hasOwnProperty("username") && body.hasOwnProperty("email") && body.hasOwnProperty("password") && body.hasOwnProperty("confPass")){
     else
         res.status(400).send({
-            done: false, msg: "Inserisci i dati richiesti per continuare"
+            done: false, msg: Messages.ERROR_MISSINGDATA
         });
 };

@@ -1,5 +1,6 @@
 
 import express, { NextFunction, Request, Response } from 'express';
+import { Messages } from '../../namespaces/messages';
 import { Regexs } from '../../namespaces/regex';
 
 /**
@@ -26,9 +27,9 @@ export const contacts_validator = (req: Request, res: Response ,next: NextFuncti
             if(valid == true)
                next();
             else
-                res.status(400).send({done: false, msg: "I dati inseriti non sono nel formato corretto, riprova"});
+                res.status(400).send({done: false, msg: Messages.ERROR_INCORRECTFORMAT});
         }//if(body.hasOwnProperty('name') && body.hasOwnProperty('email') && body.hasOwnProperty('subject') && body.hasOwnProperty('message')){ 
     }//if(body != null){
     else
-        res.status(400).send({done: false, msg: "Inserisci i dati richiesti per continuare"});
+        res.status(400).send({done: false, msg: Messages.ERROR_MISSINGDATA});
 };
