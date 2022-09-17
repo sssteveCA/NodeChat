@@ -6,6 +6,7 @@ import { Schemas } from "../../namespaces/schemas";
 import { Account, AccountInterface } from "../database/models/account";
 import { MongoDbModelManager, MongoDbModelManagerInterface } from "../database/mongodbmodelmanager";
 import { EmailVerify, EmailVerifyInterface } from "../email/emailverify";
+import { AccountNotFoundError } from "../errors/accountnotfounderror";
 import { DuplicateKeysError } from "../errors/duplicatekeyserror";
 import { MissingDataError } from "../errors/missingdataerror";
 import { SendEmailError } from "../errors/sendemailerror";
@@ -59,17 +60,37 @@ export class Subscribe{
 
     public async activateAccount(): Promise<object>{
         let response: object = {};
-        let mongodb_mmi: MongoDbModelManagerInterface = {
-            collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
-            schema: Schemas.ACCOUNTS
-        };
-        let acc_data: AccountInterface = {};
-        let account: Account = new Account(mongodb_mmi,acc_data);
-        await account.getAccount({activation_code: this._activation_code}).then(res => {
-
-        }).catch(err => {
-
-        });
+        try{
+            let mongodb_mmi: MongoDbModelManagerInterface = {
+                collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
+                schema: Schemas.ACCOUNTS
+            };
+            let acc_data: AccountInterface = {};
+            let account: Account = new Account(mongodb_mmi,acc_data);
+            await account.getAccount({activationCode: this._activation_code}).then(res => {
+                if(res['done'] == true){
+                    if(res['result'] != null){
+                        //Found the account with this activation_code
+                        return account.updateAccount(
+                            {activationCode: this._activation_code},
+                            {activationCode: null, verified: true});
+                    }//if(res['result'] != null){
+                    else throw new AccountNotFoundError("Codice non valido");
+                }//if(res['done'] == true){
+                else throw new Error("Errore durante l'attivazione dell'account");
+            }).then(res => {
+                if(res['done'] == true && res['result'].modifiedCount > 0){
+                    response = {done: true,msg: "L'account è stato attivato"}
+                }//if(res['done'] == true && res['result'].modifiedCount > 0){
+                else throw new Error("Errore durante l'attivazione dell'account");
+            }).catch(err => {
+                throw err;
+            });
+        }catch(e: any){
+            response['done'] = false
+            if(e instanceof AccountNotFoundError)response['msg'] = e.message;
+            else response['msg'] = "Errore durante l'attivazione dell'account";
+        }
         return response;
     }
 

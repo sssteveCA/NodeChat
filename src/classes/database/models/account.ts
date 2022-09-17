@@ -176,8 +176,16 @@ export class Account extends MongoDbModelManager{
             else throw new DatabaseConnectionError('Errore durante la connessione al Database');
         }).then(res => {
             console.log(res);
+            response = {
+                done: true,
+                result: res
+            };
         }).catch(err => {
             console.warn(err);
+            response = {
+                done: false,
+                msg: err.message
+            };
         }).finally(()=>{
             super.close();
         });
