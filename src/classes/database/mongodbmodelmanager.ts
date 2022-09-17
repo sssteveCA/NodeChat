@@ -8,7 +8,7 @@ export abstract class MongoDbModelManager{
     protected _connected: boolean = false;
     protected _mongodb_string: string;
     protected _environment: Environment = Environment.local;
-    protected _model_name: string;
+    protected _collection_name: string;
     protected _schema: Schema;
     protected _model: Model<any>;
     protected _errno: number = 0;
@@ -33,7 +33,7 @@ export abstract class MongoDbModelManager{
     protected static DISCONNECTION_ERROR_MSG: string = "Errore durante la chiusura della connessione al database";
 
     get mongodb_string(){return this._mongodb_string;}
-    get model_name(){return this._model_name;}
+    get collection_name(){return this._collection_name;}
     get schema(){return this._schema;}
     get environment(){return this._environment;}
     get isConnected(){return this._connected;}
@@ -73,9 +73,9 @@ export abstract class MongoDbModelManager{
      * @param data 
      */
     private assignValues(data: MongoDbModelManagerInterface){
-        this._model_name = data.model_name;
+        this._collection_name = data.collection_name;
         this._schema = data.schema;
-        this._model = mongoose.model(this._model_name,this._schema);
+        this._model = mongoose.model(this._collection_name,this._schema);
         if(data.environment)
             this._environment = data.environment;
         if(data.mongodb_string)
@@ -86,7 +86,7 @@ export abstract class MongoDbModelManager{
             else
                 this._mongodb_string = process.env.MONGODB_LOCAL_URL as string;
         console.log(`mongoDB string => ${this._mongodb_string}`);
-        console.log(`model name => ${this._model_name}`);
+        console.log(`collection name => ${this._collection_name}`);
     }
 
     /**
@@ -204,7 +204,7 @@ export abstract class MongoDbModelManager{
 export interface MongoDbModelManagerInterface{
     mongodb_string?: string;
     environment?: Environment;
-    model_name: string;
+    collection_name: string;
     schema: Schema;
 }
 

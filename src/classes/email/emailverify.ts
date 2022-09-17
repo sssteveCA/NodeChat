@@ -1,10 +1,10 @@
 import { Email, EmailInterface } from "./email";
 
 export interface EmailVerifyInterface{
-    username?: string;
-    email?: string;
-    email_verify_url?: string;
-    activation_code?: string;
+    username: string;
+    email: string;
+    email_verify_url: string;
+    activation_code: string;
 }
 
 export class EmailVerify{
@@ -45,10 +45,10 @@ export class EmailVerify{
     }
 
     private assingValues(data: EmailVerifyInterface): void{
-        if(data.username)this._username = data.username;
-        if(data.email)this._email = data.email;
-        if(data.activation_code)this._activation_code = data.activation_code;
-        if(data.email_verify_url)this._email_verify_url = data.email_verify_url;
+        this._username = data.username;
+        this._email = data.email;
+        this._activation_code = data.activation_code;
+        this._email_verify_url = data.email_verify_url;
         this._full_activation_link = `${this._email_verify_url}/${this._activation_code}`;
         console.log("EMailVerify full activation link => "+this._full_activation_link);
     }

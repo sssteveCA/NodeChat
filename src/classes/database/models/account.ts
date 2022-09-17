@@ -98,11 +98,20 @@ export class Account extends MongoDbModelManager{
                 this._errno = MongoDbModelManager.CONNECTION_ERROR;
                 throw new DatabaseConnectionError(this.error as string);
             }       
-        }).then(res => {
+        }).then(res => {   
+            response = {
+                done: true,
+                result: res
+            };
             console.log("getAccount");
-            console.log(res);
+            console.log(response);
         }).catch(err => {
             console.warn(err);
+            this._errno = MongoDbModelManager.GET_ERROR;
+            response = {
+                done: false,
+                msg: this.error
+            };
         }).finally(()=>{
             super.close();
         });

@@ -24,13 +24,16 @@ export class Subscribe{
     private _password:string;
     private _password_hash: string;
     private _home_url: string;
+    private _activation_code: string = "";
     private _errno:number = 0;
     private _error:string|null = null;
 
     //Errors
     public static ERR_SUBSCRIBE:number = 1;
+    public static ERR_ACTIVATION_NOTFOUND: number = 2;
 
     public static ERR_SUBSCRIBE_MSG:string = "Errore durante la registrazione";
+    public static ERR_ACTIVATION_NOTFOUND_MSG: string = "Nessun account trovato con questo codice";
 
     constructor(data: SubscribeInterface){
         this.assignValues(data);
@@ -40,6 +43,7 @@ export class Subscribe{
     get email(){return this._email; }
     get password_hash(){return this._password_hash;}
     get home_url(){return this._home_url;}
+    get activation_code(){return this._activation_code;}
     get errno(){return this._errno; }
     get error(){
         switch(this._errno){
@@ -51,6 +55,22 @@ export class Subscribe{
                 break;
         }
         return this._error;
+    }
+
+    public async activateAccount(): Promise<object>{
+        let response: object = {};
+        let mongodb_mmi: MongoDbModelManagerInterface = {
+            collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
+            schema: Schemas.ACCOUNTS
+        };
+        let acc_data: AccountInterface = {};
+        let account: Account = new Account(mongodb_mmi,acc_data);
+        await account.getAccount({activation_code: this._activation_code}).then(res => {
+
+        }).catch(err => {
+
+        });
+        return response;
     }
 
     private assignValues(data: SubscribeInterface): void{
@@ -75,9 +95,14 @@ export class Subscribe{
             emailCode += characters[random_character];
         }
         emailCode += now;
-        return emailCode;
+        this._activation_code = emailCode;
+        return this._activation_code;
     }
 
+    /**
+     * Insert new User in accounts collections
+     * @returns operation status info
+     */
     public async insertNewAccount(): Promise<object>{
         let response: object = {};
         let account: Account;
@@ -85,7 +110,7 @@ export class Subscribe{
         try{ 
             if(!this._username || !this._email)throw new MissingDataError("Mancano uno o più dati richiesti");
             let mongodb_mmi: MongoDbModelManagerInterface = {
-                model_name: Constants.MONGODB_ACCOUNTS_COLLECTION, schema: Schemas.ACCOUNTS
+                collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string, schema: Schemas.ACCOUNTS
             }; 
             await this.passwordHashPromise().then(hash => {
                 let emailCode: string = this.emailVerifCode();
