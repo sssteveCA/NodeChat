@@ -18,8 +18,6 @@ export class VerifyRequest{
      */
     private gotoActivationLink(): void{
         let full_link: string = `${this._verify_url}/${this._activation_code}`;
-        console.log(full_link);
-        console.log(window.location);
-        //window.location.href = full_link;
+        window.location.href = full_link;
     }
 }

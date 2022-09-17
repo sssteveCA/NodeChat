@@ -10,13 +10,13 @@
         <script src="{{bootstrap_js}}"></script>
         <script src="{{jquery_js}}"></script>
         <script src="{{jquery_ui_js}}"></script>
-        <script src="../js/verify.js"></script>
+        <script type="module" src="../js/verify.js"></script>
     </head>
     <body>
         {{> menu}}
         <div class="{{container}}">
             <div class="verifyDiv">
-               <form id="fVerify" method="post" action="#">
+               <form id="fVerify" method="get" action="#">
                     <fieldset>
                         <legend>Verifica il tuo account</legend>
                         <div class="container-fluid">
