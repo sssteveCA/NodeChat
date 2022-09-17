@@ -13,18 +13,19 @@ import { SendEmailError } from "../errors/sendemailerror";
 
 
 export interface SubscribeInterface{
-    username: string;
-    email: string;
-    password: string;
-    home_url: string;
+    username?: string;
+    email?: string;
+    password?: string;
+    home_url?: string;
+    activation_code?: string;
 }
 
 export class Subscribe{
-    private _username:string;
-    private _email:string;
-    private _password:string;
-    private _password_hash: string;
-    private _home_url: string;
+    private _username:string = "";
+    private _email:string = "";
+    private _password:string = "";
+    private _password_hash: string = "";
+    private _home_url: string = "";
     private _activation_code: string = "";
     private _errno:number = 0;
     private _error:string|null = null;
@@ -58,6 +59,10 @@ export class Subscribe{
         return this._error;
     }
 
+    /**
+     * Activate the account previously subscribed
+     * @returns 
+     */
     public async activateAccount(): Promise<object>{
         let response: object = {};
         try{
@@ -80,7 +85,7 @@ export class Subscribe{
                 else throw new Error("Errore durante l'attivazione dell'account");
             }).then(res => {
                 if(res['done'] == true && res['result'].modifiedCount > 0){
-                    response = {done: true,msg: "L'account è stato attivato"}
+                    response = {done: true,msg: "L'account è stato attivato", code: 200}
                 }//if(res['done'] == true && res['result'].modifiedCount > 0){
                 else throw new Error("Errore durante l'attivazione dell'account");
             }).catch(err => {
@@ -88,17 +93,24 @@ export class Subscribe{
             });
         }catch(e: any){
             response['done'] = false
-            if(e instanceof AccountNotFoundError)response['msg'] = e.message;
-            else response['msg'] = "Errore durante l'attivazione dell'account";
+            if(e instanceof AccountNotFoundError){
+                response['msg'] = e.message;
+                response['code'] = 404;
+            }
+            else {
+                response['msg'] = "Errore durante l'attivazione dell'account";
+                response['code'] = 500;
+            }
         }
         return response;
     }
 
     private assignValues(data: SubscribeInterface): void{
-        this._username = data.username;
-        this._email = data.email;
-        this._password = data.password;
-        this._home_url = data.home_url;
+        if(data.username)this._username = data.username;
+        if(data.email)this._email = data.email;
+        if(data.password)this._password = data.password;
+        if(data.home_url)this._home_url = data.home_url;
+        if(data.activation_code)this._activation_code = data.activation_code;
     }
 
     /**
