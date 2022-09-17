@@ -7,7 +7,7 @@ import { Account } from '../../classes/database/models/account';
 import { Constants } from '../../namespaces/constants';
 import { Paths } from '../../namespaces/paths';
 import { Regexs } from '../../namespaces/regex';
-import { subscribe_validator } from './authentication_m';
+import { login_validator, subscribe_validator } from './authentication_m';
 
 const app = express();
 export const authentication_routes = express.Router();
@@ -65,8 +65,8 @@ authentication_routes.get('/verify/:code',async(req,res)=>{
         });
 });
 
-authentication_routes.post('/login',(req,res)=>{
-
+authentication_routes.post('/login', login_validator, (req,res)=>{
+    res.send("Login POST route");
 });
 
 authentication_routes.post('/newAccount',subscribe_validator,(req,res)=> {
@@ -81,8 +81,8 @@ authentication_routes.post('/newAccount',subscribe_validator,(req,res)=> {
     };
     let subscribe: Subscribe = new Subscribe(subscribe_data);
     subscribe.insertNewAccount().then(obj => {
-        res.status(obj['code']).send(obj);
+        res.status(obj['code']).json(obj);
     }).catch(err => {
-        res.send(500).send(err);
+        res.status(500).send(err);
     });
 });

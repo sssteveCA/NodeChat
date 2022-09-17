@@ -2,19 +2,20 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { Messages } from '../../namespaces/messages';
 import { Regexs } from '../../namespaces/regex';
+import url from 'url';
 
-
+/**
+ * Login form validator middleware
+ */
 export const login_validator = (req: Request, res: Response, next: NextFunction) => {
-    let body: object = {};
+    let body: object = req.body;
     if(body.hasOwnProperty("username") && body.hasOwnProperty("password")){
-        if(body['username'] != "" && body['password']){
-
+        if(body['username'] != "" && body['password'] != ""){
+            next();
         }//if(body['username'] != "" && body['password']){
     }//if(body.hasOwnProperty("username") && body.hasOwnProperty("password")){
-    res.status(400).send({
-        done: false,
-        msg: Messages.ERROR_MISSINGDATA
-    })
+    let msg_encoded = encodeURIComponent(Messages.ERROR_MISSINGDATA);
+    res.redirect("/login?message="+msg_encoded);
 };
 
 /**

@@ -48,6 +48,13 @@
                     </fieldset>
                 </form>
             </div>
+            {{#message}}
+            <div class="error">
+                <div class="alert alert-danger" role="alert">
+                {{message}}
+                </div>
+            </div>
+            {{/message}}
             <div class="notSubscribed">
                 <p>Non sei registrato? <a href="{{subscribe}}">Iscriviti</a></p>
             </div>
