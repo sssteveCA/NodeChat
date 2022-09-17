@@ -55,7 +55,7 @@ export class SubscribeRequest{
         this._errno = 0;
         try{
             await this.subscribePromise().then(res => {
-                console.log(res);
+                //console.log(res);
                 let obj = JSON.parse(res);
                 response = {
                     done: obj['done'],

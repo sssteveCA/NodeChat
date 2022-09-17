@@ -90,8 +90,8 @@ export abstract class MongoDbModelManager{
                 this._mongodb_string = process.env.MONGODB_PRODUCTION_URL as string;
             else
                 this._mongodb_string = process.env.MONGODB_LOCAL_URL as string;
-        console.log(`mongoDB string => ${this._mongodb_string}`);
-        console.log(`collection name => ${this._collection_name}`);
+        /* console.log(`mongoDB string => ${this._mongodb_string}`);
+        console.log(`collection name => ${this._collection_name}`); */
     }
 
     /**
@@ -118,6 +118,7 @@ export abstract class MongoDbModelManager{
      * @returns true is close is done successfully otherwise false
      */
     protected async close(): Promise<boolean>{
+        this._errno = 0;
         let disconnected: boolean = false;
         try{
             if(mongoose.connection.readyState == 1){
@@ -140,6 +141,7 @@ export abstract class MongoDbModelManager{
      * @returns 
      */
     protected async delete(filter: object): Promise<any>{
+        this._errno = 0;
         return await new Promise<any>((resolve, reject) => {
             this._model.deleteOne(filter).then(res => {
                 resolve(res);
@@ -155,10 +157,12 @@ export abstract class MongoDbModelManager{
      * @returns 
      */
     protected async dropIndexes(): Promise<any>{
+        this._errno = 0;
         return await new Promise<any>((resolve,reject)=>{
             this._model.collection.dropIndexes().then(res => {
                 resolve(res);
             }).catch(err => {
+                this._errno = MongoDbModelManager.DROPINDEXES_ERROR;
                 reject(err);
             });
         });
@@ -186,7 +190,6 @@ export abstract class MongoDbModelManager{
      * @returns 
      */
     protected async insert(document: object): Promise<any>{
-        console.log("mmm insert");
         this._errno = 0;
         return await new Promise<any>((resolve,reject)=>{
             this._model.collection.insertOne(document).then(res => {
@@ -205,6 +208,7 @@ export abstract class MongoDbModelManager{
      * @returns 
      */
     protected async update(filter: object, set: object): Promise<any>{
+        this._errno = 0;
         return await new Promise<any>((resolve, reject)=>{
             this._model.updateOne(filter, set).then(res => {
                 resolve(res);

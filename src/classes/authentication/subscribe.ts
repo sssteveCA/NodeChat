@@ -160,8 +160,8 @@ export class Subscribe{
                         username: account.username, email: account.email, email_verify_url: this._home_url,
                         activation_code: account.activationCode
                     }
-                    console.log("ev_data => ");
-                    console.log(ev_data);
+                    /* console.log("ev_data => ");
+                    console.log(ev_data); */
                     let ev: EmailVerify = new EmailVerify(ev_data);
                     return ev.sendEmailVerify();
                 }//if(res['errno'] == 0){

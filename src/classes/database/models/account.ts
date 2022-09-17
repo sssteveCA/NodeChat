@@ -73,7 +73,7 @@ export class Account extends MongoDbModelManager{
                 throw new DatabaseConnectionError(this.error as string);
             }
         }).then(res => {
-            console.log(res);
+            //console.log(res);
         }).catch(err => {
             console.warn(err);
         }).finally(()=>{
@@ -103,8 +103,8 @@ export class Account extends MongoDbModelManager{
                 done: true,
                 result: res
             };
-            console.log("getAccount");
-            console.log(response);
+            /* console.log("getAccount");
+            console.log(response); */
         }).catch(err => {
             console.warn(err);
             this._errno = MongoDbModelManager.GET_ERROR;
@@ -133,12 +133,14 @@ export class Account extends MongoDbModelManager{
         let response: object = {};
         await super.connect().then(conn => {
             if(conn == true){
-                return super.get({$or: [{username: this._username},{email: this._email}]});
+                return super.dropIndexes();
             }
             else{
                 this._errno = MongoDbModelManager.CONNECTION_ERROR;
                 throw new DatabaseConnectionError(this.error as string);
             } 
+        }).then(res => {
+            return super.get({$or: [{username: this._username},{email: this._email}]});
         }).then(result => {
             if(result != null){
                 //console.log(`Account get before insert => ${result} `);
@@ -149,7 +151,7 @@ export class Account extends MongoDbModelManager{
             }
             return super.insert(document);
         }).then(res => {
-            console.log(res);
+            //console.log(res);
             response['errno'] = 0;
         }).catch(err => {
             console.warn(err);
@@ -171,11 +173,13 @@ export class Account extends MongoDbModelManager{
         let response: object = {};
         await super.connect().then(conn => {
             if(conn == true){
-                return super.update(filter,set);
+                return super.dropIndexes();
             }
             else throw new DatabaseConnectionError('Errore durante la connessione al Database');
         }).then(res => {
-            console.log(res);
+            return super.update(filter,set);
+        }).then(res => {
+            //console.log(res);
             response = {
                 done: true,
                 result: res
