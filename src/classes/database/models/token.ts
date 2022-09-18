@@ -38,7 +38,7 @@ export class Token extends MongoDbModelManager{
      * @param filter the filter to search the first document to delete
      * @returns 
      */
-     public async deletToken(filter: object): Promise<object>{
+     public async deleteToken(filter: object): Promise<object>{
         this._errno = 0;
         let response: object = {};
         await super.connect().then(conn => {
@@ -106,37 +106,63 @@ export class Token extends MongoDbModelManager{
      */
      public async insertToken(): Promise<object>{
         this._errno = 0;
-        let document: object = {
-            accountId: this._accountId
-        };
         let response: object = {};
         await super.connect().then(conn => {
-            if(conn == true){
-                return super.get({accountId: this._accountId});
-            }
-            else{
-                throw new DatabaseConnectionError(this.error as string);
-            } 
+            if(conn == true)return super.get({accountId: this._accountId});
+            else throw new DatabaseConnectionError(this.error as string);
         }).then(result => {
             if(result != null){
                 console.log(`Token get before insert => ${result} `);
-                return super.delete({accountId: this._accountId});
+                let token_data: object = {
+                    accountId: this._accountId,tokenKey: this._tokenKey,creationDate: this._creationDate,
+                    expireDate: this._expireDate
+                };
+                return super.replace({accountId: this._accountId},token_data);
+            }//if(result != null){
+            let token_data: object = {
+                accountId: this._accountId, tokenKey: this._tokenKey, expireDate: this._expireDate
             }
-            return true;
+            return super.insert(token_data);
         }).then(res => {
-            console.log("Insert token delete promise res => ");
+            console.log("Insert/Replace token promise res => ");
             console.log(res);
-            if(res == true || res.deletedCount > 0){
-
-            }//if(res == true || res.deletedCount > 0){
-            else{
-                throw new Error(this.error as string);
-            }
-            //console.log(res);
-            response['errno'] = 0;
+            if(res.acknowledged == true) response['errno'] = 0;
+            else throw new Error(this.error as string);
         }).catch(err => {
             console.warn(err);
             response['errno'] = this._errno;
+        }).finally(()=>{
+            super.close();
+        });
+        return response;
+    }
+
+    /**
+     * Updated the first token from the collection that match with a filter with the set data
+     * @param filter the filter to search the first document to update
+     * @param set the data to updated the matched document
+     * @returns 
+     */
+     public async updateToken(filter: object, set: object): Promise<object>{
+        this._errno = 0;
+        let response: object = {};
+        await super.connect().then(conn => {
+            if(conn == true){
+                return super.update(filter,set);
+            }
+            else throw new DatabaseConnectionError('Errore durante la connessione al Database');
+        }).then(res => {
+            //console.log(res);
+            response = {
+                done: true,
+                result: res
+            };
+        }).catch(err => {
+            console.warn(err);
+            response = {
+                done: false,
+                msg: err.message
+            };
         }).finally(()=>{
             super.close();
         });
