@@ -25,6 +25,7 @@ export abstract class MongoDbModelManager{
     public static DELETE_ERROR: number = 5;
     public static DISCONNECTION_ERROR: number = 6;
     public static DROPINDEXES_ERROR: number = 7;
+    public static REPLACE_ERROR: number = 8;
 
     protected static CONNECTION_ERROR_MSG: string = "Errore durante la connessione al database";
     protected static GET_ERROR_MSG: string = "Errore durante la lettura dei dati";
@@ -33,6 +34,7 @@ export abstract class MongoDbModelManager{
     protected static DELETE_ERROR_MSG: string = "Errore durante la rimozione dei dati";
     protected static DISCONNECTION_ERROR_MSG: string = "Errore durante la chiusura della connessione al database";
     protected static DROPINDEXES_ERROR_MSG: string = "Errore durante la cancellazione degli indici";
+    protected static REPLACE_ERROR_MSG: string = "Errore durante la sostituzione del documento";
 
     get mongodb_string(){return this._mongodb_string;}
     get collection_name(){return this._collection_name;}
@@ -62,6 +64,9 @@ export abstract class MongoDbModelManager{
                 break;
             case MongoDbModelManager.DROPINDEXES_ERROR:
                 this._error = MongoDbModelManager.DROPINDEXES_ERROR_MSG;
+                break;
+            case MongoDbModelManager.REPLACE_ERROR:
+                this._error = MongoDbModelManager.REPLACE_ERROR_MSG;
                 break;
             default:
                 this._error = null;
@@ -196,6 +201,17 @@ export abstract class MongoDbModelManager{
                 resolve(res);  
             }).catch(err => {
                 this._errno = MongoDbModelManager.INSERT_ERROR;
+                reject(err);
+            });
+        });
+    }
+
+    protected async replace(filter: object, set: object): Promise<any>{
+        this._errno = 0;
+        return await new Promise<any>((resolve,reject)=>{
+            this._model.replaceOne(filter,set).then(res => {
+                resolve(res);
+            }).catch(err => {
                 reject(err);
             });
         });
