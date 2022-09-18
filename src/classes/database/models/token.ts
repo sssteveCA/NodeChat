@@ -138,6 +138,35 @@ export class Token extends MongoDbModelManager{
     }
 
     /**
+     * Replace the token that match the filter with new token
+     * @param filter the filter to search the first document to replace
+     * @param document the new document to replace the matched document
+     * @returns 
+     */
+    public async replaceToken(filter: object, document: object): Promise<object>{
+        this._errno = 0;
+        let response: object = {};
+        await super.connect().then(conn => {
+            if(conn == true) return super.replace(filter,document);
+            else throw new DatabaseConnectionError('Errore durante la connessione al Database');
+        }).then(res => {
+            response = {
+                done: true,
+                result: res
+            };
+        }).catch(err => {
+            console.warn(err);
+            response = {
+                done: false,
+                msg: err.message
+            };
+        }).finally(()=>{
+            super.close();
+        });
+        return response;
+    }
+
+    /**
      * Updated the first token from the collection that match with a filter with the set data
      * @param filter the filter to search the first document to update
      * @param set the data to updated the matched document
@@ -147,9 +176,7 @@ export class Token extends MongoDbModelManager{
         this._errno = 0;
         let response: object = {};
         await super.connect().then(conn => {
-            if(conn == true){
-                return super.update(filter,set);
-            }
+            if(conn == true) return super.update(filter,set);
             else throw new DatabaseConnectionError('Errore durante la connessione al Database');
         }).then(res => {
             //console.log(res);

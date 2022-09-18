@@ -71,7 +71,6 @@ export class Account extends MongoDbModelManager{
                 return super.delete(filter);
             }
             else{
-                this._errno = MongoDbModelManager.CONNECTION_ERROR;
                 throw new DatabaseConnectionError(this.error as string);
             }
         }).then(res => {
@@ -97,7 +96,6 @@ export class Account extends MongoDbModelManager{
                 return super.get(filter);
             }
             else{
-                this._errno = MongoDbModelManager.CONNECTION_ERROR;
                 throw new DatabaseConnectionError(this.error as string);
             }       
         }).then(res => {   
@@ -120,7 +118,6 @@ export class Account extends MongoDbModelManager{
             }
         }).catch(err => {
             console.warn(err);
-            this._errno = MongoDbModelManager.GET_ERROR;
             response = {
                 done: false,
                 msg: this.error
@@ -138,20 +135,13 @@ export class Account extends MongoDbModelManager{
     public async insertAccount(): Promise<object>{
         this._errno = 0;
         let document: object = {
-            username: this._username,
-            email: this._email,
-            password: this._password_hash,
+            username: this._username,email: this._email,password: this._password_hash,
             activationCode: this._activationCode
         };
         let response: object = {};
         await super.connect().then(conn => {
-            if(conn == true){
-                return super.dropIndexes();
-            }
-            else{
-                this._errno = MongoDbModelManager.CONNECTION_ERROR;
-                throw new DatabaseConnectionError(this.error as string);
-            } 
+            if(conn == true)return super.dropIndexes();
+            else throw new DatabaseConnectionError(this.error as string);
         }).then(res => {
             return super.get({$or: [{username: this._username},{email: this._email}]});
         }).then(result => {
@@ -169,6 +159,35 @@ export class Account extends MongoDbModelManager{
         }).catch(err => {
             console.warn(err);
             response['errno'] = this._errno;
+        }).finally(()=>{
+            super.close();
+        });
+        return response;
+    }
+
+    /**
+     * Replace the account that match the filter with new account
+     * @param filter the filter to search the first document to replace
+     * @param document the new document to replace the matched document
+     * @returns 
+     */
+     public async replaceAccount(filter: object, document: object): Promise<object>{
+        this._errno = 0;
+        let response: object = {};
+        await super.connect().then(conn => {
+            if(conn == true) return super.replace(filter,document);
+            else throw new DatabaseConnectionError('Errore durante la connessione al Database');
+        }).then(res => {
+            response = {
+                done: true,
+                result: res
+            };
+        }).catch(err => {
+            console.warn(err);
+            response = {
+                done: false,
+                msg: err.message
+            };
         }).finally(()=>{
             super.close();
         });

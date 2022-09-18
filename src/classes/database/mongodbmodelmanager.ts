@@ -141,7 +141,7 @@ export abstract class MongoDbModelManager{
     }
 
     /**
-     * Delete one document with provided filter
+     * Delete one document that match the filter
      * @param filter 
      * @returns 
      */
@@ -174,7 +174,7 @@ export abstract class MongoDbModelManager{
     }
 
     /**
-     * Get one document with provided filter
+     * Get one document that match the filter
      * @param filter 
      * @returns 
      */
@@ -206,10 +206,16 @@ export abstract class MongoDbModelManager{
         });
     }
 
-    protected async replace(filter: object, set: object): Promise<any>{
+    /**
+     * Replace the document that match the filter with new document
+     * @param filter 
+     * @param document 
+     * @returns 
+     */
+    protected async replace(filter: object, document: object): Promise<any>{
         this._errno = 0;
         return await new Promise<any>((resolve,reject)=>{
-            this._model.replaceOne(filter,set).then(res => {
+            this._model.replaceOne(filter,document).then(res => {
                 resolve(res);
             }).catch(err => {
                 reject(err);
@@ -218,7 +224,7 @@ export abstract class MongoDbModelManager{
     }
 
     /**
-     * Update one document that match with filter with set object data
+     * Update one document that match the filter with set object data
      * @param filter 
      * @param set 
      * @returns 
