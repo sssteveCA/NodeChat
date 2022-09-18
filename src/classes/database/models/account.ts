@@ -107,14 +107,17 @@ export class Account extends MongoDbModelManager{
             };
             console.log("getAccount");
             console.log(response);
-            if(res["_id"])this._id = res["_id"];
-            if(res["username"])this._username = res["username"];
-            if(res["email"])this._email = res["email"];
-            if(res["password_hash"])this._password_hash = res["password_hash"];
-            if(res["activationCode"])this._activationCode = res["activationCode"];
-            if(res["resetCode"])this._resetCode = res["resetCode"];
-            if(res["verified"])this._verified = res["verified"];
-            if(res["resetted"])this._resetted = res["resetted"];
+            if(res != null){
+                if(res["_id"])this._id = res["_id"];
+                if(res["username"])this._username = res["username"];
+                if(res["email"])this._email = res["email"];
+                if(res["password_hash"])this._password_hash = res["password_hash"];
+                if(res["creationDate"])this._creationDate = res["creationDate"];
+                if(res["activationCode"])this._activationCode = res["activationCode"];
+                if(res["resetCode"])this._resetCode = res["resetCode"];
+                if(res["verified"])this._verified = res["verified"];
+                if(res["resetted"])this._resetted = res["resetted"];
+            }
         }).catch(err => {
             console.warn(err);
             this._errno = MongoDbModelManager.GET_ERROR;

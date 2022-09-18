@@ -18,6 +18,7 @@ authentication_routes.get('/login',(req,res)=>{
         bootstrap_css: Paths.BOOTSTRAP_CSS,
         bootstrap_js: Paths.BOOTSTRAP_JS,
         container: Constants.CONTAINER,
+        jquery_js: Paths.JQUERY_JS,
         login: Paths.LOGIN,
         message: message,
         subscribe: Paths.SUBSCRIBE
