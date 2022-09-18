@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="css/login.css">
         <link rel="stylesheet" href="css/menu.css">
         <script src="{{bootstrap_js}}"></script>
+        <script src="js/login.js"></script>
     </head>
     <body>
         {{> menu}}
@@ -49,13 +50,13 @@
                 </form>
             </div>
             {{#message}}
-            <div class="error">
-                <div class="alert alert-danger" role="alert">
+            <div class="error my-4">
+                <div class="alert alert-danger text-center" role="alert">
                 {{message}}
                 </div>
             </div>
             {{/message}}
-            <div class="notSubscribed">
+            <div class="notSubscribed my-4">
                 <p>Non sei registrato? <a href="{{subscribe}}">Iscriviti</a></p>
             </div>
         </div>

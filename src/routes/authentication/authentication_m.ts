@@ -9,13 +9,17 @@ import url from 'url';
  */
 export const login_validator = (req: Request, res: Response, next: NextFunction) => {
     let body: object = req.body;
+    let passed: boolean = false;
     if(body.hasOwnProperty("username") && body.hasOwnProperty("password")){
         if(body['username'] != "" && body['password'] != ""){
+            passed = true;
             next();
         }//if(body['username'] != "" && body['password']){
     }//if(body.hasOwnProperty("username") && body.hasOwnProperty("password")){
-    let msg_encoded = encodeURIComponent(Messages.ERROR_MISSINGDATA);
-    res.redirect("/login?message="+msg_encoded);
+    if(!passed){
+        let msg_encoded = encodeURIComponent(Messages.ERROR_MISSINGDATA);
+        res.redirect("/login?message="+msg_encoded);
+    } 
 };
 
 /**
@@ -50,4 +54,14 @@ export const subscribe_validator = (req: Request, res: Response, next: NextFunct
         res.status(400).send({
             done: false, msg: Messages.ERROR_MISSINGDATA
         });
+};
+
+
+/**
+ * 
+ * Check if provided username and password are correct
+ */
+export const verify_credentials = (req: Request, res: Response, next: NextFunction) => {
+    let username: string = req.body.username;
+    let password: string = req.body.password;
 };

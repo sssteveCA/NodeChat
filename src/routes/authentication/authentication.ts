@@ -7,14 +7,13 @@ import { Account } from '../../classes/database/models/account';
 import { Constants } from '../../namespaces/constants';
 import { Paths } from '../../namespaces/paths';
 import { Regexs } from '../../namespaces/regex';
-import { login_validator, subscribe_validator } from './authentication_m';
+import { login_validator, subscribe_validator, verify_credentials } from './authentication_m';
 
 const app = express();
 export const authentication_routes = express.Router();
 
 authentication_routes.get('/login',(req,res)=>{
     let message: string|null = (req.query.message != null) ? req.query.message as string : null;
-    console.log("Message => "+message);
     res.render('login',{
         bootstrap_css: Paths.BOOTSTRAP_CSS,
         bootstrap_js: Paths.BOOTSTRAP_JS,
@@ -68,7 +67,7 @@ authentication_routes.get('/verify/:code',async(req,res)=>{
         });
 });
 
-authentication_routes.post('/login', login_validator, (req,res)=>{
+authentication_routes.post('/login', [login_validator, verify_credentials], (req,res)=>{
     res.send("Login POST route");
 });
 

@@ -12,6 +12,7 @@ export interface AccountInterface{
 
 export class Account extends MongoDbModelManager{
 
+    private _id: string;
     private _username:string;
     private _email:string;
     private _password: string;
@@ -32,6 +33,7 @@ export class Account extends MongoDbModelManager{
         this.setValues(data);
     }
 
+    get id(){return this._id;}
     get username(){return this._username;}
     get email(){return this._email;}
     get password_hash(){return this._password_hash;}
@@ -103,8 +105,16 @@ export class Account extends MongoDbModelManager{
                 done: true,
                 result: res
             };
-            /* console.log("getAccount");
-            console.log(response); */
+            console.log("getAccount");
+            console.log(response);
+            if(res["_id"])this._id = res["_id"];
+            if(res["username"])this._username = res["username"];
+            if(res["email"])this._email = res["email"];
+            if(res["password"])this._password = res["password"];
+            if(res["activationCode"])this._activationCode = res["activationCode"];
+            if(res["resetCode"])this._resetCode = res["resetCode"];
+            if(res["verified"])this._verified = res["verified"];
+            if(res["resetted"])this._resetted = res["resetted"];
         }).catch(err => {
             console.warn(err);
             this._errno = MongoDbModelManager.GET_ERROR;
