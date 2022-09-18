@@ -110,7 +110,7 @@ export class Account extends MongoDbModelManager{
             if(res["_id"])this._id = res["_id"];
             if(res["username"])this._username = res["username"];
             if(res["email"])this._email = res["email"];
-            if(res["password"])this._password = res["password"];
+            if(res["password_hash"])this._password_hash = res["password_hash"];
             if(res["activationCode"])this._activationCode = res["activationCode"];
             if(res["resetCode"])this._resetCode = res["resetCode"];
             if(res["verified"])this._verified = res["verified"];
