@@ -77,22 +77,22 @@ export const verify_credentials = async (req: Request, res: Response, next: Next
     let ac_data: AccountInterface = {};
     let ac: Account = new Account(mongo_mmi,ac_data);
     await ac.getAccount({username: username}).then(res => {
-        console.log("verify_credentials getAccount => ");
-        console.log(res);
-        if(res['done'] == true && ac.password_hash != null){
-            return brcypt.compare(password, ac.password_hash);
+        /* console.log("verify_credentials getAccount => ");
+        console.log(res); */
+        if(res['done'] == true && res['result'] != null && username == res['result']['username']){
+            return brcypt.compare(password, res['result']['password']);
         }
         else throw new InvalidCredentialsError(Messages.ERROR_INVALIDCREDENTIALS);
     }).then(res =>{
-        console.log("verify_credentials bcrypt => ");
-        console.log(res);
+        /* console.log("verify_credentials bcrypt => ");
+        console.log(res); */
         if(res == true){
             next();
         }
         else throw new InvalidCredentialsError(Messages.ERROR_INVALIDCREDENTIALS);
     }).catch(err => {
-        console.log("verify_credentials error => ");
-        console.error(err);
+        /* console.log("verify_credentials error => ");
+        console.error(err); */
         if(err instanceof InvalidCredentialsError){
             let message: string = encodeURIComponent(err.message);
             res.redirect("/login?message="+message);
