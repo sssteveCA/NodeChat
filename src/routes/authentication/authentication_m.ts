@@ -8,6 +8,7 @@ import { MongoDbModelManagerInterface } from '../../classes/database/mongodbmode
 import { Constants } from '../../namespaces/constants';
 import { Schemas } from '../../namespaces/schemas';
 import brcypt from 'bcrypt';
+import { InvalidCredentialsError } from '../../classes/errors/invalidcredentialserror';
 
 /**
  * Login form validator middleware
@@ -66,7 +67,7 @@ export const subscribe_validator = (req: Request, res: Response, next: NextFunct
  * 
  * Check if provided username and password are correct
  */
-export const verify_credentials = (req: Request, res: Response, next: NextFunction) => {
+export const verify_credentials = async (req: Request, res: Response, next: NextFunction) => {
     let username: string = req.body.username;
     let password: string = req.body.password;
     let mongo_mmi: MongoDbModelManagerInterface = {
@@ -75,11 +76,24 @@ export const verify_credentials = (req: Request, res: Response, next: NextFuncti
     };
     let ac_data: AccountInterface = {};
     let ac: Account = new Account(mongo_mmi,ac_data);
-    ac.getAccount({username: username}).then(res => {
+    await ac.getAccount({username: username}).then(res => {
         if(res['done'] == true && ac.password_hash != null){
             return brcypt.compare(password, ac.password_hash);
         }
+        else throw new InvalidCredentialsError(Messages.ERROR_INVALIDCREDENTIALS);
     }).then(res =>{
-        
-    })
+        if(res == true){
+            next();
+        }
+        else throw new InvalidCredentialsError(Messages.ERROR_INVALIDCREDENTIALS);
+    }).catch(err => {
+        if(err instanceof InvalidCredentialsError){
+            let message: string = encodeURIComponent(err.message);
+            res.redirect("/login?message="+message);
+        } 
+        else{
+            let message: string = encodeURIComponent("Errore durante il login dell'account");
+            res.redirect("/login?message="+message);
+        }   
+    });
 };
