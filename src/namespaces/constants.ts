@@ -9,4 +9,9 @@ export namespace Constants{
 
     //MongoDB
     export const MONGODB_ACCOUNTS_COLLECTION = 'accounts';
+
+    /**
+     * The duration of the token_key when user login
+     */
+    export const TOKEN_DURATION_SECONDS: number = 900; 
 }
