@@ -3,25 +3,39 @@
 import express from 'express';
 import { Constants } from '../../namespaces/constants';
 import { Paths } from '../../namespaces/paths';
+import session from 'express-session';
 
 export const menu_items_routes = express.Router();
 
+menu_items_routes.use(session({
+    secret: process.env.EXPRESS_SESSION_SECRET as string
+}));
+
 menu_items_routes.get('/about_us',(req,res)=>{
-    res.render('about_us',{ container: Constants.CONTAINER });
+    let username: string = req.session['username'] ? req.session['username'] : null;
+    let guest: boolean = !username ? true : false;
+    res.render('about_us',{ container: Constants.CONTAINER, guest: guest, username: username });
 });
 
 menu_items_routes.get('/contacts',(req,res)=>{
+    let username: string = req.session['username'] ? req.session['username'] : null;
+    let guest: boolean = !username ? true : false;
     res.render('contacts',{
         bootstrap_css: Paths.BOOTSTRAP_CSS, bootstrap_js: Paths.BOOTSTRAP_JS, container: Constants.CONTAINER,
-        jquery_js: Paths.JQUERY_JS, jquery_ui_css: Paths.JQUERY_UI_CSS, jquery_ui_js: Paths.JQUERY_UI_JS
+        guest: guest, jquery_js: Paths.JQUERY_JS, jquery_ui_css: Paths.JQUERY_UI_CSS, 
+        jquery_ui_js: Paths.JQUERY_UI_JS, username: username,
     });
 });
 
 menu_items_routes.get('/rules',(req,res)=>{
-    res.render('rules',{ container: Constants.CONTAINER });
+    let username: string = req.session['username'] ? req.session['username'] : null;
+    let guest: boolean = !username ? true : false;
+    res.render('rules',{ container: Constants.CONTAINER, guest: guest, username: username });
 });
 
 menu_items_routes.get('/terms',(req,res)=>{
-    res.render('terms',{ container: Constants.CONTAINER });
+    let username: string = req.session['username'] ? req.session['username'] : null;
+    let guest: boolean = !username ? true : false;
+    res.render('terms',{ container: Constants.CONTAINER, guest: guest, username: username });
 });
 

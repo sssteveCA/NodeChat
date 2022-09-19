@@ -7,7 +7,12 @@
         <link rel="stylesheet" href="css/menu.css">
     </head>
     <body>
-        {{> menu}}
+        {{#guest}}
+            {{> menu}}
+        {{/guest}}
+        {{#username}}
+            {{> menu_logged}}
+        {{/username}}
         <div class="{{container}}">
             <div class="header">
                 <h1>Termini e condizioni</h1>
