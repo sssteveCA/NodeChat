@@ -83,10 +83,11 @@ export const verify_credentials = async (req: Request, res: Response, next: Next
             return brcypt.compare(password, res['result']['password']);
         }
         else throw new InvalidCredentialsError(Messages.ERROR_INVALIDCREDENTIALS);
-    }).then(res =>{
+    }).then(result =>{
         /* console.log("verify_credentials bcrypt => ");
         console.log(res); */
-        if(res == true){
+        if(result == true){
+            res.locals.accountId = ac.id;
             next();
         }
         else throw new InvalidCredentialsError(Messages.ERROR_INVALIDCREDENTIALS);
