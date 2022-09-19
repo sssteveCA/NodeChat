@@ -15,11 +15,15 @@ import { email_routes } from './routes/email/email';
 import { Paths } from './namespaces/paths';
 import { Constants } from './namespaces/constants';
 import { loadavg } from 'os';
+import session from 'express-session';
 
 dotenv.config(); //Load .env file
 
 const app = express();
 
+app.use(session({
+    secret: process.env.EXPRESS_SESSION_SECRET as string
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());

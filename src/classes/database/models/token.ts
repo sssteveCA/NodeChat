@@ -140,7 +140,12 @@ export class Token extends MongoDbModelManager{
                 }).then(res => {
                     console.log("Insert/Replace token promise res => ");
                     console.log(res);
-                    if(res.acknowledged == true) response['errno'] = 0;
+                    if(res.acknowledged == true) {
+                        response = {
+                            errno: 0,
+                            token_key: this._tokenKey
+                        };
+                    }
                     else throw new Error(this.error as string);
                 }).catch(err => {
                     console.warn(err);

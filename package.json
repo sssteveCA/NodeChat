@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/express-session": "^1.17.5",
     "@types/jquery": "^3.5.14",
     "@types/jqueryui": "^1.12.16",
     "@types/nodemailer": "^6.4.5",

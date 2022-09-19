@@ -9,9 +9,13 @@ import { Constants } from '../../namespaces/constants';
 import { Paths } from '../../namespaces/paths';
 import { Regexs } from '../../namespaces/regex';
 import { login_validator, subscribe_validator, verify_credentials } from './authentication_m';
+import session from 'express-session';
 
-const app = express();
 export const authentication_routes = express.Router();
+
+authentication_routes.use(session({
+    secret: process.env.EXPRESS_SESSION_SECRET as string
+}));
 
 authentication_routes.get('/login',(req,res)=>{
     let message: string|null = (req.query.message != null) ? req.query.message as string : null;
@@ -68,12 +72,17 @@ authentication_routes.get('/verify/:code',async(req,res)=>{
 });
 
 authentication_routes.post('/login', [login_validator, verify_credentials], (req,res)=>{
+    let username: string = req.body.username;
     let login_data: LoginInterface = {
         accountId: res.locals.accountId
     };
     let login: Login = new Login(login_data);
     login.login().then(obj => {
-        if(obj['done'] == true)return res.status(obj['code']).json(obj);
+        if(obj['done'] == true){
+            req.session.username = username;
+            req.session.token_key = obj['token_key'];
+            return res.redirect("/");
+        }
 
         let msg_encoded: string = encodeURIComponent(obj['msg']);
         return res.redirect('/login?message='+msg_encoded);     
