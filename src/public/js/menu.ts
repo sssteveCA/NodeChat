@@ -1,4 +1,4 @@
-import { ConfirmDialog, ConfirmDialogInterface } from "./classes/dialogs/confirmdialog";
+import { ConfirmDialog, ConfirmDialogInterface } from "./classes/dialogs/confirmdialog.js";
 
 $(()=>{
     console.log("menu.js");

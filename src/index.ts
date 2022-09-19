@@ -44,7 +44,8 @@ app.get('/',(req,res)=>{
     console.log(req.session);
     if(req.session['username'] && req.session['token_key']){
         return res.render('logged/index_logged',{
-            container: Constants.CONTAINER, username: req.session['username']
+            container: Constants.CONTAINER, jquery_js: Paths.JQUERY_JS, jquery_ui_css: Paths.JQUERY_UI_CSS, 
+            jquery_ui_js: Paths.JQUERY_UI_JS, username: req.session['username']
         });
     }
     return res.render('index',{container: Constants.CONTAINER});
