@@ -1,0 +1,32 @@
+@use "sass:selector"
+
+$hover-li-background: linear-gradient(0deg, rgba(6,242,184,1) 0%, rgba(0,138,255,1) 100%)
+$nav-border: 1px solid black
+$nav-background: linear-gradient(90deg, rgba(242,128,6,1) 0%, rgba(224,255,0,1) 76%, rgba(78,255,0,1) 100%)
+
+@mixin menu-style()
+    nav
+        display: flex
+        justify-content: space-between
+        background: $nav-background
+        border: $nav-border
+        @include ul-li-style()
+    $nav-ul-sel: selector.nest("nav","ul")
+    #{$nav-ul-sel}
+        padding: 0
+        margin: 0
+
+@mixin ul-li-style()
+    ul
+        list-style-type: none
+        display: flex
+        li
+            font-size: 18px
+            font-weight: bold
+            padding: 20px
+        $li-hover: selector.nest("li","&:hover")
+        #{$li-hover}
+            background: $hover-li-background
+            border: 2px solid red
+
+@include menu-style()
