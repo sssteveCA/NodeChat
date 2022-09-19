@@ -4,7 +4,8 @@ import { MissingDataError } from "../../errors/missingdataerror";
 import { MongoDbModelManager, MongoDbModelManagerInterface } from "../mongodbmodelmanager";
 
 export interface TokenInterface{
-    account_id?: string; 
+    accountId?: string; 
+    tokenKey?: string;
 }
 
 export class Token extends MongoDbModelManager{
@@ -118,7 +119,7 @@ export class Token extends MongoDbModelManager{
         this._errno = 0;
         let response: object = {};
         try{
-            if(this._accountId && this._tokenKey && this._creationDate && this._expireDate){
+            if(this._accountId && this._tokenKey && this._expireDate){
                 await super.connect().then(conn => {
                     if(conn == true)return super.get({accountId: this._accountId});
                     else throw new DatabaseConnectionError(this.error as string);
@@ -126,7 +127,7 @@ export class Token extends MongoDbModelManager{
                     if(result != null){
                         console.log(`Token get before insert => ${result} `);
                         let token_data: object = {
-                            tokenKey: this._tokenKey,creationDate: this._creationDate,expireDate: this._expireDate
+                            tokenKey: this._tokenKey,expireDate: this._expireDate
                         };
                         return super.replace({accountId: this._accountId},token_data);
                     }//if(result != null){
@@ -145,7 +146,7 @@ export class Token extends MongoDbModelManager{
                 }).finally(()=>{
                     super.close();
                 });
-            }//if(this._accountId && this._tokenKey && this._creationDate && this._expireDate){
+            }//if(this._accountId && this._tokenKey && this._expireDate){
             else{
                 this._errno = Token.MISSINGDATA_ERROR;
                 throw new MissingDataError(this.error as string);
@@ -232,8 +233,9 @@ export class Token extends MongoDbModelManager{
     }
 
     private setValues(data: TokenInterface){
-        if(data.account_id){
-            this._accountId = data.account_id;
+        if(data.accountId && data.tokenKey){
+            this._accountId = data.accountId;
+            this._tokenKey = data.tokenKey;
             let today: Date = new Date();
             this._creationDate = this.dateString(today);
             console.log("setValues creationDate => "+this._creationDate);
@@ -241,6 +243,6 @@ export class Token extends MongoDbModelManager{
             expireTime.setMinutes(today.getMinutes() + 15);
             this._expireDate = this.dateString(expireTime);
             console.log("setValues expireDate => "+this._expireDate);
-        }//if(data.account_id){
+        }//if(data.accountId && data.tokenKey){
     }
 }

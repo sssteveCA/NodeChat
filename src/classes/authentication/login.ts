@@ -1,3 +1,7 @@
+import { trusted } from "mongoose";
+import { Schemas } from "../../namespaces/schemas";
+import { Token, TokenInterface } from "../database/models/token";
+import { MongoDbModelManagerInterface } from "../database/mongodbmodelmanager";
 
 export interface LoginInterface{
     accountId: string;
@@ -10,6 +14,10 @@ export class Login{
     private _errno: number = 0;
     private _error: string|null = null;
 
+    public static LOGIN_ERROR: number = 1;
+
+    private static LOGIN_ERROR_MSG: string = "Errore durante il login";
+
     private static TOKENKEY_LENGTH:number = 100;
 
     constructor(data: LoginInterface){
@@ -21,6 +29,9 @@ export class Login{
     get errno(){return this._errno;}
     get error(){
         switch(this._errno){
+            case Login.LOGIN_ERROR:
+                this._error = Login.LOGIN_ERROR_MSG;
+                break;
             default:
                 this._error = null;
                 break;
@@ -35,9 +46,28 @@ export class Login{
     public async login(): Promise<object>{
         let response: object = {};
         try{
-
+            this._token_key = this.tokenKeyString();
+            let mongo_mmi: MongoDbModelManagerInterface = {
+                collection_name: process.env.MONGODB_TOKENS_COLLECTION as string, schema: Schemas.TOKENS
+            };
+            let token_data: TokenInterface = {
+                accountId: this._accountId, tokenKey: this._token_key
+            };
+            let token: Token = new Token(mongo_mmi,token_data);
+            await token.insertToken().then(res => {
+                if(res['errno'] == 0)response = { done: true };
+                else{
+                    this._errno = Login.LOGIN_ERROR;
+                    throw new Error(this.error as string);
+                }
+            }).catch(err => {
+                throw err;
+            });
         }catch(e){
-
+            response = {
+                done: false,
+                msg: this.error
+            };
         }
         return response;
     }
