@@ -26,10 +26,8 @@ export const contacts_validator = (req: Request, res: Response ,next: NextFuncti
             }//for(const [key,value] of Object.entries(body)){
             if(valid == true)
                next();
-            else
-                res.status(400).send({done: false, msg: Messages.ERROR_INCORRECTFORMAT});
+            return res.status(400).send({done: false, msg: Messages.ERROR_INCORRECTFORMAT});
         }//if(body.hasOwnProperty('name') && body.hasOwnProperty('email') && body.hasOwnProperty('subject') && body.hasOwnProperty('message')){ 
     }//if(body != null){
-    else
-        res.status(400).send({done: false, msg: Messages.ERROR_MISSINGDATA});
+    return res.status(400).send({done: false, msg: Messages.ERROR_MISSINGDATA});
 };

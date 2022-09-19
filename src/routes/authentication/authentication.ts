@@ -61,12 +61,10 @@ authentication_routes.get('/verify/:code',async(req,res)=>{
         verify_response = obj['msg'];
         status_code = obj['code']; 
     });
-    res.status(status_code).render('code_verify',{
-            bootstrap_css: '../'+Paths.BOOTSTRAP_CSS,
-            bootstrap_js: '../'+Paths.BOOTSTRAP_JS,
-            container: Constants.CONTAINER,
-            verify_response: verify_response
-        });
+    return res.status(status_code).render('code_verify',{
+        bootstrap_css: '../'+Paths.BOOTSTRAP_CSS, bootstrap_js: '../'+Paths.BOOTSTRAP_JS,
+        container: Constants.CONTAINER, verify_response: verify_response
+    });
 });
 
 authentication_routes.post('/login', [login_validator, verify_credentials], (req,res)=>{
@@ -75,11 +73,10 @@ authentication_routes.post('/login', [login_validator, verify_credentials], (req
     };
     let login: Login = new Login(login_data);
     login.login().then(obj => {
-        if(obj['done'] == true) res.status(obj['code']).json(obj);
-        else{
-            let msg_encoded: string = encodeURIComponent(obj['msg']);
-            res.redirect('/login?message='+msg_encoded);
-        } 
+        if(obj['done'] == true)return res.status(obj['code']).json(obj);
+
+        let msg_encoded: string = encodeURIComponent(obj['msg']);
+        return res.redirect('/login?message='+msg_encoded);     
     });
 });
 
@@ -95,8 +92,8 @@ authentication_routes.post('/newAccount',subscribe_validator,(req,res)=> {
     };
     let subscribe: Subscribe = new Subscribe(subscribe_data);
     subscribe.insertNewAccount().then(obj => {
-        res.status(obj['code']).json(obj);
+        return res.status(obj['code']).json(obj);
     }).catch(err => {
-        res.status(500).send(err);
+        return res.status(500).send(err);
     });
 });

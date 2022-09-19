@@ -19,14 +19,11 @@ export const login_validator = (req: Request, res: Response, next: NextFunction)
     let passed: boolean = false;
     if(body.hasOwnProperty("username") && body.hasOwnProperty("password")){
         if(body['username'] != "" && body['password'] != ""){
-            passed = true;
             next();
         }//if(body['username'] != "" && body['password']){
     }//if(body.hasOwnProperty("username") && body.hasOwnProperty("password")){
-    if(!passed){
-        let msg_encoded = encodeURIComponent(Messages.ERROR_MISSINGDATA);
-        res.redirect("/login?message="+msg_encoded);
-    } 
+    let msg_encoded = encodeURIComponent(Messages.ERROR_MISSINGDATA);
+    return res.redirect("/login?message="+msg_encoded);   
 };
 
 /**
@@ -42,25 +39,21 @@ export const subscribe_validator = (req: Request, res: Response, next: NextFunct
                 if(password_regex.test(body["password"])){
                     next();
                 }//if(email_regex.test(body["password"])){
-                else
-                   res.status(400).send({
+                return res.status(400).send({
                     done: false, msg: "La password deve contenere almeno una lettera minuscola, almeno una lettera maiuscola e un numero"
-                   });
-            }//if(email_regex.test(body["email"])){
-            else
-                res.status(400).send({
-                    done: false, msg: "L'indirizzo email inserito non è valido"
                 });
+            }//if(email_regex.test(body["email"])){
+            return res.status(400).send({
+                    done: false, msg: "L'indirizzo email inserito non è valido"
+                    });
         }//if(body["password"] == body["confPass"]){
-        else
-            res.status(400).send({
-                done: false, msg: "Le due password non coincidono"
-            });
-    }//if(body.hasOwnProperty("username") && body.hasOwnProperty("email") && body.hasOwnProperty("password") && body.hasOwnProperty("confPass")){
-    else
-        res.status(400).send({
-            done: false, msg: Messages.ERROR_MISSINGDATA
+        return res.status(400).send({
+            done: false, msg: "Le due password non coincidono"
         });
+    }//if(body.hasOwnProperty("username") && body.hasOwnProperty("email") && body.hasOwnProperty("password") && body.hasOwnProperty("confPass")){
+    return res.status(400).send({
+            done: false, msg: Messages.ERROR_MISSINGDATA
+    });
 };
 
 
@@ -100,11 +93,10 @@ export const verify_credentials = async (req: Request, res: Response, next: Next
         console.error(err); */
         if(err instanceof InvalidCredentialsError || err instanceof AccountNotActivatedError){
             let message: string = encodeURIComponent(err.message);
-            res.redirect("/login?message="+message);
+            return res.redirect("/login?message="+message);
         } 
-        else{
-            let message: string = encodeURIComponent("Errore durante il login dell'account");
-            res.redirect("/login?message="+message);
-        }   
+
+        let message: string = encodeURIComponent("Errore durante il login dell'account");
+        return res.redirect("/login?message="+message);
     });
 };

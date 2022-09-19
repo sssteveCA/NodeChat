@@ -11,28 +11,22 @@ export const email_routes = express.Router();
 email_routes.post('/send_email',contacts_validator,async (req,res)=>{
     let output: object = {};
     let em_data: EmailInterface = {
-        name: req.body.name,
-        email: req.body.email,
-        subject: req.body.subject,
-        message: req.body.message
+        name: req.body.name, email: req.body.email, subject: req.body.subject, message: req.body.message
     };
     let em: Email = new Email(em_data);
     em.sendMail().then(obj => {
-        if(obj['done'] == true)
-        {
+        if(obj['done'] == true){
             output = {
-                done: true,
-                msg: "La tua richiesta è stata inviata. Riceverai una risposta nel minor tempo possibile"
-            }
-            res.status(200).send(output);
-        } 
-        else{
-            output = {
-                done: false,
-                msg: em.error
+                done: true, msg: "La tua richiesta è stata inviata. Riceverai una risposta nel minor tempo possibile"
             };
-            res.status(500).send(output);
-        }      
+            return res.status(200).send(output);
+        }
+
+        output = {
+            done: false,
+            msg: em.error
+        };
+        return res.status(500).send(output);
     });
 });
 
