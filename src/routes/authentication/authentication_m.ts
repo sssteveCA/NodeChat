@@ -9,6 +9,7 @@ import { Constants } from '../../namespaces/constants';
 import { Schemas } from '../../namespaces/schemas';
 import brcypt from 'bcrypt';
 import { InvalidCredentialsError } from '../../classes/errors/invalidcredentialserror';
+import { AccountNotActivatedError } from '../../classes/errors/accountnotactivatederror';
 
 /**
  * Login form validator middleware
@@ -91,9 +92,7 @@ export const verify_credentials = async (req: Request, res: Response, next: Next
                 res.locals.accountId = ac.id;
                 next();
             }
-            else{
-                
-            }
+            else throw new AccountNotActivatedError("Il tuo account non è attivo. Per utilizzarlo completa la registrazione facendo click sul link che ti abbiamo inviato alla tua casella di posta.");
         }
         else throw new InvalidCredentialsError(Messages.ERROR_INVALIDCREDENTIALS);
     }).catch(err => {
