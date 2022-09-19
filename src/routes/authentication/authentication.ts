@@ -30,6 +30,14 @@ authentication_routes.get('/login', guest, (req,res)=>{
     });
 });
 
+authentication_routes.get('/logout', async (req,res)=>{
+    if(req.session['username'])req.session['username'] = null;
+    if(req.session['token_key'])req.session['token_key'] = null;
+    req.session.destroy(()=>{
+        return res.redirect("/");
+    }); 
+});
+
 authentication_routes.get('/subscribe', guest, (req,res)=>{
     res.render('subscribe',{
         bootstrap_css: Paths.BOOTSTRAP_CSS,
