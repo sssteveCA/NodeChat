@@ -12,6 +12,16 @@ import { InvalidCredentialsError } from '../../classes/errors/invalidcredentials
 import { AccountNotActivatedError } from '../../classes/errors/accountnotactivatederror';
 
 /**
+ * Pass to the next hop if user is not logged 
+ */
+export const guest = (req: Request, res: Response, next: NextFunction) => {
+    if(req.session['username'] && req.session['token_key'])
+        return res.redirect("/");
+    else
+        return next();
+};
+
+/**
  * Login form validator middleware
  */
 export const login_validator = (req: Request, res: Response, next: NextFunction) => {

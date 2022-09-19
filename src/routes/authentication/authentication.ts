@@ -8,7 +8,7 @@ import { Account } from '../../classes/database/models/account';
 import { Constants } from '../../namespaces/constants';
 import { Paths } from '../../namespaces/paths';
 import { Regexs } from '../../namespaces/regex';
-import { login_validator, subscribe_validator, verify_credentials } from './authentication_m';
+import { guest, login_validator, subscribe_validator, verify_credentials } from './authentication_m';
 import session from 'express-session';
 
 export const authentication_routes = express.Router();
@@ -16,6 +16,7 @@ export const authentication_routes = express.Router();
 authentication_routes.use(session({
     secret: process.env.EXPRESS_SESSION_SECRET as string
 }));
+authentication_routes.use(guest);
 
 authentication_routes.get('/login',(req,res)=>{
     let message: string|null = (req.query.message != null) ? req.query.message as string : null;

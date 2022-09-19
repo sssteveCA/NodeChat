@@ -55,7 +55,7 @@ export class Login{
             };
             let token: Token = new Token(mongo_mmi,token_data);
             await token.insertToken().then(res => {
-                if(res['errno'] == 0)response = { done: true, msg: "Sei loggato", code: 200 };
+                if(res['errno'] == 0)response = { done: true, token_key: this._token_key };
                 else{
                     this._errno = Login.LOGIN_ERROR;
                     throw new Error(this.error as string);

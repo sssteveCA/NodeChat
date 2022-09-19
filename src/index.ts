@@ -35,6 +35,7 @@ app.use('/',email_routes);
 
 app.engine('mustache',mustacheExpress());
 app.engine('mustache', mustacheExpress(Paths.ROOTPATH+'/views/partials','.mustache')); //Partials directory
+//app.engine('mustache', mustacheExpress(Paths.ROOTPATH+'/views/logged','.mustache')); //Logged views directory
 app.set('view engine','mustache');
 app.set('views', Paths.ROOTPATH+'/views');
 app.use(express.static(StaticPaths.PUBLIC_PATH));
@@ -42,7 +43,7 @@ app.get('/',(req,res)=>{
     console.log("session => ");
     console.log(req.session);
     if(req.session['username'] && req.session['token_key']){
-        return res.render('index_logged',{
+        return res.render('logged/index_logged',{
             container: Constants.CONTAINER, username: req.session['username']
         });
     }
