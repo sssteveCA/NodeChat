@@ -16,9 +16,8 @@ export const authentication_routes = express.Router();
 authentication_routes.use(session({
     secret: process.env.EXPRESS_SESSION_SECRET as string
 }));
-authentication_routes.use(guest);
 
-authentication_routes.get('/login',(req,res)=>{
+authentication_routes.get('/login', guest, (req,res)=>{
     let message: string|null = (req.query.message != null) ? req.query.message as string : null;
     res.render('login',{
         bootstrap_css: Paths.BOOTSTRAP_CSS,
@@ -31,7 +30,7 @@ authentication_routes.get('/login',(req,res)=>{
     });
 });
 
-authentication_routes.get('/subscribe',(req,res)=>{
+authentication_routes.get('/subscribe', guest, (req,res)=>{
     res.render('subscribe',{
         bootstrap_css: Paths.BOOTSTRAP_CSS,
         bootstrap_js: Paths.BOOTSTRAP_JS,
@@ -43,7 +42,7 @@ authentication_routes.get('/subscribe',(req,res)=>{
     });
 });
 
-authentication_routes.get('/verify',(req,res)=>{
+authentication_routes.get('/verify', guest, (req,res)=>{
     res.render('verify',{
         bootstrap_css: '../'+Paths.BOOTSTRAP_CSS,
         bootstrap_js: '../'+Paths.BOOTSTRAP_JS,
@@ -54,7 +53,7 @@ authentication_routes.get('/verify',(req,res)=>{
     });
 });
 
-authentication_routes.get('/verify/:code',async(req,res)=>{
+authentication_routes.get('/verify/:code', guest, async(req,res)=>{
     let code = req.params.code;
     let status_code: number = 200;
     let verify_response: string = "";
@@ -90,7 +89,7 @@ authentication_routes.post('/login', [login_validator, verify_credentials], (req
     });
 });
 
-authentication_routes.post('/newAccount',subscribe_validator,(req,res)=> {
+authentication_routes.post('/newAccount',[guest,subscribe_validator],(req,res)=> {
     let body: object = req.body as object;
     let home_url: string = process.env.MAIN_URL+Paths.VERIFY as string;
     //console.log("home_url => "+home_url);
