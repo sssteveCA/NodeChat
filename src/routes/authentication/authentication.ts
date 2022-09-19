@@ -83,9 +83,9 @@ authentication_routes.post('/login', [login_validator, verify_credentials], (req
             req.session.token_key = obj['token_key'];
             return res.redirect("/");
         }
-
         let msg_encoded: string = encodeURIComponent(obj['msg']);
-        return res.redirect('/login?message='+msg_encoded);     
+        return res.redirect('/login?message='+msg_encoded);  
+         
     });
 });
 

@@ -24,8 +24,7 @@ export const contacts_validator = (req: Request, res: Response ,next: NextFuncti
                     }
                 }//if(key == 'email'){
             }//for(const [key,value] of Object.entries(body)){
-            if(valid == true)
-               next();
+            if(valid == true) return next();
             return res.status(400).send({done: false, msg: Messages.ERROR_INCORRECTFORMAT});
         }//if(body.hasOwnProperty('name') && body.hasOwnProperty('email') && body.hasOwnProperty('subject') && body.hasOwnProperty('message')){ 
     }//if(body != null){

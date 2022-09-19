@@ -39,10 +39,14 @@ app.set('view engine','mustache');
 app.set('views', Paths.ROOTPATH+'/views');
 app.use(express.static(StaticPaths.PUBLIC_PATH));
 app.get('/',(req,res)=>{
-    res.render('index',{
-        container: Constants.CONTAINER,
-        background: Constants.BACKGROUND
-    });
+    console.log("session => ");
+    console.log(req.session);
+    if(req.session['username'] && req.session['token_key']){
+        return res.render('index_logged',{
+            container: Constants.CONTAINER, username: req.session['username']
+        });
+    }
+    return res.render('index',{container: Constants.CONTAINER});
 });
 
 app.listen(Constants.PORT,Constants.HOSTNAME,()=>{

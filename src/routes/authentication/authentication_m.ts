@@ -19,9 +19,11 @@ export const login_validator = (req: Request, res: Response, next: NextFunction)
     let passed: boolean = false;
     if(body.hasOwnProperty("username") && body.hasOwnProperty("password")){
         if(body['username'] != "" && body['password'] != ""){
-            next();
+            console.log("LoginValidator next");
+            return next();
         }//if(body['username'] != "" && body['password']){
     }//if(body.hasOwnProperty("username") && body.hasOwnProperty("password")){
+    console.log("LoginValidator next");
     let msg_encoded = encodeURIComponent(Messages.ERROR_MISSINGDATA);
     return res.redirect("/login?message="+msg_encoded);   
 };
@@ -37,7 +39,7 @@ export const subscribe_validator = (req: Request, res: Response, next: NextFunct
             if(email_regex.test(body["email"])){
                 let password_regex: RegExp = new RegExp(Regexs.PASSWORD);
                 if(password_regex.test(body["password"])){
-                    next();
+                    return next();
                 }//if(email_regex.test(body["password"])){
                 return res.status(400).send({
                     done: false, msg: "La password deve contenere almeno una lettera minuscola, almeno una lettera maiuscola e un numero"
@@ -83,7 +85,7 @@ export const verify_credentials = async (req: Request, res: Response, next: Next
         if(result == true){
             if(ac.verified == true){
                 res.locals.accountId = ac.id;
-                next();
+                return next();
             }
             else throw new AccountNotActivatedError("Il tuo account non è attivo. Per utilizzarlo completa la registrazione facendo click sul link che ti abbiamo inviato alla tua casella di posta.");
         }
