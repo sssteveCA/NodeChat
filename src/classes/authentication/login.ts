@@ -55,7 +55,7 @@ export class Login{
             };
             let token: Token = new Token(mongo_mmi,token_data);
             await token.insertToken().then(res => {
-                if(res['errno'] == 0)response = { done: true };
+                if(res['errno'] == 0)response = { done: true, msg: "Sei loggato", code: 200 };
                 else{
                     this._errno = Login.LOGIN_ERROR;
                     throw new Error(this.error as string);
@@ -64,10 +64,7 @@ export class Login{
                 throw err;
             });
         }catch(e){
-            response = {
-                done: false,
-                msg: this.error
-            };
+            response = { done: false,msg: this.error, code: 500};
         }
         return response;
     }

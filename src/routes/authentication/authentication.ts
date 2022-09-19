@@ -2,6 +2,7 @@
 
 import express, { NextFunction, Request, Response } from 'express';
 import mustacheExpress from 'mustache-express';
+import { Login, LoginInterface } from '../../classes/authentication/login';
 import { Subscribe, SubscribeInterface } from '../../classes/authentication/subscribe';
 import { Account } from '../../classes/database/models/account';
 import { Constants } from '../../namespaces/constants';
@@ -69,7 +70,17 @@ authentication_routes.get('/verify/:code',async(req,res)=>{
 });
 
 authentication_routes.post('/login', [login_validator, verify_credentials], (req,res)=>{
-    res.send("Login POST route");
+    let login_data: LoginInterface = {
+        accountId: res.locals.accountId
+    };
+    let login: Login = new Login(login_data);
+    login.login().then(obj => {
+        if(obj['done'] == true) res.status(obj['code']).json(obj);
+        else{
+            let msg_encoded: string = encodeURIComponent(obj['msg']);
+            res.redirect('/login?message='+msg_encoded);
+        } 
+    });
 });
 
 authentication_routes.post('/newAccount',subscribe_validator,(req,res)=> {
