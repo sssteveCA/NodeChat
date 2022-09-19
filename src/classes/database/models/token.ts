@@ -9,11 +9,12 @@ export class Token extends MongoDbModelManager{
     private _id: string;
     private _accountId: string;
     private _tokenKey: string;
-    private _creationDate: Date;
-    private _expireDate: Date;
+    private _creationDate: string;
+    private _expireDate: string;
 
     constructor(data_mmi: MongoDbModelManagerInterface, data: TokenInterface){
         super(data_mmi);
+        this.setValues(data);
     }
 
     get id(){return this._id;}
@@ -114,8 +115,7 @@ export class Token extends MongoDbModelManager{
             if(result != null){
                 console.log(`Token get before insert => ${result} `);
                 let token_data: object = {
-                    accountId: this._accountId,tokenKey: this._tokenKey,creationDate: this._creationDate,
-                    expireDate: this._expireDate
+                    tokenKey: this._tokenKey,creationDate: this._creationDate,expireDate: this._expireDate
                 };
                 return super.replace({accountId: this._accountId},token_data);
             }//if(result != null){
@@ -196,7 +196,27 @@ export class Token extends MongoDbModelManager{
         return response;
     }
 
+    /**
+     * Parse a Date object into date string
+     * @param date Date
+     * @returns YYYY-MM-DD hh:mm:ss string data
+     */
+    private dateString(date: Date):string{
+        let year = date.getFullYear();
+        let month = date.getMonth() < 10 ? "0"+date.getMonth() : date.getMonth();
+        let day = date.getDate() < 10 ? "0"+date.getDate() : date.getDate();
+        let hours = date.getHours() < 10 ? "0"+date.getHours() : date.getHours();
+        let minutes = date.getMinutes() < 10 ? "0"+date.getMinutes() : date.getMinutes();
+        let seconds = date.getSeconds() < 10 ? "0"+date.getSeconds() : date.getSeconds();
+        let stringDate: string = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        return stringDate;
+    }
+
     private setValues(data: TokenInterface){
-        if(data.account_id)this._accountId = data.account_id;
+        if(data.account_id){
+            this._accountId = data.account_id;
+            let today: Date = new Date();
+            this._creationDate = this.dateString(today);
+        }//if(data.account_id){
     }
 }
