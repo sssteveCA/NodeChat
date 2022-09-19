@@ -87,8 +87,13 @@ export const verify_credentials = async (req: Request, res: Response, next: Next
         /* console.log("verify_credentials bcrypt => ");
         console.log(res); */
         if(result == true){
-            res.locals.accountId = ac.id;
-            next();
+            if(ac.verified == true){
+                res.locals.accountId = ac.id;
+                next();
+            }
+            else{
+                
+            }
         }
         else throw new InvalidCredentialsError(Messages.ERROR_INVALIDCREDENTIALS);
     }).catch(err => {

@@ -142,10 +142,10 @@ export class Account extends MongoDbModelManager{
         this._errno = 0;
         let response: object = {};
         try{
-            if(this._username && this._email && this._password_hash && this._activationCode){
+            if(this._username && this._email && this._password_hash && this._creationDate && this._activationCode){
                 let document: object = {
                     username: this._username,email: this._email,password: this._password_hash,
-                    activationCode: this._activationCode
+                    creationDate: this._creationDate, activationCode: this._activationCode
                 };
                 await super.connect().then(conn => {
                     if(conn == true)return super.dropIndexes();
@@ -170,7 +170,7 @@ export class Account extends MongoDbModelManager{
                 }).finally(()=>{
                     super.close();
                 });
-            }//if(this._username && this._email && this._password_hash && this._activationCode){
+            }//if(this._username && this._email && this._password_hash && this._creationDate && this._activationCode){
             else{
                 this._errno = Account.MISSINGDATA_ERROR;
                 throw new MissingDataError(this.error as string);
@@ -244,15 +244,6 @@ export class Account extends MongoDbModelManager{
         return response;
     }
 
-    private setValues(data: AccountInterface){
-        if(data.username && data.email && data.password_hash && data.activationCode){
-            this._username = data.username;
-            this._email = data.email;
-            this._password_hash = data.password_hash;
-            this._activationCode = data.activationCode;
-        }
-    }
-
     /**
      * Parse a Date object into date string
      * @param date Date
@@ -268,4 +259,17 @@ export class Account extends MongoDbModelManager{
         let stringDate: string = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
         return stringDate;
     }
+
+    private setValues(data: AccountInterface){
+        if(data.username && data.email && data.password_hash && data.activationCode){
+            this._username = data.username;
+            this._email = data.email;
+            this._password_hash = data.password_hash;
+            this._activationCode = data.activationCode;
+            let current: Date = new Date();
+            this._creationDate = this.dateString(current);
+        }
+    }
+
+    
 }

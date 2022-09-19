@@ -119,22 +119,22 @@ export class Token extends MongoDbModelManager{
         this._errno = 0;
         let response: object = {};
         try{
-            if(this._accountId && this._tokenKey && this._expireDate){
+            if(this._accountId && this._tokenKey && this._creationDate && this._expireDate){
                 await super.connect().then(conn => {
                     if(conn == true)return super.get({accountId: this._accountId});
                     else throw new DatabaseConnectionError(this.error as string);
                 }).then(result => {
                     if(result != null){
                         console.log(`Token get before insert => ${result} `);
-                        let token_data: object = {
-                            tokenKey: this._tokenKey,expireDate: this._expireDate
+                        let document: object = {
+                            tokenKey: this._tokenKey, creationDate: this._creationDate, expireDate: this._expireDate
                         };
-                        return super.replace({accountId: this._accountId},token_data);
+                        return super.replace({accountId: this._accountId},document);
                     }//if(result != null){
-                    let token_data: object = {
-                        accountId: this._accountId, tokenKey: this._tokenKey, expireDate: this._expireDate
+                    let document: object = {
+                        accountId: this._accountId, tokenKey: this._tokenKey, creationDate: this._creationDate, expireDate: this._expireDate
                     }
-                    return super.insert(token_data);
+                    return super.insert(document);
                 }).then(res => {
                     console.log("Insert/Replace token promise res => ");
                     console.log(res);
@@ -146,7 +146,7 @@ export class Token extends MongoDbModelManager{
                 }).finally(()=>{
                     super.close();
                 });
-            }//if(this._accountId && this._tokenKey && this._expireDate){
+            }//if(this._accountId && this._tokenKey && this._creationDate && this._expireDate){
             else{
                 this._errno = Token.MISSINGDATA_ERROR;
                 throw new MissingDataError(this.error as string);
