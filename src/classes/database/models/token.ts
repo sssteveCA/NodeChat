@@ -1,4 +1,6 @@
+import { Messages } from "../../../namespaces/messages";
 import { DatabaseConnectionError } from "../../errors/databaseconnectionerror";
+import { MissingDataError } from "../../errors/missingdataerror";
 import { MongoDbModelManager, MongoDbModelManagerInterface } from "../mongodbmodelmanager";
 
 export interface TokenInterface{
@@ -11,6 +13,10 @@ export class Token extends MongoDbModelManager{
     private _tokenKey: string;
     private _creationDate: string;
     private _expireDate: string;
+
+    public static MISSINGDATA_ERROR: number = 50;
+
+    private static MISSINGDATA_ERROR_MSG: string = "Uno o più dati richiesti sono mancanti";
 
     constructor(data_mmi: MongoDbModelManagerInterface, data: TokenInterface){
         super(data_mmi);
@@ -27,6 +33,9 @@ export class Token extends MongoDbModelManager{
             return super.error;
         }
         switch(this._errno){
+            case Token.MISSINGDATA_ERROR:
+                this._error = Token.MISSINGDATA_ERROR_MSG;
+                break;
             default:
                 this._error = null;
                 break;
@@ -108,32 +117,42 @@ export class Token extends MongoDbModelManager{
      public async insertToken(): Promise<object>{
         this._errno = 0;
         let response: object = {};
-        await super.connect().then(conn => {
-            if(conn == true)return super.get({accountId: this._accountId});
-            else throw new DatabaseConnectionError(this.error as string);
-        }).then(result => {
-            if(result != null){
-                console.log(`Token get before insert => ${result} `);
-                let token_data: object = {
-                    tokenKey: this._tokenKey,creationDate: this._creationDate,expireDate: this._expireDate
-                };
-                return super.replace({accountId: this._accountId},token_data);
-            }//if(result != null){
-            let token_data: object = {
-                accountId: this._accountId, tokenKey: this._tokenKey, expireDate: this._expireDate
-            }
-            return super.insert(token_data);
-        }).then(res => {
-            console.log("Insert/Replace token promise res => ");
-            console.log(res);
-            if(res.acknowledged == true) response['errno'] = 0;
-            else throw new Error(this.error as string);
-        }).catch(err => {
-            console.warn(err);
+        try{
+            if(this._accountId && this._tokenKey && this._creationDate && this._expireDate){
+                await super.connect().then(conn => {
+                    if(conn == true)return super.get({accountId: this._accountId});
+                    else throw new DatabaseConnectionError(this.error as string);
+                }).then(result => {
+                    if(result != null){
+                        console.log(`Token get before insert => ${result} `);
+                        let token_data: object = {
+                            tokenKey: this._tokenKey,creationDate: this._creationDate,expireDate: this._expireDate
+                        };
+                        return super.replace({accountId: this._accountId},token_data);
+                    }//if(result != null){
+                    let token_data: object = {
+                        accountId: this._accountId, tokenKey: this._tokenKey, expireDate: this._expireDate
+                    }
+                    return super.insert(token_data);
+                }).then(res => {
+                    console.log("Insert/Replace token promise res => ");
+                    console.log(res);
+                    if(res.acknowledged == true) response['errno'] = 0;
+                    else throw new Error(this.error as string);
+                }).catch(err => {
+                    console.warn(err);
+                    response['errno'] = this._errno;
+                }).finally(()=>{
+                    super.close();
+                });
+            }//if(this._accountId && this._tokenKey && this._creationDate && this._expireDate){
+            else{
+                this._errno = Token.MISSINGDATA_ERROR;
+                throw new MissingDataError(this.error as string);
+            } 
+        }catch(e){
             response['errno'] = this._errno;
-        }).finally(()=>{
-            super.close();
-        });
+        }
         return response;
     }
 
@@ -217,6 +236,11 @@ export class Token extends MongoDbModelManager{
             this._accountId = data.account_id;
             let today: Date = new Date();
             this._creationDate = this.dateString(today);
+            console.log("setValues creationDate => "+this._creationDate);
+            let expireTime: Date = new Date();
+            expireTime.setMinutes(today.getMinutes() + 15);
+            this._expireDate = this.dateString(expireTime);
+            console.log("setValues expireDate => "+this._expireDate);
         }//if(data.account_id){
     }
 }

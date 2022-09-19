@@ -1,6 +1,7 @@
 import mongoose, { Date} from "mongoose";
 import { DatabaseConnectionError } from "../../errors/databaseconnectionerror";
 import { DuplicateKeysError } from "../../errors/duplicatekeyserror";
+import { MissingDataError } from "../../errors/missingdataerror";
 import { MongoDbModelManager, MongoDbModelManagerInterface } from "../mongodbmodelmanager";
 
 export interface AccountInterface{
@@ -25,8 +26,10 @@ export class Account extends MongoDbModelManager{
 
     //Errors
     public static DUPLICATEKEYS_ERROR:number = 50;
+    public static MISSINGDATA_ERROR: number = 51;
 
     public static DUPLICATEKEYS_ERROR_MSG:string = "Esiste già un account con questo nome o con questo indirizzo email";
+    private static MISSINGDATA_ERROR_MSG: string = "Uno o più dati richiesti sono mancanti";
 
     constructor(data_parent: MongoDbModelManagerInterface, data: AccountInterface){
         super(data_parent);
@@ -49,6 +52,9 @@ export class Account extends MongoDbModelManager{
         switch(this._errno){
             case Account.DUPLICATEKEYS_ERROR:
                 this._error = Account.DUPLICATEKEYS_ERROR_MSG;
+                break;
+            case Account.MISSINGDATA_ERROR:
+                this._error = Account.MISSINGDATA_ERROR_MSG;
                 break;
             default:
                 this._error = null;
@@ -134,34 +140,44 @@ export class Account extends MongoDbModelManager{
      */
     public async insertAccount(): Promise<object>{
         this._errno = 0;
-        let document: object = {
-            username: this._username,email: this._email,password: this._password_hash,
-            activationCode: this._activationCode
-        };
         let response: object = {};
-        await super.connect().then(conn => {
-            if(conn == true)return super.dropIndexes();
-            else throw new DatabaseConnectionError(this.error as string);
-        }).then(res => {
-            return super.get({$or: [{username: this._username},{email: this._email}]});
-        }).then(result => {
-            if(result != null){
-                //console.log(`Account get before insert => ${result} `);
-                if(result['username'] == this._username || result['email'] == this._email){
-                    this._errno = Account.DUPLICATEKEYS_ERROR;
-                    throw new DuplicateKeysError(this.error as string);
-                }
+        try{
+            if(this._username && this._email && this._password_hash && this._activationCode){
+                let document: object = {
+                    username: this._username,email: this._email,password: this._password_hash,
+                    activationCode: this._activationCode
+                };
+                await super.connect().then(conn => {
+                    if(conn == true)return super.dropIndexes();
+                    else throw new DatabaseConnectionError(this.error as string);
+                }).then(res => {
+                    return super.get({$or: [{username: this._username},{email: this._email}]});
+                }).then(result => {
+                    if(result != null){
+                        //console.log(`Account get before insert => ${result} `);
+                        if(result['username'] == this._username || result['email'] == this._email){
+                            this._errno = Account.DUPLICATEKEYS_ERROR;
+                            throw new DuplicateKeysError(this.error as string);
+                        }
+                    }
+                    return super.insert(document);
+                }).then(res => {
+                    //console.log(res);
+                    response['errno'] = 0;
+                }).catch(err => {
+                    console.warn(err);
+                    response['errno'] = this._errno;
+                }).finally(()=>{
+                    super.close();
+                });
+            }//if(this._username && this._email && this._password_hash && this._activationCode){
+            else{
+                this._errno = Account.MISSINGDATA_ERROR;
+                throw new MissingDataError(this.error as string);
             }
-            return super.insert(document);
-        }).then(res => {
-            //console.log(res);
-            response['errno'] = 0;
-        }).catch(err => {
-            console.warn(err);
+        }catch(e){
             response['errno'] = this._errno;
-        }).finally(()=>{
-            super.close();
-        });
+        }
         return response;
     }
 

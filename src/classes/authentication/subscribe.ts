@@ -148,7 +148,7 @@ export class Subscribe{
             }; 
             await this.passwordHashPromise().then(hash => {
                 let emailCode: string = this.emailVerifCode();
-                let account_data: AccountInterface= {
+                let account_data: AccountInterface = {
                     username: this._username, email: this._email,password_hash: hash, activationCode: emailCode
                 };
                 account = new Account(mongodb_mmi,account_data);
