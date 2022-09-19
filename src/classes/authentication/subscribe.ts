@@ -30,6 +30,8 @@ export class Subscribe{
     private _errno:number = 0;
     private _error:string|null = null;
 
+    private static ACTIVATION_CODE_LENGTH:number = 80;
+
     //Errors
     public static ERR_SUBSCRIBE:number = 1;
     public static ERR_ACTIVATION_NOTFOUND: number = 2;
@@ -116,19 +118,20 @@ export class Subscribe{
 
     /**
      * Generate an email verification code
-     * @returns 
+     * @returns the email verification code generated
      */
     private emailVerifCode(): string{
         let emailCode: string = "";
         let now: number = Date.now();
         let characters: string = "aAbBcCdDeEfFGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
         let length: number = characters.length;
-        let times:number = 80;
+        let times:number = Subscribe.ACTIVATION_CODE_LENGTH;
         for(let i = 0; i < times; i++){
             let random_character = Math.floor(Math.random()* length);
             emailCode += characters[random_character];
         }
         emailCode += now;
+        return emailCode;
         this._activation_code = emailCode;
         return this._activation_code;
     }
@@ -147,9 +150,9 @@ export class Subscribe{
                 collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string, schema: Schemas.ACCOUNTS
             }; 
             await this.passwordHashPromise().then(hash => {
-                let emailCode: string = this.emailVerifCode();
+                this._activation_code = this.emailVerifCode();
                 let account_data: AccountInterface = {
-                    username: this._username, email: this._email,password_hash: hash, activationCode: emailCode
+                    username: this._username, email: this._email,password_hash: hash, activationCode: this._activation_code
                 };
                 account = new Account(mongodb_mmi,account_data);
                 return account.insertAccount();
