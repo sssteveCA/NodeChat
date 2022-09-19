@@ -1,6 +1,6 @@
 //Mongoose schemas
 
-import { Schema } from "mongoose";
+import mongoose, {ObjectId, Schema } from "mongoose";
 
 export namespace Schemas{
     export const ACCOUNTS: Schema = new Schema({
@@ -16,7 +16,7 @@ export namespace Schemas{
 
     export const TOKENS: Schema = new Schema({
         tokenKey: {type: String, required: true, index: {unique: true}},
-        accountId: {type: String, required: true, index: {unique: true}},
+        accountId: {type: Schema.Types.ObjectId, required: true, index: {unique: true}},
         creationDate: {type: Date, required: true},
         expireDate: {type: Date, required: true}
     });

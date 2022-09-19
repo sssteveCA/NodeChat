@@ -124,10 +124,12 @@ export class Token extends MongoDbModelManager{
                     if(conn == true)return super.get({accountId: this._accountId});
                     else throw new DatabaseConnectionError(this.error as string);
                 }).then(result => {
+                    console.log("insertToken get result => ");
+                    console.log(result);
                     if(result != null){
                         console.log(`Token get before insert => ${result} `);
                         let document: object = {
-                            tokenKey: this._tokenKey, creationDate: this._creationDate, expireDate: this._expireDate
+                            accountId: this._accountId, tokenKey: this._tokenKey, creationDate: this._creationDate, expireDate: this._expireDate
                         };
                         return super.replace({accountId: this._accountId},document);
                     }//if(result != null){

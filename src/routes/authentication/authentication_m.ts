@@ -98,7 +98,7 @@ export const verify_credentials = async (req: Request, res: Response, next: Next
     }).catch(err => {
         /* console.log("verify_credentials error => ");
         console.error(err); */
-        if(err instanceof InvalidCredentialsError){
+        if(err instanceof InvalidCredentialsError || err instanceof AccountNotActivatedError){
             let message: string = encodeURIComponent(err.message);
             res.redirect("/login?message="+message);
         } 
