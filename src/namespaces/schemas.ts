@@ -7,7 +7,7 @@ export namespace Schemas{
         username: {type: String, required: true, index: {unique: true}},
         email: {type: String, required: true, index: {unique: true}},
         password: {type: String, required: true},
-        creationDate: {type: Date, default: Date.now},
+        creationDate: {type: Date, required: true},
         activationCode: {type: String, required: false, index: {unique: true, sparse: true }},
         resetCode: {type: String, required: false, index: {unique: true, sparse: true }},
         verified: {type: Boolean, required: false, default: false},
@@ -17,7 +17,7 @@ export namespace Schemas{
     export const TOKENS: Schema = new Schema({
         tokenKey: {type: String, required: true, index: {unique: true}},
         accountId: {type: String, required: true, index: {unique: true}},
-        creationDate: {type: Date, default: Date.now},
+        creationDate: {type: Date, required: true},
         expireDate: {type: Date, required: true}
     });
 

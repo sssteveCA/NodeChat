@@ -1,4 +1,4 @@
-import mongoose, { Date} from "mongoose";
+import mongoose from "mongoose";
 import { DatabaseConnectionError } from "../../errors/databaseconnectionerror";
 import { DuplicateKeysError } from "../../errors/duplicatekeyserror";
 import { MissingDataError } from "../../errors/missingdataerror";
@@ -18,7 +18,7 @@ export class Account extends MongoDbModelManager{
     private _email:string;
     private _password: string;
     private _password_hash: string;
-    private _creationDate: Date;
+    private _creationDate: string;
     private _activationCode: string;
     private _resetCode: string;
     private _verified: boolean;
@@ -245,9 +245,27 @@ export class Account extends MongoDbModelManager{
     }
 
     private setValues(data: AccountInterface){
-        if(data.username)this._username = data.username;
-        if(data.email)this._email = data.email;
-        if(data.password_hash)this._password_hash = data.password_hash;
-        if(data.activationCode)this._activationCode = data.activationCode;
+        if(data.username && data.email && data.password_hash && data.activationCode){
+            this._username = data.username;
+            this._email = data.email;
+            this._password_hash = data.password_hash;
+            this._activationCode = data.activationCode;
+        }
+    }
+
+    /**
+     * Parse a Date object into date string
+     * @param date Date
+     * @returns YYYY-MM-DD hh:mm:ss string data
+     */
+     private dateString(date: Date):string{
+        let year = date.getFullYear();
+        let month = date.getMonth() < 10 ? "0"+date.getMonth() : date.getMonth();
+        let day = date.getDate() < 10 ? "0"+date.getDate() : date.getDate();
+        let hours = date.getHours() < 10 ? "0"+date.getHours() : date.getHours();
+        let minutes = date.getMinutes() < 10 ? "0"+date.getMinutes() : date.getMinutes();
+        let seconds = date.getSeconds() < 10 ? "0"+date.getSeconds() : date.getSeconds();
+        let stringDate: string = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        return stringDate;
     }
 }
