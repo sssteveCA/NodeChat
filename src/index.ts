@@ -16,6 +16,7 @@ import { Paths } from './namespaces/paths';
 import { Constants } from './namespaces/constants';
 import { loadavg } from 'os';
 import session from 'express-session';
+import { account_routes } from './routes/account/account';
 
 dotenv.config(); //Load .env file
 
@@ -34,6 +35,7 @@ app.use('/js2',scripts_router);
 app.use('/',authentication_routes);
 app.use('/',menu_items_routes);
 app.use('/',email_routes);
+app.use('/',account_routes);
 
 app.engine('mustache',mustacheExpress());
 app.engine('mustache', mustacheExpress(Paths.ROOTPATH+'/views/partials','.mustache')); //Partials directory
