@@ -8,7 +8,8 @@ import { Account } from '../../classes/database/models/account';
 import { Constants } from '../../namespaces/constants';
 import { Paths } from '../../namespaces/paths';
 import { Regexs } from '../../namespaces/regex';
-import { guest, login_validator, subscribe_validator, verify_credentials } from './authentication_m';
+import { guest } from '../../middlewares/middlewares';
+import { login_validator, subscribe_validator, verify_credentials } from './authentication_m';
 import session from 'express-session';
 
 export const authentication_routes = express.Router();

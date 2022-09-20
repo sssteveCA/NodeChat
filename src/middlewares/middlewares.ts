@@ -1,6 +1,5 @@
 //Middlewares used in different routes
 import express, { NextFunction, Request, Response } from 'express';
-import session from 'express-session';
 
 /**
  * Pass to the next hop if user is not logged 
@@ -8,6 +7,16 @@ import session from 'express-session';
  export const guest = (req: Request, res: Response, next: NextFunction) => {
     if(req.session['username'] && req.session['token_key'])
         return res.redirect("/");
-    else
-        return next();
+    else return next();
 };
+
+/**
+ * Pass to the next hop if user is logged
+ */
+export const logged = (req:Request, res: Response, next: NextFunction) => {
+    if(req.session['username'] && req.session['token_key']){
+        return next();
+    }
+    else return res.redirect("/login");
+    
+}
