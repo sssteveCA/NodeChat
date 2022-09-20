@@ -14,7 +14,9 @@ import session from 'express-session';
 export const authentication_routes = express.Router();
 
 authentication_routes.use(session({
-    secret: process.env.EXPRESS_SESSION_SECRET as string
+    secret: process.env.EXPRESS_SESSION_SECRET as string,
+    saveUninitialized: false,
+    resave: false
 }));
 
 authentication_routes.get('/login', guest, (req,res)=>{

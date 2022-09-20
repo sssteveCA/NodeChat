@@ -22,7 +22,9 @@ dotenv.config(); //Load .env file
 const app = express();
 
 app.use(session({
-    secret: process.env.EXPRESS_SESSION_SECRET as string
+    secret: process.env.EXPRESS_SESSION_SECRET as string,
+    saveUninitialized: false,
+    resave: false
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));

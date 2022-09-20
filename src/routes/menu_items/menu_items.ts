@@ -8,7 +8,9 @@ import session from 'express-session';
 export const menu_items_routes = express.Router();
 
 menu_items_routes.use(session({
-    secret: process.env.EXPRESS_SESSION_SECRET as string
+    secret: process.env.EXPRESS_SESSION_SECRET as string,
+    saveUninitialized: false,
+    resave: false
 }));
 
 menu_items_routes.get('/about_us',(req,res)=>{
