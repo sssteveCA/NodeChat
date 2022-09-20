@@ -18,8 +18,8 @@ import { Messages } from '../namespaces/messages';
  * Pass to the next hop if user is logged
  */
 export const logged = async(req:Request, res: Response, next: NextFunction) => {
+    let redirect_string: string = "/login";
     if(req.session['username'] && req.session['token_key']){
-        let username: string = req.session['username'];
         let token_key: string = req.session['token_key'];
         let mongo_mmi: MongoDbModelManagerInterface = {
             collection_name: process.env.MONGODB_TOKENS_COLLECTION as string,
@@ -28,7 +28,7 @@ export const logged = async(req:Request, res: Response, next: NextFunction) => {
         let token_data: TokenInterface = {};
         let token: Token = new Token(mongo_mmi,token_data);
         await token.getToken({tokenKey: token_key}).then(result => {
-            if(result['errno'] == 0 && result['result'] != null){
+            if(result['done'] == true && result['result'] != null){
                 let nowTimestamp: number = Date.now();
                 let expDate: Date = new Date(result['result']['expireDate']);
                 let expTime: number = expDate.getTime();
@@ -36,19 +36,21 @@ export const logged = async(req:Request, res: Response, next: NextFunction) => {
                 console.log("expTime => "+expTime);
                 if(nowTimestamp < expTime) return next();
                 else{
-                    req.session['username'] = null;
-                    req.session['token_key'] = null;
-                    req.session.destroy(()=>{
-                        let message_encoded = encodeURIComponent(Messages.ERROR_SESSIONEXPIRED);
-                        return res.redirect("/login?message="+message_encoded);
-                    });
+                    let message_encoded: string = encodeURIComponent(Messages.ERROR_SESSIONEXPIRED);
+                    redirect_string = `/login?message=${message_encoded}`;
                 }
-            }//if(result['errno'] == 0 && result['result'] != null){
-            else return res.redirect("/login");
+            }//if(result['done'] == true && result['result'] != null){
+            else redirect_string = "/login";
         }).catch(err => {
-            return res.redirect("/login");
+            redirect_string = "/login";
         });
-    }
-    else return res.redirect("/login");
+
+        req.session['username'] = null;
+        req.session['token_key'] = null;
+        req.session.destroy(()=>{
+            return res.redirect(redirect_string);
+        });
+    }//if(req.session['username'] && req.session['token_key']){
+    else return res.redirect(redirect_string);
     
 }
