@@ -19,11 +19,9 @@ export const login_validator = (req: Request, res: Response, next: NextFunction)
     let passed: boolean = false;
     if(body.hasOwnProperty("username") && body.hasOwnProperty("password")){
         if(body['username'] != "" && body['password'] != ""){
-            console.log("LoginValidator next");
             return next();
         }//if(body['username'] != "" && body['password']){
     }//if(body.hasOwnProperty("username") && body.hasOwnProperty("password")){
-    console.log("LoginValidator next");
     let msg_encoded = encodeURIComponent(Messages.ERROR_MISSINGDATA);
     return res.redirect("/login?message="+msg_encoded);   
 };

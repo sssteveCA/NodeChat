@@ -44,8 +44,8 @@ app.set('view engine','mustache');
 app.set('views', Paths.ROOTPATH+'/views');
 app.use(express.static(StaticPaths.PUBLIC_PATH));
 app.get('/',(req,res)=>{
-    console.log("session => ");
-    console.log(req.session);
+    /* console.log("session => ");
+    console.log(req.session); */
     if(req.session['username'] && req.session['token_key']){
         return res.render('logged/index_logged',{
             container: Constants.CONTAINER, jquery_js: Paths.JQUERY_JS, jquery_ui_css: Paths.JQUERY_UI_CSS, 

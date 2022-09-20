@@ -90,8 +90,8 @@ export class Token extends MongoDbModelManager{
                 done: true,
                 result: res
             };
-            console.log("getToken");
-            console.log(response);
+            /* console.log("getToken");
+            console.log(response); */
             if(res != null){
                 if(res["_id"])this._id = res["_id"];
                 if(res["accountId"])this._accountId = res["accountId"];
@@ -124,10 +124,10 @@ export class Token extends MongoDbModelManager{
                     if(conn == true)return super.get({accountId: this._accountId});
                     else throw new DatabaseConnectionError(this.error as string);
                 }).then(result => {
-                    console.log("insertToken get result => ");
-                    console.log(result);
+                    /* console.log("insertToken get result => ");
+                    console.log(result); */
                     if(result != null){
-                        console.log(`Token get before insert => ${result} `);
+                        //console.log(`Token get before insert => ${result} `);
                         let document: object = {
                             accountId: this._accountId, tokenKey: this._tokenKey, creationDate: this._creationDate, expireDate: this._expireDate
                         };
@@ -138,8 +138,8 @@ export class Token extends MongoDbModelManager{
                     }
                     return super.insert(document);
                 }).then(res => {
-                    console.log("Insert/Replace token promise res => ");
-                    console.log(res);
+                    /* console.log("Insert/Replace token promise res => ");
+                    console.log(res); */
                     if(res.acknowledged == true) {
                         response = {
                             errno: 0,
@@ -245,11 +245,9 @@ export class Token extends MongoDbModelManager{
             this._tokenKey = data.tokenKey;
             let today: Date = new Date();
             this._creationDate = this.dateString(today);
-            console.log("setValues creationDate => "+this._creationDate);
             let expireTime: Date = new Date();
             expireTime.setMinutes(today.getMinutes() + 15);
             this._expireDate = this.dateString(expireTime);
-            console.log("setValues expireDate => "+this._expireDate);
         }//if(data.accountId && data.tokenKey){
     }
 }

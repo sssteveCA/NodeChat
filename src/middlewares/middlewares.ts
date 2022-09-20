@@ -19,6 +19,7 @@ import { Messages } from '../namespaces/messages';
  */
 export const logged = async(req:Request, res: Response, next: NextFunction) => {
     let redirect_string: string = "/login";
+    let next_hop: boolean = false;
     if(req.session['username'] && req.session['token_key']){
         let token_key: string = req.session['token_key'];
         let mongo_mmi: MongoDbModelManagerInterface = {
@@ -32,19 +33,22 @@ export const logged = async(req:Request, res: Response, next: NextFunction) => {
                 let nowTimestamp: number = Date.now();
                 let expDate: Date = new Date(result['result']['expireDate']);
                 let expTime: number = expDate.getTime();
-                console.log("nowTimestamp => "+nowTimestamp);
-                console.log("expTime => "+expTime);
+                /* console.log("nowTimestamp => "+nowTimestamp);
+                console.log("expTime => "+expTime); 
                 if(nowTimestamp < expTime) return next();
                 else{
                     let message_encoded: string = encodeURIComponent(Messages.ERROR_SESSIONEXPIRED);
                     redirect_string = `/login?message=${message_encoded}`;
-                }
+                }*/
+                next_hop = true;
             }//if(result['done'] == true && result['result'] != null){
             else redirect_string = "/login";
         }).catch(err => {
             redirect_string = "/login";
         });
-
+        if(next_hop)return next();
+        console.log("Before delete token");
+        await token.deleteToken({tokenKey: token_key});
         req.session['username'] = null;
         req.session['token_key'] = null;
         req.session.destroy(()=>{
