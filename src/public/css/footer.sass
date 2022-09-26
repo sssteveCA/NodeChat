@@ -1,0 +1,10 @@
+$footer-class: ".footer"
+$footer-height: 150px
+
+@mixin footer-style($footer,$height)
+    #{$footer}
+        width: 100%
+        height: $height
+        background: linear-gradient(0deg, rgba(153,179,107,0.5) 0%, rgba(205,218,170,0.5) 100%)
+
+@include footer-style($footer-class,$footer-height)
