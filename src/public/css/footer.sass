@@ -1,10 +1,22 @@
-$footer-class: ".footer"
-$footer-height: 150px
+@use "sass:map"
+@use "sass:selector"
 
-@mixin footer-style($footer,$height)
-    #{$footer}
+$footer-params: ("class": ".footer","height": 150px, "font-family":DealerplateCalifornia, "font-url": "../fonts/dealerplate_california/dealerplate_california.ttf")
+
+@mixin footer-style($map)
+    $class: map.get($map,"class")
+    $height: map.get($map,"height")
+    $font-family: map.get($map, "font-family")
+    $font-url: map.get($map,"font-url")
+    @font-face 
+        font-family: $font-family
+        src: url($font-url)
+    #{$class}
         width: 100%
         height: $height
-        background: linear-gradient(0deg, rgba(153,179,107,0.5) 0%, rgba(205,218,170,0.5) 100%)
+        background: linear-gradient(0deg, rgba(153,179,107,0.8) 0%, rgba(205,218,170,0.8) 100%)
+    $childs: selector.nest($class, div)
+    #{$childs}
+        font-family: $font-family
 
-@include footer-style($footer-class,$footer-height)
+@include footer-style($footer-params)

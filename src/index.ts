@@ -52,7 +52,10 @@ app.get('/',(req,res)=>{
             jquery_ui_js: Paths.JQUERY_UI_JS, username: req.session['username']
         });
     }
-    return res.render('index',{container: Constants.CONTAINER});
+    return res.render('index',{
+        bootstrap_css: Paths.BOOTSTRAP_CSS, bootstrap_js: Paths.BOOTSTRAP_JS,container: Constants.CONTAINER,
+        jquery_js: Paths.JQUERY_JS
+    });
 });
 
 app.listen(Constants.PORT,Constants.HOSTNAME,()=>{
