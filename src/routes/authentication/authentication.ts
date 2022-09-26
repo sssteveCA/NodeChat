@@ -78,7 +78,7 @@ authentication_routes.get('/verify/:code', guest, async(req,res)=>{
     });
     return res.status(status_code).render('code_verify',{
         bootstrap_css: '../'+Paths.BOOTSTRAP_CSS, bootstrap_js: '../'+Paths.BOOTSTRAP_JS,
-        container: Constants.CONTAINER, verify_response: verify_response
+        container: Constants.CONTAINER, jquery_js: '../'+Paths.JQUERY_JS,verify_response: verify_response
     });
 });
 

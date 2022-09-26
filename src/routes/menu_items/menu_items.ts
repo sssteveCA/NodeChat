@@ -16,7 +16,7 @@ menu_items_routes.use(session({
 menu_items_routes.get('/about_us',(req,res)=>{
     let username: string = req.session['username'] ? req.session['username'] : null;
     let guest: boolean = !username ? true : false;
-    res.render('about_us',{ container: Constants.CONTAINER, guest: guest, jquery_js: Paths.JQUERY_JS, jquery_ui_css: Paths.JQUERY_UI_CSS, 
+    res.render('about_us',{bootstrap_css: Paths.BOOTSTRAP_CSS, bootstrap_js: Paths.BOOTSTRAP_JS, container: Constants.CONTAINER, guest: guest, jquery_js: Paths.JQUERY_JS, jquery_ui_css: Paths.JQUERY_UI_CSS, 
         jquery_ui_js: Paths.JQUERY_UI_JS, username: username });
 });
 
@@ -33,14 +33,14 @@ menu_items_routes.get('/contacts',(req,res)=>{
 menu_items_routes.get('/rules',(req,res)=>{
     let username: string = req.session['username'] ? req.session['username'] : null;
     let guest: boolean = !username ? true : false;
-    res.render('rules',{ container: Constants.CONTAINER, guest: guest, jquery_js: Paths.JQUERY_JS, jquery_ui_css: Paths.JQUERY_UI_CSS, 
+    res.render('rules',{bootstrap_css: Paths.BOOTSTRAP_CSS, bootstrap_js: Paths.BOOTSTRAP_JS, container: Constants.CONTAINER, guest: guest, jquery_js: Paths.JQUERY_JS, jquery_ui_css: Paths.JQUERY_UI_CSS, 
         jquery_ui_js: Paths.JQUERY_UI_JS, username: username });
 });
 
 menu_items_routes.get('/terms',(req,res)=>{
     let username: string = req.session['username'] ? req.session['username'] : null;
     let guest: boolean = !username ? true : false;
-    res.render('terms',{ container: Constants.CONTAINER, guest: guest, jquery_js: Paths.JQUERY_JS, jquery_ui_css: Paths.JQUERY_UI_CSS, 
+    res.render('terms',{bootstrap_css: Paths.BOOTSTRAP_CSS, bootstrap_js: Paths.BOOTSTRAP_JS, container: Constants.CONTAINER, guest: guest, jquery_js: Paths.JQUERY_JS, jquery_ui_css: Paths.JQUERY_UI_CSS, 
         jquery_ui_js: Paths.JQUERY_UI_JS, username: username });
 });
 
