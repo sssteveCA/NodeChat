@@ -3,9 +3,11 @@
     <head>
         <title>Nodechat</title>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="{{bootstrap_css}}">
         <link rel="stylesheet" href="css/logged/index_logged.css">
         <link rel="stylesheet" href="css/logged/menu_logged.css">
         <link rel="stylesheet" href="{{jquery_ui_css}}">
+        <script src="{{bootstrap_js}}"></script>
         <script src="{{jquery_js}}"></script>
         <script src="{{jquery_ui_js}}"></script>
         <script type="module" src="js/menu.js"></script>
@@ -15,6 +17,19 @@
         <div class="{{container}}">
             <div class="header">
                 <h1>Benvenuto {{username}}</h1>
+            </div>
+            <div class="search-box container-fluid">
+                <div class="row mt-5">
+                    <div class="col-12 col-md-8 mt-5">
+                        <input type="text" id="users_list" class="form-control" name="users_list" placeholder="Cerca una o più persone">
+                    </div>
+                    <div class="col-4 offset-4 col-md-2 offset-md-2 mt-5 d-flex justify-content-center">
+                        <button id="ul_search" type="button" class="btn btn-success">CERCA</button>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-12 col-md-10 offset-md-1"></div>
+                </div>
             </div>
         </div>
     </body>
