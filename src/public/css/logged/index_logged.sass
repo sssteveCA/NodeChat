@@ -1,18 +1,27 @@
 @use "sass:selector"
 @use "sass:string"
 
-@import "../partials/_animations"
-@import "../partials/_background"
-@import "../partials/_global"
+@import "../partials/animations"
+@import "../partials/background"
+@import "../partials/global"
 
 $div-margin: 20px auto
 $description-class-style: (text-align: center, margin: $div-margin)
 
 $bk-url-logged: string.insert($bk-url, "../" , 0)
 
+$users-div-map: (height: 600px, width: 100%, border: 1px solid black, background-color: rgba(255,255,255,0.4))
+
+@mixin users-div-style($map)
+    #users-results
+        @each $prop,$val in $map     
+            #{$prop}: #{$val}
+    
+
 @include main-background($bk-url-logged)
 @include header-class()
-@include container-style('.container')
+@include container-style($container-class)
+@include users-div-style($users-div-map)
 
 
 
