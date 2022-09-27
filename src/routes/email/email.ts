@@ -8,7 +8,7 @@ import { contacts_validator } from './email_m';
 
 export const email_routes = express.Router();
 
-email_routes.post('/send_email',contacts_validator,async (req,res)=>{
+email_routes.post('/send_email',contacts_validator,(req,res)=>{
     let output: object = {};
     let em_data: EmailInterface = {
         name: req.body.name, email: req.body.email, subject: req.body.subject, message: req.body.message
@@ -21,10 +21,8 @@ email_routes.post('/send_email',contacts_validator,async (req,res)=>{
             };
             return res.status(200).send(output);
         }
-
         output = {
-            done: false,
-            msg: em.error
+            done: false, msg: em.error
         };
         return res.status(500).send(output);
     });
