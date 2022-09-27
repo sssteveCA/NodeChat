@@ -1,9 +1,11 @@
 
+@import "partials/animations"
 @import "partials/global"
 @import "partials/background"
 @import "partials/description"
 
 @include header-class()
 @include main-background($bk-url)
-@include description-class(".description",2)
+@include description-class($description-class,2)
+@include appareance($description-class)
 

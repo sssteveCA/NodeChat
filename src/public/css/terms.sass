@@ -1,8 +1,9 @@
 @use "sass:selector"
     
-@import "partials/_global"
-@import "partials/_background"
-@import "partials/_description"
+@import "partials/animations"
+@import "partials/global"
+@import "partials/background"
+@import "partials/description"
 
 @mixin terms-style()
     ul
@@ -15,4 +16,5 @@
 @include main-background($bk-url)
 @include description-class(".description",4 )
 @include terms-style()
+@include appareance($description-class)
 

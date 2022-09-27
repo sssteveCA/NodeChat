@@ -1,4 +1,5 @@
 
+$appareance: appareance
 $move-appareance: move-appareance
 
 @mixin animation($name, $duration, $delay, $direction, $fill-mode, $iteration-count, $timing-function)
@@ -9,6 +10,15 @@ $move-appareance: move-appareance
     animation-fill-mode: $fill-mode
     animation-iteration-count: $iteration-count
     animation-timing-function: $timing-function
+
+@mixin appareance($selector)
+    @keyframes #{$appareance}
+        from
+            opacity: 0
+        to
+            opacity: 1
+    #{$selector}
+        @include animation($appareance, 1s, 0s, normal, forwards, 1, ease-in)
 
 @mixin move-appareance($selector)
     @keyframes #{$move-appareance} 

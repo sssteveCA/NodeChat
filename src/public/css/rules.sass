@@ -1,5 +1,7 @@
-@import "partials/_global"
-@import "partials/_background"
+
+@import "partials/animations"
+@import "partials/global"
+@import "partials/background"
 @import "partials/description"
 
 @mixin list-style()
@@ -10,5 +12,6 @@
 
 @include header-class()
 @include main-background($bk-url)
-@include description-class('.description',2)
+@include description-class($description-class,2)
 @include list-style()
+@include appareance($description-class)
