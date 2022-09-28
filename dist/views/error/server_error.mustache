@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <title>Errore del server</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="{{bootstrap_css}}">
+        <link rel="stylesheet" href="css/menu.css">
+        <link rel="stylesheet" href="css/error/server_error.css">
+        <link rel="stylesheet" href="css/footer.css">
+        <script src="{{bootstrap_js}}"></script>
+        <script src="{{jquery_js}}"></script>
+        <script src="js/footer.js"></script>
+    </head>
+    <body>
+        {{#guest}}
+            {{> menu}}
+        {{/guest}}
+        {{#username}}
+            {{> menu_logged}}
+        {{/username}}
+        <div class="{{container}}">
+            <div class="header">
+                <h1>Errore del server</h1>
+            </div>
+            <div class="description">
+                <div>
+                    Siamo spiacenti, il server non è in grado di elaborare la tua richiesta.
+                </div>
+                <div>
+                    Se il problema persiste, contatta l'amministratore del sito.
+                </div>
+                <div>
+                    <a href="/">Torna alla homepage</a>
+                </div>
+            </div>
+        </div>
+        {{> footer}}
+    </body>
+</html>
