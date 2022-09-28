@@ -64,7 +64,7 @@ app.listen(Constants.PORT,Constants.HOSTNAME,()=>{
 });
 
 app.all("*",(req,res)=>{
-    res.redirect("/");
+    res.redirect("/not_found");
 });
 
 process.on('uncaughtException',(err) => {
