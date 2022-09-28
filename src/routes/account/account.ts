@@ -27,10 +27,15 @@ account_routes.get("/profile/:username", logged, (req,res)=>{
         };
         let ac_data: AccountInterface = {};
         let ac: Account = new Account(mmi_data,ac_data);
-        ac.getAccount({username: username}).then(res =>{
-            if(res['result'] != null){
+        ac.getAccount({username: username}).then(obj =>{
+            if(obj['result'] != null){
                 //Account found
-            }//if(res['result'] != null){
+                res.render('logged/user_profile',{
+                    bootstrap_css: "../"+Paths.BOOTSTRAP_CSS, bootstrap_js: "../"+Paths.BOOTSTRAP_JS,
+                    container: Constants.CONTAINER, jquery_js: "../"+Paths.JQUERY_JS, jquery_ui_css: "../"+Paths.JQUERY_UI_CSS, 
+                    jquery_ui_js: "../"+Paths.JQUERY_UI_JS, username: username
+                });
+            }//if(obj['result'] != null){
             else{
                 //Account not found
             }
