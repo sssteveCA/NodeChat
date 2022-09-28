@@ -1,9 +1,11 @@
 
 @use "sass:string"
 
-$bk-url: '../img/chat_background.jfif'
+$bk-url: 'img/chat_background.jfif'
 
-@mixin main-background($url)
+@mixin main-background($url,$n-back)
+    @for $i from 1 through $n-back
+        $url: string.insert($url, '../',0)
     html
         body
             //position: relative
