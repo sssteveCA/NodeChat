@@ -13,14 +13,17 @@ export const account_routes = express.Router();
 account_routes.get("/profile/:username", logged, (req,res)=>{
     let username: string = req.params.username;
     let current_username: string = req.session['username'];
+    let view_params: object = {
+        bootstrap_css: "../"+Paths.BOOTSTRAP_CSS, bootstrap_js: "../"+Paths.BOOTSTRAP_JS,
+        container: Constants.CONTAINER, jquery_js: "../"+Paths.JQUERY_JS, jquery_ui_css: "../"+Paths.JQUERY_UI_CSS, 
+        jquery_ui_js: "../"+Paths.JQUERY_UI_JS, username: username
+    };
     if(username == current_username){
-        return res.render('logged/profile', {
-            bootstrap_css: "../"+Paths.BOOTSTRAP_CSS, bootstrap_js: "../"+Paths.BOOTSTRAP_JS,
-            container: Constants.CONTAINER, jquery_js: "../"+Paths.JQUERY_JS, jquery_ui_css: "../"+Paths.JQUERY_UI_CSS, 
-            jquery_ui_js: "../"+Paths.JQUERY_UI_JS, username: username
-        });
+        //Personal profile
+        return res.render('logged/profile', view_params);
     }//if(username == current_username){
     else{
+        //Other profiles
         let mmi_data: MongoDbModelManagerInterface = {
             collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
             schema: Schemas.ACCOUNTS 
@@ -30,17 +33,15 @@ account_routes.get("/profile/:username", logged, (req,res)=>{
         ac.getAccount({username: username}).then(obj =>{
             if(obj['result'] != null){
                 //Account found
-                res.render('logged/user_profile',{
-                    bootstrap_css: "../"+Paths.BOOTSTRAP_CSS, bootstrap_js: "../"+Paths.BOOTSTRAP_JS,
-                    container: Constants.CONTAINER, jquery_js: "../"+Paths.JQUERY_JS, jquery_ui_css: "../"+Paths.JQUERY_UI_CSS, 
-                    jquery_ui_js: "../"+Paths.JQUERY_UI_JS, username: username
-                });
+                return res.render('logged/user_profile',view_params);
             }//if(obj['result'] != null){
             else{
                 //Account not found
+                return res.redirect('/not_found');
             }
         }).catch(err => {
             //Server error
+            return res.redirect('/server_error');
         });
     }
 });
