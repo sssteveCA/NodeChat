@@ -63,6 +63,10 @@ app.listen(Constants.PORT,Constants.HOSTNAME,()=>{
     console.log(`Server in esecuzione su ${Constants.MAIN_URL}`);
 });
 
+app.all("*",(req,res)=>{
+    res.redirect("/");
+});
+
 process.on('uncaughtException',(err) => {
     console.error("UncaughtException");
     console.error(err);
