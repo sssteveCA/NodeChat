@@ -20,3 +20,12 @@ errors_router.get('/not_found',(req,res)=>{
         container: Constants.CONTAINER, guest: guest,jquery_js: Paths.JQUERY_JS, username: username
     });
 });
+
+errors_router.get('/server_error',(req,res) => {
+    let username: string = req.session['username'] ? req.session['username'] : null;
+    let guest: boolean = !username ? true : false;
+    return res.status(500).render('error/server_error',{
+        bootstrap_css: Paths.BOOTSTRAP_CSS, bootstrap_js: Paths.BOOTSTRAP_JS,
+        container: Constants.CONTAINER, guest: guest,jquery_js: Paths.JQUERY_JS, username: username
+    });
+});
