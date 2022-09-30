@@ -1,6 +1,7 @@
 import { MessageDialog, MessageDialogInterface } from "../classes/dialogs/messagedialog.js";
 import { SearchProfilesRequest, SearchProfilesRequestInterface } from "../classes/requests/searchprofilesrequest.js";
 import { SearchProfilesTable, SearchProfilesTableInterface } from "../classes/tables/searchprofilestable.js";
+import { fMessageDialog } from "../functions/general.js";
 
 $(()=>{
     $('#ul_search').on('click',()=>{
@@ -23,16 +24,8 @@ $(()=>{
                 let md_data: MessageDialogInterface = {
                     title: 'Ricerca utenti', message: obj['msg']
                 };
-                messageDialog(md_data);
+                fMessageDialog(md_data);
             }
         });
     });//$('#ul_search').on('click',()=>{
 });
-
-function messageDialog(md_data: MessageDialogInterface): void{
-    let md: MessageDialog = new MessageDialog(md_data);
-    md.btOk.on('click',()=>{
-        md.dialog.dialog('destroy');
-        md.dialog.remove();
-    });
-}

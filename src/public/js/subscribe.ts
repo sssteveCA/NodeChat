@@ -1,5 +1,6 @@
 import { MessageDialog, MessageDialogInterface } from "./classes/dialogs/messagedialog.js";
 import { SubscribeRequest, SubscribeRequestInterface } from "./classes/requests/subscriberequest.js";
+import { fMessageDialog } from "./functions/general.js";
 
 $(()=>{
     let spinner = $('#subscribe-spinner');
@@ -20,13 +21,13 @@ $(()=>{
                     title: "Registrazione",
                     message: obj['msg']
                 };
-                messageDialog(md_data);
+                fMessageDialog(md_data);
             }).catch(err => {
                 let md_data: MessageDialogInterface = {
                     title: "Registrazione",
                     message: err.message 
                 };
-                messageDialog(md_data);
+                fMessageDialog(md_data);
             });
         }catch(e){
             if(e instanceof Error){
@@ -34,7 +35,7 @@ $(()=>{
                     title: "Registrazione",
                     message: e.message as string
                 };
-                messageDialog(md_data);
+                fMessageDialog(md_data);
             }   
         }
     });//$('#bSubscribe').on('click', (e)=>{
@@ -50,11 +51,3 @@ $(()=>{
         }
     });
 });
-
-function messageDialog(md_data: MessageDialogInterface){
-    let md: MessageDialog = new MessageDialog(md_data);
-    md.btOk.on('click', ()=>{
-        md.dialog.dialog('destroy');
-        md.dialog.remove();
-    });
-}

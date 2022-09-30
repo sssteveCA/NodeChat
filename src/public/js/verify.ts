@@ -1,5 +1,6 @@
 import { MessageDialog, MessageDialogInterface } from "./classes/dialogs/messagedialog.js";
 import { VerifyRequest, VerifyRequestInterface } from "./classes/requests/verifyrequest.js";
+import { fMessageDialog } from "./functions/general.js";
 
 $(()=>{
     $('#fVerify').on('submit',(e)=>{
@@ -16,16 +17,8 @@ $(()=>{
                 title: "Attivazione account",
                 message: "Inserisci un codice di attivazione"
             };
-            messageDialog(md_data);
+            fMessageDialog(md_data);
 
         }//else of if(activation_code != ""){  
     });
 });
-
-function messageDialog(md_data: MessageDialogInterface){
-    let md: MessageDialog = new MessageDialog(md_data);
-    md.btOk.on('click', ()=>{
-        md.dialog.dialog('destroy');
-        md.dialog.remove();
-    });
-}
