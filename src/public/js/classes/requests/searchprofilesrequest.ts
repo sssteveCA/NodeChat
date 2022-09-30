@@ -1,11 +1,13 @@
 
 export interface SearchProfilesRequestInterface{
     query: string;
+    token_key: string;
 }
 
 export class SearchProfilesRequest{
     private _query: string;
     private _results: [];
+    private _token_key: string;
     private _errno:number = 0;
     private _error:string|null = null;
 
@@ -17,9 +19,11 @@ export class SearchProfilesRequest{
 
     constructor(data: SearchProfilesRequestInterface){
         this._query = data.query;
+        this._token_key = data.token_key;
     }
 
     get query(){return this._query;}
+    get results(){return this._results;}
     get errno(){return this._errno; }
     get error(){
         switch(this._errno){
@@ -69,13 +73,17 @@ export class SearchProfilesRequest{
 
     private async searchProfilePromise(): Promise<string>{
         return await new Promise<string>((resolve,reject)=>{
-            let url: string = `${SearchProfilesRequest.FETCH_URL}/${this._query}`;
+            let url: string = SearchProfilesRequest.FETCH_URL;
+            let body_data: SearchProfilesRequestInterface = {
+                query: this._query, token_key: this._token_key
+            };
             fetch(url,{
-                method: 'GET',
+                method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(body_data)
             }).then(res => {
                 resolve(res.text());
             }).catch(err => {
