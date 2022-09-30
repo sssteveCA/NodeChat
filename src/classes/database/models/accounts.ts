@@ -1,3 +1,4 @@
+import { DatabaseConnectionError } from "../../errors/databaseconnectionerror";
 import { MongoDbModelsManager, MongoDbModelsManagerInterface } from "../mongodbmodelsmanager";
 
 export interface AccountsInterface{
@@ -34,4 +35,42 @@ export class Accounts extends MongoDbModelsManager{
         }
         return this._error;
     }
+
+    /**
+     * Delete all the accounts from the collection that match with a filter
+     * @param filter the filter to search the documents to delete
+     * @returns 
+     */
+    public async deleteAccounts(filter: object): Promise<object>{
+        this._errno = 0;
+        let response: object = {};
+        await super.connect().then(conn => {
+            if(conn == true) return super.delete(filter);
+            else throw new DatabaseConnectionError(this.error as string);
+        }).then(res => {
+            //console.log(res);
+        }).catch(err => {
+            console.warn(err);
+        }).finally(()=>{
+            super.close();
+        });
+        return response;
+    }
+
+    /**
+     * Get the accounts from the collection that match with a filter
+     * @param filter the filter to search the documents to get
+     * @returns 
+     */
+    public async getAccounts(filter: object): Promise<object>{
+        this._errno = 0;
+        let response: object = {};
+        await super.connect().then(conn => {
+            if(conn == true)return super.get(filter);
+            else throw new DatabaseConnectionError(this.error as string);     
+        })
+        return response;
+    }
+
+    
 }

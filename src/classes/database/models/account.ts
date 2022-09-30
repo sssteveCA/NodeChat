@@ -73,12 +73,8 @@ export class Account extends MongoDbModelManager{
         this._errno = 0;
         let response: object = {};
         await super.connect().then(conn => {
-            if(conn == true){
-                return super.delete(filter);
-            }
-            else{
-                throw new DatabaseConnectionError(this.error as string);
-            }
+            if(conn == true) return super.delete(filter);
+            else throw new DatabaseConnectionError(this.error as string);
         }).then(res => {
             //console.log(res);
         }).catch(err => {
@@ -98,12 +94,8 @@ export class Account extends MongoDbModelManager{
         this._errno = 0;
         let response: object = {};
         await super.connect().then(conn => {
-            if(conn == true){
-                return super.get(filter);
-            }
-            else{
-                throw new DatabaseConnectionError(this.error as string);
-            }       
+            if(conn == true) return super.get(filter);
+            else throw new DatabaseConnectionError(this.error as string); 
         }).then(res => {   
             response = {
                 done: true,
@@ -220,9 +212,7 @@ export class Account extends MongoDbModelManager{
         this._errno = 0;
         let response: object = {};
         await super.connect().then(conn => {
-            if(conn == true){
-                return super.dropIndexes();
-            }
+            if(conn == true) return super.dropIndexes();
             else throw new DatabaseConnectionError('Errore durante la connessione al Database');
         }).then(res => {
             return super.update(filter,set);
