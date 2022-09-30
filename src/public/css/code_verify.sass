@@ -1,5 +1,5 @@
 @import 'partials/global'
-@import 'partials/_background'
+@import 'partials/background'
 
 @mixin code-verify-div()
     .codeVerifyDiv
@@ -10,6 +10,6 @@
 
 
 @include main-background($bk-url,1)
-@include container-style('.container')
+@include container-style($container-class)
 @include code-verify-div()
 

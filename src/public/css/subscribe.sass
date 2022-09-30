@@ -1,6 +1,6 @@
 @import 'partials/global'
 @import "partials/background"
-@import "partials/_animations"
+@import "partials/animations"
 
 $subscribe-form-id: "fSubscribe"
 
@@ -24,7 +24,7 @@ $subscribe-form-id: "fSubscribe"
                         #bReset
                             margin-left: button-margin($bs-breakpoint-md)
 
-@include container-style('.container')
+@include container-style($container-class)
 
 .subscribeDiv
     position: relative

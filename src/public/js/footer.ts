@@ -11,7 +11,7 @@ $(()=>{
  */
 function setFooter(): void{
     let body: JQuery = $('body');
-    let container: JQuery = $('.container');
+    let container: JQuery = $('.my-container');
     let footer: JQuery = $('.footer');
     let menu: JQuery = $('.menu-bar');
     let heights: object = {

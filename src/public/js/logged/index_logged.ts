@@ -11,14 +11,14 @@ $(()=>{
         };
         let spr: SearchProfilesRequest = new SearchProfilesRequest(spr_data);
         spr.searchProfiles().then(obj => {
-            console.log(obj);
+            //console.log(obj);
             if(obj['done'] == true){
                 let profiles: [] = obj['profiles'];
                 let srt_data: SearchProfilesTableInterface = {
                     query: query, profiles: profiles
                 };
                 let srt: SearchProfilesTable = new SearchProfilesTable(srt_data);
-                console.log(srt.html_table);
+                //console.log(srt.html_table);
                 $('#users-results').html(srt.html_table as string);
             }//if(obj['done'] == true){
             else{

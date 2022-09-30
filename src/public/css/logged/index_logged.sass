@@ -6,6 +6,7 @@
 @import "../partials/global"
 
 $div-margin: 20px auto
+$div-results: "#users-results"
 $description-class-style: (text-align: center, margin: $div-margin)
 
 $bk-url-logged: string.insert($bk-url, "../" , 0)
@@ -16,15 +17,29 @@ $users-div-map: (height: 600px, width: 100%, border: 1px solid black, background
     #users-results
         @each $prop,$val in $map     
             #{$prop}: #{$val}
-    
+
+@mixin table-style($main-div)
+    $td-n: 2
+    #{$main-div} table
+        thead th
+            border-bottom-width: 0px
+        tr td
+            padding: 15px
+        @for $c from 1 through $td-n
+            @if $c == 1
+                tr td:nth-child(#{$c})
+                    font-size: 18px
+                    font-weight: bold
+            @else if $c == 2
+                tr td:nth-child(#{$c})
+                    display: flex
+                    justify-content: flex-end
 
 @include main-background($bk-url,2)
 @include header-class()
 @include container-style($container-class)
 @include users-div-style($users-div-map)
-
-
-
+@include table-style($div-results)
 
 
 
