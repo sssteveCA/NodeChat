@@ -14,10 +14,10 @@ import { menu_items_routes } from './routes/menu_items/menu_items';
 import { email_routes } from './routes/email/email';
 import { Paths } from './namespaces/paths';
 import { Constants } from './namespaces/constants';
-import { loadavg } from 'os';
 import session from 'express-session';
 import { account_routes } from './routes/account/account';
 import { errors_router } from './routes/errors/errors';
+import { account_routes_api } from './routes/api/account/account_api';
 
 dotenv.config(); //Load .env file
 
@@ -37,6 +37,7 @@ app.use('/',authentication_routes);
 app.use('/',menu_items_routes);
 app.use('/',email_routes);
 app.use('/',account_routes);
+app.use('/api',account_routes_api);
 app.use('/',errors_router);
 
 app.engine('mustache',mustacheExpress());
