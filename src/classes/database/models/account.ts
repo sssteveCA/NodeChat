@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { DatabaseConnectionError } from "../../errors/databaseconnectionerror";
 import { DuplicateKeysError } from "../../errors/duplicatekeyserror";
 import { MissingDataError } from "../../errors/missingdataerror";
+import { General } from "../../general";
 import { MongoDbModelManager, MongoDbModelManagerInterface } from "../mongodbmodelmanager";
 
 export interface AccountInterface{
@@ -67,6 +68,8 @@ export class Account extends MongoDbModelManager{
         }
         return this._error;
     }
+
+    set creationDate(creation_date: string){this._creationDate = creation_date;}
 
 
     /**
@@ -141,7 +144,7 @@ export class Account extends MongoDbModelManager{
         try{
             if(this._username && this._email && this._password_hash && this._activationCode){
                 let current: Date = new Date();
-                this._creationDate = this.dateString(current);
+                this._creationDate = General.dateString(current);
                 let document: object = {
                     username: this._username,email: this._email,password: this._password_hash,
                     creationDate: this._creationDate, activationCode: this._activationCode
@@ -239,22 +242,6 @@ export class Account extends MongoDbModelManager{
             super.close();
         });
         return response;
-    }
-
-    /**
-     * Parse a Date object into date string
-     * @param date Date
-     * @returns YYYY-MM-DD hh:mm:ss string data
-     */
-     private dateString(date: Date):string{
-        let year = date.getFullYear();
-        let month = date.getMonth() < 10 ? "0"+date.getMonth() : date.getMonth();
-        let day = date.getDate() < 10 ? "0"+date.getDate() : date.getDate();
-        let hours = date.getHours() < 10 ? "0"+date.getHours() : date.getHours();
-        let minutes = date.getMinutes() < 10 ? "0"+date.getMinutes() : date.getMinutes();
-        let seconds = date.getSeconds() < 10 ? "0"+date.getSeconds() : date.getSeconds();
-        let stringDate: string = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-        return stringDate;
     }
 
     private setValues(data: AccountInterface){

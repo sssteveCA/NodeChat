@@ -1,5 +1,6 @@
 import { Schemas } from "../../../namespaces/schemas";
 import { DatabaseConnectionError } from "../../errors/databaseconnectionerror";
+import { General } from "../../general";
 import { MongoDbModelManagerInterface } from "../mongodbmodelmanager";
 import { MongoDbModelsManager, MongoDbModelsManagerInterface } from "../mongodbmodelsmanager";
 import { Account, AccountInterface } from "./account";
@@ -10,7 +11,7 @@ export interface AccountsInterface{
 
 export class Accounts extends MongoDbModelsManager{
     
-    private _results: Array<Account> = new Array<Account>(); //Array of Account objects result
+    private _results: Account[]; //Array of Account objects result
     
     //Errors
     public static DUPLICATEKEYS_ERROR:number = 50;
@@ -105,6 +106,29 @@ export class Accounts extends MongoDbModelsManager{
             super.close();
         });
         return response;
+    }
+
+    /**
+     * Add multiple accounts to the collection
+     * @returns 
+     */
+    public async insertAccounts(accounts: Account[]): Promise<object>{
+        this._errno = 0;
+        let response: object = {};
+        try{
+            
+        }catch(e){
+
+        }
+        return response;
+    }
+
+    private prepareInsert(accounts: Account[]):void{
+        accounts.forEach((acc, index, accounts_array) =>{
+            let current_date: Date = new Date();
+            let curr_date_str: string = General.dateString(current_date);
+            accounts_array[index].creationDate = curr_date_str;
+        });
     }
 
 
