@@ -1,5 +1,6 @@
 import { DatabaseConnectionError } from "../../errors/databaseconnectionerror";
 import { MongoDbModelsManager, MongoDbModelsManagerInterface } from "../mongodbmodelsmanager";
+import { Account } from "./account";
 
 export interface AccountsInterface{
 
@@ -7,7 +8,7 @@ export interface AccountsInterface{
 
 export class Accounts extends MongoDbModelsManager{
     
-    private _results: Array<object> = new Array<object>(); //Array of Account objects result
+    private _results: Array<Account> = new Array<Account>(); //Array of Account objects result
     
     //Errors
     public static DUPLICATEKEYS_ERROR:number = 50;
@@ -64,13 +65,34 @@ export class Accounts extends MongoDbModelsManager{
      */
     public async getAccounts(filter: object): Promise<object>{
         this._errno = 0;
-        let response: object = {};
+        this._results = [];
+        let response: object = {
+            result: []
+        };
         await super.connect().then(conn => {
             if(conn == true)return super.get(filter);
             else throw new DatabaseConnectionError(this.error as string);     
-        })
+        }).then(res => {
+            console.log("getAccounts");
+            console.log(res);
+            response['done'] = true;
+            //Check if results is a non empty an Array of objects
+            if(Array.isArray(res) && res.length > 0){
+                res.forEach(acc => {
+
+                });
+            }//if(Array.isArray(res) && res.length > 0 ){
+        }).catch(err => {
+            console.warn(err);
+            response = {
+                done: false,
+                msg: this.error
+            };
+        }).finally(()=>{
+            super.close();
+        });
         return response;
     }
 
-    
+
 }

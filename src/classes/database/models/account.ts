@@ -5,10 +5,15 @@ import { MissingDataError } from "../../errors/missingdataerror";
 import { MongoDbModelManager, MongoDbModelManagerInterface } from "../mongodbmodelmanager";
 
 export interface AccountInterface{
+    id?: string,
     username?: string,
     email?: string,
     password_hash?: string,
-    activationCode?: string
+    creationDate?: string,
+    activationCode?: string|null,
+    resetCode?: string|null,
+    verified?: boolean,
+    resetted?: boolean
 }
 
 export class Account extends MongoDbModelManager{
@@ -19,10 +24,10 @@ export class Account extends MongoDbModelManager{
     private _password: string;
     private _password_hash: string;
     private _creationDate: string;
-    private _activationCode: string;
-    private _resetCode: string;
-    private _verified: boolean;
-    private _resetted: boolean;
+    private _activationCode: string|null;
+    private _resetCode: string|null;
+    private _verified: boolean = false;
+    private _resetted: boolean = false;
 
     //Errors
     public static DUPLICATEKEYS_ERROR:number = 50;
@@ -134,7 +139,9 @@ export class Account extends MongoDbModelManager{
         this._errno = 0;
         let response: object = {};
         try{
-            if(this._username && this._email && this._password_hash && this._creationDate && this._activationCode){
+            if(this._username && this._email && this._password_hash && this._activationCode){
+                let current: Date = new Date();
+                this._creationDate = this.dateString(current);
                 let document: object = {
                     username: this._username,email: this._email,password: this._password_hash,
                     creationDate: this._creationDate, activationCode: this._activationCode
@@ -251,15 +258,13 @@ export class Account extends MongoDbModelManager{
     }
 
     private setValues(data: AccountInterface){
-        if(data.username && data.email && data.password_hash && data.activationCode){
-            this._username = data.username;
-            this._email = data.email;
-            this._password_hash = data.password_hash;
-            this._activationCode = data.activationCode;
-            let current: Date = new Date();
-            this._creationDate = this.dateString(current);
-        }
-    }
-
-    
+        if(data.username)this._username = data.username;
+        if(data.email)this._email = data.email;
+        if(data.password_hash)this._password_hash = data.password_hash;
+        if(data.creationDate)this._creationDate = data.creationDate;
+        if(data.activationCode)this._activationCode = data.activationCode;
+        if(data.resetCode)this._resetCode = data.resetCode;
+        if(data.verified)this._verified = data.verified;
+        if(data.resetted)this._resetted = data.resetted;
+    }   
 }
