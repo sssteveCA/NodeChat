@@ -1,6 +1,8 @@
+import { Schemas } from "../../../namespaces/schemas";
 import { DatabaseConnectionError } from "../../errors/databaseconnectionerror";
+import { MongoDbModelManagerInterface } from "../mongodbmodelmanager";
 import { MongoDbModelsManager, MongoDbModelsManagerInterface } from "../mongodbmodelsmanager";
-import { Account } from "./account";
+import { Account, AccountInterface } from "./account";
 
 export interface AccountsInterface{
 
@@ -78,9 +80,20 @@ export class Accounts extends MongoDbModelsManager{
             response['done'] = true;
             //Check if results is a non empty an Array of objects
             if(Array.isArray(res) && res.length > 0){
+                let mmi_data: MongoDbModelManagerInterface = {
+                    collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
+                    schema: Schemas.ACCOUNTS
+                };
                 res.forEach(acc => {
-
+                    let acc_data: AccountInterface = {
+                        id: acc['id'], username: acc['username'], email: acc['email'],
+                        creationDate: acc['creationDate'], activationCode: acc['activationCode'],
+                        resetCode: acc['resetCode'], verified: acc['verified'], resetted: acc['resetted']
+                    };
+                    let account: Account = new Account(mmi_data,acc_data);
+                    this._results.push(account);
                 });
+                response['result'] = this._results;
             }//if(Array.isArray(res) && res.length > 0 ){
         }).catch(err => {
             console.warn(err);
