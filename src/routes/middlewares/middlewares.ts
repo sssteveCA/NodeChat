@@ -20,8 +20,6 @@ import { Messages } from '../../namespaces/messages';
 export const logged = async(req:Request, res: Response, next: NextFunction) => {
     let redirect_string: string = "/login";
     let next_hop: boolean = false;
-    console.log("Session => ");
-    console.log(req.session);
     if(req.session['username'] && req.session['token_key']){
         let token_key: string = req.session['token_key'];
         let mongo_mmi: MongoDbModelManagerInterface = {

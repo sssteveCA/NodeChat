@@ -97,7 +97,7 @@ export class EmailVerify{
                 };
             }
         }).catch(err => {
-            console.log("sendMail catch => "+err);
+            //console.log("sendMail catch => "+err);
             this._errno = EmailVerify.ERR_SENDMAIL;
             response = {
                 done: false,

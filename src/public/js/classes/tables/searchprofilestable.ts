@@ -11,8 +11,6 @@ export class SearchProfilesTable{
     private _profiles: [] = [];
 
     constructor(data: SearchProfilesTableInterface){
-        console.log("SearchProfilesTable constructor");
-        console.log(data);
         this._query = data.query;
         this._profiles = data.profiles;
         this.setTable();
