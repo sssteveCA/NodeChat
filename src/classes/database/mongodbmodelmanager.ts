@@ -14,10 +14,6 @@ export abstract class MongoDbModelManager{
     protected _errno: number = 0;
     protected _error:string|null = null;
 
-    constructor(data: MongoDbModelManagerInterface){
-        this.assignValues(data);
-    }
-
     public static CONNECTION_ERROR: number = 1;
     public static GET_ERROR: number = 2;
     public static INSERT_ERROR: number = 3;
@@ -35,6 +31,10 @@ export abstract class MongoDbModelManager{
     protected static DISCONNECTION_ERROR_MSG: string = "Errore durante la chiusura della connessione al database";
     protected static DROPINDEXES_ERROR_MSG: string = "Errore durante la cancellazione degli indici";
     protected static REPLACE_ERROR_MSG: string = "Errore durante la sostituzione del documento";
+
+    constructor(data: MongoDbModelManagerInterface){
+        this.assignValues(data);
+    }
 
     get mongodb_string(){return this._mongodb_string;}
     get collection_name(){return this._collection_name;}
