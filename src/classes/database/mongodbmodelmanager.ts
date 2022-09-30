@@ -1,8 +1,8 @@
 import { rejects } from "assert";
 import mongoose, {Document, HydratedDocument, Model, Query, Schema } from "mongoose";
+import {Environment} from '../../enums/environment';
 
-
-//Single collection MongoDB manager
+//Single document MongoDB manager
 
 export abstract class MongoDbModelManager{
     protected _connected: boolean = false;
@@ -250,9 +250,6 @@ export interface MongoDbModelManagerInterface{
     schema: Schema;
 }
 
-enum Environment{
-    local = 'local',
-    production = 'production'
-}
+
 
 
