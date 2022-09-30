@@ -3,8 +3,6 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
-import fs from 'fs';
-import mustache from 'mustache';
 import mustacheExpress from 'mustache-express';
 import { StaticPaths } from './modules/static_paths';
 import { styles_router } from './routes/css/styles';
