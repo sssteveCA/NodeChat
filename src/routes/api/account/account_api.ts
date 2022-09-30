@@ -9,6 +9,7 @@ import { loggedApi } from '../middlewares/middlewares_api';
 export const account_routes_api = express.Router();
 
 account_routes_api.post('/profile/search', loggedApi, async(req,res)=>{
+    console.log(req.body);
     let query: string = req.body.query as string;
     if(query && query != ""){
         let mmis_data: MongoDbModelsManagerInterface = {
@@ -17,7 +18,7 @@ account_routes_api.post('/profile/search', loggedApi, async(req,res)=>{
         let accounts_data: AccountsInterface = {};
         let accounts: Accounts = new Accounts(mmis_data,accounts_data);
         await accounts.getAccounts({username: {$regex: `^${query}`, $options: "i"}}).then(result => {
-            let response: object = { done: true, result: result['result'] };
+            let response: object = { done: true, msg: '', result: result['result'] };
             return res.json(response);
         }).catch(err => {
             return res.status(500).json({done: false, msg: Messages.ERROR_SERVER});

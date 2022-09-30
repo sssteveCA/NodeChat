@@ -15,7 +15,7 @@ export class SearchProfilesRequest{
 
     private static ERR_SEARCH_PROFILES_MSG:string = "Errore durante la ricerca dei profili richiesti";
 
-    private static FETCH_URL: string = "/profile/search";
+    private static FETCH_URL: string = "api/profile/search";
 
     constructor(data: SearchProfilesRequestInterface){
         this._query = data.query;
@@ -46,16 +46,14 @@ export class SearchProfilesRequest{
         this._errno = 0;
         try{
             await this.searchProfilePromise().then(res => {
-                console.log(res);
+                //console.log(res);
                 let obj = JSON.parse(res);
+                console.log(obj);
                 response = {
                     done: obj['done'],
-                    lenght: obj['length'],
                     msg: obj['msg'],
-                    profiles: obj['profiles']
+                    profiles: obj['result']
                 };
-                console.log("SearchProfileRequest searchProfiles");
-                console.log(response);
                 this._results = response['profile'];
             }).catch(err => {
                 console.warn(err);

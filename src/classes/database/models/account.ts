@@ -109,8 +109,8 @@ export class Account extends MongoDbModelManager{
                 done: true,
                 result: res
             };
-            console.log("getAccount");
-            console.log(response);
+            /* console.log("getAccount");
+            console.log(response); */
             if(res != null){
                 if(res["_id"])this._id = res["_id"];
                 if(res["username"])this._username = res["username"];

@@ -1,5 +1,5 @@
-import { SearchProfilesRequest, SearchProfilesRequestInterface } from "../classes/requests/searchprofilesrequest";
-import { SearchProfilesTable } from "../classes/tables/searchprofilestable";
+import { SearchProfilesRequest, SearchProfilesRequestInterface } from "../classes/requests/searchprofilesrequest.js";
+import { SearchProfilesTable } from "../classes/tables/searchprofilestable.js";
 
 $(()=>{
     $('#ul_search').on('click',()=>{
