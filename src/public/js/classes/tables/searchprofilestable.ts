@@ -1,11 +1,13 @@
 
 export interface SearchProfilesTableInterface{
+    query: string;
     results: [];
 }
 
 export class SearchProfilesTable{
 
     private _html_table: string|null = null; //The table generated with the profiles list
+    private _query: string;
     private _results: [] = [];
 
     constructor(data: SearchProfilesTableInterface){
@@ -14,13 +16,15 @@ export class SearchProfilesTable{
     }
 
     get html_table(){return this._html_table;}
+    get query(){return this._query;}
     get results(){return this._results;}
 
     /**
      * Set the table HTML code
      */
     private setTable(): void{
-        this._html_table = `
+        if(this._results.length > 0){
+            this._html_table = `
 <table class="table table-striped">
     <thead>
         <tr>
@@ -30,13 +34,18 @@ export class SearchProfilesTable{
     </thead>
     <tbody>
 `; 
-        this._results.forEach(acc => {
-            this._html_table += this.setSingleRow(acc);
-        });
-        this._html_table += `
+            this._results.forEach(acc => {
+                this._html_table += this.setSingleRow(acc);
+            });
+            this._html_table += `
     </tbody>
 </table>        
-        `;
+            `;
+        }//if(this._results.length > 0){
+        else{
+            this._html_table = `<h3 class=text-center w-100">Nessun profilo trovato con il termine ${this._query}</h3>`
+        }
+
     }
 
     /**

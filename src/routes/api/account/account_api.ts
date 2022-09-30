@@ -17,9 +17,7 @@ account_routes_api.post('/profile/search', loggedApi, async(req,res)=>{
         let accounts_data: AccountsInterface = {};
         let accounts: Accounts = new Accounts(mmis_data,accounts_data);
         await accounts.getAccounts({username: {$regex: `^${query}`, $options: "i"}}).then(result => {
-            let length: number = result['result'].length;
-            let response: object = { done: true, length: length, result: result['result'] };
-            if(length < 1)response['msg'] = `Nessun profilo trovato con il termine ${query}`;
+            let response: object = { done: true, result: result['result'] };
             return res.json(response);
         }).catch(err => {
             return res.status(500).json({done: false, msg: Messages.ERROR_SERVER});
