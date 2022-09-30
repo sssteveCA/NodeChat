@@ -9,7 +9,6 @@ import { loggedApi } from '../middlewares/middlewares_api';
 export const account_routes_api = express.Router();
 
 account_routes_api.post('/profile/search', loggedApi, async(req,res)=>{
-    console.log(req.body);
     let query: string = req.body.query as string;
     if(query && query != ""){
         let mmis_data: MongoDbModelsManagerInterface = {

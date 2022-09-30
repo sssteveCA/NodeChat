@@ -6,7 +6,7 @@ export interface SearchProfilesRequestInterface{
 
 export class SearchProfilesRequest{
     private _query: string;
-    private _results: [];
+    private _profiles: [];
     private _token_key: string;
     private _errno:number = 0;
     private _error:string|null = null;
@@ -23,7 +23,7 @@ export class SearchProfilesRequest{
     }
 
     get query(){return this._query;}
-    get results(){return this._results;}
+    get profiles(){return this._profiles;}
     get errno(){return this._errno; }
     get error(){
         switch(this._errno){
@@ -54,7 +54,7 @@ export class SearchProfilesRequest{
                     msg: obj['msg'],
                     profiles: obj['result']
                 };
-                this._results = response['profile'];
+                this._profiles = response['profiles'];
             }).catch(err => {
                 console.warn(err);
                 throw err;

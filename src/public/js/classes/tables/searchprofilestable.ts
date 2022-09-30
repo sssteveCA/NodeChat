@@ -1,29 +1,32 @@
 
 export interface SearchProfilesTableInterface{
     query: string;
-    results: [];
+    profiles: [];
 }
 
 export class SearchProfilesTable{
 
     private _html_table: string|null = null; //The table generated with the profiles list
     private _query: string;
-    private _results: [] = [];
+    private _profiles: [] = [];
 
     constructor(data: SearchProfilesTableInterface){
-        this._results = data.results;
+        console.log("SearchProfilesTable constructor");
+        console.log(data);
+        this._query = data.query;
+        this._profiles = data.profiles;
         this.setTable();
     }
 
     get html_table(){return this._html_table;}
     get query(){return this._query;}
-    get results(){return this._results;}
+    get results(){return this._profiles;}
 
     /**
      * Set the table HTML code
      */
     private setTable(): void{
-        if(this._results.length > 0){
+        if(this._profiles && this._profiles.length > 0){
             this._html_table = `
 <table class="table table-striped">
     <thead>
@@ -34,16 +37,16 @@ export class SearchProfilesTable{
     </thead>
     <tbody>
 `; 
-            this._results.forEach(acc => {
+            this._profiles.forEach(acc => {
                 this._html_table += this.setSingleRow(acc);
             });
             this._html_table += `
     </tbody>
 </table>        
             `;
-        }//if(this._results.length > 0){
+        }//if(this._profiles && this._profiles.length > 0){
         else{
-            this._html_table = `<h3 class=text-center w-100">Nessun profilo trovato con il termine ${this._query}</h3>`
+            this._html_table = `<h4 class=text-center w-100">Nessun profilo trovato con il termine ${this._query}</h4>`
         }
 
     }
@@ -56,7 +59,7 @@ export class SearchProfilesTable{
     private setSingleRow(account: object): string{
         let row: string = `
 <tr>
-    <td>${account['username']}</td>
+    <td>${account['_username']}</td>
     <td>
         <button type="button" class="btn btn-primary">VAI AL PROFILO</button>
     </td>

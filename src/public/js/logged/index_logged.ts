@@ -13,12 +13,13 @@ $(()=>{
         spr.searchProfiles().then(obj => {
             console.log(obj);
             if(obj['done'] == true){
-                let accounts: [] = obj['result'];
+                let profiles: [] = obj['profiles'];
                 let srt_data: SearchProfilesTableInterface = {
-                    query: query, results: accounts
+                    query: query, profiles: profiles
                 };
                 let srt: SearchProfilesTable = new SearchProfilesTable(srt_data);
-                $('#users-list').html(srt.html_table as string);
+                console.log(srt.html_table);
+                $('#users-results').html(srt.html_table as string);
             }//if(obj['done'] == true){
             else{
                 let md_data: MessageDialogInterface = {
