@@ -131,9 +131,8 @@ export class Subscribe{
             emailCode += characters[random_character];
         }
         emailCode += now;
-        return emailCode;
         this._activation_code = emailCode;
-        return this._activation_code;
+        return emailCode;
     }
 
     /**
