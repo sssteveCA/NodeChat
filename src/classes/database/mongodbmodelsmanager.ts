@@ -184,6 +184,11 @@ export abstract class MongoDbModelsManager{
         });
     }
 
+    /**
+     * Insert new documents in the collection
+     * @param documents
+     * @returns 
+     */
     protected async insert(documents: Array<object>): Promise<any>{
         this._errno = 0;
         return await new Promise<any>((resolve,reject)=>{
@@ -196,9 +201,25 @@ export abstract class MongoDbModelsManager{
         });
     }
 
+    /**
+     * Update multiple documents that match the filter with set object data
+     * @param filter 
+     * @param set 
+     * @returns 
+     */
+    protected async update(filter: object, set: object): Promise<any>{
+        this._errno = 0;
+        return await new Promise<any>((resolve, reject)=>{
+            this._model.updateMany(filter,set).then(res => {
+                resolve(res);
+            }).catch(err => {
+                this._errno = MongoDbModelsManager.UPDATE_ERROR;
+                reject(err);
+            });
+        });
+    }
+
 }
-
-
 
 export interface MongoDbModelsManagerInterface{
     mongodb_string?: string;
