@@ -133,6 +133,39 @@ export abstract class MongoDbModelsManager{
         }
         return disconnected;
     }
+
+    /**
+     * Delete multiple documents that match the filter
+     * @param filter 
+     * @returns 
+     */
+    protected async delete(filter: object): Promise<any>{
+        this._errno = 0;
+        return await new Promise<any>((resolve,reject)=>{
+            this._model.deleteMany(filter).then(res =>{
+                resolve(res);
+            }).catch(err => {
+                this._errno = MongoDbModelsManager.DELETE_ERROR;
+                reject(err);
+            });
+        });
+    }
+
+    /**
+     * Remove all indexes from collection
+     * @returns 
+     */
+    protected async dropIndexes(): Promise<any>{
+        this._errno = 0;
+        return await new Promise<any>((resolve,reject)=>{
+            this._model.collection.dropIndexes().then(res => {
+                resolve(res);
+            }).catch(err => {
+                this._errno = MongoDbModelsManager.DROPINDEXES_ERROR;
+                reject(err);
+            });
+        });
+    }
 }
 
 
