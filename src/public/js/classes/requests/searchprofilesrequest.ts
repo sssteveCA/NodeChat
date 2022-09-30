@@ -5,6 +5,7 @@ export interface SearchProfilesRequestInterface{
 
 export class SearchProfilesRequest{
     private _query: string;
+    private _results: [];
     private _errno:number = 0;
     private _error:string|null = null;
 
@@ -36,7 +37,7 @@ export class SearchProfilesRequest{
      * Search the profiles that matches the input query
      * @returns the response
      */
-    public async searchProfile(): Promise<object>{
+    public async searchProfiles(): Promise<object>{
         let response: object = {};
         this._errno = 0;
         try{
@@ -45,9 +46,13 @@ export class SearchProfilesRequest{
                 let obj = JSON.parse(res);
                 response = {
                     done: obj['done'],
+                    lenght: obj['length'],
                     msg: obj['msg'],
                     profiles: obj['profiles']
                 };
+                console.log("SearchProfileRequest searchProfiles");
+                console.log(response);
+                this._results = response['profile'];
             }).catch(err => {
                 console.warn(err);
                 throw err;

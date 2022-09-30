@@ -55,8 +55,8 @@ export class Accounts extends MongoDbModelsManager{
             if(conn == true)return super.get(filter);
             else throw new DatabaseConnectionError(this.error as string);     
         }).then(res => {
-            console.log("getAccounts");
-            console.log(res);
+            /* console.log("getAccounts");
+            console.log(res); */
             response['done'] = true;
             //Check if results is a non empty an Array of objects
             if(Array.isArray(res) && res.length > 0){
