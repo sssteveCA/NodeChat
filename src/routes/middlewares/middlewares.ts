@@ -1,9 +1,9 @@
 //Middlewares used in different routes
 import express, { NextFunction, Request, Response } from 'express';
-import { MongoDbModelManagerInterface } from '../classes/database/mongodbmodelmanager';
-import { Schemas } from '../namespaces/schemas';
-import {TokenInterface, Token} from '../classes/database/models/token'
-import { Messages } from '../namespaces/messages';
+import { MongoDbModelManagerInterface } from '../../classes/database/mongodbmodelmanager';
+import { Schemas } from '../../namespaces/schemas';
+import {TokenInterface, Token} from '../../classes/database/models/token'
+import { Messages } from '../../namespaces/messages';
 
 /**
  * Pass to the next hop if user is not logged 

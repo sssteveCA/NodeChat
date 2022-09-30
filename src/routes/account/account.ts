@@ -2,7 +2,7 @@
 
 import express from 'express';
 import { MongoDbModelManagerInterface } from '../../classes/database/mongodbmodelmanager';
-import { logged } from '../../middlewares/middlewares';
+import { logged } from '../middlewares/middlewares';
 import { Constants } from '../../namespaces/constants';
 import { Paths } from '../../namespaces/paths';
 import { Schemas} from '../../namespaces/schemas';
