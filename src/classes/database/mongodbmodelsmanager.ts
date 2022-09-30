@@ -93,7 +93,49 @@ export abstract class MongoDbModelsManager{
                 this._mongodb_string = process.env.MONGODB_LOCAL_URL as string;
         }
     }
+
+    /**
+     * Connect to MongoDB database
+     * @returns true if connection is established, false otherwise
+     */
+    protected async connect(): Promise<boolean>{
+        this._errno = 0;
+        try{
+            await mongoose.connect(this._mongodb_string).then(conn =>{
+                this._connected = true;
+            }).catch(err => {
+                throw err;
+            });
+        }catch(e){
+            this._errno = MongoDbModelsManager.CONNECTION_ERROR;
+        }
+        return this._connected;
+    }
+
+    /**
+     * Close the MongoDB connection
+     * @returns true is close is done successfully otherwise false
+     */
+    protected async close(): Promise<boolean>{
+        this._errno = 0;
+        let disconnected: boolean = false;
+        try{
+            if(mongoose.connection.readyState == 1){
+                await mongoose.connection.close().then(close => {
+                    disconnected = true;
+                    this._connected = false;
+                }).catch(err => {
+                    throw err;
+                });
+            }//if(mongoose.connection.readyState == 1){
+        }catch(e){
+            this._errno = MongoDbModelsManager.DISCONNECTION_ERROR;
+        }
+        return disconnected;
+    }
 }
+
+
 
 export interface MongoDbModelsManagerInterface{
     mongodb_string?: string;

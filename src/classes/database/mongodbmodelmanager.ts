@@ -102,7 +102,7 @@ export abstract class MongoDbModelManager{
 
     /**
      * Connect to MongoDB database
-     * @returns 
+     * @returns true if connection is established, false otherwise
      */
     protected async connect(): Promise<boolean>{
         this._errno = 0;
