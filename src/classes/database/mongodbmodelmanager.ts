@@ -185,6 +185,7 @@ export abstract class MongoDbModelManager{
             this._model.findOne(filter).then(res => {
                 resolve(res);
             }).catch(err => {
+                this._errno = MongoDbModelManager.GET_ERROR;
                 reject(err);
             })
         });

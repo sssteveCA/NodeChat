@@ -166,6 +166,36 @@ export abstract class MongoDbModelsManager{
             });
         });
     }
+
+    /**
+     * Get multiple documents that match the filter
+     * @param filter 
+     * @returns 
+     */
+    protected async get(filter: object): Promise<any>{
+        this._errno = 0;
+        return await new Promise<any>((resolve,reject)=>{
+            this._model.find(filter).then(res => {
+                resolve(res);
+            }).catch(err => {
+                this._errno = MongoDbModelsManager.GET_ERROR;
+                reject(err);
+            });
+        });
+    }
+
+    protected async insert(documents: Array<object>): Promise<any>{
+        this._errno = 0;
+        return await new Promise<any>((resolve,reject)=>{
+            this._model.insertMany(documents).then(res => {
+                resolve(res);  
+            }).catch(err => {
+                this._errno = MongoDbModelsManager.INSERT_ERROR;
+                reject(err);
+            });
+        });
+    }
+
 }
 
 
