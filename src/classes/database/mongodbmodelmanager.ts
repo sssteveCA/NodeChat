@@ -90,11 +90,12 @@ export abstract class MongoDbModelManager{
             this._environment = data.environment;
         if(data.mongodb_string)
             this._mongodb_string = data.mongodb_string;
-        else
+        else{
             if(this._environment == Environment.production)
                 this._mongodb_string = process.env.MONGODB_PRODUCTION_URL as string;
             else
                 this._mongodb_string = process.env.MONGODB_LOCAL_URL as string;
+        }
         /* console.log(`mongoDB string => ${this._mongodb_string}`);
         console.log(`collection name => ${this._collection_name}`); */
     }

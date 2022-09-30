@@ -1,4 +1,4 @@
-import { Model, Schema } from "mongoose";
+import mongoose, { Model, Schema } from "mongoose";
 import { Environment } from "../../enums/environment";
 
 export abstract class MongoDbModelsManager{
@@ -30,7 +30,7 @@ export abstract class MongoDbModelsManager{
     protected static REPLACE_ERROR_MSG: string = "Errore durante la sostituzione del documento";
 
     constructor(data: MongoDbModelsManagerInterface){
-
+        this.assignValues(data);
     }
 
     get mongodb_string(){return this._mongodb_string;}
@@ -73,6 +73,26 @@ export abstract class MongoDbModelsManager{
     }
 
     set error(error: string|null){this._error = error;}
+
+    /**
+     * Assign the values to properties 
+     * @param data 
+     */
+    private assignValues(data: MongoDbModelsManagerInterface){
+        this._collection_name = data.collection_name;
+        this._schema = data.schema;
+        this._model = mongoose.model(this._collection_name,this._schema);
+        if(data.environment)
+            this._environment = data.environment;
+        if(data.mongodb_string)
+            this._mongodb_string = data.mongodb_string;
+        else{
+             if(this._environment == Environment.production)
+                this._mongodb_string = process.env.MONGODB_PRODUCTION_URL as string;
+            else
+                this._mongodb_string = process.env.MONGODB_LOCAL_URL as string;
+        }
+    }
 }
 
 export interface MongoDbModelsManagerInterface{
