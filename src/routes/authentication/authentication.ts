@@ -105,10 +105,8 @@ authentication_routes.post('/newAccount',[guest,subscribe_validator],(req,res)=>
     let home_url: string = process.env.MAIN_URL+Paths.VERIFY as string;
     //console.log("home_url => "+home_url);
     let subscribe_data: SubscribeInterface = {
-        username: body['username'],
-        email: body['email'],
-        password: body['password'],
-        home_url: home_url
+        name: body['name'], surname: body['surname'], username: body['username'],
+        email: body['email'], password: body['password'], home_url: home_url
     };
     let subscribe: Subscribe = new Subscribe(subscribe_data);
     subscribe.insertNewAccount().then(obj => {

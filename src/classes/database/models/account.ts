@@ -7,6 +7,8 @@ import { MongoDbModelManager, MongoDbModelManagerInterface } from "../mongodbmod
 
 export interface AccountInterface{
     id?: string,
+    name?: string;
+    surname?: string;
     username?: string,
     email?: string,
     password_hash?: string,
@@ -20,6 +22,8 @@ export interface AccountInterface{
 export class Account extends MongoDbModelManager{
 
     private _id: string;
+    private _name: string;
+    private _surname: string;
     private _username:string;
     private _email:string;
     private _password: string;
@@ -43,6 +47,8 @@ export class Account extends MongoDbModelManager{
     }
 
     get id(){return this._id;}
+    get name(){return this._name;}
+    get surname(){return this._surname;}
     get username(){return this._username;}
     get email(){return this._email;}
     get password_hash(){return this._password_hash;}
@@ -113,6 +119,8 @@ export class Account extends MongoDbModelManager{
             console.log(response); */
             if(res != null){
                 if(res["_id"])this._id = res["_id"];
+                if(res["name"])this._name = res["name"];
+                if(res["surname"])this._surname = res["surname"];
                 if(res["username"])this._username = res["username"];
                 if(res["email"])this._email = res["email"];
                 if(res["password_hash"])this._password_hash = res["password_hash"];
@@ -142,10 +150,11 @@ export class Account extends MongoDbModelManager{
         this._errno = 0;
         let response: object = {};
         try{
-            if(this._username && this._email && this._password_hash && this._activationCode){
+            if(this._name && this._surname && this._username && this._email && this._password_hash && this._activationCode){
                 let current: Date = new Date();
                 this._creationDate = General.dateString(current);
                 let document: object = {
+                    name: this._name, surname: this._surname,
                     username: this._username,email: this._email,password: this._password_hash,
                     creationDate: this._creationDate, activationCode: this._activationCode
                 };

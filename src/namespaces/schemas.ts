@@ -4,6 +4,8 @@ import mongoose, {ObjectId, Schema } from "mongoose";
 
 export namespace Schemas{
     export const ACCOUNTS: Schema = new Schema({
+        name: {type: String, required: true},
+        surname: {type: String, required: true},
         username: {type: String, required: true, index: {unique: true}},
         email: {type: String, required: true, index: {unique: true}},
         password: {type: String, required: true},

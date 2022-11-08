@@ -1,6 +1,6 @@
 import { rejects } from "assert";
 import bcrypt from "bcrypt";
-import mongoose from "mongoose";
+import mongoose, { StringSchemaDefinition } from "mongoose";
 import { Constants } from "../../namespaces/constants";
 import { Schemas } from "../../namespaces/schemas";
 import { Account, AccountInterface } from "../database/models/account";
@@ -13,6 +13,8 @@ import { SendEmailError } from "../errors/sendemailerror";
 
 
 export interface SubscribeInterface{
+    name?: string;
+    surname?: string;
     username?: string;
     email?: string;
     password?: string;
@@ -21,6 +23,8 @@ export interface SubscribeInterface{
 }
 
 export class Subscribe{
+    private _name: string;
+    private _surname: string;
     private _username:string;
     private _email:string;
     private _password:string;
@@ -43,6 +47,8 @@ export class Subscribe{
         this.assignValues(data);
     }
 
+    get name(){return this._name;}
+    get surname(){return this._surname;}
     get username(){return this._username; }
     get email(){return this._email; }
     get password_hash(){return this._password_hash;}
@@ -109,6 +115,8 @@ export class Subscribe{
     }
 
     private assignValues(data: SubscribeInterface): void{
+        if(data.name)this._name = data.name;
+        if(data.surname)this._surname = data.surname;
         if(data.username)this._username = data.username;
         if(data.email)this._email = data.email;
         if(data.password)this._password = data.password;
@@ -151,6 +159,7 @@ export class Subscribe{
             await this.passwordHashPromise().then(hash => {
                 this._activation_code = this.emailVerifCode();
                 let account_data: AccountInterface = {
+                    name: this._name, surname: this._surname,
                     username: this._username, email: this._email,password_hash: hash, activationCode: this._activation_code
                 };
                 account = new Account(mongodb_mmi,account_data);
