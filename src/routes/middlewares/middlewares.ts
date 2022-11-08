@@ -46,7 +46,11 @@ export const logged = async(req:Request, res: Response, next: NextFunction) => {
         }).catch(err => {
             redirect_string = "/login";
         });
-        if(next_hop)return next();
+        if(next_hop)
+        {
+            res.locals.tokenKey = req.session['token_key'];
+            return next();
+        }
         console.log("Before delete token");
         await token.deleteToken({tokenKey: token_key});
         req.session['username'] = null;

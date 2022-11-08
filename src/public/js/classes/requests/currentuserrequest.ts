@@ -50,14 +50,14 @@ export class CurrentUserRequest{
 
     private async currentUserPromise(): Promise<string>{
         return await new Promise<string>((resolve, reject) => {
-            let post_data: URLSearchParams = new URLSearchParams();
-            post_data.append("token_key",this._token_key);
             fetch(CurrentUserRequest.FETCH_URL,{
                 method: "POST",
                 headers: {
                     "Accept": "application/json", "Content-Type": "application/json"
                 },
-                body: post_data
+                body: JSON.stringify({
+                    token_key: this._token_key
+                })
             }).then(res => {
                 resolve(res.text());
             }).catch(err => {

@@ -20,6 +20,7 @@ account_routes.get("/profile/:username", logged, (req,res)=>{
     };
     if(username == current_username){
         //Personal profile
+        view_params["token_key"] = res.locals["tokenKey"];
         return res.render('logged/profile', view_params);
     }//if(username == current_username){
     else{

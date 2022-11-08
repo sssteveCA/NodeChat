@@ -17,8 +17,8 @@ function setFooter(): void{
         wHeight: $(window).height(),
         bodyHeight: $('body').height()
     };
-    console.log("footer.ts setFooterPosition heights object");
-    console.log(heights);
+    //console.log("footer.ts setFooterPosition heights object");
+    //console.log(heights);
     if(heights['bodyHeight'] < heights['wHeight']){
         footer.css({
             position: 'fixed', bottom: '0px'
