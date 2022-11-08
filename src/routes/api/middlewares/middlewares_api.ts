@@ -20,7 +20,10 @@ export const loggedApi = async(req: Request, res: Response, next: NextFunction) 
             let token_data: TokenInterface = {};
             let token: Token = new Token(mmmi_data,token_data);
             await token.getToken({tokenKey: token_key}).then(obj => {
-                if(obj['done'] == true && obj['result'] != null) return next();
+                if(obj['done'] == true && obj['result'] != null) {
+                    res.locals.tokenKey = token_key;
+                    return next();
+                }
                 else throw new NotAuthenticatedError("");
             }).catch(err => {
                 throw err;

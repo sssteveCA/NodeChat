@@ -1,6 +1,7 @@
 
 import express from 'express';
 import { Accounts, AccountsInterface } from '../../../classes/database/models/accounts';
+import { Token } from '../../../classes/database/models/token';
 import { MongoDbModelsManagerInterface } from '../../../classes/database/mongodbmodelsmanager';
 import { MyProfileSections } from '../../../enums/enums';
 import { Messages } from '../../../namespaces/messages';
@@ -10,10 +11,21 @@ import { loggedApi } from '../middlewares/middlewares_api';
 export const account_routes_api = express.Router();
 
 account_routes_api.post('/profile/section/:section', loggedApi, async(req,res)=>{
-    let section: string = req.params['section'] as string;
+    let tokenKey: string = res.locals["tokenKey"];
+    let section: string = req.params['section'];
     if((<any>Object).values(MyProfileSections).includes(section)){
-        return res.status(200).json({msg: "Ciao"});
+        let mmis_data: MongoDbModelsManagerInterface = {
+            collection_name: process.env.MONGODB_TOKENS_COLLECTION as string,
+            schema: Schemas.TOKENS
+        };
+        let token: Token = new Token(mmis_data,{});
+        await token.getToken({tokenKey: tokenKey}).then(obj => {
+            res.status(200).json(obj);
+        }).catch(err => {
+
+        })
     }//if((<any>Object).values(MyProfileSections).includes(section)){
+    return res.status(404).json({msg: "Sezione profilo non trovata"});
 })
 
 account_routes_api.post('/profile/search', loggedApi, async(req,res)=>{
