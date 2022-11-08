@@ -11,9 +11,34 @@ $description-class-style: (text-align: center, margin: $div-margin)
 $bk-url-logged: string.insert($bk-url, "../" , 0)
 //@debug $bk-url-logged
 
+@mixin left-side-style()
+    .left-side
+        @media only screen and (min-width: #{$bs-breakpoint-md})
+            width: 25%
+        .profile-image
+            width: 100%
+            height: 150px
+
+@mixin right-side-style()
+    .right-side
+        @media only screen and (min-width: #{$bs-breakpoint-md})
+            width: 75%
+        .cover-image
+            width: 100%
+            height: 300px
+
+@mixin content-style()
+    .container
+        position: fixed
+        .content
+            @include left-side-style()
+            @include right-side-style()
+        
 @include main-background($bk-url,2)
 @include header-class()
 @include container-style($container-class)
+@include content-style()
+
 
 
 
