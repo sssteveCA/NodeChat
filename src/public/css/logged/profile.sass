@@ -1,6 +1,7 @@
 @use "sass:selector"
 @use "sass:string"
 @use "sass:color"
+@use "sass:map"
 
 @import "../partials/animations"
 @import "../partials/background"
@@ -14,28 +15,43 @@ $bk-url-logged: string.insert($bk-url, "../" , 0)
 
 $profile-image-div-bkcolor: color.adjust(grey, $alpha: -0.9)
 $cover-image-div-bkcolor: color.adjust(grey, $alpha: -0.9)
+$li-items-hover-bkcolor: color.adjust(yellow, $alpha: -0.2)
+$container-sides-width: (left: 33%, right: 67%)
 
 @mixin left-side-style()
     .left-side
+        background-color: white
+        border-right: 1px solid grey
         @media only screen and (min-width: #{$bs-breakpoint-md})
-            width: 25%
+            width: map.get($container-sides-width, "left")
         .profile-image
             background-color: $profile-image-div-bkcolor
             width: 100%
-            height: 150px
+            height: 200px
+            z-index: 11
+        .sections
+            ul
+                li
+                    text-align: center
+                    font-family: Arial, Helvetica, sans-serif
+                    font-size: 20px
+                    padding: 10px 0px
+                    &:hover
+                        background-color: $li-items-hover-bkcolor
+
 
 @mixin right-side-style()
     .right-side
         @media only screen and (min-width: #{$bs-breakpoint-md})
-            width: 75%
+            width: map.get($container-sides-width, "right")
         .cover-image
             background-color: $cover-image-div-bkcolor
             width: 100%
-            height: 300px
+            height: 350px
 
 @mixin content-style()
     #{$container-class}
-        position: fixed
+        //position: fixed
         .content
             @include left-side-style()
             @include right-side-style()
