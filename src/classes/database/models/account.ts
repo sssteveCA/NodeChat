@@ -254,6 +254,8 @@ export class Account extends MongoDbModelManager{
     }
 
     private setValues(data: AccountInterface){
+        if(data.name)this._name = data.name;
+        if(data.surname)this._surname = data.surname;
         if(data.username)this._username = data.username;
         if(data.email)this._email = data.email;
         if(data.password_hash)this._password_hash = data.password_hash;

@@ -31,6 +31,8 @@ export const login_validator = (req: Request, res: Response, next: NextFunction)
  */
 export const subscribe_validator = (req: Request, res: Response, next: NextFunction) =>{
     let body: object = req.body as object;
+    console.log("authentication_m.ts subscribe_validator body => ");
+    console.log(body);
     let propertyExists: boolean = (
         body.hasOwnProperty("name") && body.hasOwnProperty("surname") &&
         body.hasOwnProperty("username") && body.hasOwnProperty("email") && body.hasOwnProperty("password") && body.hasOwnProperty("confPass"));

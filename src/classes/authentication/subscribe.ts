@@ -193,6 +193,7 @@ export class Subscribe{
                 else
                     throw new SendEmailError(EmailVerify.ERR_SENDMAIL_MSG);
             }).catch(err => {
+                console.warn(err);
                 throw err;
             });
         }catch(e: any){

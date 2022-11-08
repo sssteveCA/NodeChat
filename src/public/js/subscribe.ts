@@ -7,6 +7,8 @@ $(()=>{
     $('#bSubscribe').on('click', (e)=>{
         e.preventDefault();
         let sr_data: SubscribeRequestInterface = {
+            name: $('#name').val() as string,
+            surname: $('#surname').val() as string,
             username: $('#username').val() as string,
             email: $('#email').val() as string,
             password: $('#password').val() as string,

@@ -1,13 +1,13 @@
 import { ValidationError } from "../../errors/validationerror.js";
 
 export interface SubscribeRequestInterface{
-    username:string;
-    email:string;
-    password:string;
-    confPass:string;
+    name: string, surname: string, username:string;
+    email:string; password:string; confPass:string;
 }
 
 export class SubscribeRequest{
+    private _name: string;
+    private _surname: string;
     private _username:string;
     private _email:string;
     private _password:string;
@@ -23,12 +23,16 @@ export class SubscribeRequest{
     private static ERR_SUBSCRIBE_MSG:string = "Errore durante la registrazione";
 
     constructor(data: SubscribeRequestInterface){
+        this._name = data.name;
+        this._surname = data.surname;
         this._username = data.username;
         this._email = data.email;
         this._password = data.password;
         this._confPass = data.confPass;
     }
 
+    get name(){return this._name;}
+    get surname(){return this._surname}
     get username(){return this._username; }
     get email(){return this._email; }
     get password(){return this._password; }
@@ -78,9 +82,8 @@ export class SubscribeRequest{
     private async subscribePromise(): Promise<string>{
         return await new Promise<string>((resolve, reject) => {
             let post_data: SubscribeRequestInterface = {
-                username: this._username,
-                email: this._email,
-                password: this._password,
+                name: this._name,surname: this._surname,
+                username: this._username,email: this._email,password: this._password,
                 confPass: this._confPass
             }
             fetch(SubscribeRequest.FETCH_URL,{
