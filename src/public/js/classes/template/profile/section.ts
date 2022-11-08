@@ -53,6 +53,7 @@ export class Section{
         else if(this._section == MyProfileSections.PHOTOS)this.photosTemplate();
         else if(this._section == MyProfileSections.SETTINGS)this.settingsTemplate();
         else if(this._section == MyProfileSections.VIDEOS)this.videosTemplate();
+        $('#'+this._container).html(this._html);
     }
 
     private friendsTemplate(): void{
