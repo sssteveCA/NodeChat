@@ -31,7 +31,11 @@ export const login_validator = (req: Request, res: Response, next: NextFunction)
  */
 export const subscribe_validator = (req: Request, res: Response, next: NextFunction) =>{
     let body: object = req.body as object;
-    if(body.hasOwnProperty("username") && body.hasOwnProperty("email") && body.hasOwnProperty("password") && body.hasOwnProperty("confPass")){
+    let propertyExists: boolean = (
+        body.hasOwnProperty("name") && body.hasOwnProperty("surname") &&
+        body.hasOwnProperty("username") && body.hasOwnProperty("email") && body.hasOwnProperty("password") && body.hasOwnProperty("confPass"));
+    let notEmpty: boolean = (body["name"] != "" && body["surname"] != "" && body["username"] != "" && body["email"] != "" && body["password"] != "" && body["confPass"] != "");
+    if(propertyExists && notEmpty){
         if(body["password"] == body["confPass"]){
             let email_regex: RegExp = new RegExp(Regexs.EMAIL);
             if(email_regex.test(body["email"])){
@@ -50,7 +54,7 @@ export const subscribe_validator = (req: Request, res: Response, next: NextFunct
         return res.status(400).send({
             done: false, msg: "Le due password non coincidono"
         });
-    }//if(body.hasOwnProperty("username") && body.hasOwnProperty("email") && body.hasOwnProperty("password") && body.hasOwnProperty("confPass")){
+    }//if(propertyExists && notEmpty){
     return res.status(400).send({
             done: false, msg: Messages.ERROR_MISSINGDATA
     });
