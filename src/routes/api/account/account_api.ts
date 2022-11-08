@@ -12,9 +12,8 @@ import { loggedApi } from '../middlewares/middlewares_api';
 
 export const account_routes_api = express.Router();
 
-account_routes_api.post('/profile/section/:section', loggedApi, async(req,res)=>{
+account_routes_api.post('/current_user', loggedApi, async(req,res)=>{
     let tokenKey: string = res.locals["tokenKey"];
-    let section: string = req.params['section'];
     let mmi_data: MongoDbModelManagerInterface = {
         collection_name: process.env.MONGODB_TOKENS_COLLECTION as string,
         schema: Schemas.TOKENS
@@ -34,7 +33,14 @@ account_routes_api.post('/profile/section/:section', loggedApi, async(req,res)=>
         return account.getAccount({_id: accountId});
     }).then(obj => {
         console.log(obj);
-        return res.status(200).json(obj);
+        let account: object = obj["result"];
+        return res.status(200).json({
+            done: obj["done"],
+            account: {
+                name: account["name"], surname: account["surname"], username: account["username"],
+                email: account["email"]
+            }
+        });
     })
     .catch(err => {
         console.warn(err);
