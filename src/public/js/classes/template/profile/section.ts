@@ -1,4 +1,4 @@
-import { MyProfileSections } from "../../../enums/enums";
+import { MyProfileSections } from "../../../enums/enums.js";
 
 
 export interface SectionInterface {

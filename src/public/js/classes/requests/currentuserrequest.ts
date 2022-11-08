@@ -36,7 +36,7 @@ export class CurrentUserRequest{
         let response: object = {};
         try{
             await this.currentUserPromise().then(res => {
-                console.log(res);
+                //console.log(res);
                 response = JSON.parse(res);
             }).catch(err => {
                 throw err;

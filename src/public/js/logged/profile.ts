@@ -9,13 +9,11 @@ $(()=>{
     //console.log(cur_data);
     let cur: CurrentUserRequest = new CurrentUserRequest(cur_data);
     cur.currentUser().then(obj => {
-        console.log(obj);
         $('#'+SectionLiItems.INFORMATION).trigger('click');
     });
     $('.sections ul li').on('click',(e)=>{
         let fired: JQuery = $(e.target);
         let idTarget: string = fired.attr("id") as string;
-        console.log(idTarget);
         let section_data: SectionInterface = {
             account: {}, container: 'section-content', section: MyProfileSections.INFORMATION };
         if(idTarget == SectionLiItems.ACCOUNT_SETTINGS){
