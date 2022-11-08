@@ -2,11 +2,19 @@
 import express from 'express';
 import { Accounts, AccountsInterface } from '../../../classes/database/models/accounts';
 import { MongoDbModelsManagerInterface } from '../../../classes/database/mongodbmodelsmanager';
+import { MyProfileSections } from '../../../enums/enums';
 import { Messages } from '../../../namespaces/messages';
 import { Schemas } from '../../../namespaces/schemas';
 import { loggedApi } from '../middlewares/middlewares_api';
 
 export const account_routes_api = express.Router();
+
+account_routes_api.post('/profile/section/:section', loggedApi, async(req,res)=>{
+    let section: string = req.params['section'] as string;
+    if((<any>Object).values(MyProfileSections).includes(section)){
+        return res.status(200).json({msg: "Ciao"});
+    }//if((<any>Object).values(MyProfileSections).includes(section)){
+})
 
 account_routes_api.post('/profile/search', loggedApi, async(req,res)=>{
     let query: string = req.body.query as string;
