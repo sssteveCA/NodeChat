@@ -134,7 +134,7 @@ export class Section{
         <div class="container">
             <div class="row">
                 <div class="edit-button col-12">
-                    <button class="btn btn-success"></button>
+                    <button class="btn btn-success bi bi-pen"></button>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
                     <span class="fw-bold">Scuola superiore</span>
@@ -157,7 +157,7 @@ export class Section{
         <div class="container">
             <div class="row">
                 <div class="edit-button col-12">
-                    <button class="btn btn-success"></button>
+                    <button class="btn btn-success bi bi-pen"></button>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
                     <span class="fw-bold">Lavoro attuale</span>
@@ -173,7 +173,7 @@ export class Section{
         <div class="container">
             <div class="row">
                 <div class="edit-button col-12">
-                    <button class="btn btn-success"></button>
+                    <button class="btn btn-success bi bi-pen"></button>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
                     <span class="fw-bold">Numero di telefono</span>
