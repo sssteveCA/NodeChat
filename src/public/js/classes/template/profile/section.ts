@@ -72,7 +72,113 @@ export class Section{
 <div class="sel-section-header">
         <h2 class="text-center">Informazioni personali</h2>
 </div>
-<div class="sel-section-content mt-5">
+<div class="sel-section-content mt-5 d-flex flex-column">
+    <fielset>
+        <legend>Informazioni personali</legend>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-6 my-2 my-lg-0">
+                    <span class="fw-bold">Il tuo nome</span>
+                </div>
+                <div class="col-12 col-lg-6 my-2 my-lg-0">
+                    <span id="name"></span>
+                </div>
+            </div>  
+            <div class="row">
+                <div class="col-12 col-lg-6 my-2 my-lg-0">
+                    <span class="fw-bold">Il tuo cognome</span>
+                </div>
+                <div class="col-12 col-lg-6 my-2 my-lg-0">
+                    <span id="surname"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-lg-6 my-2 my-lg-0">
+                    <span class="fw-bold">Sesso</span>
+                </div>
+                <div class="col-12 col-lg-6 my-2 my-lg-0">
+                    <span id="sex"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-lg-6 my-2 my-lg-0">
+                    <span class="fw-bold">Data di nascita</span>
+                </div>
+                <div class="col-12 col-lg-6 my-2 my-lg-0">
+                    <span id="birth-date"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-lg-6 my-2 my-lg-0">
+                    <span class="fw-bold">Luogo di nascita</span>
+                </div>
+                <div class="col-12 col-lg-6 my-2 my-lg-0">
+                    <span id="birth-place"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-lg-6 my-2 my-lg-0">
+                    <span class="fw-bold">Luogo di residenza</span>
+                </div>
+                <div class="col-12 col-lg-6 my-2 my-lg-0">
+                    <span id="living-place"></span>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+        <legend>Istruzione</legend>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <span class="fw-bold">Scuola superiore</span>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <span id="secondary-school"></span>
+                </div>
+            </div>  
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <span class="fw-bold">Università</span>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <span id="university"></span>
+                </div>
+            </div>
+        </div>
+    <fieldset>
+        <lengend>Lavoro</legend>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <span class="fw-bold">Lavoro attuale</span>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <span id="work"></span>
+                </div>
+            </div>  
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Informazioni di contatto</legend>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <span class="fw-bold">Numero di telefono</span>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <span id="telephone"></span>
+                </div>
+            </div>  
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <span class="fw-bold">Indirizzo email</span>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <span id="email"></span>
+                </div>
+            </div>
+        </div>
+    </fieldset>
 </div>
         `;
     }
