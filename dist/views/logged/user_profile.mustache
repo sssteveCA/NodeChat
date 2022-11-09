@@ -20,6 +20,26 @@
             <div class="header">
                 <h1>{{username}}</h1>
             </div>
+            <div class="content d-flex flex-column flex-md-row">
+                <div class="left-side">
+                    <div class="profile-image">
+                    </div>
+                    <div class="sections">
+                        <ul class="list-group">
+                            <li id="li-information" class="list-group-item">Informazioni</li>
+                            <li id="li-friends" class="list-group-item">Amici</li>
+                            <li id="li-photos" class="list-group-item">Foto</li>
+                            <li id="li-videos" class="list-group-item">Video</li>
+                            <li id="li-account-settings" class="list-group-item">Impostazioni account</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="right-side">
+                    <div class="cover-image">
+                    </div>
+                    <div id="section-content"></div>
+                </div>
+            </div>
         </div>
         {{> footer}}
     </body>
