@@ -61,7 +61,8 @@ export class Section{
 <div class="sel-section-header">
         <h2 class="text-center">Amici</h2>
 </div>
-<div class="sel-section-content">
+<div class="sel-section-content mt-5">
+        <p class="fs-4 fw-bold">Non hai aggiunto ancora nessun amico</p>
 </div>
         `;
     }
@@ -71,7 +72,7 @@ export class Section{
 <div class="sel-section-header">
         <h2 class="text-center">Informazioni personali</h2>
 </div>
-<div class="sel-section-content">
+<div class="sel-section-content mt-5">
 </div>
         `;
     }
@@ -81,7 +82,8 @@ export class Section{
 <div class="sel-section-header">
         <h2 class="text-center">Foto</h2>
 </div>
-<div class="sel-section-content">
+<div class="sel-section-content mt-5">
+    <p class="fs-4 fw-bold text-center">Nessuna foto da mostrare</p>
 </div>
         `;
     }
@@ -91,7 +93,8 @@ export class Section{
 <div class="sel-section-header">
         <h2 class="text-center">Impostazioni account</h2>
 </div>
-<div class="sel-section-content">
+<div class="sel-section-content mt-5">
+    <p class="h2 fs-3">Impostazioni account</p>
 </div>
         `;
     }
@@ -101,7 +104,8 @@ export class Section{
 <div class="sel-section-header">
         <h2 class="text-center">Video</h2>
 </div>
-<div class="sel-section-content">
+<div class="sel-section-content mt-5">
+    <p class="fs-4 fw-bold text-center">Nessun video da mostrare</p>
 </div>
         `;
     }
