@@ -67,7 +67,15 @@ $container-sides-width: (left: 33%, right: 67%)
         #section-content
             background-color: white
             width: 100%
-            padding: 100px 0px
+            padding: 100px 10px
+            @include right-section-container-style()
+
+@mixin right-section-container-style()
+    .container
+        border: 1px solid #ccc !important
+        border-radius: 16px
+        .row
+            padding: 5px 0px
 
 @mixin content-style()
     #{$container-class}
