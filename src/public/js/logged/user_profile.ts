@@ -1,16 +1,17 @@
 import { CurrentUserRequest, CurrentUserRequestInterface } from "../classes/requests/currentuserrequest.js";
+import { UserRequest, UserRequestInterface } from "../classes/requests/userrequest.js";
 import { Section, SectionInterface } from "../classes/template/profile/section.js";
 import { MyProfileSections } from "../enums/enums.js";
 import Account from "../models/account.js";
 
 $(()=>{
-    let cur_data: CurrentUserRequestInterface = {
-        token_key: $('input[name=user_id]').val() as string
+    let ur_data: UserRequestInterface = {
+        user_id: $('input[name=user_id]').val() as string
     };
     let account: Account = new Account();
     //console.log(cur_data);
-    let cur: CurrentUserRequest = new CurrentUserRequest(cur_data);
-    cur.currentUser().then(obj => {
+    let ur: UserRequest = new UserRequest(ur_data);
+    ur.userInfo().then(obj => {
         console.log(obj);
         if(obj["done"] == true){
             account = setAccount(obj["account"]);

@@ -7,5 +7,6 @@ export namespace Messages{
     export const ERROR_NOTAUTHENTICATED: string = "Non sei autenticato";
     export const ERROR_SERVER: string = "Siamo spiacenti, il server non è in grado di elaborare la tua richiesta. "+ADMIN_CONTACT;
     export const ERROR_SESSIONEXPIRED: string = "La tua sessione è scaduta";
+    export const ERROR_USERNOTFOUND: string = "Utente non trovato";
 
 }

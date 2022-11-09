@@ -35,11 +35,11 @@ export class UserRequest{
         return this._error;
     }
 
-    public async currentUser(): Promise<object>{
+    public async userInfo(): Promise<object>{
         this._errno = 0;
         let response: object = {};
         try{
-            await this.currentUserPromise().then(res => {
+            await this.userInfoPromise().then(res => {
                 //console.log(res);
                 response = JSON.parse(res);
             }).catch(err => {
@@ -52,7 +52,7 @@ export class UserRequest{
         return response;
     }
 
-    private async currentUserPromise(): Promise<string>{
+    private async userInfoPromise(): Promise<string>{
         return await new Promise<string>((resolve, reject) => {
             fetch(UserRequest.FETCH_URL,{
                 method: "POST",

@@ -19,7 +19,7 @@ account_routes_api.post('/current_user', loggedApi, async(req,res)=>{
         schema: Schemas.TOKENS
     };
     let token: Token = new Token(mmi_data,{});
-    await token.getToken({tokenKey: tokenKey}).then(obj => {
+    token.getToken({tokenKey: tokenKey}).then(obj => {
         if(obj["done"] == true){
             let accountId = obj["result"]["accountId"];
             return accountId;
@@ -33,22 +33,53 @@ account_routes_api.post('/current_user', loggedApi, async(req,res)=>{
         return account.getAccount({_id: accountId});
     }).then(obj => {
         console.log(obj);
-        let account: object = obj["result"];
-        return res.status(200).json({
-            done: obj["done"],
-            account: {
-                name: account["name"], surname: account["surname"], username: account["username"],
-                email: account["email"]
-            }
-        });
-    })
-    .catch(err => {
+        if(obj["done"] == true){
+            let account: object = obj["result"];
+            return res.status(200).json({
+                done: obj["done"],
+                account: {
+                    name: account["name"], surname: account["surname"], username: account["username"], email: account["email"]
+                }
+            });
+        }//if(obj["done"] == true){
+        else{
+            return res.status(404).json({ done: false, msg: Messages.ERROR_USERNOTFOUND });
+        }
+    }).catch(err => {
         console.warn(err);
         return res.status(500).json({
             done: false, msg: Messages.ERROR_SERVER
         });
     });
 })
+
+account_routes_api.post('/user_info', loggedApi, async(req,res)=>{
+    let user_id: string = req.body["user_id"];
+    let mmi_data: MongoDbModelManagerInterface = {
+        collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
+        schema: Schemas.ACCOUNTS
+    };
+    let account: Account = new Account(mmi_data,{});
+    account.getAccount({_id: user_id}).then(obj => {
+        if(obj["done"] == true){
+            let account: object = obj["result"];
+            return res.status(200).json({
+                done: obj["done"],
+                account: {
+                    name: account["name"], surname: account["surname"], username: account["username"], email: account["email"]
+                }
+            });
+        }//if(obj["done"] == true){
+        else{
+            return res.status(404).json({ done: false, msg: Messages.ERROR_USERNOTFOUND });
+        }
+    }).catch(err => {
+        return res.status(500).json({
+            done: false, msg: Messages.ERROR_SERVER
+        });
+    })
+
+});
 
 account_routes_api.post('/profile/search', loggedApi, async(req,res)=>{
     let query: string = req.body.query as string;
