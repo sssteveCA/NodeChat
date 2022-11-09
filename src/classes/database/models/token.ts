@@ -127,12 +127,14 @@ export class Token extends MongoDbModelManager{
                     /* console.log("insertToken get result => ");
                     console.log(result); */
                     if(result != null){
+                        console.log("Token insertToken result != null");
                         //console.log(`Token get before insert => ${result} `);
                         let document: object = {
                             accountId: this._accountId, tokenKey: this._tokenKey, creationDate: this._creationDate, expireDate: this._expireDate
                         };
                         return super.replace({accountId: this._accountId},document);
                     }//if(result != null){
+                    console.log("Token insertToken result == null");
                     let document: object = {
                         accountId: this._accountId, tokenKey: this._tokenKey, creationDate: this._creationDate, expireDate: this._expireDate
                     }
@@ -230,7 +232,8 @@ export class Token extends MongoDbModelManager{
      */
     private dateString(date: Date):string{
         let year = date.getFullYear();
-        let month = date.getMonth() < 10 ? "0"+date.getMonth() : date.getMonth();
+        let month_number: number = date.getMonth()+1;
+        let month = month_number < 10 ? "0"+month_number : month_number;
         let day = date.getDate() < 10 ? "0"+date.getDate() : date.getDate();
         let hours = date.getHours() < 10 ? "0"+date.getHours() : date.getHours();
         let minutes = date.getMinutes() < 10 ? "0"+date.getMinutes() : date.getMinutes();
@@ -245,9 +248,13 @@ export class Token extends MongoDbModelManager{
             this._tokenKey = data.tokenKey;
             let today: Date = new Date();
             this._creationDate = this.dateString(today);
+            console.log("Token setValues creationDate => ");
+            console.log(this._creationDate);
             let expireTime: Date = new Date();
             expireTime.setMinutes(today.getMinutes() + 15);
             this._expireDate = this.dateString(expireTime);
+            console.log("Token setValues expireDate => ");
+            console.log(this._expireDate);
         }//if(data.accountId && data.tokenKey){
     }
 }
