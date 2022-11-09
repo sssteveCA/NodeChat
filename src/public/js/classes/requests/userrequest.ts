@@ -1,6 +1,7 @@
 
 
 export interface UserRequestInterface{
+    token_key: string;
     user_id: string;
 }
 
@@ -8,6 +9,7 @@ export interface UserRequestInterface{
  * Get the needed logged user information for profile managing
  */
 export class UserRequest{
+    private _token_key: string;
     private _user_id: string;
     private _errno: number = 0;
     private _error: string|null = null;
@@ -19,6 +21,7 @@ export class UserRequest{
     private static FETCH_URL:string = "/api/user_info";
 
     constructor(data: UserRequestInterface){
+        this._token_key = data.token_key;
         this._user_id = data.user_id;
     }
 
@@ -60,7 +63,7 @@ export class UserRequest{
                     "Accept": "application/json", "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    user_id: this._user_id
+                    token_key: this._token_key, user_id: this._user_id
                 })
             }).then(res => {
                 resolve(res.text());

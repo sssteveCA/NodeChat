@@ -63,7 +63,7 @@ export class Section{
         <h2 class="text-center">Amici</h2>
 </div>
 <div class="sel-section-content mt-5">
-        <p class="fs-4 fw-bold">Non hai aggiunto ancora nessun amico</p>
+        <p class="fs-4 fw-bold text-center">Non hai aggiunto ancora nessun amico</p>
 </div>
         `;
     }
@@ -213,7 +213,7 @@ export class Section{
         <h2 class="text-center">Impostazioni account</h2>
 </div>
 <div class="sel-section-content mt-5">
-    <p class="h2 fs-3">Impostazioni account</p>
+    <p class="fs-4 fw-bold text-center">Impostazioni account</p>
 </div>
         `;
     }

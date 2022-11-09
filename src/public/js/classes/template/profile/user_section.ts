@@ -2,13 +2,13 @@ import { MyProfileSections } from "../../../enums/enums.js";
 import Account from "../../../models/account.js";
 
 
-export interface SectionInterface {
+export interface UserSectionInterface {
     account: Account;
     container: string;
     section: MyProfileSections;
 }
 
-export class Section{
+export class UserSection{
     /**
      * The logged user information
      */
@@ -29,7 +29,7 @@ export class Section{
     private _errno: number = 0;
     private _error: string|null = null;
 
-    constructor(data: SectionInterface){
+    constructor(data: UserSectionInterface){
         this._account = data.account;
         this._container = data.container;
         this._section = data.section;
@@ -63,7 +63,7 @@ export class Section{
         <h2 class="text-center">Amici</h2>
 </div>
 <div class="sel-section-content mt-5">
-        <p class="fs-4 fw-bold">Non hai aggiunto ancora nessun amico</p>
+        <p class="fs-4 fw-bold text-center">Non hai aggiunto ancora nessun amico</p>
 </div>
         `;
     }
@@ -201,7 +201,7 @@ export class Section{
         <h2 class="text-center">Impostazioni account</h2>
 </div>
 <div class="sel-section-content mt-5">
-    <p class="h2 fs-3">Impostazioni account</p>
+    <p class="fs-4 fw-bold text-center">Impostazioni account</p>
 </div>
         `;
     }

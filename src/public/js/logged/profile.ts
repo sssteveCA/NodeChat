@@ -1,6 +1,6 @@
 import { CurrentUserRequest, CurrentUserRequestInterface } from "../classes/requests/currentuserrequest.js";
 import { Section, SectionInterface } from "../classes/template/profile/section.js";
-import { MyProfileSections } from "../enums/enums.js";
+import { MyProfileSections, SectionLiItems } from "../enums/enums.js";
 import Account from "../models/account.js";
 
 $(()=>{
@@ -46,10 +46,6 @@ $(()=>{
         let section: Section = new Section(section_data);
     });
 });
-
-enum SectionLiItems{
-    ACCOUNT_SETTINGS = "li-account-settings", FRIENDS = "li-friends", INFORMATION = "li-information", PHOTOS = "li-photos", VIDEOS = "li-videos"
-}
 
 function setAccount(obj: object): Account{
     let account: Account = new Account();

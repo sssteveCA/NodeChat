@@ -1,11 +1,13 @@
 import { CurrentUserRequest, CurrentUserRequestInterface } from "../classes/requests/currentuserrequest.js";
 import { UserRequest, UserRequestInterface } from "../classes/requests/userrequest.js";
 import { Section, SectionInterface } from "../classes/template/profile/section.js";
-import { MyProfileSections } from "../enums/enums.js";
+import { UserSection, UserSectionInterface } from "../classes/template/profile/user_section.js";
+import { MyProfileSections, SectionLiItems } from "../enums/enums.js";
 import Account from "../models/account.js";
 
 $(()=>{
     let ur_data: UserRequestInterface = {
+        token_key: $('input[name=token_key]').val() as string,
         user_id: $('input[name=user_id]').val() as string
     };
     let account: Account = new Account();
@@ -22,7 +24,7 @@ $(()=>{
     $('.sections ul li').on('click',(e)=>{
         let fired: JQuery = $(e.target);
         let idTarget: string = fired.attr("id") as string;
-        let section_data: SectionInterface = {
+        let section_data: UserSectionInterface = {
             account: account, container: 'section-content', section: MyProfileSections.INFORMATION };
         if(idTarget == SectionLiItems.ACCOUNT_SETTINGS){
             section_data = {
@@ -44,13 +46,9 @@ $(()=>{
             section_data = {
                 account: account, container: 'section-content', section: MyProfileSections.VIDEOS};
         }
-        let section: Section = new Section(section_data);
+        let section: UserSection = new UserSection(section_data);
     });
 });
-
-enum SectionLiItems{
-    ACCOUNT_SETTINGS = "li-account-settings", FRIENDS = "li-friends", INFORMATION = "li-information", PHOTOS = "li-photos", VIDEOS = "li-videos"
-}
 
 function setAccount(obj: object): Account{
     let account: Account = new Account();

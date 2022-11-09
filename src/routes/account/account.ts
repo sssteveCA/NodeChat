@@ -35,6 +35,8 @@ account_routes.get("/profile/:username", logged, (req,res)=>{
         ac.getAccount({username: username}).then(obj =>{
             if(obj['result'] != null){
                 //Account found
+                view_params["token_key"] = res.locals["tokenKey"];
+                view_params["user_id"] = ac.id;
                 return res.render('logged/user_profile',view_params);
             }//if(obj['result'] != null){
             else{
