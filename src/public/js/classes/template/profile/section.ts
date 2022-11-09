@@ -1,8 +1,9 @@
 import { MyProfileSections } from "../../../enums/enums.js";
+import Account from "../../../models/account.js";
 
 
 export interface SectionInterface {
-    account: object;
+    account: Account;
     container: string;
     section: MyProfileSections;
 }
@@ -11,7 +12,7 @@ export class Section{
     /**
      * The logged user information
      */
-    private _account: object;
+    private _account: Account;
     /**
      * the id of container that must contain the generated HTML
      */
@@ -81,7 +82,7 @@ export class Section{
                     <span class="fw-bold">Il tuo nome</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="name"></span>
+                    <span id="name">${this._account.name}</span>
                 </div>
             </div>  
             <div class="row">
@@ -89,7 +90,7 @@ export class Section{
                     <span class="fw-bold">Il tuo cognome</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="surname"></span>
+                    <span id="surname">${this._account.surname}</span>
                 </div>
             </div>
             <div class="row">
@@ -174,7 +175,7 @@ export class Section{
                     <span class="fw-bold">Indirizzo email</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="email"></span>
+                    <span id="email">${this._account.email}</span>
                 </div>
             </div>
         </div>
