@@ -5,7 +5,7 @@ import Account from "../models/account.js";
 
 $(()=>{
     let cur_data: CurrentUserRequestInterface = {
-        token_key: $('input[name=token_key]').val() as string
+        token_key: $('input[name=user_id]').val() as string
     };
     let account: Account = new Account();
     //console.log(cur_data);
