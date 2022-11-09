@@ -1,0 +1,85 @@
+@use "sass:selector"
+@use "sass:string"
+@use "sass:color"
+@use "sass:map"
+
+@import "../partials/animations"
+@import "../partials/background"
+@import "../partials/global"
+
+$div-margin: 20px auto
+$description-class-style: (text-align: center, margin: $div-margin)
+
+$bk-url-logged: string.insert($bk-url, "../" , 0)
+//@debug $bk-url-logged
+
+$profile-image-div-bkcolor: color.adjust(grey, $alpha: -0.9)
+$cover-image-div-bkcolor: color.adjust(grey, $alpha: -0.9)
+$li-items-hover-bkcolor: color.adjust(yellow, $alpha: -0.2)
+$container-sides-width: (left: 33%, right: 67%)
+
+@mixin left-side-style()
+    .left-side
+        background-color: white
+        border-right: 1px solid grey
+        @media only screen and (min-width: #{$bs-breakpoint-md})
+            width: map.get($container-sides-width, "left")
+        .profile-image
+            position: relative
+            background-color: $profile-image-div-bkcolor
+            width: 100%
+            height: 200px
+            z-index: 11
+        .sections
+            ul
+                li
+                    text-align: center
+                    font-family: Arial, Helvetica, sans-serif
+                    font-size: 20px
+                    padding: 10px 0px
+                    &:hover
+                        background-color: $li-items-hover-bkcolor
+
+
+@mixin right-side-style()
+    .right-side
+        @media only screen and (min-width: #{$bs-breakpoint-md})
+            width: map.get($container-sides-width, "right")
+        .cover-image
+            position: relative
+            background-color: $cover-image-div-bkcolor
+            width: 100%
+            height: 350px
+        #section-content
+            background-color: white
+            width: 100%
+            padding: 100px 10px
+            @include right-section-container-style()
+
+@mixin right-section-container-style()
+    .container
+        border: 1px solid #ccc !important
+        border-radius: 16px
+        .row
+            padding: 5px 0px
+
+@mixin content-style()
+    #{$container-class}
+        //position: fixed
+        .content
+            @include left-side-style()
+            @include right-side-style()
+        
+@include main-background($bk-url,2)
+@include header-class()
+@include container-style($container-class)
+@include content-style()
+
+
+
+
+
+
+
+
+        
