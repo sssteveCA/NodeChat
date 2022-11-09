@@ -11,10 +11,10 @@ $(()=>{
     //console.log(cur_data);
     let cur: CurrentUserRequest = new CurrentUserRequest(cur_data);
     cur.currentUser().then(obj => {
-        console.log(obj);
+        //console.log(obj);
         if(obj["done"] == true){
             account = setAccount(obj["account"]);
-            console.log(account);
+            //console.log(account);
             $('#'+SectionLiItems.INFORMATION).trigger('click');
         }//if(obj["done"] == true){
     });

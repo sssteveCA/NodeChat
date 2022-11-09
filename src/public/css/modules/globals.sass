@@ -1,4 +1,19 @@
+@use "sass:map"
 
 $bs-breakpoints: ('xsm': 0px, 'sm': 576px, 'md': 768px, 'lg': 992px, 'xl': 1200px, 'xxl': 1400px)
 
-    
+@function button-margin($breakpoint)
+    $bs-breakpoint-sm: map.get($bs-breakpoints,'sm')
+    $bs-breakpoint-md: map.get($bs-breakpoints,'md')
+    $bs-breakpoint-lg: map.get($bs-breakpoints,'lg')
+    $bs-breakpoint-xl: map.get($bs-breakpoints,'xl')
+    @if $breakpoint < $bs-breakpoint-sm
+        @return 75px
+    @else if $breakpoint < $bs-breakpoint-md 
+        @return 120px
+    @else if $breakpoint < $bs-breakpoint-lg
+        @return 175px
+    @else if $breakpoint < $bs-breakpoint-xl
+        @return 300px
+    @else 
+        @return 350px     

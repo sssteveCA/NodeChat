@@ -14,10 +14,10 @@ $(()=>{
     //console.log(cur_data);
     let ur: UserRequest = new UserRequest(ur_data);
     ur.userInfo().then(obj => {
-        console.log(obj);
+        //console.log(obj);
         if(obj["done"] == true){
             account = setAccount(obj["account"]);
-            console.log(account);
+            //console.log(account);
             $('#'+SectionLiItems.INFORMATION).trigger('click');
         }//if(obj["done"] == true){
     });

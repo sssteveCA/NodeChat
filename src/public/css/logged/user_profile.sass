@@ -2,6 +2,7 @@
 @use "sass:string"
 @use "sass:color"
 @use "sass:map"
+@use "../modules/globals"
 
 @import "../partials/animations"
 @import "../partials/background"
@@ -19,6 +20,7 @@ $li-items-hover-bkcolor: color.adjust(yellow, $alpha: -0.2)
 $container-sides-width: (left: 33%, right: 67%)
 
 @mixin left-side-style()
+    $bs-breakpoint-md: map.get(globals.$bs-breakpoints,'md')
     .left-side
         background-color: white
         border-right: 1px solid grey
@@ -42,6 +44,7 @@ $container-sides-width: (left: 33%, right: 67%)
 
 
 @mixin right-side-style()
+    $bs-breakpoint-md: map.get(globals.$bs-breakpoints,'md')
     .right-side
         @media only screen and (min-width: #{$bs-breakpoint-md})
             width: map.get($container-sides-width, "right")

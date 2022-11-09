@@ -1,6 +1,11 @@
+@use "sass:map"
+@use "modules/globals"
+    
 @import 'partials/global'
 @import "partials/background"
 @import "partials/_animations"
+
+
 
 $div2_margin: 40px 10px 10px 10px
 $div2_padding: 30px
@@ -10,6 +15,8 @@ $login-form-id: "fLogin"
 $fsetChildren: 4
 
 @mixin login-form()
+    $bs-breakpoint-xsm: map.get(globals.$bs-breakpoints,'xsm')
+    $bs-breakpoint-md: map.get(globals.$bs-breakpoints,'md')
     ##{$login-form-id}
         fieldset
             legend
@@ -18,16 +25,16 @@ $fsetChildren: 4
                 .row
                     margin-top: $bs-row-margin-top
                 .row:last-child
-                    @media only screen and(min-width: 0px)
+                    @media only screen and(min-width: #{$bs-breakpoint-xsm})
                         #bLogin
-                            margin-right: button-margin(0px)
+                            margin-right: globals.button-margin(0px)
                         #bReset
-                            margin-left: button-margin(0px)
+                            margin-left: globals.button-margin(0px)
                     @media only screen and(min-width: #{$bs-breakpoint-md})
                         #bLogin
-                            margin-right: button-margin($bs-breakpoint-md)
+                            margin-right: globals.button-margin($bs-breakpoint-md)
                         #bReset
-                            margin-left: button-margin($bs-breakpoint-md)
+                            margin-left: globals.button-margin($bs-breakpoint-md)
 
 @mixin notsubscribed-style()
     margin: $div2_margin

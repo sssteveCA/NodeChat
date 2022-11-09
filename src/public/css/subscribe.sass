@@ -1,10 +1,17 @@
+@use "sass:map"
+@use "modules/globals"
+    
 @import 'partials/global'
 @import "partials/background"
 @import "partials/animations"
 
+
+
 $subscribe-form-id: "fSubscribe"
 
 @mixin subscribe-form()
+    $bs-breakpoint-xsm: map.get(globals.$bs-breakpoints,'xsm')
+    $bs-breakpoint-md: map.get(globals.$bs-breakpoints,'md')
     ##{$subscribe-form-id}
         fieldset
             legend
@@ -13,16 +20,16 @@ $subscribe-form-id: "fSubscribe"
                 .row
                     margin-top: $bs-row-margin-top
                 .row:nth-last-child(2)
-                    @media only screen and (min-width: 0px)
+                    @media only screen and (min-width: #{$bs-breakpoint-xsm})
                         #bSubscribe
-                            margin-right: button-margin(0px)
+                            margin-right: globals.button-margin(0px)
                         #bReset
-                            margin-left: button-margin(0px)
+                            margin-left: globals.button-margin(0px)
                     @media only screen and (min-width: #{$bs-breakpoint-md})
                         #bSubscribe
-                            margin-right: button-margin($bs-breakpoint-md)
+                            margin-right: globals.button-margin($bs-breakpoint-md)
                         #bReset
-                            margin-left: button-margin($bs-breakpoint-md)
+                            margin-left: globals.button-margin($bs-breakpoint-md)
 
 @include container-style($container-class)
 
