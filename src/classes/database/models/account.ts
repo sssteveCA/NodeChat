@@ -33,6 +33,11 @@ export class Account extends MongoDbModelManager{
     private _resetCode: string|null;
     private _verified: boolean = false;
     private _resetted: boolean = false;
+    private _contacts: object;
+    private _education: object;
+    private _images: object;
+    private _otherPersonals: object;
+    private _videos: object;
 
     //Errors
     public static DUPLICATEKEYS_ERROR:number = 50;
@@ -57,6 +62,11 @@ export class Account extends MongoDbModelManager{
     get resetCode(){return this._resetCode;}
     get verified(){return this._verified;}
     get resetted(){return this._resetted;}
+    get contacts(){return this._contacts;}
+    get education(){return this._education;}
+    get images(){return this._images;}
+    get otherPersonals(){return this._otherPersonals;}
+    get videos(){return this._videos;}
     get error(){
         if(this._errno < 50){
             return super.error;
@@ -129,6 +139,11 @@ export class Account extends MongoDbModelManager{
                 if(res["resetCode"])this._resetCode = res["resetCode"];
                 if(res["verified"])this._verified = res["verified"];
                 if(res["resetted"])this._resetted = res["resetted"];
+                if(res["contacts"])this._contacts = res["contacts"];
+                if(res["education"])this._education = res["education"];
+                if(res["images"])this._images = res["images"];
+                if(res["otherPersonals"])this._otherPersonals = res["otherPersonals"];
+                if(res["videos"])this._videos = res["videos"];
             }
         }).catch(err => {
             console.warn(err);
