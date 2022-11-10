@@ -156,7 +156,8 @@ export class Account extends MongoDbModelManager{
                 let document: object = {
                     name: this._name, surname: this._surname,
                     username: this._username,email: this._email,password: this._password_hash,
-                    creationDate: this._creationDate, activationCode: this._activationCode
+                    creationDate: this._creationDate, activationCode: this._activationCode,
+                    /* contacts: {}, education: {}, images: {}, otherPersonals: {}, videos: [] */
                 };
                 await super.connect().then(conn => {
                     if(conn == true)return super.dropIndexes();

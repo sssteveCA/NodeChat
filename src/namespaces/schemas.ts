@@ -7,7 +7,7 @@ namespace SubSchemas{
         email: {type: String, default: ""},
         phone: {type: String, default: ""},
         socials: {type: Map, of: String}
-    });
+    },{_id: false});
 
     export const ACCOUNTS_IMAGE: Schema = new Schema({
         coverImage: {type: String, default: ""},
@@ -16,7 +16,7 @@ namespace SubSchemas{
             url: {type: String, required: true},
             uploadDate: {type: Date, default: Date.now}
         }]
-    });
+    },{_id: false});
 
     export const ACCOUNTS_OTHER_PERSONALS: Schema = new Schema({
         birthDate: {type:Date, default: null},
@@ -27,7 +27,7 @@ namespace SubSchemas{
             number: {type: Number, required: false, min: 1}
         },
         sex: {type: String, enum: ["","M","F"], default: ""}
-    });
+    },{_id: false});
 }
 
 export namespace Schemas{
