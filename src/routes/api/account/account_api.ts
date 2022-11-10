@@ -34,12 +34,17 @@ account_routes_api.post('/current_user', loggedApi, async(req,res)=>{
     }).then(obj => {
         console.log(obj);
         if(obj["done"] == true){
-            let account: object = obj["result"];
+            let account: object = {
+                name: obj["result"]["name"], surname: obj["result"]["surname"], email: obj["result"]["email"],
+                contacts: obj["result"]["contacts"], education: obj["result"]["education"],
+                images: obj["result"]["images"], otherPersonals: obj["result"]["otherPersonals"],
+                videos: obj["result"]["videos"],
+            };
+            /* console.log("account_api current_user account => ");
+            console.log(account); */
             return res.status(200).json({
                 done: obj["done"],
-                account: {
-                    name: account["name"], surname: account["surname"], username: account["username"], email: account["email"]
-                }
+                account: account
             });
         }//if(obj["done"] == true){
         else{
@@ -62,12 +67,17 @@ account_routes_api.post('/user_info', loggedApi, async(req,res)=>{
     let account: Account = new Account(mmi_data,{});
     account.getAccount({_id: user_id}).then(obj => {
         if(obj["done"] == true){
-            let account: object = obj["result"];
+            let account: object = {
+                name: obj["result"]["name"], surname: obj["result"]["surname"], email: obj["result"]["email"],
+                contacts: obj["result"]["contacts"], education: obj["result"]["education"],
+                images: obj["result"]["images"], otherPersonals: obj["result"]["otherPersonals"],
+                videos: obj["result"]["videos"],
+            };
+            /* console.log("account_api user_info account => ");
+            console.log(account); */
             return res.status(200).json({
                 done: obj["done"],
-                account: {
-                    name: account["name"], surname: account["surname"], username: account["username"], email: account["email"]
-                }
+                account: account
             });
         }//if(obj["done"] == true){
         else{

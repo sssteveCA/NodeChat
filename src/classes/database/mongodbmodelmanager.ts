@@ -86,8 +86,8 @@ export abstract class MongoDbModelManager{
         this._collection_name = data.collection_name;
         this._schema = data.schema;
         this._model = mongoose.model(this._collection_name,this._schema);
-        console.log("MongoDbModelManager class assignValues model schema => ");
-        console.log(this._model.schema);
+        /* console.log("MongoDbModelManager class assignValues model schema => ");
+        console.log(this._model.schema); */
         if(data.environment)
             this._environment = data.environment;
         if(data.mongodb_string)
