@@ -35,6 +35,7 @@ export class Account extends MongoDbModelManager{
     private _resetted: boolean = false;
     private _contacts: object;
     private _education: object;
+    private _employment: string;
     private _images: object;
     private _otherPersonals: object;
     private _videos: object;
@@ -64,6 +65,7 @@ export class Account extends MongoDbModelManager{
     get resetted(){return this._resetted;}
     get contacts(){return this._contacts;}
     get education(){return this._education;}
+    get employment(){return this._employment;}
     get images(){return this._images;}
     get otherPersonals(){return this._otherPersonals;}
     get videos(){return this._videos;}
@@ -141,6 +143,7 @@ export class Account extends MongoDbModelManager{
                 if(res["resetted"])this._resetted = res["resetted"];
                 if(res["contacts"])this._contacts = res["contacts"];
                 if(res["education"])this._education = res["education"];
+                if(res["employment"])this._employment = res["employment"];
                 if(res["images"])this._images = res["images"];
                 if(res["otherPersonals"])this._otherPersonals = res["otherPersonals"];
                 if(res["videos"])this._videos = res["videos"];

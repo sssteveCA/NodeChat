@@ -37,6 +37,7 @@ account_routes_api.post('/current_user', loggedApi, async(req,res)=>{
             let account: object = {
                 name: obj["result"]["name"], surname: obj["result"]["surname"], email: obj["result"]["email"],
                 contacts: obj["result"]["contacts"], education: obj["result"]["education"],
+                employment: obj["result"]["employment"],
                 images: obj["result"]["images"], otherPersonals: obj["result"]["otherPersonals"],
                 videos: obj["result"]["videos"],
             };
@@ -70,6 +71,7 @@ account_routes_api.post('/user_info', loggedApi, async(req,res)=>{
             let account: object = {
                 name: obj["result"]["name"], surname: obj["result"]["surname"], email: obj["result"]["email"],
                 contacts: obj["result"]["contacts"], education: obj["result"]["education"],
+                employment: obj["result"]["employment"],
                 images: obj["result"]["images"], otherPersonals: obj["result"]["otherPersonals"],
                 videos: obj["result"]["videos"],
             };

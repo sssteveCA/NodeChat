@@ -6,7 +6,9 @@ export default class Account{
     public email:string;
     public contacts: object;
     public education: object;
+    public employment: string;
     public images: object;
     public otherPersonals: object;
+    public sex: string;
     public videos: object;
 }

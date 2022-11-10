@@ -47,6 +47,7 @@ export namespace Schemas{
             secondary: {type: String, default: ""},
             university: {type: String, default: ""}
         },
+        employment: {type: String, default: ""},
         images : {type: SubSchemas.ACCOUNTS_IMAGE, default: {}},
         otherPersonals: {type: SubSchemas.ACCOUNTS_OTHER_PERSONALS, default: {}},
         videos : [{

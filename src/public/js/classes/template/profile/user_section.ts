@@ -69,6 +69,9 @@ export class UserSection{
     }
 
     private informationTemplate(): void{
+        let sex: string = "";
+        if(this._account.otherPersonals["sex"] == "M") sex = "Maschio";
+        else if(this._account.otherPersonals["sex"] == "F") sex = "Femmina";
         this._html = `
 <div class="sel-section-header">
         <h2 class="text-center">Informazioni personali</h2>
@@ -98,7 +101,7 @@ export class UserSection{
                     <span class="fw-bold">Sesso</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="sex"></span>
+                    <span id="sex">${sex}</span>
                 </div>
             </div>
             <div class="row">
@@ -154,7 +157,7 @@ export class UserSection{
                     <span class="fw-bold">Lavoro attuale</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="work"></span>
+                    <span id="work">${this._account.employment}</span>
                 </div>
             </div>  
         </div>
