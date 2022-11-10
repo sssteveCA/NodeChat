@@ -11,15 +11,15 @@ import {Account, AccountInterface} from '../../classes/database/models/account';
 export const account_routes = express.Router();
 
 account_routes.get("/profile/:username", logged, (req,res)=>{
-    let username: string = req.params.username;
+    let username_inserted: string = req.params.username;
     let current_username: string = req.session['username'];
     let view_params: object = {
         bootstrap_css: "../"+Paths.BOOTSTRAP_CSS,
         bootstrap_js: "../"+Paths.BOOTSTRAP_JS,
         container: Constants.CONTAINER, jquery_js: "../"+Paths.JQUERY_JS, jquery_ui_css: "../"+Paths.JQUERY_UI_CSS, 
-        jquery_ui_js: "../"+Paths.JQUERY_UI_JS, username: username
+        jquery_ui_js: "../"+Paths.JQUERY_UI_JS, username: current_username, usernameProfile: username_inserted
     };
-    if(username == current_username){
+    if(username_inserted == current_username){
         //Personal profile
         view_params["token_key"] = res.locals["tokenKey"];
         return res.render('logged/profile', view_params);
@@ -32,7 +32,7 @@ account_routes.get("/profile/:username", logged, (req,res)=>{
         };
         let ac_data: AccountInterface = {};
         let ac: Account = new Account(mmi_data,ac_data);
-        ac.getAccount({username: username}).then(obj =>{
+        ac.getAccount({username: username_inserted}).then(obj =>{
             if(obj['result'] != null){
                 //Account found
                 view_params["token_key"] = res.locals["tokenKey"];

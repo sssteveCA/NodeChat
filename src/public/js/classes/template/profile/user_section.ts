@@ -31,6 +31,8 @@ export class UserSection{
 
     constructor(data: UserSectionInterface){
         this._account = data.account;
+        console.log("UserSection constructor account => ");
+        console.log(this._account);
         this._container = data.container;
         this._section = data.section;
         this.setTemplate();
@@ -69,6 +71,7 @@ export class UserSection{
     }
 
     private informationTemplate(): void{
+        let birthDate = (this._account.otherPersonals["birthDate"]) ? this._account.otherPersonals["birthDate"] : "";
         let sex: string = "";
         if(this._account.otherPersonals["sex"] == "M") sex = "Maschio";
         else if(this._account.otherPersonals["sex"] == "F") sex = "Femmina";
@@ -109,7 +112,7 @@ export class UserSection{
                     <span class="fw-bold">Data di nascita</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="birth-date">${this._account.otherPersonals["birthDate"]}</span>
+                    <span id="birth-date">${birthDate}</span>
                 </div>
             </div>
             <div class="row">
