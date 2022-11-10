@@ -1,4 +1,5 @@
 import { Messages } from "../../../namespaces/messages";
+import { TokenType } from "../../../types/tokentype";
 import { DatabaseConnectionError } from "../../errors/databaseconnectionerror";
 import { MissingDataError } from "../../errors/missingdataerror";
 import { MongoDbModelManager, MongoDbModelManagerInterface } from "../mongodbmodelmanager";
@@ -135,21 +136,19 @@ export class Token extends MongoDbModelManager{
                         return super.replace({accountId: this._accountId},document);
                     }//if(result != null){
                     //console.log("Token insertToken result == null");
-                    let document: object = {
+                    /* let document: object = {
                         accountId: this._accountId, tokenKey: this._tokenKey, creationDate: this._creationDate, expireDate: this._expireDate
-                    }
+                    } */
+                    let document: TokenType = {
+                        accountId: this._accountId, tokenKey: this._tokenKey, creationDate: new Date(this._creationDate), 
+                        expireDate: new Date(this._expireDate)
+                    };
                     return super.insert(document);
                 }).then(res => {
-                    /* console.log("Insert/Replace token promise res => ");
-                    console.log(res); */
-                    if(res.acknowledged == true) {
-                        response = {
-                            errno: 0,
-                            token_key: this._tokenKey
-                        };
-                    }
-                    else throw new Error(this.error as string);
+                    response = {
+                        errno: 0, token_key: this._tokenKey };
                 }).catch(err => {
+                    console.warn("token insertToken catch => ");
                     console.warn(err);
                     response['errno'] = this._errno;
                 }).finally(()=>{

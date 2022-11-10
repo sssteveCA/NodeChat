@@ -61,6 +61,8 @@ export class Login{
                     throw new Error(this.error as string);
                 }
             }).catch(err => {
+                /* console.log("login.ts login insertToken error => ");
+                console.log(err); */
                 throw err;
             });
         }catch(e){
