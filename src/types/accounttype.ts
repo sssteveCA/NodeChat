@@ -8,6 +8,6 @@ export type AccountType = {
     username: string;
     email: string;
     password: string;
-    creationDate: string;
+    creationDate: Date;
     activationCode: string;
 }

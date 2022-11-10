@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { AccountType } from "../../../types/accounttype";
 import { DatabaseConnectionError } from "../../errors/databaseconnectionerror";
 import { DuplicateKeysError } from "../../errors/duplicatekeyserror";
 import { MissingDataError } from "../../errors/missingdataerror";
@@ -171,10 +172,15 @@ export class Account extends MongoDbModelManager{
             if(this._name && this._surname && this._username && this._email && this._password_hash && this._activationCode){
                 let current: Date = new Date();
                 this._creationDate = General.dateString(current);
-                let document: object = {
+                /* let document: object = {
                     name: this._name, surname: this._surname,
                     username: this._username,email: this._email,password: this._password_hash,
                     creationDate: this._creationDate, activationCode: this._activationCode,
+                }; */
+                let document: AccountType = {
+                    name: this._name, surname: this._surname,
+                    username: this._username,email: this._email,password: this._password_hash,
+                    creationDate: new Date(this._creationDate), activationCode: this._activationCode,
                 };
                 await super.connect().then(conn => {
                     if(conn == true)return super.dropIndexes();
