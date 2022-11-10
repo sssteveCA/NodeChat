@@ -109,7 +109,7 @@ export class Section{
                     <span class="fw-bold">Data di nascita</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="birth-date"></span>
+                    <span id="birth-date">${this._account.otherPersonals["birthDate"]}</span>
                 </div>
             </div>
             <div class="row">
@@ -117,7 +117,7 @@ export class Section{
                     <span class="fw-bold">Luogo di nascita</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="birth-place"></span>
+                    <span id="birth-place">${this._account.otherPersonals["birthPlace"]}</span>
                 </div>
             </div>
             <div class="row">
@@ -125,7 +125,7 @@ export class Section{
                     <span class="fw-bold">Luogo di residenza</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="living-place"></span>
+                    <span id="living-place">${this._account.otherPersonals["residence"]["city"]}</span>
                 </div>
             </div>
         </div>
@@ -140,7 +140,7 @@ export class Section{
                     <span class="fw-bold">Scuola superiore</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="secondary-school"></span>
+                    <span id="secondary-school">${this._account.education["secondary"]}</span>
                 </div>
             </div>  
             <div class="row">
@@ -148,7 +148,7 @@ export class Section{
                     <span class="fw-bold">Università</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="university"></span>
+                    <span id="university">${this._account.education["university"]}</span>
                 </div>
             </div>
         </div>
@@ -179,7 +179,7 @@ export class Section{
                     <span class="fw-bold">Numero di telefono</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="telephone"></span>
+                    <span id="telephone">${this._account.contacts["phone"]}</span>
                 </div>
             </div>  
             <div class="row">
@@ -187,7 +187,7 @@ export class Section{
                     <span class="fw-bold">Indirizzo email</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="email">${this._account.email}</span>
+                    <span id="email">${this._account.contacts["email"]}</span>
                 </div>
             </div>
         </div>

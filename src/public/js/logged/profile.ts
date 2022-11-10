@@ -52,5 +52,10 @@ function setAccount(obj: object): Account{
     account.email = obj["email"];
     account.name = obj["name"];
     account.surname = obj["surname"];
+    account.contacts = obj["contacts"];
+    account.education = obj["education"];
+    account.images = obj["images"];
+    account.otherPersonals = obj["otherPersonals"];
+    account.videos = obj["videos"];
     return account;
 }
