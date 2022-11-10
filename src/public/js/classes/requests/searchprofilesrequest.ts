@@ -48,7 +48,7 @@ export class SearchProfilesRequest{
             await this.searchProfilePromise().then(res => {
                 //console.log(res);
                 let obj = JSON.parse(res);
-                console.log(obj);
+                //console.log(obj);
                 response = {
                     done: obj['done'],
                     msg: obj['msg'],

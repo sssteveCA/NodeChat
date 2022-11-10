@@ -51,7 +51,7 @@ export const logged = async(req:Request, res: Response, next: NextFunction) => {
             res.locals.tokenKey = req.session['token_key'];
             return next();
         }
-        console.log("Before delete token");
+        //console.log("Before delete token");
         await token.deleteToken({tokenKey: token_key});
         req.session['username'] = null;
         req.session['token_key'] = null;

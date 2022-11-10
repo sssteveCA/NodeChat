@@ -32,7 +32,7 @@ account_routes_api.post('/current_user', loggedApi, async(req,res)=>{
         let account: Account = new Account(mmi_data,{});
         return account.getAccount({_id: accountId});
     }).then(obj => {
-        console.log(obj);
+        //console.log(obj);
         if(obj["done"] == true){
             let account: object = {
                 name: obj["result"]["name"], surname: obj["result"]["surname"], email: obj["result"]["email"],

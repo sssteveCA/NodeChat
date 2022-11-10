@@ -59,7 +59,7 @@ export class SearchProfilesTable{
 <tr>
     <td>${account['_username']}</td>
     <td>
-        <button type="button" class="btn btn-primary">VAI AL PROFILO</button>
+        <a class="btn btn-primary" href="/profile/${account["_username"]}" role="button">VAI AL PROFILO</a>
     </td>
 </tr>  
         `;
