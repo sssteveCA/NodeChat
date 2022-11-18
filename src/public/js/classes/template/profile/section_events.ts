@@ -34,7 +34,6 @@ export class SectionEvents{
 
     public contactInfoButtonClick(): void{
         this._contactInfoButton.on('click',()=>{
-            console.log(this._contactInfoButton.attr("class"));
             if(this._contactInfoButton.hasClass("bi-pen")){
                 let tel_value: string = this._personalInformationItems.telephone_value_el.text();
                 let ea_value: string = this._personalInformationItems.email_value_el.text();
@@ -63,6 +62,26 @@ export class SectionEvents{
 
     public educationButtonClick(): void{
         this._educationButton.on('click',()=>{
+            if(this._educationButton.hasClass("bi-pen")){
+                let ss_value: string = this._personalInformationItems.secondary_school_value_el.text();
+                let univ_value: string = this._personalInformationItems.university_value_el.text();
+                this._personalInformationItems.secondary_school_label_el.parent().html(`<label id="secondary_school_label" class="form-label fw-bold">Scuola superiore</label>`);
+                this._personalInformationItems.secondary_school_value_el.parent().html(`<input type="text" id="secondary_school_value" class="form-control" value="${ss_value}">`);
+                this._personalInformationItems.university_label_el.parent().html(`<label id="university_label" class="form-label fw-bold">Università</label>`);
+                this._personalInformationItems.university_value_el.parent().html(`<input type="text" id="university_value" class="form-control" value="${univ_value}">`);
+            }//if(this._contactInfoButton.hasClass("bi-pen")){
+            else if(this._educationButton.hasClass("bi-x-circle-fill")){
+                let ss_value: string = this._personalInformationItems.secondary_school_value_el.val() as string;
+                let univ_value: string = this._personalInformationItems.university_value_el.val() as string;
+                this._personalInformationItems.secondary_school_label_el.parent().html(`<span id="secondary_school_label" class="fw-bold">Scuola superiore</span>`);
+                this._personalInformationItems.secondary_school_value_el.parent().html(`<span id="secondary_school_value">${ss_value}</span>`);
+                this._personalInformationItems.university_label_el.parent().html(`<span id="university_label" class="fw-bold">Università</span>`);
+                this._personalInformationItems.university_value_el.parent().html(`<span id="university_value">${univ_value}</span>`);
+            }//else di if(this._contactInfoButton.hasClass("bi-pen")){
+            this._personalInformationItems.secondary_school_label_el = $('#secondary_school_label');
+            this._personalInformationItems.secondary_school_value_el = $('#secondary_school_value');
+            this._personalInformationItems.university_label_el = $('#university_label');
+            this._personalInformationItems.university_value_el = $('#university_value');
             this._educationButton.toggleClass("btn-success bi-pen");
             this._educationButton.toggleClass("btn-danger bi-x-circle-fill");
         })
