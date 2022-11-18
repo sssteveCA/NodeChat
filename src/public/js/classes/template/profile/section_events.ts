@@ -1,9 +1,11 @@
+import { PersonalInformationItemsType } from "../../../types/personalinformationitemstype";
 
 export interface SectionEventsInterface{
     personalInfoButton: JQuery<HTMLButtonElement>;
     educationButton: JQuery<HTMLButtonElement>;
     workButton: JQuery<HTMLButtonElement>;
     contactInfoButton: JQuery<HTMLButtonElement>;
+    personalInformationItems: PersonalInformationItemsType;
 }
 
 /**
@@ -14,18 +16,21 @@ export class SectionEvents{
     private _educationButton: JQuery<HTMLButtonElement>;
     private _workButton: JQuery<HTMLButtonElement>;
     private _contactInfoButton: JQuery<HTMLButtonElement>;
+    private _personalInformationItems: PersonalInformationItemsType;
 
     constructor(data: SectionEventsInterface){
         this._personalInfoButton = data.personalInfoButton;
         this._educationButton = data.educationButton;
         this._workButton = data.workButton;
         this._contactInfoButton = data.contactInfoButton;
+        this._personalInformationItems = data.personalInformationItems;
     }
 
     get personalInfoButton(){return this._personalInfoButton;}
     get educationButton(){return this._educationButton;}
     get workButton(){return this._workButton;}
     get contactInfoButton(){return this._contactInfoButton;}
+    get personalInformationItems(){return this._personalInformationItems;}
 
     public contactInfoButtonClick(): void{
         this._contactInfoButton.on('click',()=>{
