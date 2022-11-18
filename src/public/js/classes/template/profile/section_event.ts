@@ -1,5 +1,5 @@
 
-export interface SectionEventInterface{
+export interface SectionEventsInterface{
     personalInfoButton: JQuery<HTMLButtonElement>;
     educationButton: JQuery<HTMLButtonElement>;
     workButton: JQuery<HTMLButtonElement>;
@@ -9,13 +9,13 @@ export interface SectionEventInterface{
 /**
  * This class contains the personal profile events and actions
  */
-export class SectionEvent{
+export class SectionEvents{
     private _personalInfoButton: JQuery<HTMLButtonElement>;
     private _educationButton: JQuery<HTMLButtonElement>;
     private _workButton: JQuery<HTMLButtonElement>;
     private _contactInfoButton: JQuery<HTMLButtonElement>;
 
-    constructor(data: SectionEventInterface){
+    constructor(data: SectionEventsInterface){
         this._personalInfoButton = data.personalInfoButton;
         this._educationButton = data.educationButton;
         this._workButton = data.workButton;
@@ -27,11 +27,10 @@ export class SectionEvent{
     get workButton(){return this._workButton;}
     get contactInfoButton(){return this._contactInfoButton;}
 
-    public personalInfoButtonClick(): void{
-        this._personalInfoButton.on('click',()=>{
-            this._personalInfoButton.toggleClass("btn-success bi-pen");
-            this._personalInfoButton.toggleClass("btn-danger bi-x-circle-fill");
-
+    public contactInfoButtonClick(): void{
+        this._contactInfoButton.on('click',()=>{
+            this._contactInfoButton.toggleClass("btn-success bi-pen");
+            this._contactInfoButton.toggleClass("btn-danger bi-x-circle-fill");
         });
     }
 
@@ -42,6 +41,14 @@ export class SectionEvent{
         })
     }
 
+    public personalInfoButtonClick(): void{
+        this._personalInfoButton.on('click',()=>{
+            this._personalInfoButton.toggleClass("btn-success bi-pen");
+            this._personalInfoButton.toggleClass("btn-danger bi-x-circle-fill");
+
+        });
+    }
+
     public workButtonClick(): void{
         this._workButton.on('click',()=>{
             this._workButton.toggleClass("btn-success bi-pen");
@@ -49,12 +56,5 @@ export class SectionEvent{
         });
     }
 
-    public contactInfoButtonClick(): void{
-        this._contactInfoButton.on('click',()=>{
-            this._contactInfoButton.toggleClass("btn-success bi-pen");
-            this._contactInfoButton.toggleClass("btn-danger bi-x-circle-fill");
-        });
-    }
-
-
+    
 }

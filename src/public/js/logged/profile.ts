@@ -1,5 +1,6 @@
 import { CurrentUserRequest, CurrentUserRequestInterface } from "../classes/requests/currentuserrequest.js";
 import { Section, SectionInterface } from "../classes/template/profile/section.js";
+import { SectionEvents, SectionEventsInterface } from "../classes/template/profile/section_event.js";
 import { MyProfileSections, SectionLiItems } from "../enums/enums.js";
 import Account from "../models/account.js";
 
@@ -44,6 +45,9 @@ $(()=>{
                 account: account, container: 'section-content', section: MyProfileSections.VIDEOS};
         }
         let section: Section = new Section(section_data);
+        if(idTarget == SectionLiItems.INFORMATION){
+            setInformationSectionEvents();
+        }//
     });
 });
 
@@ -59,4 +63,16 @@ function setAccount(obj: object): Account{
     account.otherPersonals = obj["otherPersonals"];
     account.videos = obj["videos"];
     return account;
+}
+
+function setInformationSectionEvents(): void{
+    let se_data: SectionEventsInterface = {
+        personalInfoButton: $('#bt_personal_info'), educationButton: $('#bt_education'),
+        workButton: $('#bt_work'), contactInfoButton: $('#bt_contacts_info')
+    };
+    let se: SectionEvents = new SectionEvents(se_data);
+    se.personalInfoButtonClick();
+    se.educationButtonClick();
+    se.workButtonClick();
+    se.contactInfoButtonClick();
 }
