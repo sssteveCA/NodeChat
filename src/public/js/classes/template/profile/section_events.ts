@@ -89,14 +89,60 @@ export class SectionEvents{
 
     public personalInfoButtonClick(): void{
         this._personalInfoButton.on('click',()=>{
+            if(this._personalInfoButton.hasClass("bi-pen")){
+                let nm_value: string = this._personalInformationItems.name_value_el.text();
+                let snm_value: string = this._personalInformationItems.surname_value_el.text();
+                let sex_value: string = this._personalInformationItems.sex_value_el.text();
+                let bd_value: string = this._personalInformationItems.birth_date_value_el.text();
+                let bp_value: string = this._personalInformationItems.birth_place_value_el.text();
+                let lp_value: string = this._personalInformationItems.living_place_value_el.text();
+                this._personalInformationItems.name_label_el.parent().html(`<label id="name_label" class="form-label fw-bold">Il tuo nome</label>`);
+                this._personalInformationItems.name_value_el.parent().html(`<input type="text" id="name_value" class="form-control" value="${nm_value}">`);
+                this._personalInformationItems.surname_label_el.parent().html(`<label id="surname_label" class="form-label fw-bold">Il tuo cognome</label>`);
+                this._personalInformationItems.surname_value_el.parent().html(`<input type="text" id="surname_value" class="form-control" value="${snm_value}">`);
+                this._personalInformationItems.sex_label_el.parent().html(`<label id="sex_label" class="form-label fw-bold">Sesso</label>`);
+                this._personalInformationItems.sex_value_el.parent().html(`<input type="text" id="sex_value" class="form-control" value="${sex_value}">`);
+                this._personalInformationItems.birth_date_label_el.parent().html(`<label id="birth_date_label" class="form-label fw-bold">Data di nascita</label>`);
+                this._personalInformationItems.birth_date_value_el.parent().html(`<input type="text" id="birth_date_value" class="form-control" value="${bd_value}">`);
+                this._personalInformationItems.birth_place_label_el.parent().html(`<label id="birth_place_label" class="form-label fw-bold">Luogo di nascita</label>`);
+                this._personalInformationItems.birth_place_value_el.parent().html(`<input type="text" id="birth_place_value" class="form-control" value="${bp_value}">`);
+                this._personalInformationItems.living_place_label_el.parent().html(`<label id="living_place_label" class="form-label fw-bold">Luogo di residenza</label>`);
+                this._personalInformationItems.living_place_value_el.parent().html(`<input type="text" id="living_place_value" class="form-control" value="${lp_value}">`);
+            }//if(this._contactInfoButton.hasClass("bi-pen")){
+            else if(this._personalInfoButton.hasClass("bi-x-circle-fill")){
+                let nm_value: string = this._personalInformationItems.name_value_el.val() as string;
+                let snm_value: string = this._personalInformationItems.surname_value_el.val() as string;
+                let sex_value: string = this._personalInformationItems.sex_value_el.val() as string;
+                let bd_value: string = this._personalInformationItems.birth_date_value_el.val() as string;
+                let bp_value: string = this._personalInformationItems.birth_place_value_el.val() as string;
+                let lp_value: string = this._personalInformationItems.living_place_value_el.val() as string;
+                this._personalInformationItems.name_label_el.parent().html(`<span id="name_label" class="fw-bold">Scuola superiore</span>`);
+                this._personalInformationItems.name_value_el.parent().html(`<span id="name_value">${nm_value}</span>`);
+                this._personalInformationItems.surname_label_el.parent().html(`<span id="surname_label" class="fw-bold">Università</span>`);
+                this._personalInformationItems.surname_value_el.parent().html(`<span id="surname_value">${snm_value}</span>`);
+                this._personalInformationItems.sex_label_el.parent().html(`<span id="sex_label" class="fw-bold">Università</span>`);
+                this._personalInformationItems.sex_value_el.parent().html(`<span id="sex_value">${sex_value}</span>`);
+                this._personalInformationItems.birth_date_label_el.parent().html(`<span id="birth_date_label" class="fw-bold">Università</span>`);
+                this._personalInformationItems.birth_date_value_el.parent().html(`<span id="birth_date_value">${bd_value}</span>`);
+                this._personalInformationItems.birth_place_label_el.parent().html(`<span id="birth_place_label" class="fw-bold">Università</span>`);
+                this._personalInformationItems.birth_place_value_el.parent().html(`<span id="birth_place_value">${bp_value}</span>`);
+                this._personalInformationItems.living_place_label_el.parent().html(`<span id="living_place_label" class="fw-bold">Università</span>`);
+                this._personalInformationItems.living_place_value_el.parent().html(`<span id="living_place_value">${lp_value}</span>`);
+            }//else di if(this._contactInfoButton.hasClass("bi-pen")){
+            this._personalInformationItems.name_label_el = $('#name_label');
+            this._personalInformationItems.name_value_el = $('#name_value');
+            this._personalInformationItems.surname_label_el = $('#surname_label');
+            this._personalInformationItems.surname_value_el = $('#surname_value');
+            this._personalInformationItems.sex_label_el = $('#sex_label');
+            this._personalInformationItems.sex_value_el = $('#sex_value');
+            this._personalInformationItems.birth_date_label_el = $('#birth_date_label');
+            this._personalInformationItems.birth_date_value_el = $('#birth_date_value');
+            this._personalInformationItems.birth_place_label_el = $('#birth_place_label');
+            this._personalInformationItems.birth_place_value_el = $('#birth_place_value');
+            this._personalInformationItems.living_place_label_el = $('#living_place_label');
+            this._personalInformationItems.living_place_value_el = $('#living_place_value');
             this._personalInfoButton.toggleClass("btn-success bi-pen");
             this._personalInfoButton.toggleClass("btn-danger bi-x-circle-fill");
-            if(this._personalInfoButton.hasClass("bi-x-circle-fill")){
-
-            }//if(this._personalInfoButton.hasClass("bi-x-circle-fill")){
-            else if(this._personalInfoButton.hasClass("bi-pen")){
-
-            }//else if(this._personalInfoButton.hasClass("bi-pen")){
         });
     }
 
