@@ -88,50 +88,50 @@ export class Section{
                     <button id="bt_personal_info" class="btn btn-success bi bi-pen"></button>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span class="fw-bold">Il tuo nome</span>
+                    <span id="name_label" class="fw-bold">Il tuo nome</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="name">${this._account.name}</span>
+                    <span id="name_value">${this._account.name}</span>
                 </div>
             </div>  
             <div class="row">
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span class="fw-bold">Il tuo cognome</span>
+                    <span id="surname_label" class="fw-bold">Il tuo cognome</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="surname">${this._account.surname}</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span class="fw-bold">Sesso</span>
-                </div>
-                <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="sex">${sex}</span>
+                    <span id="surname_value">${this._account.surname}</span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span class="fw-bold">Data di nascita</span>
+                    <span id="sex_label" class="fw-bold">Sesso</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="birth-date">${birthDate}</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span class="fw-bold">Luogo di nascita</span>
-                </div>
-                <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="birth-place">${this._account.otherPersonals["birthPlace"]}</span>
+                    <span id="sex_value">${sex}</span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span class="fw-bold">Luogo di residenza</span>
+                    <span id="birth_date_label" class="fw-bold">Data di nascita</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="living-place">${this._account.otherPersonals["residence"]["city"]}</span>
+                    <span id="birth_date_value">${birthDate}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-lg-6 my-1 my-lg-0">
+                    <span id="birth_place_label"" class="fw-bold">Luogo di nascita</span>
+                </div>
+                <div class="col-12 col-lg-6 my-1 my-lg-0">
+                    <span id="birth_place_value">${this._account.otherPersonals["birthPlace"]}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-lg-6 my-1 my-lg-0">
+                    <span id="living_place_label" class="fw-bold">Luogo di residenza</span>
+                </div>
+                <div class="col-12 col-lg-6 my-1 my-lg-0">
+                    <span id="living_place_value">${this._account.otherPersonals["residence"]["city"]}</span>
                 </div>
             </div>
         </div>
@@ -143,18 +143,18 @@ export class Section{
                     <button id="bt_education" class="btn btn-success bi bi-pen"></button>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span class="fw-bold">Scuola superiore</span>
+                    <span id="secondary_school_label" class="fw-bold">Scuola superiore</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="secondary-school">${this._account.education["secondary"]}</span>
+                    <span id="secondary_school_value">${this._account.education["secondary"]}</span>
                 </div>
             </div>  
             <div class="row">
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span class="fw-bold">Università</span>
+                    <span id="university_label" class="fw-bold">Università</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="university">${this._account.education["university"]}</span>
+                    <span id="university_value">${this._account.education["university"]}</span>
                 </div>
             </div>
         </div>
@@ -166,10 +166,10 @@ export class Section{
                     <button id="bt_work" class="btn btn-success bi bi-pen"></button>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span class="fw-bold">Lavoro attuale</span>
+                    <span id="work_label" class="fw-bold">Lavoro attuale</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="work">${this._account.employment}</span>
+                    <span id="work_value">${this._account.employment}</span>
                 </div>
             </div>  
         </div>
@@ -182,18 +182,18 @@ export class Section{
                     <button id="bt_contacts_info" class="btn btn-success bi bi-pen"></button>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span class="fw-bold">Numero di telefono</span>
+                    <span id="telephone_label" class="fw-bold">Numero di telefono</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="telephone">${this._account.contacts["phone"]}</span>
+                    <span id="telephone_value">${this._account.contacts["phone"]}</span>
                 </div>
             </div>  
             <div class="row">
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span class="fw-bold">Indirizzo email</span>
+                    <span id="email_label" class="fw-bold">Indirizzo email</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="email">${this._account.contacts["email"]}</span>
+                    <span id="email_value">${this._account.contacts["email"]}</span>
                 </div>
             </div>
         </div>

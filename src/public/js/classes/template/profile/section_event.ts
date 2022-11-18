@@ -45,7 +45,12 @@ export class SectionEvents{
         this._personalInfoButton.on('click',()=>{
             this._personalInfoButton.toggleClass("btn-success bi-pen");
             this._personalInfoButton.toggleClass("btn-danger bi-x-circle-fill");
+            if(this._personalInfoButton.hasClass("bi-x-circle-fill")){
 
+            }//if(this._personalInfoButton.hasClass("bi-x-circle-fill")){
+            else if(this._personalInfoButton.hasClass("bi-pen")){
+
+            }//else if(this._personalInfoButton.hasClass("bi-pen")){
         });
     }
 
