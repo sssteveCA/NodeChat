@@ -1,6 +1,6 @@
 import { CurrentUserRequest, CurrentUserRequestInterface } from "../classes/requests/currentuserrequest.js";
 import { Section, SectionInterface } from "../classes/template/profile/section.js";
-import { SectionEvents, SectionEventsInterface } from "../classes/template/profile/section_event.js";
+import { SectionEvents, SectionEventsInterface } from "../classes/template/profile/section_events.js";
 import { MyProfileSections, SectionLiItems } from "../enums/enums.js";
 import Account from "../models/account.js";
 
