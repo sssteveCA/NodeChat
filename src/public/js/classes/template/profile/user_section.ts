@@ -54,7 +54,6 @@ export class UserSection{
         if(this._section == MyProfileSections.FRIENDS)this.friendsTemplate();
         else if(this._section == MyProfileSections.INFORMATION)this.informationTemplate();
         else if(this._section == MyProfileSections.PHOTOS)this.photosTemplate();
-        else if(this._section == MyProfileSections.SETTINGS)this.settingsTemplate();
         else if(this._section == MyProfileSections.VIDEOS)this.videosTemplate();
         $('#'+this._container).html(this._html);
     }
@@ -65,7 +64,7 @@ export class UserSection{
         <h2 class="text-center">Amici</h2>
 </div>
 <div class="sel-section-content mt-5">
-        <p class="fs-4 fw-bold text-center">Non hai aggiunto ancora nessun amico</p>
+        <p class="fs-4 fw-bold text-center">Nessun amico da mostrare</p>
 </div>
         `;
     }
@@ -85,7 +84,7 @@ export class UserSection{
         <div class="container">
             <div class="row">
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span class="fw-bold">Il tuo nome</span>
+                    <span class="fw-bold">Nome</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
                     <span id="name">${this._account.name}</span>
@@ -93,7 +92,7 @@ export class UserSection{
             </div>  
             <div class="row">
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span class="fw-bold">Il tuo cognome</span>
+                    <span class="fw-bold">Cognome</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
                     <span id="surname">${this._account.surname}</span>
@@ -197,17 +196,6 @@ export class UserSection{
 </div>
 <div class="sel-section-content mt-5">
     <p class="fs-4 fw-bold text-center">Nessuna foto da mostrare</p>
-</div>
-        `;
-    }
-
-    private settingsTemplate(): void{
-        this._html = `
-<div class="sel-section-header">
-        <h2 class="text-center">Impostazioni account</h2>
-</div>
-<div class="sel-section-content mt-5">
-    <p class="fs-4 fw-bold text-center">Impostazioni account</p>
 </div>
         `;
     }

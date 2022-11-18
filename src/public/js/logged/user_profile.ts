@@ -26,11 +26,7 @@ $(()=>{
         let idTarget: string = fired_parent.attr("id") as string;
         let section_data: UserSectionInterface = {
             account: account, container: 'section-content', section: MyProfileSections.INFORMATION };
-        if(idTarget == SectionLiItems.ACCOUNT_SETTINGS){
-            section_data = {
-                account: account, container: 'section-content', section: MyProfileSections.SETTINGS };
-        }
-        else if(idTarget == SectionLiItems.FRIENDS){
+        if(idTarget == SectionLiItems.FRIENDS){
             section_data = {
                 account: account, container: 'section-content', section: MyProfileSections.FRIENDS };
         }
