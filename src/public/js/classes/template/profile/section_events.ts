@@ -43,7 +43,6 @@ export class SectionEvents{
                 this._personalInformationItems.email_value_el.parent().html(`<input type="text" id="email_value" class="form-control" value="${ea_value}">`);
             }//if(this._contactInfoButton.hasClass("bi-pen")){
             else if(this._contactInfoButton.hasClass("bi-x-circle-fill")){
-                console.log(this._personalInformationItems.telephone_label_el);
                 let tel_value: string = this._personalInformationItems.telephone_value_el.val() as string;
                 let ea_value: string = this._personalInformationItems.email_value_el.val() as string;
                 this._personalInformationItems.telephone_label_el.parent().html(`<span id="telephone_label" class="fw-bold">Numero di telefono</span>`);
@@ -116,17 +115,17 @@ export class SectionEvents{
                 let bd_value: string = this._personalInformationItems.birth_date_value_el.val() as string;
                 let bp_value: string = this._personalInformationItems.birth_place_value_el.val() as string;
                 let lp_value: string = this._personalInformationItems.living_place_value_el.val() as string;
-                this._personalInformationItems.name_label_el.parent().html(`<span id="name_label" class="fw-bold">Scuola superiore</span>`);
+                this._personalInformationItems.name_label_el.parent().html(`<span id="name_label" class="fw-bold">Il tuo nome</span>`);
                 this._personalInformationItems.name_value_el.parent().html(`<span id="name_value">${nm_value}</span>`);
-                this._personalInformationItems.surname_label_el.parent().html(`<span id="surname_label" class="fw-bold">Università</span>`);
+                this._personalInformationItems.surname_label_el.parent().html(`<span id="surname_label" class="fw-bold">Il tuo cognome</span>`);
                 this._personalInformationItems.surname_value_el.parent().html(`<span id="surname_value">${snm_value}</span>`);
-                this._personalInformationItems.sex_label_el.parent().html(`<span id="sex_label" class="fw-bold">Università</span>`);
+                this._personalInformationItems.sex_label_el.parent().html(`<span id="sex_label" class="fw-bold">Sesso</span>`);
                 this._personalInformationItems.sex_value_el.parent().html(`<span id="sex_value">${sex_value}</span>`);
-                this._personalInformationItems.birth_date_label_el.parent().html(`<span id="birth_date_label" class="fw-bold">Università</span>`);
+                this._personalInformationItems.birth_date_label_el.parent().html(`<span id="birth_date_label" class="fw-bold">Data di nascita</span>`);
                 this._personalInformationItems.birth_date_value_el.parent().html(`<span id="birth_date_value">${bd_value}</span>`);
-                this._personalInformationItems.birth_place_label_el.parent().html(`<span id="birth_place_label" class="fw-bold">Università</span>`);
+                this._personalInformationItems.birth_place_label_el.parent().html(`<span id="birth_place_label" class="fw-bold">Luogo di nascita</span>`);
                 this._personalInformationItems.birth_place_value_el.parent().html(`<span id="birth_place_value">${bp_value}</span>`);
-                this._personalInformationItems.living_place_label_el.parent().html(`<span id="living_place_label" class="fw-bold">Università</span>`);
+                this._personalInformationItems.living_place_label_el.parent().html(`<span id="living_place_label" class="fw-bold">Luogo di residenza</span>`);
                 this._personalInformationItems.living_place_value_el.parent().html(`<span id="living_place_value">${lp_value}</span>`);
             }//else di if(this._contactInfoButton.hasClass("bi-pen")){
             this._personalInformationItems.name_label_el = $('#name_label');
@@ -148,6 +147,18 @@ export class SectionEvents{
 
     public workButtonClick(): void{
         this._workButton.on('click',()=>{
+            if(this._workButton.hasClass("bi-pen")){
+                let wk_value: string = this._personalInformationItems.work_value_el.text();
+                this._personalInformationItems.work_label_el.parent().html(`<label id="work_label" class="form-label fw-bold">Lavoro attuale</label>`);
+                this._personalInformationItems.work_value_el.parent().html(`<input type="text" id="work_value" class="form-control" value="${wk_value}">`);
+            }//if(this._workButton.hasClass("bi-pen")){
+            else if(this._workButton.hasClass("bi-x-circle-fill")){
+                let wk_value: string = this._personalInformationItems.work_value_el.val() as string;
+                this._personalInformationItems.work_label_el.parent().html(`<span id="work_label" class="fw-bold">Lavoro attuale</span>`);
+                this._personalInformationItems.work_value_el.parent().html(`<span id="work_value">${wk_value}</span>`);
+            }//else if(this._workButton.hasClass("bi-x-circle-fill")){
+            this._personalInformationItems.work_label_el = $('#work_label');
+            this._personalInformationItems.work_value_el = $('#work_value');
             this._workButton.toggleClass("btn-success bi-pen");
             this._workButton.toggleClass("btn-danger bi-x-circle-fill");
         });
