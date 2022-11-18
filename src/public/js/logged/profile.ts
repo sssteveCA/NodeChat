@@ -20,9 +20,9 @@ $(()=>{
             $('#'+SectionLiItems.INFORMATION).trigger('click');
         }//if(obj["done"] == true){
     });
-    $('.sections ul li').on('click',(e)=>{
-        let fired: JQuery = $(e.target);
-        let idTarget: string = fired.attr("id") as string;
+    $('.sections ul li a').on('click',(e)=>{
+        let fired_parent: JQuery = $(e.target).parent();
+        let idTarget: string = fired_parent.attr("id") as string;
         let section_data: SectionInterface = {
             account: account, container: 'section-content', section: MyProfileSections.INFORMATION };
         if(idTarget == SectionLiItems.ACCOUNT_SETTINGS){
