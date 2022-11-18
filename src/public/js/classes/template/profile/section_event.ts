@@ -27,5 +27,34 @@ export class SectionEvent{
     get workButton(){return this._workButton;}
     get contactInfoButton(){return this._contactInfoButton;}
 
+    public personalInfoButtonClick(): void{
+        this._personalInfoButton.on('click',()=>{
+            this._personalInfoButton.toggleClass("btn-success bi-pen");
+            this._personalInfoButton.toggleClass("btn-danger bi-x-circle-fill");
+
+        });
+    }
+
+    public educationButtonClick(): void{
+        this._educationButton.on('click',()=>{
+            this._educationButton.toggleClass("btn-success bi-pen");
+            this._educationButton.toggleClass("btn-danger bi-x-circle-fill");
+        })
+    }
+
+    public workButtonClick(): void{
+        this._workButton.on('click',()=>{
+            this._workButton.toggleClass("btn-success bi-pen");
+            this._workButton.toggleClass("btn-danger bi-x-circle-fill");
+        });
+    }
+
+    public contactInfoButtonClick(): void{
+        this._contactInfoButton.on('click',()=>{
+            this._contactInfoButton.toggleClass("btn-success bi-pen");
+            this._contactInfoButton.toggleClass("btn-danger bi-x-circle-fill");
+        });
+    }
+
 
 }
