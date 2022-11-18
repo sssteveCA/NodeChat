@@ -34,6 +34,22 @@ export class SectionEvents{
 
     public contactInfoButtonClick(): void{
         this._contactInfoButton.on('click',()=>{
+            if(this._contactInfoButton.hasClass("bi-pen")){
+                let tel_value: string = this._personalInformationItems.telephone_value_el.text();
+                let ea_value: string = this._personalInformationItems.email_value_el.text();
+                this._personalInformationItems.telephone_label_el.replaceWith(`<label id="telephone_label" class="form-label fw-bold">Numero di telefono</label>`);
+                this._personalInformationItems.telephone_value_el.replaceWith(`<input type="text" id="telephone_value" class="form-control" value="${tel_value}">`);
+                this._personalInformationItems.email_label_el.replaceWith(`<label id="email_label" class="form-label fw-bold">Indirizzo email</label>`);
+                this._personalInformationItems.email_value_el.replaceWith(`<input type="text" id="email_value" class="form-control" value="${ea_value}">`);
+            }//if(this._contactInfoButton.hasClass("bi-pen")){
+            else if(this._contactInfoButton.hasClass("bi-x-circle-fill")){
+                let tel_value: string = this._personalInformationItems.telephone_value_el.val() as string;
+                let ea_value: string = this._personalInformationItems.email_value_el.val() as string;
+                this._personalInformationItems.telephone_label_el.replaceWith(`<span id="telephone_label" class="fw-bold">Numero di telefono</span>`);
+                this._personalInformationItems.telephone_value_el.replaceWith(`<span id="telephone_value">${tel_value}</span>`);
+                this._personalInformationItems.email_label_el.replaceWith(`<span id="email_label" class="fw-bold">Indirizzo email</span>`);
+                this._personalInformationItems.email_value_el.replaceWith(`<span id="email_value">${ea_value}</span>`);
+            }//else di if(this._contactInfoButton.hasClass("bi-pen")){
             this._contactInfoButton.toggleClass("btn-success bi-pen");
             this._contactInfoButton.toggleClass("btn-danger bi-x-circle-fill");
         });
