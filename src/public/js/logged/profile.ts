@@ -19,7 +19,7 @@ $(()=>{
             account = setAccount(obj["account"]);
             addImages(account["images"]["profileImage"], account["images"]["coverImage"]);
             //console.log(account);
-            $('#'+SectionLiItems.INFORMATION).trigger('click');
+            $('#'+SectionLiItems.INFORMATION+' a').trigger('click');
         }//if(obj["done"] == true){
     });
     $('.sections ul li a').on('click',(e)=>{
@@ -55,8 +55,8 @@ $(()=>{
 });
 
 function addImages(profile: string, cover: string): void{
-    $('.profile-image').html(`<img src="${profile}" alt="Immagine del profilo" title="Immagine del profilo">`);
-    $('.cover-image').html(`<img src="${cover}" alt="Immagine di copertina" title="Immagine di copertina">`);
+    $('.profile-image').html(`<img src="${profile}" alt="Immagine del profilo" title="Immagine del profilo"><button type="button" id="profile-button" class="btn btn-success bi bi-pen"></button>`);
+    $('.cover-image').html(`<img src="${cover}" alt="Immagine di copertina" title="Immagine di copertina"><button type="button" id="cover-button" class="btn btn-primary bt-lg">MODIFICA L'IMMAGINE DI COPERTINA</button>`);
 }
 
 function setAccount(obj: object): Account{

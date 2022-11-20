@@ -36,8 +36,8 @@ account_routes_api.post('/current_user', loggedApi, async(req,res)=>{
         //console.log(obj);
         if(obj["done"] == true){
             let account: object = setUsernameObject(obj);
-            console.log("account_api current_user account => ");
-            console.log(account);
+            /* console.log("account_api current_user account => ");
+            console.log(account); */
             return res.status(200).json({
                 done: obj["done"],
                 account: account
@@ -64,8 +64,8 @@ account_routes_api.post('/user_info', loggedApi, async(req,res)=>{
     account.getAccount({_id: user_id}).then(obj => {
         if(obj["done"] == true){
             let account: object = setUsernameObject(obj);
-            console.log("account_api user_info account => ");
-            console.log(account);
+            /* console.log("account_api user_info account => ");
+            console.log(account); */
             return res.status(200).json({
                 done: obj["done"],
                 account: account

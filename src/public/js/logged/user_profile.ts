@@ -19,7 +19,7 @@ $(()=>{
             account = setAccount(obj["account"]);
             addImages(account["images"]["profileImage"], account["images"]["coverImage"]);
             //console.log(account);
-            $('#'+SectionLiItems.INFORMATION).trigger('click');
+            $('#'+SectionLiItems.INFORMATION+' a').trigger('click');
         }//if(obj["done"] == true){
     });
     $('.sections ul li a').on('click',(e)=>{
