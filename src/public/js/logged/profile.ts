@@ -76,15 +76,15 @@ function setInformationSectionEvents(): void{
     };
     let se: SectionEvents = new SectionEvents(se_data);
     se.personalInfoButtonClick(()=>{
-        console.log("click");
+        se.personalInfoButton.trigger("click");
     });
     se.educationButtonClick(()=>{
-        console.log("click");
+        se.educationButton.trigger("click");
     });
     se.workButtonClick(()=>{
-        console.log("click");
+        se.workButton.trigger("click");
     });
     se.contactInfoButtonClick(()=>{
-        console.log("click");
+        se.contactInfoButton.trigger("click");
     });
 }

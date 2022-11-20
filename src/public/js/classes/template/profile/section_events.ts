@@ -202,7 +202,6 @@ export class SectionEvents{
 <div class="col-6 col-md-4 col-lg-3 offset-3 offset-md-4 offset-lg-5">
     <button type="button" id="${params.button_id}" class="btn btn-primary">MODIFICA</button>
 </div>`);
-        console.log(this._editButtonContainer);
     }
 
     
