@@ -17,6 +17,7 @@ $(()=>{
         //console.log(obj);
         if(obj["done"] == true){
             account = setAccount(obj["account"]);
+            addImages(account["images"]["profileImage"], account["images"]["coverImage"]);
             //console.log(account);
             $('#'+SectionLiItems.INFORMATION).trigger('click');
         }//if(obj["done"] == true){
@@ -45,6 +46,11 @@ $(()=>{
         let section: UserSection = new UserSection(section_data);
     });
 });
+
+function addImages(profile: string, cover: string): void{
+    $('.profile-image').html(`<img src="${profile}" alt="Immagine del profilo" title="Immagine del profilo">`);
+    $('.cover-image').html(`<img src="${cover}" alt="Immagine di copertina" title="Immagine di copertina">`);
+}
 
 function setAccount(obj: object): Account{
     let account: Account = new Account();
