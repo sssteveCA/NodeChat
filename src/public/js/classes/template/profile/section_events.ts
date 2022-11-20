@@ -167,9 +167,9 @@ export class SectionEvents{
     private editButtonContainer(params: object): JQuery<HTMLDivElement>{
         let container: JQuery<HTMLDivElement> = $('<div>');
         container[0].outerHTML = `
-<div class="row">
+<div id="${params["container_id"]}" class="row">
     <div class="col-6 col-md-4 col-lg-3 offset-3 offset-md-4 offset-lg-5">
-        <button type="button" id="${params["id"]} class="btn btn-primary">MODIFICA</button>
+        <button type="button" id="${params["button_id"]} class="btn btn-primary">MODIFICA</button>
     </div>
 </div> 
         `;
