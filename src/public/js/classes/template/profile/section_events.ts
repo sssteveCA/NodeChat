@@ -1,4 +1,5 @@
 import { PersonalInformationItemsType } from "../../../types/personalinformationitemstype";
+import { ProfileSectionEditContainer } from "../../../types/types";
 
 export interface SectionEventsInterface{
     personalInfoButton: JQuery<HTMLButtonElement>;
@@ -16,6 +17,7 @@ export class SectionEvents{
     private _educationButton: JQuery<HTMLButtonElement>;
     private _workButton: JQuery<HTMLButtonElement>;
     private _contactInfoButton: JQuery<HTMLButtonElement>;
+    private _editButtonContainer: JQuery<HTMLDivElement>;
     private _personalInformationItems: PersonalInformationItemsType;
 
     constructor(data: SectionEventsInterface){
@@ -30,6 +32,7 @@ export class SectionEvents{
     get educationButton(){return this._educationButton;}
     get workButton(){return this._workButton;}
     get contactInfoButton(){return this._contactInfoButton;}
+    get editButtonContainer(){return this._editButtonContainer;}
     get personalInformationItems(){return this._personalInformationItems;}
 
     public contactInfoButtonClick(): void{
@@ -41,6 +44,9 @@ export class SectionEvents{
                 this._personalInformationItems.telephone_value_el.parent().html(`<input type="text" id="telephone_value" class="form-control" value="${tel_value}">`);
                 this._personalInformationItems.email_label_el.parent().html(`<label id="email_label" class="form-label fw-bold">Indirizzo email</label>`);
                 this._personalInformationItems.email_value_el.parent().html(`<input type="text" id="email_value" class="form-control" value="${ea_value}">`);
+                let ebdData: ProfileSectionEditContainer = { button_id: 'bt_edit_contact_info'};
+                this.setEditButtonContainer(ebdData);
+                this._contactInfoButton.parent(".container").append(this._editButtonContainer);
             }//if(this._contactInfoButton.hasClass("bi-pen")){
             else if(this._contactInfoButton.hasClass("bi-x-circle-fill")){
                 let tel_value: string = this._personalInformationItems.telephone_value_el.val() as string;
@@ -49,6 +55,7 @@ export class SectionEvents{
                 this._personalInformationItems.telephone_value_el.parent().html(`<span id="telephone_value">${tel_value}</span>`);
                 this._personalInformationItems.email_label_el.parent().html(`<span id="email_label" class="fw-bold">Indirizzo email</span>`);
                 this._personalInformationItems.email_value_el.parent().html(`<span id="email_value">${ea_value}</span>`);
+                this._editButtonContainer.remove();
             }//else di if(this._contactInfoButton.hasClass("bi-pen")){
             this._personalInformationItems.telephone_label_el = $('#telephone_label');
             this._personalInformationItems.telephone_value_el = $('#telephone_value');
@@ -68,6 +75,9 @@ export class SectionEvents{
                 this._personalInformationItems.secondary_school_value_el.parent().html(`<input type="text" id="secondary_school_value" class="form-control" value="${ss_value}">`);
                 this._personalInformationItems.university_label_el.parent().html(`<label id="university_label" class="form-label fw-bold">Università</label>`);
                 this._personalInformationItems.university_value_el.parent().html(`<input type="text" id="university_value" class="form-control" value="${univ_value}">`);
+                let ebdData: ProfileSectionEditContainer = { button_id: 'bt_edit_education'};
+                this.setEditButtonContainer(ebdData);
+                this._contactInfoButton.parent(".container").append(this._editButtonContainer);
             }//if(this._contactInfoButton.hasClass("bi-pen")){
             else if(this._educationButton.hasClass("bi-x-circle-fill")){
                 let ss_value: string = this._personalInformationItems.secondary_school_value_el.val() as string;
@@ -76,6 +86,7 @@ export class SectionEvents{
                 this._personalInformationItems.secondary_school_value_el.parent().html(`<span id="secondary_school_value">${ss_value}</span>`);
                 this._personalInformationItems.university_label_el.parent().html(`<span id="university_label" class="fw-bold">Università</span>`);
                 this._personalInformationItems.university_value_el.parent().html(`<span id="university_value">${univ_value}</span>`);
+                this._editButtonContainer.remove();
             }//else di if(this._contactInfoButton.hasClass("bi-pen")){
             this._personalInformationItems.secondary_school_label_el = $('#secondary_school_label');
             this._personalInformationItems.secondary_school_value_el = $('#secondary_school_value');
@@ -107,6 +118,9 @@ export class SectionEvents{
                 this._personalInformationItems.birth_place_value_el.parent().html(`<input type="text" id="birth_place_value" class="form-control" value="${bp_value}">`);
                 this._personalInformationItems.living_place_label_el.parent().html(`<label id="living_place_label" class="form-label fw-bold">Luogo di residenza</label>`);
                 this._personalInformationItems.living_place_value_el.parent().html(`<input type="text" id="living_place_value" class="form-control" value="${lp_value}">`);
+                let ebdData: ProfileSectionEditContainer = { button_id: 'bt_edit_personal_info'};
+                this.setEditButtonContainer(ebdData);
+                this._personalInfoButton.parent(".container").append(this._editButtonContainer);
             }//if(this._contactInfoButton.hasClass("bi-pen")){
             else if(this._personalInfoButton.hasClass("bi-x-circle-fill")){
                 let nm_value: string = this._personalInformationItems.name_value_el.val() as string;
@@ -127,6 +141,7 @@ export class SectionEvents{
                 this._personalInformationItems.birth_place_value_el.parent().html(`<span id="birth_place_value">${bp_value}</span>`);
                 this._personalInformationItems.living_place_label_el.parent().html(`<span id="living_place_label" class="fw-bold">Luogo di residenza</span>`);
                 this._personalInformationItems.living_place_value_el.parent().html(`<span id="living_place_value">${lp_value}</span>`);
+                this._editButtonContainer.remove();
             }//else di if(this._contactInfoButton.hasClass("bi-pen")){
             this._personalInformationItems.name_label_el = $('#name_label');
             this._personalInformationItems.name_value_el = $('#name_value');
@@ -151,11 +166,15 @@ export class SectionEvents{
                 let wk_value: string = this._personalInformationItems.work_value_el.text();
                 this._personalInformationItems.work_label_el.parent().html(`<label id="work_label" class="form-label fw-bold">Lavoro attuale</label>`);
                 this._personalInformationItems.work_value_el.parent().html(`<input type="text" id="work_value" class="form-control" value="${wk_value}">`);
+                let ebdData: ProfileSectionEditContainer = { button_id: 'bt_edit_work'};
+                this.setEditButtonContainer(ebdData);
+                this._contactInfoButton.parent(".container").append(this._editButtonContainer);
             }//if(this._workButton.hasClass("bi-pen")){
             else if(this._workButton.hasClass("bi-x-circle-fill")){
                 let wk_value: string = this._personalInformationItems.work_value_el.val() as string;
                 this._personalInformationItems.work_label_el.parent().html(`<span id="work_label" class="fw-bold">Lavoro attuale</span>`);
                 this._personalInformationItems.work_value_el.parent().html(`<span id="work_value">${wk_value}</span>`);
+                this._editButtonContainer.remove();
             }//else if(this._workButton.hasClass("bi-x-circle-fill")){
             this._personalInformationItems.work_label_el = $('#work_label');
             this._personalInformationItems.work_value_el = $('#work_value');
@@ -164,16 +183,15 @@ export class SectionEvents{
         });
     }
 
-    private editButtonContainer(params: object): JQuery<HTMLDivElement>{
-        let container: JQuery<HTMLDivElement> = $('<div>');
-        container[0].outerHTML = `
-<div id="${params["container_id"]}" class="row">
+    private setEditButtonContainer(params: ProfileSectionEditContainer): void{
+        this._editButtonContainer = $('<div>');
+        this._editButtonContainer[0].outerHTML = `
+<div class="row">
     <div class="col-6 col-md-4 col-lg-3 offset-3 offset-md-4 offset-lg-5">
-        <button type="button" id="${params["button_id"]} class="btn btn-primary">MODIFICA</button>
+        <button type="button" id="${params.button_id} class="btn btn-primary">MODIFICA</button>
     </div>
 </div> 
         `;
-        return container;
     }
 
     
