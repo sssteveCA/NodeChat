@@ -35,7 +35,7 @@ export class SectionEvents{
     get editButtonContainer(){return this._editButtonContainer;}
     get personalInformationItems(){return this._personalInformationItems;}
 
-    public contactInfoButtonClick(): void{
+    public contactInfoButtonClick(callback: ()=> void): void{
         this._contactInfoButton.on('click',()=>{
             if(this._contactInfoButton.hasClass("bi-pen")){
                 let tel_value: string = this._personalInformationItems.telephone_value_el.text();
@@ -47,6 +47,9 @@ export class SectionEvents{
                 let ebdData: ProfileSectionEditContainer = { button_id: 'bt_edit_contact_info'};
                 this.setEditButtonContainer(ebdData);
                 this._contactInfoButton.parents(".container").append(this._editButtonContainer);
+                $('#'+ebdData.button_id).on('click',()=>{
+                    callback();
+                });
             }//if(this._contactInfoButton.hasClass("bi-pen")){
             else if(this._contactInfoButton.hasClass("bi-x-circle-fill")){
                 let tel_value: string = this._personalInformationItems.telephone_value_el.val() as string;
@@ -66,7 +69,7 @@ export class SectionEvents{
         });
     }
 
-    public educationButtonClick(): void{
+    public educationButtonClick(callback: () => void): void{
         this._educationButton.on('click',()=>{
             if(this._educationButton.hasClass("bi-pen")){
                 let ss_value: string = this._personalInformationItems.secondary_school_value_el.text();
@@ -78,6 +81,9 @@ export class SectionEvents{
                 let ebdData: ProfileSectionEditContainer = { button_id: 'bt_edit_education'};
                 this.setEditButtonContainer(ebdData);
                 this._educationButton.parents(".container").append(this._editButtonContainer);
+                $('#'+ebdData.button_id).on('click',()=>{
+                    callback();
+                });
             }//if(this._contactInfoButton.hasClass("bi-pen")){
             else if(this._educationButton.hasClass("bi-x-circle-fill")){
                 let ss_value: string = this._personalInformationItems.secondary_school_value_el.val() as string;
@@ -97,7 +103,7 @@ export class SectionEvents{
         })
     }
 
-    public personalInfoButtonClick(): void{
+    public personalInfoButtonClick(callback: ()=> void): void{
         this._personalInfoButton.on('click',()=>{
             if(this._personalInfoButton.hasClass("bi-pen")){
                 let nm_value: string = this._personalInformationItems.name_value_el.text();
@@ -121,6 +127,9 @@ export class SectionEvents{
                 let ebdData: ProfileSectionEditContainer = { button_id: 'bt_edit_personal_info'};
                 this.setEditButtonContainer(ebdData);
                 this._personalInfoButton.parents(".container").append(this._editButtonContainer);
+                $('#'+ebdData.button_id).on('click',()=>{
+                    callback();
+                });
             }//if(this._contactInfoButton.hasClass("bi-pen")){
             else if(this._personalInfoButton.hasClass("bi-x-circle-fill")){
                 let nm_value: string = this._personalInformationItems.name_value_el.val() as string;
@@ -160,7 +169,7 @@ export class SectionEvents{
         });
     }
 
-    public workButtonClick(): void{
+    public workButtonClick(callback: ()=> void): void{
         this._workButton.on('click',()=>{
             if(this._workButton.hasClass("bi-pen")){
                 let wk_value: string = this._personalInformationItems.work_value_el.text();
@@ -169,6 +178,9 @@ export class SectionEvents{
                 let ebdData: ProfileSectionEditContainer = { button_id: 'bt_edit_work'};
                 this.setEditButtonContainer(ebdData);
                 this._workButton.parents(".container").append(this._editButtonContainer);
+                $('#'+ebdData.button_id).on('click',()=>{
+                    callback();
+                });
             }//if(this._workButton.hasClass("bi-pen")){
             else if(this._workButton.hasClass("bi-x-circle-fill")){
                 let wk_value: string = this._personalInformationItems.work_value_el.val() as string;

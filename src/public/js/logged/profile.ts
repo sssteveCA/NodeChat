@@ -75,8 +75,16 @@ function setInformationSectionEvents(): void{
         workButton: $('#bt_work'), contactInfoButton: $('#bt_contacts_info'), personalInformationItems: piit
     };
     let se: SectionEvents = new SectionEvents(se_data);
-    se.personalInfoButtonClick();
-    se.educationButtonClick();
-    se.workButtonClick();
-    se.contactInfoButtonClick();
+    se.personalInfoButtonClick(()=>{
+        console.log("click");
+    });
+    se.educationButtonClick(()=>{
+        console.log("click");
+    });
+    se.workButtonClick(()=>{
+        console.log("click");
+    });
+    se.contactInfoButtonClick(()=>{
+        console.log("click");
+    });
 }
