@@ -1,3 +1,4 @@
+import { ConfirmDialog, ConfirmDialogInterface } from "../classes/dialogs/confirmdialog.js";
 import { CurrentUserRequest, CurrentUserRequestInterface } from "../classes/requests/currentuserrequest.js";
 import { Section, SectionInterface } from "../classes/template/profile/section.js";
 import { SectionEvents, SectionEventsInterface } from "../classes/template/profile/section_events.js";
@@ -76,15 +77,67 @@ function setInformationSectionEvents(): void{
     };
     let se: SectionEvents = new SectionEvents(se_data);
     se.personalInfoButtonClick(()=>{
-        se.personalInfoButton.trigger("click");
+        let cdData: ConfirmDialogInterface = {
+            title: 'Modifica informazioni personali',
+            message: 'Vuoi modificare le informazioni personali con i valori inseriti?'
+        };
+        let cd: ConfirmDialog = new ConfirmDialog(cdData);
+        cd.btYes.on('click',()=>{
+            cd.dialog.dialog('destroy');
+            cd.dialog.remove();
+            se.personalInfoButton.trigger("click");
+        });
+        cd.btNo.on('click',()=>{
+            cd.dialog.dialog('destroy');
+            cd.dialog.remove();
+        }); 
     });
     se.educationButtonClick(()=>{
-        se.educationButton.trigger("click");
+        let cdData: ConfirmDialogInterface = {
+            title: 'Modifica informazioni personali',
+            message: 'Vuoi modificare le informazioni sulla tua educazione con i valori inseriti?'
+        };
+        let cd: ConfirmDialog = new ConfirmDialog(cdData);
+        cd.btYes.on('click',()=>{
+            cd.dialog.dialog('destroy');
+            cd.dialog.remove();
+            se.educationButton.trigger("click");
+        });
+        cd.btNo.on('click',()=>{
+            cd.dialog.dialog('destroy');
+            cd.dialog.remove();
+        }); 
     });
     se.workButtonClick(()=>{
-        se.workButton.trigger("click");
+        let cdData: ConfirmDialogInterface = {
+            title: 'Modifica informazioni personali',
+            message: 'Vuoi modificare le informazioni sul lavoro con i valori inseriti?'
+        };
+        let cd: ConfirmDialog = new ConfirmDialog(cdData);
+        cd.btYes.on('click',()=>{
+            cd.dialog.dialog('destroy');
+            cd.dialog.remove();
+            se.workButton.trigger("click");
+        });
+        cd.btNo.on('click',()=>{
+            cd.dialog.dialog('destroy');
+            cd.dialog.remove();
+        }); 
     });
     se.contactInfoButtonClick(()=>{
-        se.contactInfoButton.trigger("click");
+        let cdData: ConfirmDialogInterface = {
+            title: 'Modifica informazioni personali',
+            message: 'Vuoi modificare le informazioni di contatto con i valori inseriti?'
+        };
+        let cd: ConfirmDialog = new ConfirmDialog(cdData);
+        cd.btYes.on('click',()=>{
+            cd.dialog.dialog('destroy');
+            cd.dialog.remove();
+            se.contactInfoButton.trigger("click");
+        });
+        cd.btNo.on('click',()=>{
+            cd.dialog.dialog('destroy');
+            cd.dialog.remove();
+        }); 
     });
 }
