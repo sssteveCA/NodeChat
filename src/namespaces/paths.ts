@@ -13,4 +13,6 @@ export namespace Paths{
     export const SEND_EMAIL = "/send_email";
     export const SUBSCRIBE = "/subscribe";
     export const VERIFY = "/verify"; //Email verification route
+
+    export const STATIC_IMG_DEFAULT = "/img/default";
 }
