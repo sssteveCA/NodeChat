@@ -21,6 +21,11 @@ $cover-image-div-bkcolor: color.adjust(grey, $alpha: -0.9)
 $li-items-hover-bkcolor: color.adjust(yellow, $alpha: -0.2)
 $container-sides-width: (left: 33%, right: 67%)
 
+%img-selector
+    width: 100%
+    height: 100%
+    z-index: 11
+
 @mixin left-side-style()
     $bs-breakpoint-md: map.get(globals.$bs-breakpoints,'md')
     .left-side
@@ -30,10 +35,11 @@ $container-sides-width: (left: 33%, right: 67%)
             width: map.get($container-sides-width, "left")
         .profile-image
             position: relative
-            background-color: $profile-image-div-bkcolor
+            //background-color: $profile-image-div-bkcolor
             width: 100%
             height: 200px
-            z-index: 11
+            img
+                @extend %img-selector
             button
                 position: absolute
                 right: 20px
@@ -62,9 +68,11 @@ $container-sides-width: (left: 33%, right: 67%)
             width: map.get($container-sides-width, "right")
         .cover-image
             position: relative
-            background-color: $cover-image-div-bkcolor
+            //background-color: $cover-image-div-bkcolor
             width: 100%
             height: 350px
+            img
+                @extend %img-selector
             button
                 position: absolute
                 right: 20px
