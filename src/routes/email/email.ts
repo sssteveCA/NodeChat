@@ -5,26 +5,9 @@ import express, { NextFunction, Request, Response } from 'express';
 import { EmailInterface, Email } from '../../classes/email/email';
 import { Regexs } from '../../namespaces/regex';
 import { contacts_validator } from './email_m';
+import { send_email } from './functions/send_email';
 
 export const email_routes = express.Router();
 
-email_routes.post('/send_email',contacts_validator,(req,res)=>{
-    let output: object = {};
-    let em_data: EmailInterface = {
-        name: req.body.name, email: req.body.email, subject: req.body.subject, message: req.body.message
-    };
-    let em: Email = new Email(em_data);
-    em.sendMail().then(obj => {
-        if(obj['done'] == true){
-            output = {
-                done: true, msg: "La tua richiesta è stata inviata. Riceverai una risposta nel minor tempo possibile"
-            };
-            return res.status(200).send(output);
-        }
-        output = {
-            done: false, msg: em.error
-        };
-        return res.status(500).send(output);
-    });
-});
+email_routes.post('/send_email',contacts_validator,send_email);
 

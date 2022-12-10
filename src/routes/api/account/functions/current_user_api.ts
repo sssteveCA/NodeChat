@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { Account } from "../../../classes/database/models/account";
-import { Token } from "../../../classes/database/models/token";
-import { MongoDbModelManagerInterface } from "../../../classes/database/mongodbmodelmanager";
-import { Messages } from "../../../namespaces/messages";
-import { Paths } from "../../../namespaces/paths";
-import { Schemas } from "../../../namespaces/schemas";
+import { Account } from "../../../../classes/database/models/account";
+import { Token } from "../../../../classes/database/models/token";
+import { MongoDbModelManagerInterface } from "../../../../classes/database/mongodbmodelmanager";
+import { Messages } from "../../../../namespaces/messages";
+import { Paths } from "../../../../namespaces/paths";
+import { Schemas } from "../../../../namespaces/schemas";
 import { setUsernameObject } from "./account_api_functions";
 
 export function current_user_api(req: Request, res: Response){

@@ -1,4 +1,4 @@
-import { Paths } from "../../../namespaces/paths";
+import { Paths } from "../../../../namespaces/paths";
 
 export function setUsernameObject(obj: object): object{
     let usernameObject: object = {

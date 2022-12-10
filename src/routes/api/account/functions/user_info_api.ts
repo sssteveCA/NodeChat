@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { Account } from "../../../classes/database/models/account";
-import { MongoDbModelManagerInterface } from "../../../classes/database/mongodbmodelmanager";
-import { Messages } from "../../../namespaces/messages";
-import { Schemas } from "../../../namespaces/schemas";
+import { Account } from "../../../../classes/database/models/account";
+import { MongoDbModelManagerInterface } from "../../../../classes/database/mongodbmodelmanager";
+import { Messages } from "../../../../namespaces/messages";
+import { Schemas } from "../../../../namespaces/schemas";
 
 import { setUsernameObject } from "./account_api_functions";
 
