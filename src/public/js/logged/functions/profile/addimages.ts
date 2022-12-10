@@ -1,3 +1,4 @@
+import { MessageDialog, MessageDialogInterface } from "../../../classes/dialogs/messagedialog";
 import { ProfileImageUpload, ProfileImageUploadInterface } from "../../../classes/requests/profileimageupload";
 
 export function addImages(profile: string, cover: string): void{
@@ -18,6 +19,14 @@ export function addImages(profile: string, cover: string): void{
         }
         let piu: ProfileImageUpload = new ProfileImageUpload(piuData);
         piu.uploadImage().then(obj => {
+            let cdData: MessageDialogInterface = {
+                title: "Immagine del profilo", message: obj["msg"]
+            };
+            let cd: MessageDialog = new MessageDialog(cdData);
+            cd.btOk.on('click',()=>{
+                cd.dialog.dialog('destroy');
+                cd.dialog.remove();
+            })
         });
     });
 

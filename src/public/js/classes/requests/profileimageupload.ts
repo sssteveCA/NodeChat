@@ -21,6 +21,7 @@ export class ProfileImageUpload{
 
     constructor(data: ProfileImageUploadInterface){
         this._token_key = data.token_key;
+        this._image = data.image;
     }
 
     get image(){return this._image;}

@@ -14,6 +14,7 @@ import { current_user_api } from './functions/current_user_api';
 import { search_api } from './functions/search_api';
 import { user_info_api } from './functions/user_info_api';
 import multipart from "multiparty";
+import { upload_profile_image } from './functions/upload_profile_image';
 
 export const account_routes_api = express.Router();
 
@@ -23,7 +24,4 @@ account_routes_api.post('/user_info', loggedApi, user_info_api);
 
 account_routes_api.post('/profile/search', loggedApi, search_api);
 
-account_routes_api.post('/profile/upload_profile_image',loggedApi,(req,res)=>{
-    let tokenKey: string = res.locals["tokenKey"];
-    return res.status(200).json({ msg: "File ricevuto" });
-});
+account_routes_api.post('/profile/upload_profile_image', loggedApi, upload_profile_image);

@@ -3,7 +3,9 @@ import multiparty from "multiparty";
 import { Paths } from "../../../../namespaces/paths";
 
 export async function upload_profile_image(req: Request, res: Response){
+    let tokenKey: string = res.locals["tokenKey"];
     let form = new multiparty.Form({
+        autoFiles: true,
         uploadDir: Paths.STATIC_UPLOAD
     });
 
