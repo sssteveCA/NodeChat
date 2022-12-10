@@ -15,4 +15,5 @@ export namespace Paths{
     export const VERIFY = "/verify"; //Email verification route
 
     export const STATIC_IMG_DEFAULT = "/img/default";
+    export const STATIC_UPLOAD = "/upload";
 }

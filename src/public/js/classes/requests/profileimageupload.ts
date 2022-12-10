@@ -42,7 +42,7 @@ export class ProfileImageUpload{
         let response: object = {};
         try{
             await this.uploadImagePromise().then(res => {
-
+                console.log(res);
             }).catch(err => {
                 console.warn(err);
                 throw err;

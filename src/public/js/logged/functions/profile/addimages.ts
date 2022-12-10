@@ -1,3 +1,4 @@
+import { ProfileImageUpload, ProfileImageUploadInterface } from "../../../classes/requests/profileimageupload";
 
 export function addImages(profile: string, cover: string): void{
     $('.profile-image').html(`
@@ -11,6 +12,13 @@ export function addImages(profile: string, cover: string): void{
         profile_image.trigger('click');  
     });
     profile_image.on('change',()=>{
-    })
+        let piuData: ProfileImageUploadInterface = {
+            token_key:  $('input[name=token_key]').val() as string,
+            image: profile_image[0].files?.[0] as File
+        }
+        let piu: ProfileImageUpload = new ProfileImageUpload(piuData);
+        piu.uploadImage().then(obj => {
+        });
+    });
 
 }
