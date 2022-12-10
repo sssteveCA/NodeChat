@@ -12,6 +12,7 @@ import { guest } from '../middlewares/middlewares';
 import { login_validator, subscribe_validator, verify_credentials } from './authentication_m';
 import session from 'express-session';
 import { verify_code } from './functions/verify_code';
+import { login } from './functions/login';
 
 export const authentication_routes = express.Router();
 
@@ -21,18 +22,7 @@ authentication_routes.use(session({
     resave: false
 }));
 
-authentication_routes.get('/login', guest, (req,res)=>{
-    let message: string|null = (req.query.message != null) ? req.query.message as string : null;
-    res.render('login',{
-        bootstrap_css: Paths.BOOTSTRAP_CSS,
-        bootstrap_js: Paths.BOOTSTRAP_JS,
-        container: Constants.CONTAINER,
-        jquery_js: Paths.JQUERY_JS,
-        login: Paths.LOGIN,
-        message: message,
-        subscribe: Paths.SUBSCRIBE
-    });
-});
+authentication_routes.get('/login', guest, login);
 
 authentication_routes.get('/logout', async (req,res)=>{
     if(req.session['username'])req.session['username'] = null;
