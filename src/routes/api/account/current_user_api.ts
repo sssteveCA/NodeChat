@@ -5,6 +5,7 @@ import { MongoDbModelManagerInterface } from "../../../classes/database/mongodbm
 import { Messages } from "../../../namespaces/messages";
 import { Paths } from "../../../namespaces/paths";
 import { Schemas } from "../../../namespaces/schemas";
+import { setUsernameObject } from "./account_api_functions";
 
 export function current_user_api(req: Request, res: Response){
     let tokenKey: string = res.locals["tokenKey"];
@@ -45,19 +46,4 @@ export function current_user_api(req: Request, res: Response){
             done: false, msg: Messages.ERROR_SERVER
         });
     });
-}
-
-function setUsernameObject(obj: object): object{
-    let usernameObject: object = {
-        name: obj["result"]["name"], surname: obj["result"]["surname"], email: obj["result"]["email"],
-        contacts: obj["result"]["contacts"], education: obj["result"]["education"],
-        employment: obj["result"]["employment"],
-        images: obj["result"]["images"], otherPersonals: obj["result"]["otherPersonals"],
-        videos: obj["result"]["videos"],
-    };
-    if(!usernameObject["images"] || !usernameObject["images"]["profileImage"] || usernameObject["images"]["profileImage"] == '' || !usernameObject["images"]["coverImage"] || usernameObject["images"]["coverImage"] == ''){
-        usernameObject["images"]["profileImage"] = "../.."+Paths.STATIC_IMG_DEFAULT+"/profile_image.jpg";
-        usernameObject["images"]["coverImage"] = "../.."+Paths.STATIC_IMG_DEFAULT+"/cover_image.jpg";
-    }
-    return usernameObject;
 }
