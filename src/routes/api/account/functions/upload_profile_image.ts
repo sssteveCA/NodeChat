@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import multiparty from "multiparty";
+import { SetProfileImageFolder, SetProfileImageFolderInterface } from "../../../../classes/account/upload/setprofileimagefolder";
 import { Paths } from "../../../../namespaces/paths";
 
 export async function upload_profile_image(req: Request, res: Response){
     let tokenKey: string = "";
+    let imagePath: string = "";
     let form = new multiparty.Form({
         autoFiles: true,
         uploadDir: Paths.STATIC_UPLOAD
@@ -15,9 +17,19 @@ export async function upload_profile_image(req: Request, res: Response){
 
     form.on('close',()=>{
         console.log("Upload profile image close");
-        return res.status(200).json({
-            done: true, msg: "Upload completato"
+        const spifData: SetProfileImageFolderInterface = {
+            image_path: imagePath, token_key: tokenKey
+        };
+        const spif: SetProfileImageFolder = new SetProfileImageFolder(spifData);
+        spif.setFolder().then(result => {
+            if(result == true){
+                return res.status(200).json({ done: true, msg: "Upload completato" });
+            }
+            else{
+                
+            }
         });
+        
     });
 
     form.on('error',()=>{
@@ -56,5 +68,6 @@ export async function upload_profile_image(req: Request, res: Response){
         console.log(fields);
         tokenKey = fields["tokenKey"][0];
         console.log(files);
+        imagePath = files["image"]["path"];
     });
 }

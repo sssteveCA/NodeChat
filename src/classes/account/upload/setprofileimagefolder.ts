@@ -19,6 +19,14 @@ export class SetProfileImageFolder{
     private _errno:number = 0;
     private _error:string|null = null;
 
+    private static ERR_ACCOUNT_ID:number = 1;
+    private static ERR_ACCOUNT_USERNAME:number = 2;
+    private static ERR_MOVE_FILE:number = 3;
+
+    private static ERR_ACCOUNT_ID_MSG:string = "L'id dell'account non è stato trovato";
+    private static ERR_ACCOUNT_USERNAME_MSG:string = "Lo username dell'account non è stato trovato";
+    private static ERR_MOVE_FILE_MSG:string = "Impossibile spostare l'immagine";
+
     constructor(data: SetProfileImageFolderInterface){
         this._image_path = data.image_path;
         this._token_key = data.token_key;
@@ -29,6 +37,15 @@ export class SetProfileImageFolder{
     get errno(){ return this._errno; }
     get error(){
         switch(this._errno){
+            case SetProfileImageFolder.ERR_ACCOUNT_ID:
+                this._error = SetProfileImageFolder.ERR_ACCOUNT_ID_MSG;
+                break;
+            case SetProfileImageFolder.ERR_ACCOUNT_USERNAME:
+                this._error = SetProfileImageFolder.ERR_ACCOUNT_USERNAME_MSG;
+                break;
+            case SetProfileImageFolder.ERR_MOVE_FILE:
+                this._error = SetProfileImageFolder.ERR_MOVE_FILE_MSG;
+                break;
             default:
                 this._error = null;
                 break;
@@ -37,15 +54,18 @@ export class SetProfileImageFolder{
     }
 
     public async setFolder(): Promise<boolean>{
+        this._errno = 0;
         let accountId: string|null = await this.getAccountId();
         if(accountId != null){
             let accountUsername: string|null = await this.getAccountUsername(accountId);
             if(accountUsername != null){
                 let moved: boolean = await this.moveFile(this._image_path,accountUsername);
                 if(moved) return true;
+                else this._errno = SetProfileImageFolder.ERR_MOVE_FILE;
             }//if(accountUsername != null){
-            else return false;
+            else{ this._errno = SetProfileImageFolder.ERR_ACCOUNT_USERNAME; return false;} 
         }//if(accountId != null){
+        else {this._errno = SetProfileImageFolder.ERR_ACCOUNT_ID; }
         return false;
     }
 
