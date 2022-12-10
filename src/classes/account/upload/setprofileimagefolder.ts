@@ -113,13 +113,16 @@ export class SetProfileImageFolder{
      */
     private async moveFile(src: string,username: string): Promise<object>{
         let response: object = { dest: null, done: false };
-        let dest: string = `${Paths.ROOTPATH}public/${Paths.STATIC_IMG_PROFILES}/${username}/profile.jpg`;
-        await fs.rename(src,dest)
-            .then(res => { response = {dest: dest, done: false};})
-            .catch(err => {
-                 response["done"] = false;
-                 console.log(err); 
-            });
+        let destDir: string = `${Paths.ROOTPATH}public${Paths.STATIC_IMG_PROFILES}/${username}`;
+        let dest: string = `${destDir}/profile.jpg`;
+        await fs.mkdir(destDir,{ recursive: true}).then(res => {
+            return fs.rename(src,dest);
+        }).then(res => {
+            response = {dest: dest, done: true};
+        }).catch(err => {
+            response["done"] = false;
+            console.log(err); 
+        });
         return response;
     }
 }
