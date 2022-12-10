@@ -1,6 +1,6 @@
-import { ConfirmDialog, ConfirmDialogInterface } from "../../../classes/dialogs/confirmdialog";
-import { SectionEvents, SectionEventsInterface } from "../../../classes/template/profile/section_events";
-import { PersonalInformationItemsType } from "../../../types/personalinformationitemstype";
+import { ConfirmDialog, ConfirmDialogInterface } from "../../../classes/dialogs/confirmdialog.js";
+import { SectionEvents, SectionEventsInterface } from "../../../classes/template/profile/section_events.js";
+import { PersonalInformationItemsType } from "../../../types/personalinformationitemstype.js";
 
 export function setInformationSectionEvents(): void{
     let piit: PersonalInformationItemsType = {

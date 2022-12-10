@@ -5,13 +5,15 @@ import { MongoDbModelManagerInterface } from '../../../classes/database/mongodbm
 import { NotAuthenticatedError } from '../../../classes/errors/notauthenticatederror';
 import { Messages } from '../../../namespaces/messages';
 import { Schemas } from '../../../namespaces/schemas';
+import multiparty from "multiparty";
 
 /**
  * /**
  * Pass to the next hop if user is logged
  */
 export const loggedApi = async(req: Request, res: Response, next: NextFunction) => {
-    let token_key: string|null = req.body['token_key'] ? req.body['token_key'] : null;
+    let token_key: string = req.body['token_key'] ? req.body['token_key'] : null;
+    //console.log("middlewares_api loggedApi token_key => "+token_key);
     try{
         if(token_key){
             let mmmi_data: MongoDbModelManagerInterface = {

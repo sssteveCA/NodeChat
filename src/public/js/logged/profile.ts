@@ -16,7 +16,7 @@ $(()=>{
     //console.log(cur_data);
     let cur: CurrentUserRequest = new CurrentUserRequest(cur_data);
     cur.currentUser().then(obj => {
-        //console.log(obj);
+        console.log(obj);
         if(obj["done"] == true){
             account = setAccount(obj["account"]);
             addImages(account["images"]["profileImage"], account["images"]["coverImage"]);

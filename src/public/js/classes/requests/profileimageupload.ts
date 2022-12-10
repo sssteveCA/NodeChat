@@ -17,7 +17,7 @@ export class ProfileImageUpload{
 
     private static ERR_IMAGE_UPLOAD_MSG:string = "Errore durante il caricamento dell'immagine del profilo";
 
-    private static FETCH_URL: string = "api/profile/upload_profile_image";
+    private static FETCH_URL: string = "../../api/profile/upload_profile_image";
 
     constructor(data: ProfileImageUploadInterface){
         this._token_key = data.token_key;
@@ -44,6 +44,7 @@ export class ProfileImageUpload{
         try{
             await this.uploadImagePromise().then(res => {
                 console.log(res);
+                response = JSON.parse(res);
             }).catch(err => {
                 console.warn(err);
                 throw err;
