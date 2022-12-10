@@ -57,14 +57,14 @@ export class SetProfileImageFolder{
         this._errno = 0;
         let response: object = {dest: null, done: false};
         let accountId: string|null = await this.getAccountId();
-        console.log("SetProfileImageFolder accountId => "+accountId);
+        //console.log("SetProfileImageFolder accountId => "+accountId);
         if(accountId != null){
             let accountUsername: string|null = await this.getAccountUsername(accountId);
-            console.log("SetProfileImageFolder accountUsername => "+accountUsername);
+            //console.log("SetProfileImageFolder accountUsername => "+accountUsername);
             if(accountUsername != null){
                 let moved: object = await this.moveFile(this._image_path,accountUsername);
-                console.log("SetProfileImageFolder moved => ");
-                console.log(moved);
+                //console.log("SetProfileImageFolder moved => ");
+                //console.log(moved);
                 if(moved["done"] == true) 
                     response = {dest: moved["dest"], done: true};
                 else this._errno = SetProfileImageFolder.ERR_MOVE_FILE;
@@ -86,8 +86,8 @@ export class SetProfileImageFolder{
         let tokenData: TokenInterface = {
             tokenKey: this._token_key
         };
-        console.log("GetAccountId tokenData => ");
-        console.log(tokenData);
+        /* console.log ("GetAccountId tokenData => ");
+        console.log(tokenData); */
         let token: Token = new Token(mmiData,tokenData);
         await token.getToken({tokenKey: token.tokenKey}).then(res =>{ accountId = token.accountId;  });
         return accountId;

@@ -13,11 +13,11 @@ export async function upload_profile_image(req: Request, res: Response){
     });
 
     form.on('aborted',()=>{
-        console.error("Upload profile image aborted");
+        //console.error("Upload profile image aborted");
     });
 
     form.on('close',()=>{
-        console.log("Upload profile image close");
+        //console.log("Upload profile image close");
     });
 
     form.on('error',()=>{
@@ -27,45 +27,47 @@ export async function upload_profile_image(req: Request, res: Response){
     });
 
     form.on('field',(name,value)=>{
-        console.log("Upload profile image field");
+        /* console.log("Upload profile image field");
         console.log(name);
-        console.log(value);
+        console.log(value); */
     });
 
     form.on('file',(name,file)=>{
-        console.log("Upload profile image file");
+        /* console.log("Upload profile image file");
         console.log(name);
-        console.log(file);
+        console.log(file); */
     });
 
     form.on('part',(part)=>{
-        console.log("Upload profile image part");
-        console.log(part);
+        /* console.log("Upload profile image part");
+        console.log(part); */
         part.resume();
     });
 
     form.on('progress',(bytesReceived, bytesExpected)=>{
-        console.log("Upload profile image progress");
+        /* console.log("Upload profile image progress");
         console.log(bytesReceived);
-        console.log(bytesExpected);
+        console.log(bytesExpected); */
     })
 
     form.parse(req,(error,fields,files)=>{
-        console.log("Upload profile image parse");
+        //console.log("Upload profile image parse");
         console.error(error);
-        console.log(fields);
+        //console.log(fields);
         tokenKey = fields["tokenKey"][0];
-        console.log(files);
+        //console.log(files);
         imagePath = files["image"][0]["path"];
         const spifData: SetProfileImageFolderInterface = {
             image_path: imagePath, token_key: tokenKey
         };
-        console.log("spifData");
-        console.log(spifData);
+        /* console.log("spifData");
+        console.log(spifData); */
         const spif: SetProfileImageFolder = new SetProfileImageFolder(spifData);
         spif.setFolder().then(result => {
             if(result["done"] == true){
-                return res.status(200).json({ dest: result["dest"], done: true, msg: "Upload completato" });
+                const publicIndex: number = result["dest"].indexOf("/img/profiles/");
+                const relUrl: string = "../.."+result["dest"].substr(publicIndex);
+                return res.status(200).json({ dest: relUrl, done: true, msg: "Upload completato" });
             }
             else{
                 return res.status(500).json({done: false, msg: Messages.ERROR_PROFILE_IMAGE });

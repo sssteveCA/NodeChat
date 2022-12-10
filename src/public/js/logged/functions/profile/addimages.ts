@@ -18,11 +18,11 @@ export function addImages(profile: string, cover: string): void{
             token_key:  $('input[name=token_key]').val() as string, 
             image: profile_image_input[0].files?.[0] as File
         }
-        console.log(piuData);
+        //console.log(piuData);
         let piu: ProfileImageUpload = new ProfileImageUpload(piuData);
         piu.uploadImage().then(obj => {
-            console.log("piu uploadImage => ");
-            console.log(obj);
+            //console.log("piu uploadImage => ");
+            //console.log(obj);
             let cdData: MessageDialogInterface = { title: "Immagine del profilo", message: obj["msg"] };
             let cd: MessageDialog = new MessageDialog(cdData);
             cd.btOk.on('click',()=>{
