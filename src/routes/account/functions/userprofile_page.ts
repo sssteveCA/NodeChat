@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { Account, AccountInterface } from "../../classes/database/models/account";
-import { MongoDbModelManagerInterface } from "../../classes/database/mongodbmodelmanager";
-import { Constants } from "../../namespaces/constants";
-import { Paths } from "../../namespaces/paths";
-import { Schemas } from "../../namespaces/schemas";
+import { Account, AccountInterface } from "../../../classes/database/models/account";
+import { MongoDbModelManagerInterface } from "../../../classes/database/mongodbmodelmanager";
+import { Constants } from "../../../namespaces/constants";
+import { Paths } from "../../../namespaces/paths";
+import { Schemas } from "../../../namespaces/schemas";
 
 export function userprofile_page(req: Request, res: Response){
     let username_inserted: string = req.params.username;

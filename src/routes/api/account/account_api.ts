@@ -10,9 +10,9 @@ import { Messages } from '../../../namespaces/messages';
 import { Paths } from '../../../namespaces/paths';
 import { Schemas } from '../../../namespaces/schemas';
 import { loggedApi } from '../middlewares/middlewares_api';
-import { current_user_api } from './current_user_api';
-import { search_api } from './search_api';
-import { user_info_api } from './user_info_api';
+import { current_user_api } from './functions/current_user_api';
+import { search_api } from './functions/search_api';
+import { user_info_api } from './functions/user_info_api';
 
 export const account_routes_api = express.Router();
 

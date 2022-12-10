@@ -11,6 +11,7 @@ import { Regexs } from '../../namespaces/regex';
 import { guest } from '../middlewares/middlewares';
 import { login_validator, subscribe_validator, verify_credentials } from './authentication_m';
 import session from 'express-session';
+import { verify_code } from './functions/verify_code';
 
 export const authentication_routes = express.Router();
 
@@ -64,23 +65,7 @@ authentication_routes.get('/verify', guest, (req,res)=>{
     });
 });
 
-authentication_routes.get('/verify/:code', guest, async(req,res)=>{
-    let code = req.params.code;
-    let status_code: number = 200;
-    let verify_response: string = "";
-    let sb_data: SubscribeInterface = {
-        activation_code: code
-    };
-    let sb: Subscribe = new Subscribe(sb_data);
-    await sb.activateAccount().then(obj => {
-        verify_response = obj['msg'];
-        status_code = obj['code']; 
-    });
-    return res.status(status_code).render('code_verify',{
-        bootstrap_css: '../'+Paths.BOOTSTRAP_CSS, bootstrap_js: '../'+Paths.BOOTSTRAP_JS,
-        container: Constants.CONTAINER, jquery_js: '../'+Paths.JQUERY_JS,verify_response: verify_response
-    });
-});
+authentication_routes.get('/verify/:code', guest, verify_code);
 
 authentication_routes.post('/login', [login_validator, verify_credentials], (req,res)=>{
     let username: string = req.body.username;
