@@ -37,6 +37,25 @@ export class ProfileImageUpload{
         return this._error;
     }
 
+    public async uploadImage(): Promise<object>{
+        this._errno = 0;
+        let response: object = {};
+        try{
+            await this.uploadImagePromise().then(res => {
+
+            }).catch(err => {
+                console.warn(err);
+                throw err;
+            });
+        }catch(e){
+            this._errno = ProfileImageUpload.ERR_IMAGE_UPLOAD;
+            response = {
+                done: false, msg: this.error
+            };
+        }
+        return response;
+    }
+
     private async uploadImagePromise(): Promise<string>{
         return await new Promise<string>((resolve,reject)=>{
             let url: string = ProfileImageUpload.FETCH_URL;
