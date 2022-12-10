@@ -53,20 +53,24 @@ export class SetProfileImageFolder{
         return this._error;
     }
 
-    public async setFolder(): Promise<boolean>{
+    public async setFolder(): Promise<object>{
         this._errno = 0;
+        let response: object = {dest: null, done: false};
         let accountId: string|null = await this.getAccountId();
         if(accountId != null){
             let accountUsername: string|null = await this.getAccountUsername(accountId);
             if(accountUsername != null){
-                let moved: boolean = await this.moveFile(this._image_path,accountUsername);
-                if(moved) return true;
+                let moved: object = await this.moveFile(this._image_path,accountUsername);
+                if(moved["done"] == true) 
+                    response = {dest: moved["dest"], done: true};
                 else this._errno = SetProfileImageFolder.ERR_MOVE_FILE;
             }//if(accountUsername != null){
-            else{ this._errno = SetProfileImageFolder.ERR_ACCOUNT_USERNAME; return false;} 
+            else 
+                this._errno = SetProfileImageFolder.ERR_ACCOUNT_USERNAME; 
         }//if(accountId != null){
-        else {this._errno = SetProfileImageFolder.ERR_ACCOUNT_ID; }
-        return false;
+        else 
+            this._errno = SetProfileImageFolder.ERR_ACCOUNT_ID; 
+        return response;
     }
 
     private async getAccountId(): Promise<string|null>{
@@ -101,12 +105,15 @@ export class SetProfileImageFolder{
      * @param username the account username that has uploaded the image
      * @returns true if the move operation was successfully done, false otherwise
      */
-    private async moveFile(src: string,username: string): Promise<boolean>{
-        let response: boolean = false;
+    private async moveFile(src: string,username: string): Promise<object>{
+        let response: object = { dest: null, done: false };
         let dest: string = `../../${Paths.STATIC_IMG_PROFILES}/${username}/profile.jpg`;
         await fs.rename(src,dest)
-            .then(res => { response = true})
-            .catch(err => { console.log(err); });
+            .then(res => { response = {dest: dest, done: false};})
+            .catch(err => {
+                 response["done"] = false;
+                 console.log(err); 
+            });
         return response;
     }
 }

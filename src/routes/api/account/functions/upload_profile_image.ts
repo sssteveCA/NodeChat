@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import multiparty from "multiparty";
 import { SetProfileImageFolder, SetProfileImageFolderInterface } from "../../../../classes/account/upload/setprofileimagefolder";
 import { Paths } from "../../../../namespaces/paths";
+import { Messages } from "../../../../namespaces/messages";
 
 export async function upload_profile_image(req: Request, res: Response){
     let tokenKey: string = "";
@@ -20,13 +21,15 @@ export async function upload_profile_image(req: Request, res: Response){
         const spifData: SetProfileImageFolderInterface = {
             image_path: imagePath, token_key: tokenKey
         };
+        console.log("spifData");
+        console.log(spifData);
         const spif: SetProfileImageFolder = new SetProfileImageFolder(spifData);
         spif.setFolder().then(result => {
-            if(result == true){
-                return res.status(200).json({ done: true, msg: "Upload completato" });
+            if(result["done"] == true){
+                return res.status(200).json({ dest: result["dest"], done: true, msg: "Upload completato" });
             }
             else{
-                
+                return res.status(500).json({done: false, msg: Messages.ERROR_PROFILE_IMAGE });
             }
         });
         
@@ -34,7 +37,7 @@ export async function upload_profile_image(req: Request, res: Response){
 
     form.on('error',()=>{
         return res.status(400).json({
-            done: false, msg: "Errore durante il caricamento dell'immagine del profilo"
+            done: false, msg: Messages.ERROR_PROFILE_IMAGE
         });
     });
 
