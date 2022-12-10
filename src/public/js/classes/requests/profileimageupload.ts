@@ -1,6 +1,7 @@
 
 export interface ProfileImageUploadInterface{
     token_key: string;
+    image: File;
 }
 
 /**
@@ -8,6 +9,7 @@ export interface ProfileImageUploadInterface{
  */
 export class ProfileImageUpload{
     private _token_key: string;
+    private _image: File;
     private _errno:number = 0;
     private _error:string|null = null;
 
@@ -21,6 +23,7 @@ export class ProfileImageUpload{
         this._token_key = data.token_key;
     }
 
+    get image(){return this._image;}
     get errno(){return this._errno; }
     get error(){
         switch(this._errno){
@@ -32,5 +35,21 @@ export class ProfileImageUpload{
                 break;
         }
         return this._error;
+    }
+
+    private async uploadImagePromise(): Promise<string>{
+        return await new Promise<string>((resolve,reject)=>{
+            let url: string = ProfileImageUpload.FETCH_URL;
+            let formData = new FormData();
+            formData.append('tokenKey',this._token_key);
+            formData.append('image',this._image);
+            fetch(url,{
+                method: 'POST', body: formData
+            }).then(res => {
+                resolve(res.text());
+            }).catch(err => {
+                reject(err);
+            })
+        });
     }
 }
