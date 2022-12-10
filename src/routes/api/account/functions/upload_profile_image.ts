@@ -18,21 +18,6 @@ export async function upload_profile_image(req: Request, res: Response){
 
     form.on('close',()=>{
         console.log("Upload profile image close");
-        const spifData: SetProfileImageFolderInterface = {
-            image_path: imagePath, token_key: tokenKey
-        };
-        console.log("spifData");
-        console.log(spifData);
-        const spif: SetProfileImageFolder = new SetProfileImageFolder(spifData);
-        spif.setFolder().then(result => {
-            if(result["done"] == true){
-                return res.status(200).json({ dest: result["dest"], done: true, msg: "Upload completato" });
-            }
-            else{
-                return res.status(500).json({done: false, msg: Messages.ERROR_PROFILE_IMAGE });
-            }
-        });
-        
     });
 
     form.on('error',()=>{
@@ -71,6 +56,20 @@ export async function upload_profile_image(req: Request, res: Response){
         console.log(fields);
         tokenKey = fields["tokenKey"][0];
         console.log(files);
-        imagePath = files["image"]["path"];
+        imagePath = files["image"][0]["path"];
+        const spifData: SetProfileImageFolderInterface = {
+            image_path: imagePath, token_key: tokenKey
+        };
+        console.log("spifData");
+        console.log(spifData);
+        const spif: SetProfileImageFolder = new SetProfileImageFolder(spifData);
+        spif.setFolder().then(result => {
+            if(result["done"] == true){
+                return res.status(200).json({ dest: result["dest"], done: true, msg: "Upload completato" });
+            }
+            else{
+                return res.status(500).json({done: false, msg: Messages.ERROR_PROFILE_IMAGE });
+            }
+        });
     });
 }

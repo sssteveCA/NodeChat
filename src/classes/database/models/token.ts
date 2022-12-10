@@ -77,6 +77,8 @@ export class Token extends MongoDbModelManager{
      * @returns 
      */
      public async getToken(filter: object): Promise<object>{
+        console.log("getToken filter => ");
+        console.log(filter);
         this._errno = 0;
         let response: object = {};
         await super.connect().then(conn => {
@@ -86,7 +88,9 @@ export class Token extends MongoDbModelManager{
             else{
                 throw new DatabaseConnectionError(this.error as string);
             }       
-        }).then(res => {   
+        }).then(res => { 
+            console.log("Token get response => ");  
+            console.log(res);
             response = {
                 done: true,
                 result: res
@@ -242,9 +246,9 @@ export class Token extends MongoDbModelManager{
     }
 
     private setValues(data: TokenInterface){
-        if(data.accountId && data.tokenKey){
-            this._accountId = data.accountId;
-            this._tokenKey = data.tokenKey;
+        if(data.accountId) this._accountId = data.accountId;
+        if(data.tokenKey)this._tokenKey = data.tokenKey;
+        if(this._accountId && this._tokenKey){
             let today: Date = new Date();
             this._creationDate = this.dateString(today);
             /* console.log("Token setValues creationDate => ");
@@ -254,6 +258,6 @@ export class Token extends MongoDbModelManager{
             this._expireDate = this.dateString(expireTime);
             /* console.log("Token setValues expireDate => ");
             console.log(this._expireDate); */
-        }//if(data.accountId && data.tokenKey){
+        }
     }
 }
