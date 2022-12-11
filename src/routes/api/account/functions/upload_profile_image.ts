@@ -63,7 +63,7 @@ export async function upload_profile_image(req: Request, res: Response){
         /* console.log("spifData");
         console.log(spifData); */
         const spif: SetProfileImageFolder = new SetProfileImageFolder(spifData);
-        spif.setFolder().then(result => {
+        spif.setFolder(req.protocol,req.hostname).then(result => {
             if(result["done"] == true){
                 const publicIndex: number = result["dest"].indexOf("/img/profiles/");
                 const relUrl: string = "../.."+result["dest"].substr(publicIndex);

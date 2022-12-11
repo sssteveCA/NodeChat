@@ -53,7 +53,13 @@ export class SetProfileImageFolder{
         return this._error;
     }
 
-    public async setFolder(): Promise<object>{
+    /**
+     * Set the path of the new uploaded image
+     * @param protocol the current server protocol
+     * @param host the current server host
+     * @returns 
+     */
+    public async setFolder(protocol: string, host: string): Promise<object>{
         this._errno = 0;
         let response: object = {dest: null, done: false};
         let accountId: string|null = await this.getAccountId();
@@ -122,6 +128,32 @@ export class SetProfileImageFolder{
         }).catch(err => {
             response["done"] = false;
             console.log(err); 
+        });
+        return response;
+    }
+
+    /**
+     * Update the user profile image property in database
+     * @param baseUrl the baseUrl of the current server
+     * @param dest the filesystem path of the user profile image
+     * @param username the unique username property of the document to update
+     * @returns an object that contains the url of the uploaded profile image, or false if error
+     */
+    private async updateProfileImageProperty(baseUrl: string, dest: string, username: string): Promise<object>{
+        let response = { absUrl: "", done: false };
+        const publicIndex: number = dest.indexOf("/img/profiles/");
+        const absoluteUrl: string = baseUrl+dest.substring(publicIndex);
+        console.log("absUrl => "+absoluteUrl);
+        let mmiData: MongoDbModelManagerInterface = {
+            collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
+            schema: Schemas.ACCOUNTS
+        };
+        let accountData: AccountInterface = { username: username };
+        let account: Account = new Account(mmiData,accountData);
+        await account.updateAccount({username: account.username},{"images.profileImage": absoluteUrl}).then(res => {
+            console.log("profile image update => ");
+            console.log(res);
+            if(res["done"] == true) response = {absUrl: absoluteUrl, done: true};
         });
         return response;
     }
