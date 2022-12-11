@@ -77,8 +77,8 @@ export class Token extends MongoDbModelManager{
      * @returns 
      */
      public async getToken(filter: object): Promise<object>{
-        console.log("getToken filter => ");
-        console.log(filter);
+        /* console.log("getToken filter => ");
+        console.log(filter); */
         this._errno = 0;
         let response: object = {};
         await super.connect().then(conn => {
@@ -89,8 +89,8 @@ export class Token extends MongoDbModelManager{
                 throw new DatabaseConnectionError(this.error as string);
             }       
         }).then(res => { 
-            console.log("Token get response => ");  
-            console.log(res);
+            /* console.log("Token get response => ");  
+            console.log(res); */
             response = {
                 done: true,
                 result: res

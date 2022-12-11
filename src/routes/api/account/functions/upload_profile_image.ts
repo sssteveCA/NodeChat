@@ -63,11 +63,9 @@ export async function upload_profile_image(req: Request, res: Response){
         /* console.log("spifData");
         console.log(spifData); */
         const spif: SetProfileImageFolder = new SetProfileImageFolder(spifData);
-        spif.setFolder(req.protocol,req.hostname).then(result => {
+        spif.setFolder(req.protocol,req.get('host') as string).then(result => {
             if(result["done"] == true){
-                const publicIndex: number = result["dest"].indexOf("/img/profiles/");
-                const relUrl: string = "../.."+result["dest"].substr(publicIndex);
-                return res.status(200).json({ dest: relUrl, done: true, msg: "Upload completato" });
+                return res.status(200).json({ dest: result["dest"], done: true, msg: "Upload completato" });
             }
             else{
                 return res.status(500).json({done: false, msg: Messages.ERROR_PROFILE_IMAGE });

@@ -22,10 +22,12 @@ export class SetProfileImageFolder{
     private static ERR_ACCOUNT_ID:number = 1;
     private static ERR_ACCOUNT_USERNAME:number = 2;
     private static ERR_MOVE_FILE:number = 3;
+    private static ERR_UPDATE_PROPERTY:number = 4;
 
     private static ERR_ACCOUNT_ID_MSG:string = "L'id dell'account non è stato trovato";
     private static ERR_ACCOUNT_USERNAME_MSG:string = "Lo username dell'account non è stato trovato";
     private static ERR_MOVE_FILE_MSG:string = "Impossibile spostare l'immagine";
+    private static ERR_UPDATE_PROPERTY_MSG:string = "Errore durante l'aggiornamento del database";
 
     constructor(data: SetProfileImageFolderInterface){
         this._image_path = data.image_path;
@@ -45,6 +47,9 @@ export class SetProfileImageFolder{
                 break;
             case SetProfileImageFolder.ERR_MOVE_FILE:
                 this._error = SetProfileImageFolder.ERR_MOVE_FILE_MSG;
+                break;
+            case SetProfileImageFolder.ERR_UPDATE_PROPERTY:
+                this._error = SetProfileImageFolder.ERR_UPDATE_PROPERTY_MSG;
                 break;
             default:
                 this._error = null;
@@ -71,8 +76,12 @@ export class SetProfileImageFolder{
                 let moved: object = await this.moveFile(this._image_path,accountUsername);
                 //console.log("SetProfileImageFolder moved => ");
                 //console.log(moved);
-                if(moved["done"] == true) 
-                    response = {dest: moved["dest"], done: true};
+                if(moved["done"] == true){
+                    let baseUrl: string = `${protocol}://${host}`;
+                    let updateProperty: object = await this.updateProfileImageProperty(baseUrl, moved["dest"],accountUsername);
+                    if(updateProperty["done"] == true)
+                        response = {dest: updateProperty["absUrl"], done: true};  
+                }  
                 else this._errno = SetProfileImageFolder.ERR_MOVE_FILE;
             }//if(accountUsername != null){
             else 
@@ -141,9 +150,9 @@ export class SetProfileImageFolder{
      */
     private async updateProfileImageProperty(baseUrl: string, dest: string, username: string): Promise<object>{
         let response = { absUrl: "", done: false };
-        const publicIndex: number = dest.indexOf("/img/profiles/");
-        const absoluteUrl: string = baseUrl+dest.substring(publicIndex);
-        console.log("absUrl => "+absoluteUrl);
+        const imgIndex: number = dest.indexOf("/img/profiles/");
+        const absoluteUrl: string = baseUrl+dest.substring(imgIndex);
+        //console.log("absUrl => "+absoluteUrl);
         let mmiData: MongoDbModelManagerInterface = {
             collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
             schema: Schemas.ACCOUNTS
@@ -151,8 +160,8 @@ export class SetProfileImageFolder{
         let accountData: AccountInterface = { username: username };
         let account: Account = new Account(mmiData,accountData);
         await account.updateAccount({username: account.username},{"images.profileImage": absoluteUrl}).then(res => {
-            console.log("profile image update => ");
-            console.log(res);
+            /* console.log("profile image update => ");
+            console.log(res); */
             if(res["done"] == true) response = {absUrl: absoluteUrl, done: true};
         });
         return response;
