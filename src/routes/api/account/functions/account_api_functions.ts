@@ -8,9 +8,11 @@ export function setUsernameObject(obj: object): object{
         images: obj["result"]["images"], otherPersonals: obj["result"]["otherPersonals"],
         videos: obj["result"]["videos"],
     };
-    if(!usernameObject["images"] || !usernameObject["images"]["profileImage"] || usernameObject["images"]["profileImage"] == '' || !usernameObject["images"]["coverImage"] || usernameObject["images"]["coverImage"] == ''){
-        usernameObject["images"]["profileImage"] = "../.."+Paths.STATIC_IMG_DEFAULT+"/profile_image.jpg";
-        usernameObject["images"]["coverImage"] = "../.."+Paths.STATIC_IMG_DEFAULT+"/cover_image.jpg";
+    if(!usernameObject["images"] || !usernameObject["images"]["profileImage"] || usernameObject["images"]["profileImage"] == ""){
+       usernameObject["images"]["profileImage"] = "../.."+Paths.STATIC_IMG_DEFAULT+"/profile_image.jpg";
     }
+    if(!usernameObject["images"] || !usernameObject["images"]["coverImage"] || usernameObject["images"]["coverImage"] == ''){
+        usernameObject["images"]["coverImage"] = "../.."+Paths.STATIC_IMG_DEFAULT+"/cover_image.jpg";
+    } 
     return usernameObject;
 }
