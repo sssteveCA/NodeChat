@@ -25,6 +25,6 @@ account_routes_api.post('/user_info', loggedApi, user_info_api);
 
 account_routes_api.post('/profile/search', loggedApi, search_api);
 
-account_routes_api.post('/profile/upload_profile_image',upload_cover_image);
+account_routes_api.post('/profile/upload_cover_image',upload_cover_image);
 
 account_routes_api.post('/profile/upload_profile_image',upload_profile_image);
