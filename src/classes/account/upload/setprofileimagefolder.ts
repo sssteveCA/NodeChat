@@ -64,7 +64,7 @@ export class SetProfileImageFolder{
      * @param host the current server host
      * @returns 
      */
-    public async setFolder(protocol: string, host: string): Promise<object>{
+    public async setFolder(): Promise<object>{
         this._errno = 0;
         let response: object = {dest: null, done: false};
         let accountId: string|null = await this.getAccountId();
@@ -77,8 +77,7 @@ export class SetProfileImageFolder{
                 //console.log("SetProfileImageFolder moved => ");
                 //console.log(moved);
                 if(moved["done"] == true){
-                    let baseUrl: string = `${protocol}://${host}`;
-                    let updateProperty: object = await this.updateProfileImageProperty(baseUrl, moved["dest"],accountUsername);
+                    let updateProperty: object = await this.updateProfileImageProperty(moved["dest"],accountUsername);
                     if(updateProperty["done"] == true)
                         response = {dest: updateProperty["absUrl"], done: true};  
                 }  
@@ -148,10 +147,10 @@ export class SetProfileImageFolder{
      * @param username the unique username property of the document to update
      * @returns an object that contains the url of the uploaded profile image, or false if error
      */
-    private async updateProfileImageProperty(baseUrl: string, dest: string, username: string): Promise<object>{
+    private async updateProfileImageProperty(dest: string, username: string): Promise<object>{
         let response = { absUrl: "", done: false };
         const imgIndex: number = dest.indexOf("/img/profiles/");
-        const absoluteUrl: string = baseUrl+dest.substring(imgIndex);
+        const absoluteUrl: string = dest.substring(imgIndex);
         //console.log("absUrl => "+absoluteUrl);
         let mmiData: MongoDbModelManagerInterface = {
             collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,

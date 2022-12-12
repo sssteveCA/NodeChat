@@ -29,7 +29,8 @@ export function current_user_api(req: Request, res: Response){
     }).then(obj => {
         //console.log(obj);
         if(obj["done"] == true){
-            let account: object = setUsernameObject(obj);
+            let baseUrl: string = `${req.protocol}://${req.get('host')}`;
+            let account: object = setUsernameObject(obj,baseUrl);
             /* console.log("account_api current_user account => ");
             console.log(account); */
             return res.status(200).json({
