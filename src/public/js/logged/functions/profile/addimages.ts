@@ -12,7 +12,9 @@ export function addImages(profile: string, cover: string): void{
 <button type="button" id="cover-button" class="btn btn-primary bt-lg">MODIFICA L'IMMAGINE DI COPERTINA</button>`
 );
     let profile_button: JQuery<HTMLButtonElement> = $('#profile-button');
+    let cover_button: JQuery<HTMLInputElement> = $('#cover-button');
     let profile_image: JQuery<HTMLImageElement> = $('#profile-image');
+    let cover_image_input: JQuery<HTMLInputElement> = $('#profile-image-input');
     let profile_image_input: JQuery<HTMLInputElement> = $('#profile-image-input');
     profile_button.on('click',()=>{
         profile_image_input.trigger('click');  
@@ -38,5 +40,9 @@ export function addImages(profile: string, cover: string): void{
             }
         });
     });
+    cover_button.on('click',()=>{
+        cover_image_input.trigger('click');
+    })
+
 
 }
