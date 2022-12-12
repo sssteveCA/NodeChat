@@ -5,18 +5,18 @@ import { ProfileImageUploadRequest, ProfileImageUploadRequestInterface } from ".
 export function addImages(profile: string, cover: string): void{
     $('.profile-image').html(`
 <img id="profile-image" src="${profile}" alt="Immagine del profilo" title="Immagine del profilo">
-<input type="file" id="profile-image-input" name="profile_image">
+<input type="file" id="profile-image-input" class="d-none" name="profile_image">
 <button type="button" id="profile-button" class="btn btn-success bi bi-pen"></button>`);
     $('.cover-image').html(`
 <img id="cover-image" src="${cover}" alt="Immagine di copertina" title="Immagine di copertina">
-<input type="file" id="cover-image-input" name="cover_image">
+<input type="file" id="cover-image-input" class="d-none" name="cover_image">
 <button type="button" id="cover-button" class="btn btn-primary bt-lg">MODIFICA L'IMMAGINE DI COPERTINA</button>`
 );
     let profile_button: JQuery<HTMLButtonElement> = $('#profile-button');
     let cover_button: JQuery<HTMLInputElement> = $('#cover-button');
     let cover_image: JQuery<HTMLInputElement> = $('#cover-image');
     let profile_image: JQuery<HTMLImageElement> = $('#profile-image');
-    let cover_image_input: JQuery<HTMLInputElement> = $('#profile-image-input');
+    let cover_image_input: JQuery<HTMLInputElement> = $('#cover-image-input');
     let profile_image_input: JQuery<HTMLInputElement> = $('#profile-image-input');
     profile_button.on('click',()=>{
         profile_image_input.trigger('click');  
@@ -48,7 +48,7 @@ export function addImages(profile: string, cover: string): void{
     cover_image_input.on('change',()=>{
         const ciurData: CoverImageUploadRequestInterface = {
             token_key: $('input[name=token_key]').val() as string,
-            image: profile_image_input[0].files?.[0] as File
+            image: cover_image_input[0].files?.[0] as File
         }
         let ciur: CoverImageUploadRequest = new CoverImageUploadRequest(ciurData);
         ciur.uploadImage().then(obj =>{
