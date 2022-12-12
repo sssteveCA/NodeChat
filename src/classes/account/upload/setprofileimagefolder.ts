@@ -60,9 +60,6 @@ export class SetProfileImageFolder{
 
     /**
      * Set the path of the new uploaded image
-     * @param protocol the current server protocol
-     * @param host the current server host
-     * @returns 
      */
     public async setFolder(): Promise<object>{
         this._errno = 0;

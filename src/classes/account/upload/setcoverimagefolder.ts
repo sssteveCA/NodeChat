@@ -58,6 +58,33 @@ export class SetCoverImageFolder{
         return this._error;
     }
 
+    /**
+     * Set the path of the new uploaded image
+     */
+    public async setFolder(): Promise<object>{
+        this._errno = 0;
+        let response: object = {dest: null, done: false};
+        let accountId: string|null = await this.getAccountId();
+        if(accountId != null){
+            let accountUsername: string|null = await this.getAccountUsername(accountId);
+            if(accountUsername != null){
+                let moved: object = await this.moveFile(this._image_path,accountUsername);
+                if(moved["done"] == true){
+                    let updateProperty: object = await this.updateCoverImageProperty(moved["dest"],accountUsername);
+                    if(updateProperty["done"] == true)
+                        response = {dest: updateProperty["absUrl"], done: true};
+                    else this._errno = SetCoverImageFolder.ERR_MOVE_FILE;  
+                }//if(moved["done"] == true){
+                else this._errno = SetCoverImageFolder.ERR_MOVE_FILE;
+            }//if(accountUsername != null){
+            else 
+                this._errno = SetCoverImageFolder.ERR_ACCOUNT_USERNAME; 
+        }//if(accountId != null){
+        else 
+            this._errno = SetCoverImageFolder.ERR_ACCOUNT_ID; 
+        return response;
+    }
+
     private async getAccountId(): Promise<string|null>{
         let accountId: string|null = null;
         let mmiData: MongoDbModelManagerInterface = {
