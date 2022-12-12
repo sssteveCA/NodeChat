@@ -15,6 +15,7 @@ import { search_api } from './functions/search_api';
 import { user_info_api } from './functions/user_info_api';
 import multipart from "multiparty";
 import { upload_profile_image } from './functions/upload_profile_image';
+import { upload_cover_image } from './functions/upload_cover_image';
 
 export const account_routes_api = express.Router();
 
@@ -23,5 +24,7 @@ account_routes_api.post('/current_user', loggedApi, current_user_api);
 account_routes_api.post('/user_info', loggedApi, user_info_api);
 
 account_routes_api.post('/profile/search', loggedApi, search_api);
+
+account_routes_api.post('/profile/upload_profile_image',upload_cover_image);
 
 account_routes_api.post('/profile/upload_profile_image',upload_profile_image);
