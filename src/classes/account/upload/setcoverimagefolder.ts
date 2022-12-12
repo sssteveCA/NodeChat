@@ -1,3 +1,7 @@
+import { Schemas } from "../../../namespaces/schemas";
+import { Account, AccountInterface } from "../../database/models/account";
+import { Token, TokenInterface } from "../../database/models/token";
+import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager";
 
 export interface SetCoverImageFolderInterface{
     image_path: string;
@@ -50,5 +54,33 @@ export class SetCoverImageFolder{
                 break;
         }
         return this._error;
+    }
+
+    private async getAccountId(): Promise<string|null>{
+        let accountId: string|null = null;
+        let mmiData: MongoDbModelManagerInterface = {
+            collection_name: process.env.MONGODB_TOKENS_COLLECTION as string,
+            schema: Schemas.TOKENS
+        }
+        let tokenData: TokenInterface = {
+            tokenKey: this._token_key
+        };
+        /* console.log ("GetAccountId tokenData => ");
+        console.log(tokenData); */
+        let token: Token = new Token(mmiData,tokenData);
+        await token.getToken({tokenKey: token.tokenKey}).then(res => { accountId = token.accountId; });
+        return accountId;
+    }
+
+    private async getAccountUsername(accountId: string): Promise<string|null>{
+        let accountUsername: string|null = null;
+        let mmiData: MongoDbModelManagerInterface = {
+            collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
+            schema: Schemas.ACCOUNTS
+        };
+        let accountData: AccountInterface = {id: accountId };
+        let account: Account = new Account(mmiData,accountData);
+        await account.getAccount({_id: accountId}).then(res => { accountUsername = account.username; });
+        return accountUsername;
     }
 }
