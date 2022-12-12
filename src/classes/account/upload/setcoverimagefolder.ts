@@ -1,7 +1,9 @@
+import { Paths } from "../../../namespaces/paths";
 import { Schemas } from "../../../namespaces/schemas";
 import { Account, AccountInterface } from "../../database/models/account";
 import { Token, TokenInterface } from "../../database/models/token";
 import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager";
+import fs from "fs/promises";
 
 export interface SetCoverImageFolderInterface{
     image_path: string;
@@ -82,5 +84,50 @@ export class SetCoverImageFolder{
         let account: Account = new Account(mmiData,accountData);
         await account.getAccount({_id: accountId}).then(res => { accountUsername = account.username; });
         return accountUsername;
+    }
+
+    /**
+     * Move the uploaded file to the user cover image folder
+     * @param src the uploaded file path
+     * @param username the account username that has uploaded the image
+     * @returns true if the move operation was successfully done, false otherwise
+     */
+    private async moveFile(src: string, username: string): Promise<object>{
+        let response: object = { dest: null, done: false };
+        let destDir: string = `${Paths.ROOTPATH}public${Paths.STATIC_IMG_PROFILES}/${username}`;
+        let dest: string = `${destDir}/profile.jpg`;
+        await fs.mkdir(destDir,{ recursive: true}).then(res => {
+            return fs.rename(src,dest);
+        }).then(res => {
+            response = {dest: dest, done: true};
+        }).catch(err => {
+            console.log(err); 
+        });
+        return response;
+    }
+
+    /**
+     * Update the user cover image property in database
+     * @param baseUrl the baseUrl of the current server
+     * @param dest the filesystem path of the user cover image
+     * @param username the unique username property of the document to update
+     * @returns an object that contains the url of the uploaded profile image, or false if error
+     */
+    private async updateCoverImageProperty(dest: string, username: string): Promise<object>{
+        let response = { absUrl: "", done: false };
+        const imgIndex: number = dest.indexOf("/img/profiles");
+        const absoluteUrl: string = dest.substring(imgIndex);
+        //console.log("absUrl => "+absoluteUrl);
+        let mmiData: MongoDbModelManagerInterface = {
+            collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
+            schema: Schemas.ACCOUNTS
+        };
+        let accountData: AccountInterface = { username: username };
+        let account: Account = new Account(mmiData,accountData);
+        await account.updateAccount({username: account.username},{"images.coverImage": absoluteUrl}).then(res => {
+            if(res["done"] == true) 
+                response = {absUrl: absoluteUrl, done: true};
+        });
+        return response;
     }
 }
