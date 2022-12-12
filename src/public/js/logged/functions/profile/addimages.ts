@@ -1,5 +1,5 @@
 import { MessageDialog, MessageDialogInterface } from "../../../classes/dialogs/messagedialog.js";
-import { ProfileImageUpload, ProfileImageUploadInterface } from "../../../classes/requests/profileimageupload.js";
+import { ProfileImageUploadRequest, ProfileImageUploadRequestInterface } from "../../../classes/requests/profileimageuploadrequest.js";
 
 export function addImages(profile: string, cover: string): void{
     $('.profile-image').html(`
@@ -20,13 +20,13 @@ export function addImages(profile: string, cover: string): void{
         profile_image_input.trigger('click');  
     });
     profile_image_input.on('change',()=>{
-        let piuData: ProfileImageUploadInterface = {
+        let piuData: ProfileImageUploadRequestInterface = {
             token_key:  $('input[name=token_key]').val() as string, 
             image: profile_image_input[0].files?.[0] as File
         }
         //console.log(piuData);
-        let piu: ProfileImageUpload = new ProfileImageUpload(piuData);
-        piu.uploadImage().then(obj => {
+        let piur: ProfileImageUploadRequest = new ProfileImageUploadRequest(piuData);
+        piur.uploadImage().then(obj => {
             //console.log("piu uploadImage => ");
             //console.log(obj);
             let cdData: MessageDialogInterface = { title: "Immagine del profilo", message: obj["msg"] };

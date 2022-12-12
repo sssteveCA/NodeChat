@@ -1,5 +1,5 @@
 
-export interface ProfileImageUploadInterface{
+export interface ProfileImageUploadRequestInterface{
     token_key: string;
     image: File;
 }
@@ -7,7 +7,7 @@ export interface ProfileImageUploadInterface{
 /**
  * User profile image upload request
  */
-export class ProfileImageUpload{
+export class ProfileImageUploadRequest{
     private _token_key: string;
     private _image: File;
     private _errno:number = 0;
@@ -19,7 +19,7 @@ export class ProfileImageUpload{
 
     private static FETCH_URL: string = "../../api/profile/upload_profile_image";
 
-    constructor(data: ProfileImageUploadInterface){
+    constructor(data: ProfileImageUploadRequestInterface){
         this._token_key = data.token_key;
         this._image = data.image;
     }
@@ -28,8 +28,8 @@ export class ProfileImageUpload{
     get errno(){return this._errno; }
     get error(){
         switch(this._errno){
-            case ProfileImageUpload.ERR_IMAGE_UPLOAD:
-                this._error = ProfileImageUpload.ERR_IMAGE_UPLOAD_MSG;
+            case ProfileImageUploadRequest.ERR_IMAGE_UPLOAD:
+                this._error = ProfileImageUploadRequest.ERR_IMAGE_UPLOAD_MSG;
                 break;
             default:
                 this._error = null;
@@ -50,7 +50,7 @@ export class ProfileImageUpload{
                 throw err;
             });
         }catch(e){
-            this._errno = ProfileImageUpload.ERR_IMAGE_UPLOAD;
+            this._errno = ProfileImageUploadRequest.ERR_IMAGE_UPLOAD;
             response = {
                 done: false, msg: this.error
             };
@@ -60,7 +60,7 @@ export class ProfileImageUpload{
 
     private async uploadImagePromise(): Promise<string>{
         return await new Promise<string>((resolve,reject)=>{
-            let url: string = ProfileImageUpload.FETCH_URL;
+            let url: string = ProfileImageUploadRequest.FETCH_URL;
             let formData = new FormData();
             formData.append('tokenKey',this._token_key);
             formData.append('image',this._image);
