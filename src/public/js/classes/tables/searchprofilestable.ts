@@ -25,10 +25,13 @@ export class SearchProfilesTable{
      */
     private setTable(): void{
         if(this._profiles && this._profiles.length > 0){
+            console.log("SearchProfileTable profiles => ");
+            console.log(this._profiles);
             this._html_table = `
 <table class="table table-striped">
     <thead>
         <tr>
+            <th scope="col"></th>
             <th scope="col">Nome utente</tr>
             <th scope="col"></tr>
         </tr>
@@ -57,6 +60,9 @@ export class SearchProfilesTable{
     private setSingleRow(account: object): string{
         let row: string = `
 <tr>
+    <td class="profile-image">
+        <img src="${account['_images']['profileImage']}" alt="Immagine del profilo" title="Immagine del profilo">
+    </td>
     <td>${account['_username']}</td>
     <td>
         <a class="btn btn-primary" href="/profile/${account["_username"]}" role="button">VAI AL PROFILO</a>
