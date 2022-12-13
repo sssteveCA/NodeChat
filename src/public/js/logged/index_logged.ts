@@ -10,7 +10,10 @@ $(()=>{
             query: query, token_key: $('input[name=token_key]').val() as string
         };
         let spr: SearchProfilesRequest = new SearchProfilesRequest(spr_data);
+        let search_spinner: JQuery<HTMLDivElement> = $('#search-spinner');
+        search_spinner.toggleClass("invisible");
         spr.searchProfiles().then(obj => {
+            search_spinner.toggleClass("invisible");
             //console.log(obj);
             if(obj['done'] == true){
                 let profiles: [] = obj['profiles'];
