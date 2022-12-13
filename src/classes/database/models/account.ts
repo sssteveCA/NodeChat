@@ -17,7 +17,8 @@ export interface AccountInterface{
     activationCode?: string|null,
     resetCode?: string|null,
     verified?: boolean,
-    resetted?: boolean
+    resetted?: boolean,
+    images?: object
 }
 
 export class Account extends MongoDbModelManager{
@@ -288,5 +289,6 @@ export class Account extends MongoDbModelManager{
         if(data.resetCode)this._resetCode = data.resetCode;
         if(data.verified)this._verified = data.verified;
         if(data.resetted)this._resetted = data.resetted;
+        if(data.images)this._images = data.images;
     }   
 }

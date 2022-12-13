@@ -23,24 +23,22 @@ $users-div-map: (height: 600px, width: 100%, border: 1px solid black, background
     #{$main-div} table
         thead th
             border-bottom-width: 0px
-        tr td
-            display: flex
-            align-items: center
-            &:not(.profile-image)
+        tr 
+            td
                 padding: 15px
-        @for $c from 1 through $td-n
-            @if $c == 1
-                width: 75px
-                img
-                    width: 100%
-            @else if $c == 2
-                tr td:nth-child(#{$c})
-                    font-size: 18px
-                    font-weight: bold
-            @else if $c == 3
-                tr td:nth-child(#{$c})
-                    justify-content: flex-end
-
+            @for $c from 1 through $td-n
+                @if $c == 1
+                    td:nth-child(#{$c})
+                        width: 100px
+                        img
+                            width: 100%
+                @else if $c == 2
+                    td:nth-child(#{$c})
+                        font-size: 18px
+                        font-weight: bold
+                @else if $c == 3
+                    td:nth-child(#{$c})
+                        text-align: right
 @include main-background($bk-url,2)
 @include header-class()
 @include container-style($container-class)

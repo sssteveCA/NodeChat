@@ -14,7 +14,7 @@ export async function search_api(req: Request, res: Response){
         let accounts: Accounts = new Accounts(mmis_data,accounts_data);
         await accounts.getAccounts({username: {$regex: `^${query}`, $options: "i"}}).then(result => {
             let response: object = { done: true, msg: '', result: result['result'] };
-            return res.json(response);
+            return res.status(200).json(response);
         }).catch(err => {
             return res.status(500).json({done: false, msg: Messages.ERROR_SERVER});
         });

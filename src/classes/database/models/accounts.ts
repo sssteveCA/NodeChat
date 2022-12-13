@@ -68,7 +68,8 @@ export class Accounts extends MongoDbModelsManager{
                     let acc_data: AccountInterface = {
                         id: acc['id'], username: acc['username'], email: acc['email'],
                         creationDate: acc['creationDate'], activationCode: acc['activationCode'],
-                        resetCode: acc['resetCode'], verified: acc['verified'], resetted: acc['resetted']
+                        resetCode: acc['resetCode'], verified: acc['verified'], resetted: acc['resetted'],
+                        images: acc['images']
                     };
                     let account: Account = new Account(mmi_data,acc_data);
                     this._results.push(account);
