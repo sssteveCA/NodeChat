@@ -14,11 +14,11 @@ export async function search_api(req: Request, res: Response){
         let accounts_data: AccountsInterface = {};
         let accounts: Accounts = new Accounts(mmis_data,accounts_data);
         await accounts.getAccounts({username: {$regex: `^${query}`, $options: "i"}}).then(result => {
-            console.log("search_api getAccounts");
-            console.log(result);
+            /* console.log("search_api getAccounts");
+            console.log(result); */
             let response: object = { done: true, msg: '', result: result['result'] };
             const baseUrl: string = `${req.protocol}://${req.get('host')}`;
-            response['_images']['profileImage'] = setBaseUrl(baseUrl,response['_images']['profileImage']);
+            response = setBaseUrl(baseUrl,response);
             return res.status(200).json(response);
         }).catch(err => {
             return res.status(500).json({done: false, msg: Messages.ERROR_SERVER});
@@ -30,13 +30,27 @@ export async function search_api(req: Request, res: Response){
 }
 
 /**
- * Prepend the base url to a relative URL
+ * Prepend the base url to each relative URL
  * @param baseUrl the base url
- * @param url the relative URL
+ * @param response the object that contains the relative URLs
  * @returns the full URL that contains the base URL and the relative URL
  */
-function setBaseUrl(baseUrl: string, url: string): string{
-    if(url && url != "")
-        return baseUrl+url;
-    return baseUrl+Paths.STATIC_IMG_DEFAULT+"/profile_image.jpg";
+function setBaseUrl(baseUrl: string, response: object): object{
+    let responseCopy = JSON.parse(JSON.stringify(response));
+    /* console.log("setBaseUrl responseCopy => ");
+    console.log(responseCopy); */
+    if(Array.isArray(responseCopy['result'])){
+        let results = responseCopy['result'].map((account => {
+            if(account['_images'] && account['_images']['profileImage'] && account['_images']['profileImage'] != '')
+                account['_images']['profileImage'] = baseUrl+account['_images']['profileImage'];
+            else
+                account['_images']['profileImage'] = baseUrl+Paths.STATIC_IMG_DEFAULT+"/profile_image.jpg";
+            return account;
+            
+        }));
+        responseCopy['result'] = results;
+        /* console.log("responseCopy result => ");
+        console.log(responseCopy['result']); */
+    }//if(Array.isArray(responseCopy['result'])){
+    return responseCopy;
 }
