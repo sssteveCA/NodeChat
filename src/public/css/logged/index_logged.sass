@@ -19,20 +19,26 @@ $users-div-map: (height: 600px, width: 100%, border: 1px solid black, background
             #{$prop}: #{$val}
 
 @mixin table-style($main-div)
-    $td-n: 2
+    $td-n: 3
     #{$main-div} table
         thead th
             border-bottom-width: 0px
         tr td
-            padding: 15px
+            display: flex
+            align-items: center
+            &:not(.profile-image)
+                padding: 15px
         @for $c from 1 through $td-n
             @if $c == 1
+                width: 75px
+                img
+                    width: 100%
+            @else if $c == 2
                 tr td:nth-child(#{$c})
                     font-size: 18px
                     font-weight: bold
-            @else if $c == 2
+            @else if $c == 3
                 tr td:nth-child(#{$c})
-                    display: flex
                     justify-content: flex-end
 
 @include main-background($bk-url,2)
