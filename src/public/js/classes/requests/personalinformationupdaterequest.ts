@@ -60,6 +60,26 @@ export class PersonalInformationUpdateRequest{
         this._living_place = data.living_place;
     }
 
+    public async piUpdate(): Promise<object>{
+        let response: object = {};
+        this._errno = 0;
+        try{
+            await this.piUpdatePromise().then(res => {
+                console.log(res);
+                response = JSON.parse(res);
+            }).catch(err => {
+                console.warn(err);
+                throw err;
+            });
+        }catch(e){
+            this._errno = PersonalInformationUpdateRequest.ERR_FETCH;
+            response = {
+                done: false, msg: this.error
+            }
+        }
+        return response;
+    }
+
     private async piUpdatePromise(): Promise<string>{
         let body: object = {
             token_key: this._token_key, name: this._name, surname: this._surname, sex: this._sex, birth_date: this._birth_date, birth_place: this._birth_place, living_place: this._living_place
