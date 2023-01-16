@@ -1,4 +1,5 @@
 import { Schemas } from "../../../namespaces/schemas";
+import { Account, AccountInterface } from "../../database/models/account";
 import { Token, TokenInterface } from "../../database/models/token";
 import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager";
 
@@ -69,5 +70,22 @@ export class SetPersonalInformation{
         await token.getToken({tokenKey: token.tokenKey})
             .then(res =>  accountId = token.accountId );
         return accountId;
+    }
+
+    private async updatePi(accountId: string): Promise<boolean> {
+        let updated: boolean = false;
+        let mmiData: MongoDbModelManagerInterface = {
+            collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
+            schema: Schemas.ACCOUNTS
+        }
+        let account: Account = new Account(mmiData,{});
+        let lpArray: string[] = this._living_place.split(",");
+        await account.updateAccount(
+            {_id: accountId},
+            {
+                name: this._name, surname: this._surname, "otherPersonals.sex": this._sex,
+                "otherPersonals.birthDate": this._birth_date, "otherPersonals.birthPlace": this._birth_place, "otherPersonals.residence.address": lpArray[0], "otherPersonals.residence.number": lpArray[1], "otherPersonals.residence.city": lpArray[2]
+            }).then(res => updated = res["done"] );
+        return updated;
     }
 }
