@@ -12,6 +12,6 @@ profile_routes_api.post('/search', loggedApi, search_api);
 
 profile_routes_api.post('/upload_cover_image',upload_cover_image);
 
-profile_routes_api.post('/update_personal_information',update_personal_information);
+profile_routes_api.post('/update_personal_information', loggedApi, update_personal_information);
 
 profile_routes_api.post('/upload_profile_image',upload_profile_image);
