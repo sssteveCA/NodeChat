@@ -131,7 +131,7 @@ export class Section{
                     <span id="living_place_label" class="fw-bold">Luogo di residenza</span>
                 </div>
                 <div class="col-12 col-lg-6 my-1 my-lg-0">
-                    <span id="living_place_value">${this._account.otherPersonals["residence"]["city"]}</span>
+                    <span id="living_place_value">${this._account.otherPersonals["residence"]["address"]},${this._account.otherPersonals["residence"]["number"]},${this._account.otherPersonals["residence"]["city"]}</span>
                 </div>
             </div>
         </div>
