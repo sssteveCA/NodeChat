@@ -1,3 +1,4 @@
+import { threadId } from "worker_threads";
 import { Schemas } from "../../../namespaces/schemas";
 import { Account, AccountInterface } from "../../database/models/account";
 import { Token, TokenInterface } from "../../database/models/token";
@@ -27,6 +28,12 @@ export class SetPersonalInformation{
     private _errno: number = 0;
     private _error: string|null = null;
 
+    private static ERR_ACCOUNT_ID:number = 1;
+    private static ERR_UPDATE:number = 2;
+
+    private static ERR_ACCOUNT_ID_MSG:string = "L'id dell'account non è stato trovato";
+    private static ERR_UPDATE_MSG:string = "Errore durante l'aggiornamento delle informazioni personali";
+
     constructor(data: SetPersonalInformationInterface){
         this.assignValues(data);
     }
@@ -40,11 +47,35 @@ export class SetPersonalInformation{
     get errno(){return this._errno;}
     get error(){
         switch(this._errno){
+            case SetPersonalInformation.ERR_ACCOUNT_ID:
+                this._error = SetPersonalInformation.ERR_ACCOUNT_ID_MSG;
+                break;
+            case SetPersonalInformation.ERR_UPDATE:
+                this._error = SetPersonalInformation.ERR_UPDATE_MSG;
+                break;
             default:
                 this._error = null;
                 break;
         }
         return this._error;
+    }
+
+
+    /**
+     * Update the personal information of the logged user
+     * @returns 
+     */
+    public async setPersonalInformation(): Promise<object> {
+        this._errno = 0;
+        let accountId: string|null = await this.getAccountId();
+        if(accountId != null){
+            let updated: boolean = await this.updatePi(accountId);
+            if(updated) return {done: true};
+            this._errno = SetPersonalInformation.ERR_UPDATE;
+            return {done: false};
+        }//if(accountId != null){
+        this._errno = SetPersonalInformation.ERR_ACCOUNT_ID;
+        return {done: false};
     }
 
     private assignValues(data: SetPersonalInformationInterface): void{
@@ -57,6 +88,10 @@ export class SetPersonalInformation{
         this._living_place = data.living_place;
     }
 
+    /**
+     * Get the id of the user associated with the provided token key
+     * @returns 
+     */
     private async getAccountId(): Promise<string|null>{
         let accountId: string|null = null;
         let mmiData: MongoDbModelManagerInterface = {
@@ -72,6 +107,11 @@ export class SetPersonalInformation{
         return accountId;
     }
 
+    /**
+     * Update the user document that matches the _id wuth accountId
+     * @param accountId the id of the document to update
+     * @returns true if the operation was done successfully, false otherwise
+     */
     private async updatePi(accountId: string): Promise<boolean> {
         let updated: boolean = false;
         let mmiData: MongoDbModelManagerInterface = {
