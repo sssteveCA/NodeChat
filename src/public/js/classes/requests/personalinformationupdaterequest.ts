@@ -19,7 +19,7 @@ export class PersonalInformationUpdateRequest{
     private _error: string|null = null;
 
     constructor(data: PersonalInformationUpdateRequestInterface){
-
+        this.assignValues(data);
     }
 
     get name(){return this._name;}
@@ -36,5 +36,14 @@ export class PersonalInformationUpdateRequest{
                 break;
         }
         return this._error;
+    }
+
+    private assignValues(data: PersonalInformationUpdateRequestInterface): void{
+        this._name = data.name;
+        this._surname = data.surname;
+        this._sex = data.sex;
+        this._birth_date = data.birth_date;
+        this._birth_place = data.birth_place;
+        this._living_place = data.living_place;
     }
 }
