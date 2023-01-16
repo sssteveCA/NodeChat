@@ -1,3 +1,7 @@
+import { Schemas } from "../../../namespaces/schemas";
+import { Token, TokenInterface } from "../../database/models/token";
+import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager";
+
 export interface SetPersonalInformationInterface {
     token_key: string;
     name: string;
@@ -50,5 +54,20 @@ export class SetPersonalInformation{
         this._birth_date = data.birth_date;
         this._birth_place = data.birth_place;
         this._living_place = data.living_place;
+    }
+
+    private async getAccountId(): Promise<string|null>{
+        let accountId: string|null = null;
+        let mmiData: MongoDbModelManagerInterface = {
+            collection_name: process.env.MONGODB_TOKENS_COLLECTION as string,
+            schema: Schemas.TOKENS
+        }
+        let tokenData: TokenInterface = {
+            tokenKey: this._token_key
+        }
+        let token: Token = new Token(mmiData,tokenData);
+        await token.getToken({tokenKey: token.tokenKey})
+            .then(res =>  accountId = token.accountId );
+        return accountId;
     }
 }
