@@ -173,6 +173,7 @@ export class Account extends MongoDbModelManager{
             if(this._name && this._surname && this._username && this._email && this._password_hash && this._activationCode){
                 let current: Date = new Date();
                 this._creationDate = General.dateString(current);
+                //console.log("account.ts insertAccount creationDate => "+this._creationDate);
                 /* let document: object = {
                     name: this._name, surname: this._surname,
                     username: this._username,email: this._email,password: this._password_hash,
@@ -181,7 +182,7 @@ export class Account extends MongoDbModelManager{
                 let document: AccountType = {
                     name: this._name, surname: this._surname,
                     username: this._username,email: this._email,password: this._password_hash,
-                    creationDate: new Date(this._creationDate), activationCode: this._activationCode,
+                    creationDate: new Date(current), activationCode: this._activationCode,
                 };
                 await super.connect().then(conn => {
                     if(conn == true)return super.dropIndexes();

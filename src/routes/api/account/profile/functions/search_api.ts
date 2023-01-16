@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { Accounts, AccountsInterface } from "../../../../classes/database/models/accounts";
-import { MongoDbModelsManagerInterface } from "../../../../classes/database/mongodbmodelsmanager";
-import { Messages } from "../../../../namespaces/messages";
-import { Paths } from "../../../../namespaces/paths";
-import { Schemas } from "../../../../namespaces/schemas";
+import { Accounts, AccountsInterface } from "../../../../../classes/database/models/accounts";
+import { MongoDbModelsManagerInterface } from "../../../../../classes/database/mongodbmodelsmanager";
+import { Messages } from "../../../../../namespaces/messages";
+import { Paths } from "../../../../../namespaces/paths";
+import { Schemas } from "../../../../../namespaces/schemas";
 
 export async function search_api(req: Request, res: Response){
     let query: string = req.body.query as string;

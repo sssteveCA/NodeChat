@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import multiparty from "multiparty";
-import { SetProfileImageFolder, SetProfileImageFolderInterface } from "../../../../classes/account/upload/setprofileimagefolder";
-import { Paths } from "../../../../namespaces/paths";
-import { Messages } from "../../../../namespaces/messages";
+import { SetProfileImageFolder, SetProfileImageFolderInterface } from "../../../../../classes/account/upload/setprofileimagefolder";
+import { Paths } from "../../../../../namespaces/paths";
+import { Messages } from "../../../../../namespaces/messages";
 
 export async function upload_profile_image(req: Request, res: Response){
     let tokenKey: string = "";

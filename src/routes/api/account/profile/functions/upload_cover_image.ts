@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import multiparty from "multiparty";
 import { parse } from "path";
-import { SetCoverImageFolder, SetCoverImageFolderInterface } from "../../../../classes/account/upload/setcoverimagefolder";
-import { Messages } from "../../../../namespaces/messages";
-import { Paths } from "../../../../namespaces/paths";
+import { SetCoverImageFolder, SetCoverImageFolderInterface } from "../../../../../classes/account/upload/setcoverimagefolder";
+import { Messages } from "../../../../../namespaces/messages";
+import { Paths } from "../../../../../namespaces/paths";
 
 export async function upload_cover_image(req: Request, res: Response){
     let tokenKey: string = "";
