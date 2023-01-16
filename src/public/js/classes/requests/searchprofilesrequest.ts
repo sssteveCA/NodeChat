@@ -46,10 +46,10 @@ export class SearchProfilesRequest{
         this._errno = 0;
         try{
             await this.searchProfilePromise().then(res => {
-                console.log("searchprofilesrequest =>");
+                //console.log("searchprofilesrequest =>");
                 //console.log(res);
                 let obj = JSON.parse(res);
-                console.log(obj);
+                //console.log(obj);
                 response = {
                     done: obj['done'],
                     msg: obj['msg'],
