@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { SetPersonalInformation, SetPersonalInformationInterface } from "../../../../classes/account/update/setpersonalinformation";
-import { Messages } from "../../../../namespaces/messages";
+import { SetPersonalInformation, SetPersonalInformationInterface } from "../../../../../classes/account/update/setpersonalinformation";
+import { Messages } from "../../../../../namespaces/messages";
 
 export function update_personal_information(req: Request, res: Response){
     let spiData: SetPersonalInformationInterface = {

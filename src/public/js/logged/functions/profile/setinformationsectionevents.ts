@@ -2,6 +2,7 @@ import { ConfirmDialog, ConfirmDialogInterface } from "../../../classes/dialogs/
 import { MessageDialogInterface } from "../../../classes/dialogs/messagedialog.js";
 import { PersonalInformationUpdateRequest, PersonalInformationUpdateRequestInterface } from "../../../classes/requests/personalinformationupdaterequest.js";
 import { SectionEvents, SectionEventsInterface } from "../../../classes/template/profile/section_events.js";
+import { fMessageDialog } from "../../../functions/general.js";
 import { PersonalInformationItemsType } from "../../../types/personalinformationitemstype.js";
 
 export function setInformationSectionEvents(): void{
@@ -33,6 +34,11 @@ export function setInformationSectionEvents(): void{
             };
             let piur: PersonalInformationUpdateRequest = new PersonalInformationUpdateRequest(piurData);
             piur.piUpdate().then(res => {
+                let mdData: MessageDialogInterface = {
+                    title: "Modifica informazioni personali",
+                    message: res["msg"]
+                }
+                fMessageDialog(mdData);
                 se.personalInfoButton.trigger("click");
             });  
         });
