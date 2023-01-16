@@ -1,4 +1,6 @@
 import { ConfirmDialog, ConfirmDialogInterface } from "../../../classes/dialogs/confirmdialog.js";
+import { MessageDialogInterface } from "../../../classes/dialogs/messagedialog.js";
+import { PersonalInformationUpdateRequest, PersonalInformationUpdateRequestInterface } from "../../../classes/requests/personalinformationupdaterequest.js";
 import { SectionEvents, SectionEventsInterface } from "../../../classes/template/profile/section_events.js";
 import { PersonalInformationItemsType } from "../../../types/personalinformationitemstype.js";
 
@@ -20,7 +22,19 @@ export function setInformationSectionEvents(): void{
         cd.btYes.on('click',()=>{
             cd.dialog.dialog('destroy');
             cd.dialog.remove();
-            se.personalInfoButton.trigger("click");
+            let piurData: PersonalInformationUpdateRequestInterface = {
+                token_key: $('input[name=token_key]').val() as string, 
+                name: $('#name_value').val() as string,
+                surname: $('#surname_value').val() as string,
+                sex: $('#sex_value').val() as string,
+                birth_date: $('#birth_date_value').val() as string,
+                birth_place: $('#birth_place_value').val() as string,
+                living_place: $('#living_place_value').val() as string
+            };
+            let piur: PersonalInformationUpdateRequest = new PersonalInformationUpdateRequest(piurData);
+            piur.piUpdate().then(res => {
+                se.personalInfoButton.trigger("click");
+            });  
         });
         cd.btNo.on('click',()=>{
             cd.dialog.dialog('destroy');

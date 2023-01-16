@@ -8,12 +8,10 @@ import { MongoDbModelManagerInterface } from '../../../classes/database/mongodbm
 import { MongoDbModelsManagerInterface } from '../../../classes/database/mongodbmodelsmanager';
 import { Messages } from '../../../namespaces/messages';
 import { Paths } from '../../../namespaces/paths';
-import { Schemas } from '../../../namespaces/schemas';
 import { loggedApi } from '../middlewares/middlewares_api';
 import { current_user_api } from './functions/current_user_api';
 import { search_api } from './functions/search_api';
 import { user_info_api } from './functions/user_info_api';
-import multipart from "multiparty";
 import { upload_profile_image } from './functions/upload_profile_image';
 import { upload_cover_image } from './functions/upload_cover_image';
 import { update_personal_information } from './functions/update_personal_information';
