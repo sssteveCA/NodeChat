@@ -4,4 +4,5 @@
  */
 export type ProfileSectionEditContainer = {
     button_id: string;
+    spinner_id: string;
 }

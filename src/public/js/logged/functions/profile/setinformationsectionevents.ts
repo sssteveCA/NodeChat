@@ -14,7 +14,7 @@ export function setInformationSectionEvents(): void{
         workButton: $('#bt_work'), contactInfoButton: $('#bt_contacts_info'), personalInformationItems: piit
     };
     let se: SectionEvents = new SectionEvents(se_data);
-    se.personalInfoButtonClick(()=>{
+    se.personalInfoButtonClick((psecData)=>{
         let cdData: ConfirmDialogInterface = {
             title: 'Modifica informazioni personali',
             message: 'Vuoi modificare le informazioni personali con i valori inseriti?'
@@ -32,8 +32,11 @@ export function setInformationSectionEvents(): void{
                 birth_place: $('#birth_place_value').val() as string,
                 living_place: $('#living_place_value').val() as string
             };
+            let piSpinner: JQuery<HTMLDivElement> = $('#'+psecData.spinner_id);
+            piSpinner.toggleClass('invisible');
             let piur: PersonalInformationUpdateRequest = new PersonalInformationUpdateRequest(piurData);
             piur.piUpdate().then(res => {
+                piSpinner.toggleClass('invisible');
                 let mdData: MessageDialogInterface = {
                     title: "Modifica informazioni personali",
                     message: res["msg"]
@@ -47,7 +50,7 @@ export function setInformationSectionEvents(): void{
             cd.dialog.remove();
         }); 
     });
-    se.educationButtonClick(()=>{
+    se.educationButtonClick((psecData)=>{
         let cdData: ConfirmDialogInterface = {
             title: 'Modifica informazioni personali',
             message: 'Vuoi modificare le informazioni sulla tua educazione con i valori inseriti?'
