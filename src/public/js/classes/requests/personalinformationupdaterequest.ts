@@ -25,7 +25,7 @@ export class PersonalInformationUpdateRequest{
 
     private static ERR_FETCH_MSG:string = "Errore durante l'esecuzione della richiesta";
 
-    private static FETCH_URL:string =  "/api/profile//update_personal_information";
+    private static FETCH_URL:string =  "/api/profile/update_personal_information";
 
     constructor(data: PersonalInformationUpdateRequestInterface){
         this.assignValues(data);

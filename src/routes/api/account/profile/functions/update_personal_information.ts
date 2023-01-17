@@ -13,9 +13,9 @@ export default function update_personal_information(req: Request, res: Response)
             if(sexValueOk){
                 let spiData: SetPersonalInformationInterface = {
                     token_key: res.locals.tokenKey,
-                    name: req.body["name"], surname: req.body["surname"], sex: req.body["sex"], 
-                    birth_date: req.body["birth_date"], birth_place: req.body["birth_place"], 
-                    living_place: req.body["living_place"]
+                    name: req.body["name"].trim(), surname: req.body["surname"].trim(), sex: req.body["sex"].trim(), 
+                    birth_date: req.body["birth_date"].trim(), birth_place: req.body["birth_place"].trim(), 
+                    living_place: req.body["living_place"].trim()
                 }
                 /* console.log("update_personal_information spiData => ");
                 console.log(spiData); */

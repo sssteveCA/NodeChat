@@ -16,10 +16,12 @@ export class EducationUpdateRequest{
 
     private static ERR_FETCH_MSG:string = "Errore durante l'esecuzione della richiesta";
 
-    private static FETCH_URL:string = "/";
+    private static FETCH_URL:string = "/api/profile/update_education";
 
     constructor(data: EducationUpdateRequestInterface){
-
+        this._token_key = data.token_key;
+        this._secondary_school = data.secondary_school;
+        this._university = data.university;
     }
 
     get secondary_school(){return this._secondary_school;}
