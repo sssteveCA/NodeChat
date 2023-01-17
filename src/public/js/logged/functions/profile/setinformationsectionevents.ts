@@ -54,7 +54,7 @@ export function setInformationSectionEvents(): void{
     se.educationButtonClick((psecData)=>{
         let cdData: ConfirmDialogInterface = {
             title: 'Modifica informazioni personali',
-            message: 'Vuoi modificare le informazioni sulla tua educazione con i valori inseriti?'
+            message: 'Vuoi modificare le informazioni sulla tua istruzione con i valori inseriti?'
         };
         let cd: ConfirmDialog = new ConfirmDialog(cdData);
         cd.btYes.on('click',()=>{
@@ -66,7 +66,10 @@ export function setInformationSectionEvents(): void{
                 university: $('#university_value').val() as string
             }
             let eur: EducationUpdateRequest = new EducationUpdateRequest(eurData);
+            let eSpinner: JQuery<HTMLDivElement> = $('#'+psecData.spinner_id);
+            eSpinner.toggleClass('invisible');
             eur.edUpdate().then(res => {
+                eSpinner.toggleClass('invisible');
                 let mdData: MessageDialogInterface = {
                     title: "Modifica informazioni sull'istruzione", message: res["msg"]
                 }
