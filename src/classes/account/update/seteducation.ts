@@ -23,6 +23,7 @@ export class SetEducation{
     private static ERR_UPDATE_MSG:string = "Errore durante l'aggiornamento delle informazioni sull'istruzione";
 
     constructor(data: SetEducationInterface){
+        this._token_key = data.token_key;
         this._secondary_school = data.secondary_school;
         this._university = data.university;
     }
@@ -73,7 +74,11 @@ export class SetEducation{
         let account: Account = new Account(mmiData,{});
         await account.updateAccount({_id: accountId},
             {"education.secondary": this._secondary_school, 
-            "education.university": this._university}).then( res => updated = res["done"] );
+            "education.university": this._university}).then( res => {
+                console.log("setEducation updateAccount then => ");
+                console.log(res);
+                updated = res["done"]
+            });
         return updated;
     }
 }

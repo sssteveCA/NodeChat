@@ -16,7 +16,8 @@ export default function update_education(req: Request, res: Response){
             se.setEducation().then(result => {
                 if(result["done"] == true)
                     return res.status(200).json({done: true, msg: "Informazioni sull'istruzione aggiornate"});
-                else throw new Error;
+                else 
+                    return res.status(500).json({done: false, msg: Messages.ERROR_EDUCATION_UPDATE});
             }).catch(err => {
                 throw err;
             });

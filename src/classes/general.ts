@@ -31,13 +31,14 @@ export class General{
             collection_name: process.env.MONGODB_TOKENS_COLLECTION as string,
             schema: Schemas.TOKENS
         }
-        let tokenData: TokenInterface = {
-            tokenKey: token_key
-        };
         /* console.log ("GetAccountId tokenData => ");
         console.log(tokenData); */
-        let token: Token = new Token(mmiData,tokenData);
-        await token.getToken({tokenKey: token.tokenKey}).then(res =>{ accountId = token.accountId;  });
+        let token: Token = new Token(mmiData,{});
+        await token.getToken({tokenKey: token_key}).then(res =>{
+            console.log("General getAccountId getToken then => ");
+            console.log(res);
+            if(res["done"] == true) accountId = token.accountId;  
+        });
         return accountId;
     }
 }
