@@ -195,12 +195,19 @@ export class SectionEvents{
         });
     }
 
+    /**
+     * Add the edit button and the spinner to the template
+     * @param params 
+     */
     private setEditButtonContainer(params: ProfileSectionEditContainer): void{
         this._editButtonContainer = $('<div>');
         this._editButtonContainer.addClass("row");
         this._editButtonContainer.html(`
-<div class="col-6 col-md-4 col-lg-3 offset-3 offset-md-4 offset-lg-5">
+<div class="col-6 col-md-4 col-lg-3 offset-3 offset-md-4 offset-lg-5 d-flex align-items-center">
     <button type="button" id="${params.button_id}" class="btn btn-primary">MODIFICA</button>
+    <div id="spinner-${params.button_id}" class="ms-2 spinner-border invisible" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
 </div>`);
     }
 

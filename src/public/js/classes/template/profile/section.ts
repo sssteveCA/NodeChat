@@ -72,7 +72,7 @@ export class Section{
 
     private informationTemplate(): void{
         let birthDate = (this._account.otherPersonals["birthDate"]) ? this._account.otherPersonals["birthDate"] : "";
-        let sex: string = "";
+        let sex: string = this._account.otherPersonals["sex"];
         if(this._account.otherPersonals["sex"] == "M") sex = "Maschio";
         else if(this._account.otherPersonals["sex"] == "F") sex = "Femmina";
         this._html = `
