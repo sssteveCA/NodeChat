@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { SetPersonalInformation, SetPersonalInformationInterface } from "../../../../../classes/account/update/setpersonalinformation";
 import { Messages } from "../../../../../namespaces/messages";
 
-export function update_personal_information(req: Request, res: Response){
+export default function update_personal_information(req: Request, res: Response){
     let isset: boolean = (req.body["name"] && req.body["surname"] && req.body["sex"] && req.body["birth_date"] && req.body["birth_place"] && req.body["living_place"]);
     let notEmpty: boolean = (req.body["name"] != "" && req.body["surname"] != "" && req.body["sex"] != "" && req.body["birth_date"] != "" && req.body["birth_place"] != "" && req.body["living_place"] != "");
     let sexValueOk: boolean = ['F','M','Femmina','Maschio'].some((item)=> {
