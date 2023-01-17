@@ -1,5 +1,6 @@
 import { ConfirmDialog, ConfirmDialogInterface } from "../../../classes/dialogs/confirmdialog.js";
 import { MessageDialogInterface } from "../../../classes/dialogs/messagedialog.js";
+import { EducationUpdateRequest, EducationUpdateRequestInterface } from "../../../classes/requests/educationupdaterequest.js";
 import { PersonalInformationUpdateRequest, PersonalInformationUpdateRequestInterface } from "../../../classes/requests/personalinformationupdaterequest.js";
 import { SectionEvents, SectionEventsInterface } from "../../../classes/template/profile/section_events.js";
 import { fMessageDialog } from "../../../functions/general.js";
@@ -59,7 +60,19 @@ export function setInformationSectionEvents(): void{
         cd.btYes.on('click',()=>{
             cd.dialog.dialog('destroy');
             cd.dialog.remove();
-            se.educationButton.trigger("click");
+            let eurData: EducationUpdateRequestInterface = {
+                token_key: $('input[name=token_key]').val() as string,
+                secondary_school: $('#secondary_school_value').val() as string,
+                university: $('#university_value').val() as string
+            }
+            let eur: EducationUpdateRequest = new EducationUpdateRequest(eurData);
+            eur.edUpdate().then(res => {
+                let mdData: MessageDialogInterface = {
+                    title: "Modifica informazioni sull'istruzione", message: res["msg"]
+                }
+                fMessageDialog(mdData);
+                se.educationButton.trigger("click");
+            })
         });
         cd.btNo.on('click',()=>{
             cd.dialog.dialog('destroy');
