@@ -1,6 +1,7 @@
 import { Schemas } from "../../../namespaces/schemas";
 import { Account } from "../../database/models/account";
 import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager";
+import { General } from "../../general";
 
 export interface SetEducationInterface{
     token_key: string;
@@ -42,6 +43,19 @@ export class SetEducation{
                 break;
         }
         return this._error;
+    }
+
+    public async setEducation(): Promise<object>{
+        this._errno = 0;
+        let accountId: string|null = await General.getAccountId(this._token_key);
+        if(accountId != null){
+            let updated: boolean = await this.updateEducation(accountId);
+            if(updated) return {done: true};
+            this._errno = SetEducation.ERR_UPDATE;
+            return {done: false};
+        }//if(accountId != null){
+        this._errno = SetEducation.ERR_ACCOUNT_ID;
+        return {done: false};
     }
 
     /**
