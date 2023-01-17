@@ -3,6 +3,7 @@ import { Schemas } from "../../../namespaces/schemas";
 import { Account, AccountInterface } from "../../database/models/account";
 import { Token, TokenInterface } from "../../database/models/token";
 import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager";
+import { General } from "../../general";
 
 export interface SetPersonalInformationInterface {
     token_key: string;
@@ -67,7 +68,7 @@ export class SetPersonalInformation{
      */
     public async setPersonalInformation(): Promise<object> {
         this._errno = 0;
-        let accountId: string|null = await this.getAccountId();
+        let accountId: string|null = await General.getAccountId(this._token_key);
         if(accountId != null){
             let updated: boolean = await this.updatePi(accountId);
             if(updated) return {done: true};
@@ -86,25 +87,6 @@ export class SetPersonalInformation{
         this._birth_date = data.birth_date;
         this._birth_place = data.birth_place;
         this._living_place = data.living_place;
-    }
-
-    /**
-     * Get the id of the user associated with the provided token key
-     * @returns 
-     */
-    private async getAccountId(): Promise<string|null>{
-        let accountId: string|null = null;
-        let mmiData: MongoDbModelManagerInterface = {
-            collection_name: process.env.MONGODB_TOKENS_COLLECTION as string,
-            schema: Schemas.TOKENS
-        }
-        let tokenData: TokenInterface = {
-            tokenKey: this._token_key
-        }
-        let token: Token = new Token(mmiData,tokenData);
-        await token.getToken({tokenKey: token.tokenKey})
-            .then(res =>  accountId = token.accountId );
-        return accountId;
     }
 
     /**

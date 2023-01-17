@@ -1,3 +1,6 @@
+import { Schemas } from "../namespaces/schemas";
+import { Token, TokenInterface } from "./database/models/token";
+import { MongoDbModelManagerInterface } from "./database/mongodbmodelmanager";
 
 export class General{
 
@@ -15,5 +18,26 @@ export class General{
         let seconds = date.getSeconds() < 10 ? "0"+date.getSeconds() : date.getSeconds();
         let stringDate: string = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
         return stringDate;
+    }
+
+    /**
+     * Get the user account id associated with the token
+     * @param token_key the token key of the user logged
+     * @returns the account id
+     */
+    public static async getAccountId(token_key: string): Promise<string|null>{
+        let accountId: string|null = null;
+        let mmiData: MongoDbModelManagerInterface = {
+            collection_name: process.env.MONGODB_TOKENS_COLLECTION as string,
+            schema: Schemas.TOKENS
+        }
+        let tokenData: TokenInterface = {
+            tokenKey: token_key
+        };
+        /* console.log ("GetAccountId tokenData => ");
+        console.log(tokenData); */
+        let token: Token = new Token(mmiData,tokenData);
+        await token.getToken({tokenKey: token.tokenKey}).then(res =>{ accountId = token.accountId;  });
+        return accountId;
     }
 }

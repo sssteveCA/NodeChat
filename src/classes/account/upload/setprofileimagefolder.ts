@@ -4,6 +4,7 @@ import { Token, TokenInterface } from "../../database/models/token";
 import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager";
 import fs from "fs/promises";
 import { Paths } from "../../../namespaces/paths";
+import { General } from "../../general";
 
 export interface SetProfileImageFolderInterface{
     image_path: string;
@@ -64,7 +65,7 @@ export class SetProfileImageFolder{
     public async setFolder(): Promise<object>{
         this._errno = 0;
         let response: object = {dest: null, done: false};
-        let accountId: string|null = await this.getAccountId();
+        let accountId: string|null = await General.getAccountId(this._token_key);
         //console.log("SetProfileImageFolder accountId => "+accountId);
         if(accountId != null){
             let accountUsername: string|null = await this.getAccountUsername(accountId);
@@ -86,22 +87,6 @@ export class SetProfileImageFolder{
         else 
             this._errno = SetProfileImageFolder.ERR_ACCOUNT_ID; 
         return response;
-    }
-
-    private async getAccountId(): Promise<string|null>{
-        let accountId: string|null = null;
-        let mmiData: MongoDbModelManagerInterface = {
-            collection_name: process.env.MONGODB_TOKENS_COLLECTION as string,
-            schema: Schemas.TOKENS
-        }
-        let tokenData: TokenInterface = {
-            tokenKey: this._token_key
-        };
-        /* console.log ("GetAccountId tokenData => ");
-        console.log(tokenData); */
-        let token: Token = new Token(mmiData,tokenData);
-        await token.getToken({tokenKey: token.tokenKey}).then(res =>{ accountId = token.accountId;  });
-        return accountId;
     }
 
     private async getAccountUsername(accountId: string): Promise<string|null>{
