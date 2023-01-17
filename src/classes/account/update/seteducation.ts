@@ -1,3 +1,7 @@
+import { Schemas } from "../../../namespaces/schemas";
+import { Account } from "../../database/models/account";
+import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager";
+
 export interface SetEducationInterface{
     token_key: string;
     secondary_school: string;
@@ -18,7 +22,8 @@ export class SetEducation{
     private static ERR_UPDATE_MSG:string = "Errore durante l'aggiornamento delle informazioni sull'istruzione";
 
     constructor(data: SetEducationInterface){
-
+        this._secondary_school = data.secondary_school;
+        this._university = data.university;
     }
 
     get secondary_school(){return this._secondary_school;}
@@ -37,5 +42,24 @@ export class SetEducation{
                 break;
         }
         return this._error;
+    }
+
+    /**
+     * Update the user document that matches the _id wuth accountId
+     * @param accountId the id of the document to update
+     * @returns true if the operation was done successfully, false otherwise
+     */
+    private async updateEducation(accountId: string): Promise<boolean> {
+        let updated: boolean = false;
+        this._errno = 0;
+        let mmiData: MongoDbModelManagerInterface = {
+            collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
+            schema: Schemas.ACCOUNTS
+        }
+        let account: Account = new Account(mmiData,{});
+        await account.updateAccount({_id: accountId},
+            {"education.secondary": this._secondary_school, 
+            "education.university": this._university}).then( res => updated = res["done"] );
+        return updated;
     }
 }
