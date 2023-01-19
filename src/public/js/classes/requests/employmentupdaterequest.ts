@@ -35,4 +35,43 @@ export class EmploymentUpdateRequest{
         return this._error;
     }
 
+    public async employmentUpdate(): Promise<object>{
+        let response: object =  {};
+        this._errno = 0;
+        try{
+            await this.employmentUpdatePromise().then(res => {
+                console.log(res);
+                response = JSON.parse(res);
+            }).catch(err => {
+                console.warn(err);
+                throw err;
+            });
+        }catch(e){
+            this._errno = EmploymentUpdateRequest.ERR_FETCH;
+            response = {
+                done: false, msg: this.error
+            }
+        }
+        return response;
+    }
+
+    private async employmentUpdatePromise(): Promise<string>{
+        return await new Promise<string>((resolve,reject) => {
+            fetch(EmploymentUpdateRequest.FETCH_URL, {
+                method: 'POST',
+                headers: {
+                    "Accept": "application/json", "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    token_key: this._token_key, 
+                    employment: this._employment
+                })
+            }).then(res => {
+                    resolve(res.text());
+            }).catch(err => {
+                reject(err);
+            });
+        });
+    }
+
 }
