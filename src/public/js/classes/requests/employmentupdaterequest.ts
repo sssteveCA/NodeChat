@@ -13,7 +13,7 @@ export class EmploymentUpdateRequest{
 
     private static ERR_FETCH_MSG:string = "Errore durante l'esecuzione della richiesta";
 
-    private static FETCH_URL:string =  "/api/profile/update_personal_information";
+    private static FETCH_URL:string =  "/api/profile/update_employment";
 
     constructor(data: EmploymentUpdateRequestInterface){
         this._token_key = data.token_key;
