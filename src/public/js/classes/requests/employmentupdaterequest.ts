@@ -1,0 +1,38 @@
+export interface EmploymentUpdateRequestInterface{
+    token_key: string;
+    employment: string;
+}
+
+export class EmploymentUpdateRequest{
+    private _token_key: string;
+    private _employment;
+    private _errno: number = 0;
+    private _error: string|null = null;
+
+    public static ERR_FETCH:number = 1;
+
+    private static ERR_FETCH_MSG:string = "Errore durante l'esecuzione della richiesta";
+
+    private static FETCH_URL:string =  "/api/profile/update_personal_information";
+
+    constructor(data: EmploymentUpdateRequestInterface){
+        this._token_key = data.token_key;
+        this._employment = data.employment;
+    }
+
+    get token_key(){return this._token_key;}
+    get employment(){return this._employment;}
+    get errno(){return this._errno;}
+    get error(){
+        switch(this._errno){
+            case EmploymentUpdateRequest.ERR_FETCH:
+                this._error = EmploymentUpdateRequest.ERR_FETCH_MSG;
+                break;
+            default:
+                this._error = null;
+                break;
+        }
+        return this._error;
+    }
+
+}
