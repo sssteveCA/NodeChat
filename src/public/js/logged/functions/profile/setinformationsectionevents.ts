@@ -1,6 +1,7 @@
 import { ConfirmDialog, ConfirmDialogInterface } from "../../../classes/dialogs/confirmdialog.js";
 import { MessageDialogInterface } from "../../../classes/dialogs/messagedialog.js";
 import { EducationUpdateRequest, EducationUpdateRequestInterface } from "../../../classes/requests/educationupdaterequest.js";
+import { EmploymentUpdateRequest, EmploymentUpdateRequestInterface } from "../../../classes/requests/employmentupdaterequest.js";
 import { PersonalInformationUpdateRequest, PersonalInformationUpdateRequestInterface } from "../../../classes/requests/personalinformationupdaterequest.js";
 import { SectionEvents, SectionEventsInterface } from "../../../classes/template/profile/section_events.js";
 import { fMessageDialog } from "../../../functions/general.js";
@@ -36,11 +37,11 @@ export function setInformationSectionEvents(): void{
             let piSpinner: JQuery<HTMLDivElement> = $('#'+psecData.spinner_id);
             piSpinner.toggleClass('invisible');
             let piur: PersonalInformationUpdateRequest = new PersonalInformationUpdateRequest(piurData);
-            piur.piUpdate().then(res => {
+            piur.piUpdate().then(obj => {
                 piSpinner.toggleClass('invisible');
                 let mdData: MessageDialogInterface = {
                     title: "Modifica informazioni personali",
-                    message: res["msg"]
+                    message: obj["msg"]
                 }
                 fMessageDialog(mdData);
                 se.personalInfoButton.trigger("click");
@@ -53,7 +54,7 @@ export function setInformationSectionEvents(): void{
     });
     se.educationButtonClick((psecData)=>{
         let cdData: ConfirmDialogInterface = {
-            title: 'Modifica informazioni personali',
+            title: 'Modifica informazioni sull\'istruzione',
             message: 'Vuoi modificare le informazioni sulla tua istruzione con i valori inseriti?'
         };
         let cd: ConfirmDialog = new ConfirmDialog(cdData);
@@ -68,10 +69,10 @@ export function setInformationSectionEvents(): void{
             let eur: EducationUpdateRequest = new EducationUpdateRequest(eurData);
             let eSpinner: JQuery<HTMLDivElement> = $('#'+psecData.spinner_id);
             eSpinner.toggleClass('invisible');
-            eur.edUpdate().then(res => {
+            eur.edUpdate().then(obj => {
                 eSpinner.toggleClass('invisible');
                 let mdData: MessageDialogInterface = {
-                    title: "Modifica informazioni sull'istruzione", message: res["msg"]
+                    title: "Modifica informazioni sull'istruzione", message: obj["msg"]
                 }
                 fMessageDialog(mdData);
                 se.educationButton.trigger("click");
@@ -84,14 +85,26 @@ export function setInformationSectionEvents(): void{
     });
     se.workButtonClick(()=>{
         let cdData: ConfirmDialogInterface = {
-            title: 'Modifica informazioni personali',
+            title: 'Modifica informazioni sul lavoro',
             message: 'Vuoi modificare le informazioni sul lavoro con i valori inseriti?'
         };
         let cd: ConfirmDialog = new ConfirmDialog(cdData);
         cd.btYes.on('click',()=>{
             cd.dialog.dialog('destroy');
             cd.dialog.remove();
-            se.workButton.trigger("click");
+            let empData: EmploymentUpdateRequestInterface = {
+                token_key: $('input[name=token_key]').val() as string,
+                employment: $('#work_value').val() as string
+            }
+            let emp: EmploymentUpdateRequest = new EmploymentUpdateRequest(empData);
+            emp.employmentUpdate().then(obj => {
+                let mdData: MessageDialogInterface = {
+                    title: 'Modifica informazioni sul lavoro',
+                    message: obj["msg"]
+                }
+                fMessageDialog(mdData);
+                se.workButton.trigger("click");
+            });
         });
         cd.btNo.on('click',()=>{
             cd.dialog.dialog('destroy');
