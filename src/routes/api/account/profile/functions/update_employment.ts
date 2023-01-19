@@ -6,7 +6,7 @@ export default function update_employment(req: Request, res: Response){
     try{
         if(req.body["employment"] && req.body["employment"] != ""){
             let empData: SetEmploymentInterface = {
-                token_key: res.locals.tokenKey, employment: req.body["exployment"].trim()
+                token_key: res.locals.tokenKey, employment: req.body["employment"].trim()
             }
             let emp: SetEmployment = new SetEmployment(empData);
             emp.setEmployment().then(result => {

@@ -83,7 +83,7 @@ export function setInformationSectionEvents(): void{
             cd.dialog.remove();
         }); 
     });
-    se.workButtonClick(()=>{
+    se.workButtonClick((psecData)=>{
         let cdData: ConfirmDialogInterface = {
             title: 'Modifica informazioni sul lavoro',
             message: 'Vuoi modificare le informazioni sul lavoro con i valori inseriti?'
@@ -97,7 +97,10 @@ export function setInformationSectionEvents(): void{
                 employment: $('#work_value').val() as string
             }
             let emp: EmploymentUpdateRequest = new EmploymentUpdateRequest(empData);
+            let empSpinner: JQuery<HTMLDivElement> = $('#'+psecData.spinner_id);
+            empSpinner.toggleClass('invisible');
             emp.employmentUpdate().then(obj => {
+                empSpinner.toggleClass('invisible');
                 let mdData: MessageDialogInterface = {
                     title: 'Modifica informazioni sul lavoro',
                     message: obj["msg"]
