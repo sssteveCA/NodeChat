@@ -1,6 +1,7 @@
 import { Schemas } from "../../../namespaces/schemas";
 import { Account } from "../../database/models/account";
 import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager";
+import { General } from "../../general";
 
 export interface SetEmploymentInterface{
     token_key: string;
@@ -42,6 +43,28 @@ export class SetEmployment{
         return this._error;
     }
 
+    /**
+     * Update the employment information of the logged user
+     * @returns 
+     */
+    public async setEmployment(): Promise<object>{
+        this._errno = 0;
+        let accountId: string|null = await General.getAccountId(this._token_key);
+        if(accountId != null){
+            let updated: boolean = await this.updateEmployment(accountId);
+            if(updated) return {done: true};
+            this._errno = SetEmployment.ERR_UPDATE;
+            return {done: false};
+        }//if(accountId != null){
+        this._errno = SetEmployment.ERR_ACCOUNT_ID;
+        return {done: false};
+    }
+
+    /**
+     * Update the user document that matches the _id with accountId
+     * @param accountId the id of the document to update
+     * @returns true if the operation was done successfully, false otherwise
+     */
     private async updateEmployment(accountId: string): Promise<boolean>{
         let updated: boolean = false;
         let mmiData: MongoDbModelManagerInterface = {
