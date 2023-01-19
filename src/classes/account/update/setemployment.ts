@@ -1,3 +1,7 @@
+import { Schemas } from "../../../namespaces/schemas";
+import { Account } from "../../database/models/account";
+import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager";
+
 export interface SetEmploymentInterface{
     token_key: string;
     employment: string;
@@ -36,5 +40,20 @@ export class SetEmployment{
                 break;
         }
         return this._error;
+    }
+
+    private async updateEmployment(accountId: string): Promise<boolean>{
+        let updated: boolean = false;
+        let mmiData: MongoDbModelManagerInterface = {
+            collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
+            schema: Schemas.ACCOUNTS
+        }
+        let account: Account = new Account(mmiData,{});
+        await account.updateAccount(
+            {_id: accountId},
+            {
+                employment: this._employment
+            }).then(res => updated = res["done"]);
+        return updated;
     }
 }

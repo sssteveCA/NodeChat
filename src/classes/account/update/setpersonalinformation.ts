@@ -90,7 +90,7 @@ export class SetPersonalInformation{
     }
 
     /**
-     * Update the user document that matches the _id wuth accountId
+     * Update the user document that matches the _id with accountId
      * @param accountId the id of the document to update
      * @returns true if the operation was done successfully, false otherwise
      */
