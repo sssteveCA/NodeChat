@@ -1,6 +1,7 @@
 import { Schemas } from "../../../namespaces/schemas";
 import { Account } from "../../database/models/account";
 import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager";
+import { General } from "../../general";
 
 export interface SetContactsInformationInterface{
     token_key: string;
@@ -43,6 +44,23 @@ export class SetContactsInformation{
                 break;
         }
         return this._error;
+    }
+
+    /**
+     * Update the contacts information of the logged user
+     * @returns 
+     */
+    public async setContactsInformation(): Promise<object>{
+        this._errno = 0;
+        let accountId: string|null = await General.getAccountId(this._token_key);
+        if(accountId != null){
+            let updated: boolean = await this.updateCi(accountId);
+            if(updated) return {done: true};
+            this._errno = SetContactsInformation.ERR_UPDATE;
+            return {done: false};
+        }//if(accountId != null){
+        this._errno = SetContactsInformation.ERR_ACCOUNT_ID;
+        return {done: false};
     }
 
     /**
