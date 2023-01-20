@@ -1,3 +1,7 @@
+import { Schemas } from "../../../namespaces/schemas";
+import { Account } from "../../database/models/account";
+import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager";
+
 export interface SetContactsInformationInterface{
     token_key: string;
     telephone: string;
@@ -39,5 +43,25 @@ export class SetContactsInformation{
                 break;
         }
         return this._error;
+    }
+
+    /**
+     * Update the user document that matches the _id with accountId
+     * @param accountId the id of the document to update
+     * @returns true if the operation was done successfully, false otherwise
+     */
+    private async updateCi(accountId: string): Promise<boolean>{
+        let updated: boolean = false;
+        let mmiData: MongoDbModelManagerInterface = {
+            collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
+            schema: Schemas.ACCOUNTS
+        }
+        let account: Account = new Account(mmiData,{});
+        await account.updateAccount(
+            {_id: accountId},
+            {"contacts.email": this._email,
+             "contacts.phone": this._telephone}
+        ).then(res => updated = res["done"]);
+        return updated;
     }
 }
