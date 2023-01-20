@@ -44,7 +44,7 @@ export class SectionEvents{
                 this._personalInformationItems.telephone_value_el.parent().html(`<input type="text" id="telephone_value" class="form-control" value="${tel_value}">`);
                 this._personalInformationItems.email_label_el.parent().html(`<label id="email_label" class="form-label fw-bold">Indirizzo email</label>`);
                 this._personalInformationItems.email_value_el.parent().html(`<input type="text" id="email_value" class="form-control" value="${ea_value}">`);
-                let ebdData: ProfileSectionEditContainer = { button_id: 'bt_edit_contact_info', spinner_id: 'spinner_edit_contacxt_info'};
+                let ebdData: ProfileSectionEditContainer = { button_id: 'bt_edit_contact_info', spinner_id: 'spinner_edit_contact_info'};
                 this.setEditButtonContainer(ebdData);
                 this._contactInfoButton.parents(".container").append(this._editButtonContainer);
                 $('#'+ebdData.button_id).on('click',()=>{

@@ -129,8 +129,12 @@ export function setInformationSectionEvents(): void{
                 telephone: $('#telephone_value').val() as string,
                 email: $('#email_value').val() as string
             }
+            let ciSpinner: JQuery<HTMLDivElement> = $(`#${psecData.spinner_id}
+            `);
+            ciSpinner.toggleClass('invisible');
             let ciur: ContactsInformationUpdateRequest = new ContactsInformationUpdateRequest(ciurData);
             ciur.ciUpdate().then(obj => {
+                ciSpinner.toggleClass('invisible');
                 let mdData: MessageDialogInterface = {
                     title: 'Modifica informazioni di contatto',
                     message: obj["msg"]

@@ -35,8 +35,8 @@ export class General{
         console.log(tokenData); */
         let token: Token = new Token(mmiData,{});
         await token.getToken({tokenKey: token_key}).then(res =>{
-            console.log("General getAccountId getToken then => ");
-            console.log(res);
+           /*  console.log("General getAccountId getToken then => ");
+            console.log(res); */
             if(res["done"] == true) accountId = token.accountId;  
         });
         return accountId;
