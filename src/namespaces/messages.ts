@@ -17,4 +17,6 @@ export namespace Messages{
     export const ERROR_SESSIONEXPIRED: string = "La tua sessione è scaduta";
     export const ERROR_USERNOTFOUND: string = "Utente non trovato";
 
+    
+
 }

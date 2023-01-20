@@ -1,3 +1,4 @@
+import { Constants } from "../../../namespaces/constants";
 import { Schemas } from "../../../namespaces/schemas";
 import { Account } from "../../database/models/account";
 import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager";
@@ -79,7 +80,7 @@ export class SetContactsInformation{
             {_id: accountId},
             {"contacts.email": this._email,
              "contacts.phone": this._telephone}
-        ).then(res => updated = res["done"]);
+        ).then(res => updated = res[Constants.KEY_DONE]);
         return updated;
     }
 }

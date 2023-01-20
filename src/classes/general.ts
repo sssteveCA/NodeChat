@@ -1,3 +1,4 @@
+import { Constants } from "../namespaces/constants";
 import { Schemas } from "../namespaces/schemas";
 import { Token, TokenInterface } from "./database/models/token";
 import { MongoDbModelManagerInterface } from "./database/mongodbmodelmanager";
@@ -37,7 +38,7 @@ export class General{
         await token.getToken({tokenKey: token_key}).then(res =>{
            /*  console.log("General getAccountId getToken then => ");
             console.log(res); */
-            if(res["done"] == true) accountId = token.accountId;  
+            if(res[Constants.KEY_DONE] == true) accountId = token.accountId;  
         });
         return accountId;
     }

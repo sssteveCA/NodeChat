@@ -1,4 +1,5 @@
 import { threadId } from "worker_threads";
+import { Constants } from "../../../namespaces/constants";
 import { Schemas } from "../../../namespaces/schemas";
 import { Account, AccountInterface } from "../../database/models/account";
 import { Token, TokenInterface } from "../../database/models/token";
@@ -107,7 +108,7 @@ export class SetPersonalInformation{
             {
                 name: this._name, surname: this._surname, "otherPersonals.sex": this._sex,
                 "otherPersonals.birthDate": this._birth_date, "otherPersonals.birthPlace": this._birth_place, "otherPersonals.residence.address": lpArray[0].trim(), "otherPersonals.residence.number": lpArray[1].trim(), "otherPersonals.residence.city": lpArray[2].trim()
-            }).then(res => updated = res["done"] );
+            }).then(res => updated = res[Constants.KEY_DONE] );
         return updated;
     }
 }

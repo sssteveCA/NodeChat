@@ -5,6 +5,7 @@ import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager
 import fs from "fs/promises";
 import { Paths } from "../../../namespaces/paths";
 import { General } from "../../general";
+import { Constants } from "../../../namespaces/constants";
 
 export interface SetProfileImageFolderInterface{
     image_path: string;
@@ -74,9 +75,9 @@ export class SetProfileImageFolder{
                 let moved: object = await this.moveFile(this._image_path,accountUsername);
                 //console.log("SetProfileImageFolder moved => ");
                 //console.log(moved);
-                if(moved["done"] == true){
+                if(moved[Constants.KEY_DONE] == true){
                     let updateProperty: object = await this.updateProfileImageProperty(moved["dest"],accountUsername);
-                    if(updateProperty["done"] == true)
+                    if(updateProperty[Constants.KEY_DONE] == true)
                         response = {dest: updateProperty["absUrl"], done: true};  
                 }  
                 else this._errno = SetProfileImageFolder.ERR_MOVE_FILE;
@@ -116,7 +117,7 @@ export class SetProfileImageFolder{
         }).then(res => {
             response = {dest: dest, done: true};
         }).catch(err => {
-            response["done"] = false;
+            response[Constants.KEY_DONE] = false;
             console.log(err); 
         });
         return response;
@@ -143,7 +144,7 @@ export class SetProfileImageFolder{
         await account.updateAccount({username: account.username},{"images.profileImage": absoluteUrl}).then(res => {
             /* console.log("profile image update => ");
             console.log(res); */
-            if(res["done"] == true) response = {absUrl: absoluteUrl, done: true};
+            if(res[Constants.KEY_DONE] == true) response = {absUrl: absoluteUrl, done: true};
         });
         return response;
     }

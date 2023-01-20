@@ -3,6 +3,7 @@ import multiparty from "multiparty";
 import { SetProfileImageFolder, SetProfileImageFolderInterface } from "../../../../../classes/account/upload/setprofileimagefolder";
 import { Paths } from "../../../../../namespaces/paths";
 import { Messages } from "../../../../../namespaces/messages";
+import { Constants } from "../../../../../namespaces/constants";
 
 export async function upload_profile_image(req: Request, res: Response){
     let tokenKey: string = "";
@@ -64,7 +65,7 @@ export async function upload_profile_image(req: Request, res: Response){
         console.log(spifData); */
         const spif: SetProfileImageFolder = new SetProfileImageFolder(spifData);
         spif.setFolder().then(result => {
-            if(result["done"] == true){
+            if(result[Constants.KEY_DONE] == true){
                 return res.status(200).json({ dest: result["dest"], done: true, msg: "Upload completato" });
             }
             else{

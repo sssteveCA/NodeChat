@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import multiparty from "multiparty";
 import { parse } from "path";
 import { SetCoverImageFolder, SetCoverImageFolderInterface } from "../../../../../classes/account/upload/setcoverimagefolder";
+import { Constants } from "../../../../../namespaces/constants";
 import { Messages } from "../../../../../namespaces/messages";
 import { Paths } from "../../../../../namespaces/paths";
 
@@ -30,7 +31,7 @@ export async function upload_cover_image(req: Request, res: Response){
         };
         const scif: SetCoverImageFolder = new SetCoverImageFolder(scifData);
         scif.setFolder().then(result => {
-            if(result["done"] == true){
+            if(result[Constants.KEY_DONE] == true){
                 return res.status(200).json({ dest: result["dest"], done: true, msg: "Upload completato" });
             }
             else{

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Account } from "../../../../classes/database/models/account";
 import { Token } from "../../../../classes/database/models/token";
 import { MongoDbModelManagerInterface } from "../../../../classes/database/mongodbmodelmanager";
+import { Constants } from "../../../../namespaces/constants";
 import { Messages } from "../../../../namespaces/messages";
 import { Paths } from "../../../../namespaces/paths";
 import { Schemas } from "../../../../namespaces/schemas";
@@ -15,7 +16,7 @@ export function current_user_api(req: Request, res: Response){
     };
     let token: Token = new Token(mmi_data,{});
     token.getToken({tokenKey: tokenKey}).then(obj => {
-        if(obj["done"] == true){
+        if(obj[Constants.KEY_DONE] == true){
             let accountId = obj["result"]["accountId"];
             return accountId;
         }
@@ -28,16 +29,16 @@ export function current_user_api(req: Request, res: Response){
         return account.getAccount({_id: accountId});
     }).then(obj => {
         //console.log(obj);
-        if(obj["done"] == true){
+        if(obj[Constants.KEY_DONE] == true){
             let baseUrl: string = `${req.protocol}://${req.get('host')}`;
             let account: object = setUsernameObject(obj,baseUrl);
             /* console.log("account_api current_user account => ");
             console.log(account); */
             return res.status(200).json({
-                done: obj["done"],
+                done: obj[Constants.KEY_DONE],
                 account: account
             });
-        }//if(obj["done"] == true){
+        }//if(obj[Constants.KEY_DONE] == true){
         else{
             return res.status(404).json({ done: false, msg: Messages.ERROR_USERNOTFOUND });
         }

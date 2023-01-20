@@ -15,4 +15,8 @@ export namespace Constants{
      * The duration of the token_key when user login
      */
     export const TOKEN_DURATION_SECONDS: number = 900; 
+
+    //Keys
+    export const KEY_DONE: string = "done";
+    export const KEY_MESSAGE: string = "message";
 }

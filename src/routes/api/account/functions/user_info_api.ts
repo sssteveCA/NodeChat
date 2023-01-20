@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Account } from "../../../../classes/database/models/account";
 import { MongoDbModelManagerInterface } from "../../../../classes/database/mongodbmodelmanager";
+import { Constants } from "../../../../namespaces/constants";
 import { Messages } from "../../../../namespaces/messages";
 import { Schemas } from "../../../../namespaces/schemas";
 
@@ -14,16 +15,16 @@ export function user_info_api(req: Request, res: Response){
     };
     let account: Account = new Account(mmi_data,{});
     account.getAccount({_id: user_id}).then(obj => {
-        if(obj["done"] == true){
+        if(obj[Constants.KEY_DONE] == true){
             let baseUrl: string = `${req.protocol}://${req.get('host')}`;
             let account: object = setUsernameObject(obj,baseUrl);
             /* console.log("account_api user_info account => ");
             console.log(account); */
             return res.status(200).json({
-                done: obj["done"],
+                done: obj[Constants.KEY_DONE],
                 account: account
             });
-        }//if(obj["done"] == true){
+        }//if(obj[Constants.KEY_DONE] == true){
         else{
             return res.status(404).json({ done: false, msg: Messages.ERROR_USERNOTFOUND });
         }

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { SetEmployment, SetEmploymentInterface } from "../../../../../classes/account/update/setemployment";
+import { Constants } from "../../../../../namespaces/constants";
 import { Messages } from "../../../../../namespaces/messages";
 
 export default function update_employment(req: Request, res: Response){
@@ -10,7 +11,7 @@ export default function update_employment(req: Request, res: Response){
             }
             let emp: SetEmployment = new SetEmployment(empData);
             emp.setEmployment().then(result => {
-                if(result["done"] == true)
+                if(result[Constants.KEY_DONE] == true)
                     return res.status(200).json({done: true, msg: "Informazioni sul lavoro aggiornate"});
                 else
                     return res.status(500).json({done: false, msg: Messages.ERROR_EMPLOYMENT_UPDATE});

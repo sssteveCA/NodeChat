@@ -1,3 +1,4 @@
+import { Constants } from "../../../namespaces/constants";
 import { Schemas } from "../../../namespaces/schemas";
 import { Account } from "../../database/models/account";
 import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager";
@@ -76,7 +77,7 @@ export class SetEmployment{
             {_id: accountId},
             {
                 employment: this._employment
-            }).then(res => updated = res["done"]);
+            }).then(res => updated = res[Constants.KEY_DONE]);
         return updated;
     }
 }

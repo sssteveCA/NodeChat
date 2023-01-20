@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { SetEducation, SetEducationInterface } from "../../../../../classes/account/update/seteducation";
+import { Constants } from "../../../../../namespaces/constants";
 import { Messages } from "../../../../../namespaces/messages";
 
 export default function update_education(req: Request, res: Response){
@@ -14,7 +15,7 @@ export default function update_education(req: Request, res: Response){
             }
             let se: SetEducation = new SetEducation(seData);
             se.setEducation().then(result => {
-                if(result["done"] == true)
+                if(result[Constants.KEY_DONE] == true)
                     return res.status(200).json({done: true, msg: "Informazioni sull'istruzione aggiornate"});
                 else 
                     return res.status(500).json({done: false, msg: Messages.ERROR_EDUCATION_UPDATE});

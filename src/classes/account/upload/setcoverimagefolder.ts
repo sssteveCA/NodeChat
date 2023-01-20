@@ -5,6 +5,7 @@ import { Token, TokenInterface } from "../../database/models/token";
 import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager";
 import fs from "fs/promises";
 import { General } from "../../general";
+import { Constants } from "../../../namespaces/constants";
 
 export interface SetCoverImageFolderInterface{
     image_path: string;
@@ -70,12 +71,12 @@ export class SetCoverImageFolder{
             let accountUsername: string|null = await this.getAccountUsername(accountId);
             if(accountUsername != null){
                 let moved: object = await this.moveFile(this._image_path,accountUsername);
-                if(moved["done"] == true){
+                if(moved[Constants.KEY_DONE] == true){
                     let updateProperty: object = await this.updateCoverImageProperty(moved["dest"],accountUsername);
-                    if(updateProperty["done"] == true)
+                    if(updateProperty[Constants.KEY_DONE] == true)
                         response = {dest: updateProperty["absUrl"], done: true};
                     else this._errno = SetCoverImageFolder.ERR_MOVE_FILE;  
-                }//if(moved["done"] == true){
+                }//if(moved[Constants.KEY_DONE] == true){
                 else this._errno = SetCoverImageFolder.ERR_MOVE_FILE;
             }//if(accountUsername != null){
             else 
@@ -137,7 +138,7 @@ export class SetCoverImageFolder{
         let accountData: AccountInterface = { username: username };
         let account: Account = new Account(mmiData,accountData);
         await account.updateAccount({username: account.username},{"images.coverImage": absoluteUrl}).then(res => {
-            if(res["done"] == true) 
+            if(res[Constants.KEY_DONE] == true) 
                 response = {absUrl: absoluteUrl, done: true};
         });
         return response;

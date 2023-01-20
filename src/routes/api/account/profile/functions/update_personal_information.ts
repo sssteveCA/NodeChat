@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { SetPersonalInformation, SetPersonalInformationInterface } from "../../../../../classes/account/update/setpersonalinformation";
+import { Constants } from "../../../../../namespaces/constants";
 import { Messages } from "../../../../../namespaces/messages";
 
 export default function update_personal_information(req: Request, res: Response){
@@ -23,7 +24,7 @@ export default function update_personal_information(req: Request, res: Response)
                 spi.setPersonalInformation().then(result => {
                     /* console.log("update_personal_information setPersonalInformation result => ");
                     console.log(result); */
-                    if(result["done"] == true)
+                    if(result[Constants.KEY_DONE] == true)
                         return res.status(200).json({done: true, msg: "Informazioni personali aggiornate"});
                     else
                         return res.status(500).json({done: false, msg: Messages.ERROR_PERSONALINFORMATION_UPDATE});
