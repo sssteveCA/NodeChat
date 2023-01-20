@@ -37,4 +37,42 @@ export class ContactsInformationUpdateRequest{
         }
         return this._error;
     }
+
+    public async ciUpdate(): Promise<object>{
+        let response: object = {}
+        this._errno = 0;
+        try{
+            await this.ciUpdatePromise().then(res => {
+                console.log(res);
+                response = JSON.parse(res);
+            }).catch(err => {
+                console.warn(err);
+                throw err;
+            })
+        }catch(e){
+            this._errno = ContactsInformationUpdateRequest.ERR_FETCH;
+            response = {done: false, msg: this.error}
+        }
+        return response;
+    }
+
+    private async ciUpdatePromise(): Promise<string>{
+        return await new Promise<string>((resolve,reject)=> {
+            fetch(ContactsInformationUpdateRequest.FETCH_URL,{
+                method: 'POST',
+                headers: {
+                    "Accept": "application/json", "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    token_key: this._token_key,
+                    telephone: this._telephone,
+                    email: this._email
+                })
+            }).then(res => {
+                resolve(res.text());
+            }).catch(err => {
+                reject(err);
+            });
+        });
+    }
 }
