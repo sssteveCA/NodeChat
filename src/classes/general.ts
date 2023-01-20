@@ -41,4 +41,15 @@ export class General{
         });
         return accountId;
     }
+
+    /**
+     * Check if a string matches with a given pattern
+     * @param regex the regular expression
+     * @param value the value to perform the search
+     * @returns true if the string matches, false otherwise
+     */
+    public static patternMatch(regex: string, value: string): boolean{
+        let regexp: RegExp = new RegExp(regex);
+        return regexp.test(value);   
+    }
 }
