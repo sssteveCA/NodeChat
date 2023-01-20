@@ -1,5 +1,6 @@
 import { ConfirmDialog, ConfirmDialogInterface } from "../../../classes/dialogs/confirmdialog.js";
 import { MessageDialogInterface } from "../../../classes/dialogs/messagedialog.js";
+import { ContactsInformationUpdateRequest, ContactsInformationUpdateRequestInterface } from "../../../classes/requests/contactsinformationupdaterequest.js";
 import { EducationUpdateRequest, EducationUpdateRequestInterface } from "../../../classes/requests/educationupdaterequest.js";
 import { EmploymentUpdateRequest, EmploymentUpdateRequestInterface } from "../../../classes/requests/employmentupdaterequest.js";
 import { PersonalInformationUpdateRequest, PersonalInformationUpdateRequestInterface } from "../../../classes/requests/personalinformationupdaterequest.js";
@@ -114,16 +115,29 @@ export function setInformationSectionEvents(): void{
             cd.dialog.remove();
         }); 
     });
-    se.contactInfoButtonClick(()=>{
+    se.contactInfoButtonClick((psecData)=>{
         let cdData: ConfirmDialogInterface = {
-            title: 'Modifica informazioni personali',
+            title: 'Modifica informazioni di contatto',
             message: 'Vuoi modificare le informazioni di contatto con i valori inseriti?'
         };
         let cd: ConfirmDialog = new ConfirmDialog(cdData);
         cd.btYes.on('click',()=>{
             cd.dialog.dialog('destroy');
             cd.dialog.remove();
-            se.contactInfoButton.trigger("click");
+            let ciurData: ContactsInformationUpdateRequestInterface = {
+                token_key: $('input[name=token_key]').val() as string,
+                telephone: $('#telephone_value').val() as string,
+                email: $('#email_value').val() as string
+            }
+            let ciur: ContactsInformationUpdateRequest = new ContactsInformationUpdateRequest(ciurData);
+            ciur.ciUpdate().then(obj => {
+                let mdData: MessageDialogInterface = {
+                    title: 'Modifica informazioni di contatto',
+                    message: obj["msg"]
+                }
+                fMessageDialog(mdData);
+                se.contactInfoButton.trigger("click");
+            });
         });
         cd.btNo.on('click',()=>{
             cd.dialog.dialog('destroy');

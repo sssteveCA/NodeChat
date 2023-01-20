@@ -1,4 +1,4 @@
-export interface ContacstInformationUpdateRequestInterface{
+export interface ContactsInformationUpdateRequestInterface{
     token_key: string;
     telephone: string;
     email: string;
@@ -17,7 +17,7 @@ export class ContactsInformationUpdateRequest{
 
     private static FETCH_URL:string =  "/api/profile/update_contacts_information";
 
-    constructor(data: ContacstInformationUpdateRequestInterface){
+    constructor(data: ContactsInformationUpdateRequestInterface){
         this._token_key = data.token_key;
         this._telephone = data.telephone;
         this._email = data.email;
