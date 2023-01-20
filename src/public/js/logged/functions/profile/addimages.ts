@@ -1,6 +1,7 @@
 import { MessageDialog, MessageDialogInterface } from "../../../classes/dialogs/messagedialog.js";
 import { CoverImageUploadRequest, CoverImageUploadRequestInterface } from "../../../classes/requests/coverimageuploadrequest.js";
 import { ProfileImageUploadRequest, ProfileImageUploadRequestInterface } from "../../../classes/requests/profileimageuploadrequest.js";
+import { Constants } from "../../../namespaces/constants.js";
 
 export function addImages(profile: string, cover: string): void{
     $('.profile-image').html(`
@@ -31,13 +32,13 @@ export function addImages(profile: string, cover: string): void{
         piur.uploadImage().then(obj => {
             //console.log("piu uploadImage => ");
             //console.log(obj);
-            const cdData: MessageDialogInterface = { title: "Immagine del profilo", message: obj["msg"] };
+            const cdData: MessageDialogInterface = { title: "Immagine del profilo", message: obj[Constants.KEY_MESSAGE] };
             let cd: MessageDialog = new MessageDialog(cdData);
             cd.btOk.on('click',()=>{
                 cd.dialog.dialog('destroy');
                 cd.dialog.remove();
             });
-            if(obj["done"] == true){
+            if(obj[Constants.KEY_DONE] == true){
                 profile_image.attr('src',obj["dest"]);
             }
         });
@@ -54,13 +55,13 @@ export function addImages(profile: string, cover: string): void{
         ciur.uploadImage().then(obj =>{
             //console.log("piu uploadImage => ");
             //console.log(obj);
-            let cdData: MessageDialogInterface = { title: "Immagine del profilo", message: obj["msg"] };
+            let cdData: MessageDialogInterface = { title: "Immagine del profilo", message: obj[Constants.KEY_MESSAGE] };
             let cd: MessageDialog = new MessageDialog(cdData);
             cd.btOk.on('click',()=>{
                 cd.dialog.dialog('destroy');
                 cd.dialog.remove();
             });
-            if(obj["done"] == true){
+            if(obj[Constants.KEY_DONE] == true){
                 cover_image.attr('src',obj["dest"]);
             }
         });

@@ -6,6 +6,7 @@ import { EmploymentUpdateRequest, EmploymentUpdateRequestInterface } from "../..
 import { PersonalInformationUpdateRequest, PersonalInformationUpdateRequestInterface } from "../../../classes/requests/personalinformationupdaterequest.js";
 import { SectionEvents, SectionEventsInterface } from "../../../classes/template/profile/section_events.js";
 import { fMessageDialog } from "../../../functions/general.js";
+import { Constants } from "../../../namespaces/constants.js";
 import { PersonalInformationItemsType } from "../../../types/personalinformationitemstype.js";
 
 export function setInformationSectionEvents(): void{
@@ -42,7 +43,7 @@ export function setInformationSectionEvents(): void{
                 piSpinner.toggleClass('invisible');
                 let mdData: MessageDialogInterface = {
                     title: "Modifica informazioni personali",
-                    message: obj["msg"]
+                    message: obj[Constants.KEY_MESSAGE]
                 }
                 fMessageDialog(mdData);
                 se.personalInfoButton.trigger("click");
@@ -73,7 +74,7 @@ export function setInformationSectionEvents(): void{
             eur.edUpdate().then(obj => {
                 eSpinner.toggleClass('invisible');
                 let mdData: MessageDialogInterface = {
-                    title: "Modifica informazioni sull'istruzione", message: obj["msg"]
+                    title: "Modifica informazioni sull'istruzione", message: obj[Constants.KEY_MESSAGE]
                 }
                 fMessageDialog(mdData);
                 se.educationButton.trigger("click");
@@ -104,7 +105,7 @@ export function setInformationSectionEvents(): void{
                 empSpinner.toggleClass('invisible');
                 let mdData: MessageDialogInterface = {
                     title: 'Modifica informazioni sul lavoro',
-                    message: obj["msg"]
+                    message: obj[Constants.KEY_MESSAGE]
                 }
                 fMessageDialog(mdData);
                 se.workButton.trigger("click");
@@ -137,7 +138,7 @@ export function setInformationSectionEvents(): void{
                 ciSpinner.toggleClass('invisible');
                 let mdData: MessageDialogInterface = {
                     title: 'Modifica informazioni di contatto',
-                    message: obj["msg"]
+                    message: obj[Constants.KEY_MESSAGE]
                 }
                 fMessageDialog(mdData);
                 se.contactInfoButton.trigger("click");

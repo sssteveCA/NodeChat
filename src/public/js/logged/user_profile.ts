@@ -4,6 +4,7 @@ import { Section, SectionInterface } from "../classes/template/profile/section.j
 import { UserSection, UserSectionInterface } from "../classes/template/profile/user_section.js";
 import { MyProfileSections, SectionLiItems } from "../enums/enums.js";
 import Account from "../models/account.js";
+import { Constants } from "../namespaces/constants.js";
 
 $(()=>{
     let ur_data: UserRequestInterface = {
@@ -15,12 +16,12 @@ $(()=>{
     let ur: UserRequest = new UserRequest(ur_data);
     ur.userInfo().then(obj => {
         //console.log(obj);
-        if(obj["done"] == true){
+        if(obj[Constants.KEY_DONE] == true){
             account = setAccount(obj["account"]);
             addImages(account["images"]["profileImage"], account["images"]["coverImage"]);
             //console.log(account);
             $('#'+SectionLiItems.INFORMATION+' a').trigger('click');
-        }//if(obj["done"] == true){
+        }//if(obj[Constants.KEY_DONE] == true){
     });
     $('.sections ul li a').on('click',(e)=>{
         let fired_parent: JQuery = $(e.target).parent();

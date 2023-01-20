@@ -4,6 +4,7 @@ import { Section, SectionInterface } from "../classes/template/profile/section.j
 import { SectionEvents, SectionEventsInterface } from "../classes/template/profile/section_events.js";
 import { MyProfileSections, SectionLiItems } from "../enums/enums.js";
 import Account from "../models/account.js";
+import { Constants } from "../namespaces/constants.js";
 import { PersonalInformationItemsType } from "../types/personalinformationitemstype.js";
 import { addImages } from "./functions/profile/addimages.js";
 import { setInformationSectionEvents } from "./functions/profile/setinformationsectionevents.js";
@@ -17,12 +18,12 @@ $(()=>{
     let cur: CurrentUserRequest = new CurrentUserRequest(cur_data);
     cur.currentUser().then(obj => {
         //console.log(obj);
-        if(obj["done"] == true){
+        if(obj[Constants.KEY_DONE] == true){
             account = setAccount(obj["account"]);
             addImages(account["images"]["profileImage"], account["images"]["coverImage"]);
             //console.log(account);
             $('#'+SectionLiItems.INFORMATION+' a').trigger('click');
-        }//if(obj["done"] == true){
+        }//if(obj[Constants.KEY_DONE] == true){
     });
     $('.sections ul li a').on('click',(e)=>{
         let fired_parent: JQuery = $(e.target).parent();
