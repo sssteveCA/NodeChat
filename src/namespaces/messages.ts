@@ -1,6 +1,9 @@
 
 export namespace Messages{
     const ADMIN_CONTACT: string = "Se il problema persiste, contatta l'amministratore del sito";
+    
+    //Errors
+    export const ERROR_CONTACTSINFORMATION_UPDATE: string = "Errore durante la modifica delle informazioni di contatto";
     export const ERROR_EDUCATION_UPDATE: string = "Errore durante la modifica delle informazioni sull'istruzione";
     export const ERROR_EMPLOYMENT_UPDATE: string = "Errore durante la modifica delle informazioni sul lavoro";
     export const ERROR_INCORRECTFORMAT: string = "I dati inseriti non sono nel formato corretto, riprova";
