@@ -64,6 +64,7 @@ app.get('/',(req,res)=>{
 
 app.listen(Constants.PORT,Constants.HOSTNAME,()=>{
     console.log(`Server in esecuzione su ${Constants.MAIN_URL}`);
+    //console.log(app._router);
 });
 
 app.all("*",(req,res)=>{
