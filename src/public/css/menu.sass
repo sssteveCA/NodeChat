@@ -3,20 +3,23 @@
 $hover-li-background: linear-gradient(0deg, rgba(6,242,184,1) 0%, rgba(0,138,255,1) 100%)
 $nav-border: 1px solid black
 $nav-background: linear-gradient(90deg, rgba(242,128,6,1) 0%, rgba(224,255,0,1) 76%, rgba(78,255,0,1) 100%)
-$policy-class: 'policy-sub-menu'
+$policy-sub-menu-class: 'policy-sub-menu'
 
-@mixin menu-style()
-    nav
-        display: flex
-        justify-content: space-between
+
+@mixin policy-menu-style($policy-sub-menu-class)
+    ul.#{$policy-sub-menu-class}
+        display: none
+        list-style-type: none
+        flex-direction: column
         background: $nav-background
-        border: $nav-border
-        @include ul-li-style()
-    $nav-ul-sel: selector.nest("nav","ul")
-    #{$nav-ul-sel}
-        padding: 0
-        margin: 0
-    @include policy-menu-style($policy-class)
+        li
+            font-size: 18px
+            font-weight: bold
+            padding: 20px
+            &:hover
+                background: $hover-li-background
+                border: 2px solid red
+
 
 @mixin ul-li-style()
     ul
@@ -31,18 +34,17 @@ $policy-class: 'policy-sub-menu'
             background: $hover-li-background
             border: 2px solid red
 
-@mixin policy-menu-style($policy-class)
-    ul.#{$policy-class}
-        display: none
-        list-style-type: none
-        flex-direction: column
+@mixin menu-style()
+    nav
+        display: flex
+        justify-content: space-between
         background: $nav-background
-        li
-            font-size: 18px
-            font-weight: bold
-            padding: 20px
-            &:hover
-                background: $hover-li-background
-                border: 2px solid red
+        border: $nav-border
+        @include ul-li-style()
+    $nav-ul-sel: selector.nest("nav","ul")
+    #{$nav-ul-sel}
+        padding: 0
+        margin: 0
+    @include policy-menu-style($policy-sub-menu-class)
 
 @include menu-style()

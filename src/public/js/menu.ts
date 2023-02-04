@@ -1,6 +1,10 @@
 import { ConfirmDialog, ConfirmDialogInterface } from "./classes/dialogs/confirmdialog.js";
 
 $(()=>{
+    logout();
+});
+
+function logout(): void{
     let logout_link:JQuery = $('#logout');
     if(logout_link.length){
         //If logout_link exists
@@ -22,4 +26,4 @@ $(()=>{
             });
         });
     }//if(logout_link.length){
-});
+}
