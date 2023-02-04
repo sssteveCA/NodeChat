@@ -6,3 +6,6 @@ node_modules
 dist/public/css/*.map
 dist/public/img/profiles/*
 .env
+src/policies/cookiepolicy.ts
+src/policies/privacypolicy.ts
+src/policies/termsandconditions.ts
