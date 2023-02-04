@@ -2,6 +2,7 @@ import { ConfirmDialog, ConfirmDialogInterface } from "./classes/dialogs/confirm
 
 $(()=>{
     logout();
+    policy_menu_item();
 });
 
 function logout(): void{
@@ -26,4 +27,23 @@ function logout(): void{
             });
         });
     }//if(logout_link.length){
+}
+
+function policy_menu_item(): void{
+    $('.policy-menu').on('mouseenter',(e)=>{
+        let pos = $(e.currentTarget).position();
+        let height: number = $(e.currentTarget).height() as number;
+        $('.policy-sub-menu').css({
+            position: 'absolute',
+            top: (pos.top + height)+'px',
+            left: pos.left+'px',
+            display: 'flex',
+            'z-index': 20
+        });
+    });
+    $('.policy-menu').on('mouseleave',(e)=>{
+        $('.policy-sub-menu').css({
+            display: 'none'
+        })
+    });
 }
