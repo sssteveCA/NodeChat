@@ -35,13 +35,12 @@ function policy_menu_item(): void{
     let psm_css = {};
     policy_menu.on('mouseenter',(e)=>{
         let pos = $(e.currentTarget).position();
-        let pm_height: number = $(e.currentTarget).height() as number;
+        //let pm_height: number = $(e.currentTarget).height() as number;
         let pm_width: number = policy_menu.width() as number;
         let psm_width: number = policy_sub_menu.width() as number;
         let half_width_diff = (psm_width - pm_width) / 2;
         psm_css = {
             position: 'absolute',
-            top: (pos.top + pm_height)+'px',
             left: (pos.left - half_width_diff)+'px',
             display: 'flex',
             'z-index': 20,
