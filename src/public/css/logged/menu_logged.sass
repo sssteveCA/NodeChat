@@ -26,7 +26,9 @@ $policy-sub-menu-class: 'policy-sub-menu'
         justify-content: space-between
         background: $nav-background
         border: $nav-border
-        @include ul-li-style()
+        div
+            display: flex
+            @include ul-li-style()
     $nav-ul-sel: selector.nest("nav","ul")
     #{$nav-ul-sel}
         padding: 0
