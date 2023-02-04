@@ -15,7 +15,9 @@
         <script type="module" src="../js/menu.js"></script>
         <script type="module" src="../js/logged/profile.js"></script>
         <script src="../js/footer.js"></script>
-        {{> cookie_banner}}
+        {{^preferences}}
+            {{> cookie_banner}}
+        {{/preferences}}
     </head>
     <body>
         {{> menu_logged}}
