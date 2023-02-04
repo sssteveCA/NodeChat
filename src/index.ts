@@ -20,7 +20,6 @@ import { account_routes_api } from './routes/api/account/account_api';
 dotenv.config(); //Load .env file
 
 const app = express();
-
 app.use(session({
     secret: process.env.EXPRESS_SESSION_SECRET as string,
     saveUninitialized: false,
