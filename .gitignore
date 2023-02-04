@@ -5,6 +5,7 @@ node_modules
 *.map
 dist/public/css/*.map
 dist/public/img/profiles/*
+dist/views/partials/cookie_banner.mustache
 .env
 src/policies/cookiepolicy.ts
 src/policies/privacypolicy.ts
