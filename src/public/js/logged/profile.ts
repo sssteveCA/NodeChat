@@ -54,6 +54,9 @@ $(()=>{
         if(idTarget == SectionLiItems.INFORMATION){
             setInformationSectionEvents();
         }//
+        else if(idTarget == SectionLiItems.ACCOUNT_SETTINGS){
+            
+        }
     });
 });
 

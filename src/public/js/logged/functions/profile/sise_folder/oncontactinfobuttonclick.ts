@@ -1,10 +1,10 @@
-import { ConfirmDialog, ConfirmDialogInterface } from "../../../../classes/dialogs/confirmdialog";
-import { MessageDialogInterface } from "../../../../classes/dialogs/messagedialog";
-import { ContactsInformationUpdateRequest, ContactsInformationUpdateRequestInterface } from "../../../../classes/requests/contactsinformationupdaterequest";
-import { SectionEvents } from "../../../../classes/template/profile/section_events";
-import { fMessageDialog } from "../../../../functions/general";
-import { Constants } from "../../../../namespaces/constants";
-import { ProfileSectionEditContainer } from "../../../../types/types";
+import { ConfirmDialog, ConfirmDialogInterface } from "../../../../classes/dialogs/confirmdialog.js";
+import { MessageDialogInterface } from "../../../../classes/dialogs/messagedialog.js";
+import { ContactsInformationUpdateRequest, ContactsInformationUpdateRequestInterface } from "../../../../classes/requests/contactsinformationupdaterequest.js";
+import { SectionEvents } from "../../../../classes/template/profile/section_events.js";
+import { fMessageDialog } from "../../../../functions/general.js";
+import { Constants } from "../../../../namespaces/constants.js";
+import { ProfileSectionEditContainer } from "../../../../types/types.js";
 
 
 /**

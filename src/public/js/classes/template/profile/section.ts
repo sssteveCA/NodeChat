@@ -218,8 +218,22 @@ export class Section{
 <div class="sel-section-header">
         <h2 class="text-center">Impostazioni account</h2>
 </div>
-<div class="sel-section-content mt-5">
-    <p class="fs-4 fw-bold text-center">Impostazioni account</p>
+<div class="sel-section-content mt-5 d-flex flex-column">
+    <fieldset>
+        <legend class="text-center">Elimina account</legend>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10 col-lg-8 text-center">
+Fai click sul bottone 'ELIMINA' per cancellare definitivamente il tuo account. Tutte le informazioni associate ad esso andranno perse
+                </div>
+            </div>
+            <div class="row justify-content-center mt-3">
+                <div class="col-8 col-md-6 col-lg-4 text-center">
+                    <button type="button" class="btn btn-danger btn-lg">ELIMINA</button>
+                </div>
+            </div>
+        </div>
+    </fieldset>
 </div>
         `;
     }
