@@ -37,6 +37,8 @@ export class AccountSettingsSection{
                 }
                 let pcd: PasswordConfirmDialog = new PasswordConfirmDialog(pcdData);
                 pcd.btOk.on('click',()=>{
+                    pcd.dialog.dialog('destroy');
+                    pcd.dialog.remove();
                     callback({});
                 });
             });

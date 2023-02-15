@@ -21,7 +21,7 @@ export class PasswordConfirmDialog extends MessageDialog{
     <div class="row">
         <div class="col-12">${this._message}</div> 
     </div>
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-12">
             <label class="form-label">La tua password</label>
         </div>
@@ -37,8 +37,12 @@ export class PasswordConfirmDialog extends MessageDialog{
             <input type="password" id="pcd-conf-password" class="form-control">
         </div>
     </div>
-    <div class="row">
-        <input type="checkbox" class="form-check-input" id="pcd-show-password">
+    <div class="row mt-2">
+        <div class="col-12">
+            <input type="checkbox" class="form-check-input" id="pcd-show-password">
+            <label for="pcd-show-password">Mostra password</label>
+        </div>
+        
     </div>
 </div>
             
@@ -60,14 +64,16 @@ export class PasswordConfirmDialog extends MessageDialog{
             width: this._width,
             buttons: [{
                 text: 'OK',
-                click: ()=>{
+                click: function(){
 
                 }
             }],
-            close: ()=>{
+            close: function(){
 
             },
-            open: ()=>{
+            open: function(){
+                console.log("PasswordconfirmDialog message");
+                console.log(message);
                 $(this).html(message);
             }
         });
