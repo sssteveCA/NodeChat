@@ -8,9 +8,11 @@ export class PasswordConfirmDialog extends MessageDialog{
 
     private _password: JQuery<HTMLInputElement>;
     private _conf_password: JQuery<HTMLInputElement>;
+    private _show_password: JQuery<HTMLInputElement>;
 
     constructor(data: PasswordConfirmDialogInterface){
         super(data);
+        this.setDialogEvents();
     }
 
     private setMessageHtml(): string{
@@ -22,7 +24,6 @@ export class PasswordConfirmDialog extends MessageDialog{
     <div class="row">
         <div class="col-12">
             <label class="form-label">La tua password</label>
-            <input type="password" id="pcd-password" class="form-control">
         </div>
         <div class="col-12">
             <input type="password" id="pcd-password" class="form-control">
@@ -33,7 +34,7 @@ export class PasswordConfirmDialog extends MessageDialog{
             <label class="form-label">Conferma password</label>
         </div>
         <div class="col-12">
-            <input type="password" id="pcd-password" class="form-control">
+            <input type="password" id="pcd-conf-password" class="form-control">
         </div>
     </div>
     <div class="row">
@@ -67,10 +68,26 @@ export class PasswordConfirmDialog extends MessageDialog{
 
             },
             open: ()=>{
-
+                $(this).html(message);
             }
         });
+        this._password = $('#pcd-password');
+        this._conf_password = $('#pcd-conf-password');
+        this._show_password = $('#pcd-show-password');
         this._btOk = $('body > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-dialog-buttons > div.ui-dialog-buttonpane.ui-widget-content.ui-helper-clearfix > div > button');
+    }
+
+    private setDialogEvents(): void{
+       this._show_password.on('change',(e)=>{
+        if($(e.currentTarget).is(':checked')){
+            this._password.attr('type','text');
+            this._conf_password.attr('type','text');
+        }
+        else{
+            this._password.attr('type','password');
+            this._conf_password.attr('type','password');
+        }
+       })  
     }
 
 }
