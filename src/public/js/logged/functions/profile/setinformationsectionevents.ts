@@ -8,6 +8,7 @@ import { SectionEvents, SectionEventsInterface } from "../../../classes/template
 import { fMessageDialog } from "../../../functions/general.js";
 import { Constants } from "../../../namespaces/constants.js";
 import { PersonalInformationItemsType } from "../../../types/personalinformationitemstype.js";
+import onPersonalInfoButtonClick from "./sise_folder/onpersonalinfobuttonclick.js";
 
 export function setInformationSectionEvents(): void{
     let piit: PersonalInformationItemsType = {
@@ -19,40 +20,7 @@ export function setInformationSectionEvents(): void{
     };
     let se: SectionEvents = new SectionEvents(se_data);
     se.personalInfoButtonClick((psecData)=>{
-        let cdData: ConfirmDialogInterface = {
-            title: 'Modifica informazioni personali',
-            message: 'Vuoi modificare le informazioni personali con i valori inseriti?'
-        };
-        let cd: ConfirmDialog = new ConfirmDialog(cdData);
-        cd.btYes.on('click',()=>{
-            cd.dialog.dialog('destroy');
-            cd.dialog.remove();
-            let piurData: PersonalInformationUpdateRequestInterface = {
-                token_key: $('input[name=token_key]').val() as string, 
-                name: $('#name_value').val() as string,
-                surname: $('#surname_value').val() as string,
-                sex: $('#sex_value').val() as string,
-                birth_date: $('#birth_date_value').val() as string,
-                birth_place: $('#birth_place_value').val() as string,
-                living_place: $('#living_place_value').val() as string
-            };
-            let piSpinner: JQuery<HTMLDivElement> = $('#'+psecData.spinner_id);
-            piSpinner.toggleClass('invisible');
-            let piur: PersonalInformationUpdateRequest = new PersonalInformationUpdateRequest(piurData);
-            piur.piUpdate().then(obj => {
-                piSpinner.toggleClass('invisible');
-                let mdData: MessageDialogInterface = {
-                    title: "Modifica informazioni personali",
-                    message: obj[Constants.KEY_MESSAGE]
-                }
-                fMessageDialog(mdData);
-                se.personalInfoButton.trigger("click");
-            });  
-        });
-        cd.btNo.on('click',()=>{
-            cd.dialog.dialog('destroy');
-            cd.dialog.remove();
-        }); 
+        onPersonalInfoButtonClick(se,psecData);
     });
     se.educationButtonClick((psecData)=>{
         let cdData: ConfirmDialogInterface = {
