@@ -10,6 +10,7 @@ import { Constants } from "../../../namespaces/constants.js";
 import { PersonalInformationItemsType } from "../../../types/personalinformationitemstype.js";
 import onEducationButtonClick from "./sise_folder/oneducationbuttonclick.js";
 import onPersonalInfoButtonClick from "./sise_folder/onpersonalinfobuttonclick.js";
+import onWorkButtonClick from "./sise_folder/onworkbuttonclick.js";
 
 export function setInformationSectionEvents(): void{
     let piit: PersonalInformationItemsType = {
@@ -27,35 +28,7 @@ export function setInformationSectionEvents(): void{
         onEducationButtonClick(se,psecData);
     });
     se.workButtonClick((psecData)=>{
-        let cdData: ConfirmDialogInterface = {
-            title: 'Modifica informazioni sul lavoro',
-            message: 'Vuoi modificare le informazioni sul lavoro con i valori inseriti?'
-        };
-        let cd: ConfirmDialog = new ConfirmDialog(cdData);
-        cd.btYes.on('click',()=>{
-            cd.dialog.dialog('destroy');
-            cd.dialog.remove();
-            let empData: EmploymentUpdateRequestInterface = {
-                token_key: $('input[name=token_key]').val() as string,
-                employment: $('#work_value').val() as string
-            }
-            let emp: EmploymentUpdateRequest = new EmploymentUpdateRequest(empData);
-            let empSpinner: JQuery<HTMLDivElement> = $('#'+psecData.spinner_id);
-            empSpinner.toggleClass('invisible');
-            emp.employmentUpdate().then(obj => {
-                empSpinner.toggleClass('invisible');
-                let mdData: MessageDialogInterface = {
-                    title: 'Modifica informazioni sul lavoro',
-                    message: obj[Constants.KEY_MESSAGE]
-                }
-                fMessageDialog(mdData);
-                se.workButton.trigger("click");
-            });
-        });
-        cd.btNo.on('click',()=>{
-            cd.dialog.dialog('destroy');
-            cd.dialog.remove();
-        }); 
+        onWorkButtonClick(se,psecData);
     });
     se.contactInfoButtonClick((psecData)=>{
         let cdData: ConfirmDialogInterface = {
