@@ -1,4 +1,5 @@
-import { ConfirmDialog, ConfirmDialogInterface } from "../../dialogs/confirmdialog";
+import { ConfirmDialog, ConfirmDialogInterface } from "../../dialogs/confirmdialog.js";
+import { PasswordConfirmDialog, PasswordConfirmDialogInterface } from "../../dialogs/passwordconfirmdialog.js";
 
 export interface AccountSettingsSectionInterface{
     deleteAccountButton: JQuery<HTMLButtonElement>;
@@ -30,6 +31,14 @@ export class AccountSettingsSection{
             cd.btYes.on('click',()=>{
                 cd.dialog.dialog('destroy');
                 cd.dialog.remove();
+                let pcdData: PasswordConfirmDialogInterface = {
+                    title: 'Conferma password',
+                    message: 'Inserisci la tua password per continuare'
+                }
+                let pcd: PasswordConfirmDialog = new PasswordConfirmDialog(pcdData);
+                pcd.btOk.on('click',()=>{
+                    callback({});
+                });
             });
             cd.btNo.on('click',()=>{
                 cd.dialog.dialog('destroy');

@@ -1,5 +1,5 @@
-import { PersonalInformationItemsType } from "../../../types/personalinformationitemstype";
-import { ProfileSectionEditContainer } from "../../../types/types";
+import { PersonalInformationItemsType } from "../../../types/personalinformationitemstype.js";
+import { ProfileSectionEditContainer } from "../../../types/types.js";
 
 export interface SectionEventsInterface{
     personalInfoButton: JQuery<HTMLButtonElement>;

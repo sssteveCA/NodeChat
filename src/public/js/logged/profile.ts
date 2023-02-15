@@ -7,6 +7,7 @@ import Account from "../models/account.js";
 import { Constants } from "../namespaces/constants.js";
 import { PersonalInformationItemsType } from "../types/personalinformationitemstype.js";
 import { addImages } from "./functions/profile/addimages.js";
+import { setAccountSectionEvents } from "./functions/profile/setaccountsectionevents.js";
 import { setInformationSectionEvents } from "./functions/profile/setinformationsectionevents.js";
 
 $(()=>{
@@ -55,7 +56,7 @@ $(()=>{
             setInformationSectionEvents();
         }//
         else if(idTarget == SectionLiItems.ACCOUNT_SETTINGS){
-            
+            setAccountSectionEvents();
         }
     });
 });
