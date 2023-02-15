@@ -7,13 +7,13 @@ export interface MessageDialogInterface{
 }
 
 export class MessageDialog{
-    private _title: string;
-    private _message: string;
-    private _id: string;
-    private _width: number|string;
-    private _height: number|string;
-    private _dialog: JQuery;
-    private _btOk: JQuery;
+    protected _title: string;
+    protected _message: string;
+    protected _id: string;
+    protected _width: number|string;
+    protected _height: number|string;
+    protected _dialog: JQuery<HTMLDivElement>;
+    protected _btOk: JQuery<HTMLButtonElement>;
 
     constructor(data: MessageDialogInterface){
         this._title = data.title;
@@ -38,7 +38,7 @@ export class MessageDialog{
     get dialog(){return this._dialog;}
     get btOk(){return this._btOk;}
 
-    private setDialog(): void{
+    protected setDialog(): void{
         let message = this._message;
         this._dialog = $('<div>');
         this._dialog.attr('id',this._id);

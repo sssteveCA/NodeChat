@@ -13,9 +13,9 @@ export class ConfirmDialog{
     private _id: string;
     private _width: number|string;
     private _height: number|string;
-    private _dialog: JQuery;
-    private _btYes: JQuery; 
-    private _btNo: JQuery;
+    private _dialog: JQuery<HTMLDivElement>;
+    private _btYes: JQuery<HTMLButtonElement>; 
+    private _btNo: JQuery<HTMLButtonElement>;
 
     constructor(data: ConfirmDialogInterface){
         this._title = data.title;
