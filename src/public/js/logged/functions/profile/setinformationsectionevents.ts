@@ -8,6 +8,7 @@ import { SectionEvents, SectionEventsInterface } from "../../../classes/template
 import { fMessageDialog } from "../../../functions/general.js";
 import { Constants } from "../../../namespaces/constants.js";
 import { PersonalInformationItemsType } from "../../../types/personalinformationitemstype.js";
+import onContactInfoButtonClick from "./sise_folder/oncontactinfobuttonclick.js";
 import onEducationButtonClick from "./sise_folder/oneducationbuttonclick.js";
 import onPersonalInfoButtonClick from "./sise_folder/onpersonalinfobuttonclick.js";
 import onWorkButtonClick from "./sise_folder/onworkbuttonclick.js";
@@ -31,36 +32,6 @@ export function setInformationSectionEvents(): void{
         onWorkButtonClick(se,psecData);
     });
     se.contactInfoButtonClick((psecData)=>{
-        let cdData: ConfirmDialogInterface = {
-            title: 'Modifica informazioni di contatto',
-            message: 'Vuoi modificare le informazioni di contatto con i valori inseriti?'
-        };
-        let cd: ConfirmDialog = new ConfirmDialog(cdData);
-        cd.btYes.on('click',()=>{
-            cd.dialog.dialog('destroy');
-            cd.dialog.remove();
-            let ciurData: ContactsInformationUpdateRequestInterface = {
-                token_key: $('input[name=token_key]').val() as string,
-                telephone: $('#telephone_value').val() as string,
-                email: $('#email_value').val() as string
-            }
-            let ciSpinner: JQuery<HTMLDivElement> = $(`#${psecData.spinner_id}
-            `);
-            ciSpinner.toggleClass('invisible');
-            let ciur: ContactsInformationUpdateRequest = new ContactsInformationUpdateRequest(ciurData);
-            ciur.ciUpdate().then(obj => {
-                ciSpinner.toggleClass('invisible');
-                let mdData: MessageDialogInterface = {
-                    title: 'Modifica informazioni di contatto',
-                    message: obj[Constants.KEY_MESSAGE]
-                }
-                fMessageDialog(mdData);
-                se.contactInfoButton.trigger("click");
-            });
-        });
-        cd.btNo.on('click',()=>{
-            cd.dialog.dialog('destroy');
-            cd.dialog.remove();
-        }); 
+        onContactInfoButtonClick(se,psecData);
     });
 }
