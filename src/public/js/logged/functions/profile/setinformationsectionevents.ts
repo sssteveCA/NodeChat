@@ -8,6 +8,7 @@ import { SectionEvents, SectionEventsInterface } from "../../../classes/template
 import { fMessageDialog } from "../../../functions/general.js";
 import { Constants } from "../../../namespaces/constants.js";
 import { PersonalInformationItemsType } from "../../../types/personalinformationitemstype.js";
+import onEducationButtonClick from "./sise_folder/oneducationbuttonclick.js";
 import onPersonalInfoButtonClick from "./sise_folder/onpersonalinfobuttonclick.js";
 
 export function setInformationSectionEvents(): void{
@@ -23,35 +24,7 @@ export function setInformationSectionEvents(): void{
         onPersonalInfoButtonClick(se,psecData);
     });
     se.educationButtonClick((psecData)=>{
-        let cdData: ConfirmDialogInterface = {
-            title: 'Modifica informazioni sull\'istruzione',
-            message: 'Vuoi modificare le informazioni sulla tua istruzione con i valori inseriti?'
-        };
-        let cd: ConfirmDialog = new ConfirmDialog(cdData);
-        cd.btYes.on('click',()=>{
-            cd.dialog.dialog('destroy');
-            cd.dialog.remove();
-            let eurData: EducationUpdateRequestInterface = {
-                token_key: $('input[name=token_key]').val() as string,
-                secondary_school: $('#secondary_school_value').val() as string,
-                university: $('#university_value').val() as string
-            }
-            let eur: EducationUpdateRequest = new EducationUpdateRequest(eurData);
-            let eSpinner: JQuery<HTMLDivElement> = $('#'+psecData.spinner_id);
-            eSpinner.toggleClass('invisible');
-            eur.edUpdate().then(obj => {
-                eSpinner.toggleClass('invisible');
-                let mdData: MessageDialogInterface = {
-                    title: "Modifica informazioni sull'istruzione", message: obj[Constants.KEY_MESSAGE]
-                }
-                fMessageDialog(mdData);
-                se.educationButton.trigger("click");
-            })
-        });
-        cd.btNo.on('click',()=>{
-            cd.dialog.dialog('destroy');
-            cd.dialog.remove();
-        }); 
+        onEducationButtonClick(se,psecData);
     });
     se.workButtonClick((psecData)=>{
         let cdData: ConfirmDialogInterface = {
