@@ -18,6 +18,12 @@ export class DeleteAccountRequest{
 
     private static FETCH_URL:string = "/api/profile/delete_account";
 
+    constructor(data: DeleteAccountRequestInterface){
+        this._token_key = data.token_key;
+        this._password = data.password;
+        this._conf_password = data.conf_password;
+    }
+
     get errno(){return this._errno;}
     get error(){
         switch(this._errno){

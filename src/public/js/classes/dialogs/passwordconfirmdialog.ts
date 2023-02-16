@@ -10,6 +10,9 @@ export class PasswordConfirmDialog extends MessageDialog{
     private _conf_password: JQuery<HTMLInputElement>;
     private _show_password: JQuery<HTMLInputElement>;
 
+    get password(){ return this._password; }
+    get conf_password(){ return this._conf_password; }
+
     constructor(data: PasswordConfirmDialogInterface){
         super(data);
         this.setDialogEvents();

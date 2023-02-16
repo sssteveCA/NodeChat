@@ -1,5 +1,6 @@
 import { ConfirmDialog, ConfirmDialogInterface } from "../../dialogs/confirmdialog.js";
 import { PasswordConfirmDialog, PasswordConfirmDialogInterface } from "../../dialogs/passwordconfirmdialog.js";
+import { DeleteAccountRequest, DeleteAccountRequestInterface } from "../../requests/deleteaccountrequest.js";
 
 export interface AccountSettingsSectionInterface{
     deleteAccountButton: JQuery<HTMLButtonElement>;
@@ -39,7 +40,15 @@ export class AccountSettingsSection{
                 pcd.btOk.on('click',()=>{
                     pcd.dialog.dialog('destroy');
                     pcd.dialog.remove();
-                    callback({});
+                    let darData: DeleteAccountRequestInterface = {
+                        token_key: $('input[name=token_key]').val() as string,
+                        password: pcd.password.val() as string,
+                        conf_password: pcd.conf_password.val() as string
+                    }
+                    let dar: DeleteAccountRequest = new DeleteAccountRequest(darData);
+                    dar.deleteAccount().then(obj => {
+                        callback(dar);
+                    })
                 });
             });
             cd.btNo.on('click',()=>{
