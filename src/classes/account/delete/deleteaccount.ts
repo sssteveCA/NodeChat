@@ -31,33 +31,64 @@ export class DeleteAccount{
         let response: object = {};
         this._errno = 0;
         await General.getAccountId(this._token_key).then(accountId => {
-            if(accountId == null) throw new AccountNotFoundError("");
+            if(accountId != null) return this.checkPassword(accountId);
+            else throw new AccountNotFoundError("");
+        }).then(cp_response => {
+            if(cp_response['authorized'] == true){
+
+            }
+            else throw new InvalidCredentialsError("")
         })
         .catch(err => {
+            if(err instanceof AccountNotFoundError){
 
+            }
+            else if(err instanceof InvalidCredentialsError){
+
+            }
+            else{
+
+            }
         });
         return response;
     }
 
     /**
      * Check if user has provided the correct password before delete
-     * @param accountId 
-     * @returns 
+     * @param accountId the id of the account with the password to compare
+     * @returns an object with the check password status and the account id if the password is correct
      */
-    private async checkPassword(accountId: string): Promise<boolean>{
-        let authorized: boolean = false;
+    private async checkPassword(accountId: string): Promise<object>{
+        let cp_response: object = {};
         await General.getAccountById(accountId).then(response => {
             if(response[Constants.KEY_DONE] == true){
                 return bcrypt.compare(this._password,response['result']['password_hash']);
             }//if(response[Constants.KEY_DONE] == true){
             else throw new InvalidCredentialsError("");
         }).then(isAuthorized =>{ 
-            authorized = isAuthorized;
+            if(isAuthorized)
+                cp_response = { authorized: true, accountId: accountId}
+            else
+                cp_response = { authorized: false }
         }).catch(err => {
-            authorized = false;
+            cp_response = { authorized: false }
         })
-        return authorized;
+        return cp_response;
     }
 
+    /**
+     * Delete the account with a specific id permanently
+     * @param accountId the account id to the delete
+     * @returns true if the account was deleted, false otherwise
+     */
+    private async deleteAccountOp(accountId: string): Promise<boolean>{
+        let mmiData: MongoDbModelManagerInterface = {
+            collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
+            schema: Schemas.ACCOUNTS
+        }
+        let account: Account = new Account(mmiData,{});
+        const delete_response = await account.deleteAccount({_id: accountId});
+        return delete_response[Constants.KEY_DONE];
+    }
     
 }

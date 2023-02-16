@@ -104,7 +104,8 @@ export class Account extends MongoDbModelManager{
             if(conn == true) return super.delete(filter);
             else throw new DatabaseConnectionError(this.error as string);
         }).then(res => {
-            //console.log(res);
+            console.log(res);
+            response = { done: true };
         }).catch(err => {
             console.warn(err);
         }).finally(()=>{
