@@ -71,8 +71,7 @@ export class DeleteAccount{
                 return this.deleteAccountOp(cp_response['accountId']);
             }
             else throw new InvalidCredentialsError("")
-        })
-        .then(deleted => {
+        }).then(deleted => {
             if(deleted) 
                 response = {done: true, message: "Il tuo account è stato rimosso con successo", code: 200}
             else 

@@ -230,6 +230,9 @@ Fai click sul bottone 'ELIMINA' per cancellare definitivamente il tuo account. T
             <div class="row justify-content-center mt-3">
                 <div class="col-8 col-md-6 col-lg-4 text-center">
                     <button type="button" id="delete-account-button" class="btn btn-danger btn-lg">ELIMINA</button>
+                    <div id="delete-account-spinner" class="spinner-border invisible ms-2" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                 </div>
             </div>
         </div>

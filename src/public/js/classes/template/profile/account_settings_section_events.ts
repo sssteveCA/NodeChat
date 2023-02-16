@@ -1,3 +1,4 @@
+import { ProfileSectionEditContainer } from "../../../types/types.js";
 import { ConfirmDialog, ConfirmDialogInterface } from "../../dialogs/confirmdialog.js";
 import { PasswordConfirmDialog, PasswordConfirmDialogInterface } from "../../dialogs/passwordconfirmdialog.js";
 import { DeleteAccountRequest, DeleteAccountRequestInterface } from "../../requests/deleteaccountrequest.js";
@@ -46,7 +47,10 @@ export class AccountSettingsSection{
                         conf_password: pcd.conf_password.val() as string
                     }
                     let dar: DeleteAccountRequest = new DeleteAccountRequest(darData);
+                    let da_spinner = $('delete-account-spinner');
+                    da_spinner.toggleClass('invisible');
                     dar.deleteAccount().then(obj => {
+                        da_spinner.toggleClass('invisible');
                         callback(dar);
                     })
                 });
