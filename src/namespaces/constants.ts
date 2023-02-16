@@ -17,6 +17,7 @@ export namespace Constants{
     export const TOKEN_DURATION_SECONDS: number = 900; 
 
     //Keys
+    export const KEY_CODE: string = "code";
     export const KEY_DONE: string = "done";
     export const KEY_MESSAGE: string = "message";
 }

@@ -7,6 +7,7 @@ import { General } from '../../general';
 import bcrypt from 'bcrypt';
 import { InvalidCredentialsError } from '../../errors/invalidcredentialserror';
 import { AccountNotFoundError } from '../../errors/accountnotfounderror';
+import { Messages } from '../../../namespaces/messages';
 
 export interface DeleteAccountInterface{
     token_key: string;
@@ -19,14 +20,42 @@ export class DeleteAccount{
     private _errno: number = 0;
     private _error: string|null = null;
 
+    public static ERR_ACCOUNT_NOT_FOUND: number = 1;
+    public static ERR_INVALID_CREDENTIALS: number = 2;
+    public static ERR_ACCOUNT_DELETE: number = 3;
+
+    public static ERR_ACCOUNT_NOT_FOUND_MSG: string = "Nessun account trovato con il token fornito";
+    public static ERR_INVALID_CREDENTIALS_MSG: string = "La password che hai inserito non è corretta";
+    public static ERR_ACCOUNT_DELETE_MSG: string = "Errore durante la rimozione del tuo account";
+
     constructor(data: DeleteAccountInterface){
         this._token_key = data.token_key;
         this._password = data.password;
     }
 
     get errno(){return this._errno;}
-    get error(){return this._error;}
+    get error(){
+        switch(this._errno){
+            case DeleteAccount.ERR_ACCOUNT_NOT_FOUND:
+                this._error = DeleteAccount.ERR_ACCOUNT_NOT_FOUND_MSG;
+                break;
+            case DeleteAccount.ERR_INVALID_CREDENTIALS:
+                this._error = DeleteAccount.ERR_INVALID_CREDENTIALS_MSG;
+                break;
+            case DeleteAccount.ERR_ACCOUNT_DELETE:
+                this._error = DeleteAccount.ERR_ACCOUNT_DELETE_MSG;
+                break;
+            default:
+                this._error = null;
+                break;
+        }
+        return this._error;
+    }
 
+    /**
+     * 
+     * @returns Execute all the operations to delete the selected user account
+     */
     public async deleteAccount(): Promise<object>{
         let response: object = {};
         this._errno = 0;
@@ -35,19 +64,27 @@ export class DeleteAccount{
             else throw new AccountNotFoundError("");
         }).then(cp_response => {
             if(cp_response['authorized'] == true){
-
+                return this.deleteAccountOp(cp_response['accountId']);
             }
             else throw new InvalidCredentialsError("")
         })
-        .catch(err => {
+        .then(deleted => {
+            if(deleted) 
+                response = {done: true, msg: "Il tuo account è stato rimosso con successo", code: 200}
+            else 
+                throw new Error("");
+        }).catch(err => {
             if(err instanceof AccountNotFoundError){
-
+                this._errno = DeleteAccount.ERR_ACCOUNT_NOT_FOUND;
+                response = {done: false, msg: Messages.ERROR_ACCOUNT_DELETE, code: 404}
             }
             else if(err instanceof InvalidCredentialsError){
-
+                this._errno = DeleteAccount.ERR_INVALID_CREDENTIALS;
+                response = {done: false, msg: this.error, code: 401}
             }
             else{
-
+                this._errno = DeleteAccount.ERR_ACCOUNT_DELETE;
+                response = {done: false, msg: Messages.ERROR_ACCOUNT_DELETE, code: 500}
             }
         });
         return response;
