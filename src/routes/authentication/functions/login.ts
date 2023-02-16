@@ -9,7 +9,7 @@ export function login(req: Request, res: Response){
     };
     let login: Login = new Login(login_data);
     login.login().then(obj => {
-        if(obj['done'] == true){
+        if(obj[Constants.KEY_DONE] == true){
             req.session['username'] = username;
             req.session['token_key'] = obj['token_key'];
             return res.redirect("/");

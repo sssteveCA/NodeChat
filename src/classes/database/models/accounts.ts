@@ -1,3 +1,4 @@
+import { Constants } from "../../../namespaces/constants";
 import { Schemas } from "../../../namespaces/schemas";
 import { DatabaseConnectionError } from "../../errors/databaseconnectionerror";
 import { General } from "../../general";
@@ -57,7 +58,7 @@ export class Accounts extends MongoDbModelsManager{
         }).then(res => {
             /* console.log("getAccounts");
             console.log(res); */
-            response['done'] = true;
+            response[Constants.KEY_DONE] = true;
             //Check if results is a non empty an Array of objects
             if(Array.isArray(res) && res.length > 0){
                 let mmi_data: MongoDbModelManagerInterface = {

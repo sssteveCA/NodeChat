@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { Token, TokenInterface } from "../../../../classes/database/models/token";
 import { MongoDbModelManagerInterface } from "../../../../classes/database/mongodbmodelmanager";
 import { NotAuthenticatedError } from "../../../../classes/errors/notauthenticatederror";
+import { Constants } from "../../../../namespaces/constants";
 import { Messages } from "../../../../namespaces/messages";
 import { Schemas } from "../../../../namespaces/schemas";
 
@@ -16,7 +17,7 @@ export async function loggedApiMiddleware(req: Request, res: Response, next: Nex
             let token_data: TokenInterface = {};
             let token: Token = new Token(mmmi_data,token_data);
             await token.getToken({tokenKey: token_key}).then(obj => {
-                if(obj['done'] == true && obj['result'] != null) {
+                if(obj[Constants.KEY_DONE] == true && obj['result'] != null) {
                     res.locals.tokenKey = token_key;
                     return next();
                 }

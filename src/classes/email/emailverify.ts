@@ -1,3 +1,4 @@
+import { Constants } from "../../namespaces/constants";
 import { Email, EmailInterface } from "./email";
 
 export interface EmailVerifyInterface{
@@ -85,7 +86,7 @@ export class EmailVerify{
         };
         let emailSender: Email = new Email(es_data);
         await emailSender.sendMail().then(res => {
-            if(res['done'] == true)
+            if(res[Constants.KEY_DONE] == true)
                 response = {
                     done: true
                 };

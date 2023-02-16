@@ -16,7 +16,7 @@ $(()=>{
         spr.searchProfiles().then(obj => {
             search_spinner.toggleClass("invisible");
             //console.log(obj);
-            if(obj['done'] == true){
+            if(obj[Constants.KEY_DONE] == true){
                 let profiles: [] = obj['profiles'];
                 let srt_data: SearchProfilesTableInterface = {
                     query: query, profiles: profiles
@@ -24,7 +24,7 @@ $(()=>{
                 let srt: SearchProfilesTable = new SearchProfilesTable(srt_data);
                 //console.log(srt.html_table);
                 $('#users-results').html(srt.html_table as string);
-            }//if(obj['done'] == true){
+            }//if(obj[Constants.KEY_DONE] == true){
             else{
                 let md_data: MessageDialogInterface = {
                     title: 'Ricerca utenti', message: obj[Constants.KEY_MESSAGE]

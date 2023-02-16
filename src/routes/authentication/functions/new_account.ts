@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Subscribe, SubscribeInterface } from "../../../classes/authentication/subscribe";
+import { Constants } from "../../../namespaces/constants";
 import { Paths } from "../../../namespaces/paths";
 
 export function new_account(req: Request, res: Response){
@@ -12,7 +13,7 @@ export function new_account(req: Request, res: Response){
     };
     let subscribe: Subscribe = new Subscribe(subscribe_data);
     subscribe.insertNewAccount().then(obj => {
-        return res.status(obj['code']).json(obj);
+        return res.status(obj[Constants.KEY_CODE]).json(obj);
     }).catch(err => {
         return res.status(500).send(err);
     });

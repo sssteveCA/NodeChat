@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { Token, TokenInterface } from "../../../classes/database/models/token";
 import { MongoDbModelManagerInterface } from "../../../classes/database/mongodbmodelmanager";
+import { Constants } from "../../../namespaces/constants";
 import { Schemas } from "../../../namespaces/schemas";
 
 export async function loggedMiddleware(req: Request, res: Response, next: NextFunction){
@@ -15,12 +16,12 @@ export async function loggedMiddleware(req: Request, res: Response, next: NextFu
         let token_data: TokenInterface = {};
         let token: Token = new Token(mongo_mmi,token_data);
         await token.getToken({tokenKey: token_key}).then(result => {
-            if(result['done'] == true && result['result'] != null){
+            if(result[Constants.KEY_DONE] == true && result['result'] != null){
                 let nowTimestamp: number = Date.now();
                 let expDate: Date = new Date(result['result']['expireDate']);
                 let expTime: number = expDate.getTime();
                 next_hop = true;
-            }//if(result['done'] == true && result['result'] != null){
+            }//if(result[Constants.KEY_DONE] == true && result['result'] != null){
             else redirect_string = "/login";
         }).catch(err => {
             redirect_string = "/login";

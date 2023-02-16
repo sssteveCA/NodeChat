@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Email, EmailInterface } from "../../../classes/email/email";
+import { Constants } from "../../../namespaces/constants";
 
 export function send_email(req: Request, res: Response){
     let output: object = {};
@@ -8,7 +9,7 @@ export function send_email(req: Request, res: Response){
     };
     let em: Email = new Email(em_data);
     em.sendMail().then(obj => {
-        if(obj['done'] == true){
+        if(obj[Constants.KEY_DONE] == true){
             output = {
                 done: true, message: "La tua richiesta è stata inviata. Riceverai una risposta nel minor tempo possibile"
             };

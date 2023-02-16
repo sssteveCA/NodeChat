@@ -63,7 +63,7 @@ export class SubscribeRequest{
                 //console.log(res);
                 let obj = JSON.parse(res);
                 response = {
-                    done: obj['done'],
+                    done: obj[Constants.KEY_DONE],
                     message: obj[Constants.KEY_MESSAGE]
                 };
             }).catch(err => {
