@@ -1,5 +1,6 @@
 import { Constants } from "../namespaces/constants";
 import { Schemas } from "../namespaces/schemas";
+import { Account } from "./database/models/account";
 import { Token, TokenInterface } from "./database/models/token";
 import { MongoDbModelManagerInterface } from "./database/mongodbmodelmanager";
 
@@ -19,6 +20,22 @@ export class General{
         let seconds = date.getSeconds() < 10 ? "0"+date.getSeconds() : date.getSeconds();
         let stringDate: string = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
         return stringDate;
+    }
+
+    /**
+     * Get the account object that has a specific id
+     * @param accountId the id of the account document to search
+     * @returns an object that indicates the result of the search
+     */
+    public static async getAccountById(accountId: string): Promise<object>{
+        let response: object = {};
+        let mmmiData: MongoDbModelManagerInterface = {
+            collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
+            schema: Schemas.ACCOUNTS
+        }
+        let account: Account = new Account(mmmiData,{});
+        response = await account.getAccount({_id: accountId});
+        return response;
     }
 
     /**

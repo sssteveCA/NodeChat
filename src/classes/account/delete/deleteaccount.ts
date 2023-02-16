@@ -1,4 +1,8 @@
 
+import { Constants } from '../../../namespaces/constants';
+import { Schemas } from '../../../namespaces/schemas';
+import { Account } from '../../database/models/account';
+import { MongoDbModelManagerInterface } from '../../database/mongodbmodelmanager';
 import { General } from '../../general';
 
 export interface DeleteAccountInterface{
@@ -26,7 +30,24 @@ export class DeleteAccount{
         await General.getAccountId(this._token_key).then(accountId => {
             
         })
+        .catch(err => {
+
+        });
         return response;
+    }
+
+    private async checkPassword(accountId: string): Promise<boolean>{
+        let authorized: boolean = false;
+        let mmmiData: MongoDbModelManagerInterface = {
+            collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
+            schema: Schemas.ACCOUNTS
+        }
+        let account: Account = new Account(mmmiData,{});
+        const response = await account.getAccount({_id: accountId});
+        if(response[Constants.KEY_DONE] == true){
+
+        }//if(response[Constants.KEY_DONE] == true){
+        return false;
     }
 
     
