@@ -79,7 +79,7 @@ export const verify_credentials = async (req: Request, res: Response, next: Next
     await ac.getAccount({username: username}).then(res => {
         /* console.log("verify_credentials getAccount => ");
         console.log(res); */
-        if(res['done'] == true && res['result'] != null && username == res['result']['username']){
+        if(res[Constants.KEY_DONE] == true && res['result'] != null && username == res['result']['username']){
             return brcypt.compare(password, res['result']['password']);
         }
         else throw new InvalidCredentialsError(Messages.ERROR_INVALIDCREDENTIALS);
