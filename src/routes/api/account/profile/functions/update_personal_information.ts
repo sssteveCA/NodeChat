@@ -25,17 +25,17 @@ export default function update_personal_information(req: Request, res: Response)
                     /* console.log("update_personal_information setPersonalInformation result => ");
                     console.log(result); */
                     if(result[Constants.KEY_DONE] == true)
-                        return res.status(200).json({done: true, msg: "Informazioni personali aggiornate"});
+                        return res.status(200).json({done: true, message: "Informazioni personali aggiornate"});
                     else
-                        return res.status(500).json({done: false, msg: Messages.ERROR_PERSONALINFORMATION_UPDATE});
+                        return res.status(500).json({done: false, message: Messages.ERROR_PERSONALINFORMATION_UPDATE});
                 });
             }//if(sexValueOk){
             else
-                return res.status(400).json({done: false, msg: Messages.ERROR_INCORRECTFORMAT});
+                return res.status(400).json({done: false, message: Messages.ERROR_INCORRECTFORMAT});
         }//if(isset && notEmpty){
         else
-            return res.status(400).json({done: false, msg: Messages.ERROR_MISSINGDATA});
+            return res.status(400).json({done: false, message: Messages.ERROR_MISSINGDATA});
     }catch(e){
-        return res.status(500).json({done: false, msg: Messages.ERROR_PERSONALINFORMATION_UPDATE});
+        return res.status(500).json({done: false, message: Messages.ERROR_PERSONALINFORMATION_UPDATE});
     }
 }

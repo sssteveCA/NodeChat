@@ -22,8 +22,8 @@ export function contactsValidatorMiddleware(req: Request, res: Response, next: N
                 }//if(key == 'email'){
             }//for(const [key,value] of Object.entries(body)){
             if(valid == true) return next();
-            return res.status(400).send({done: false, msg: Messages.ERROR_INCORRECTFORMAT});
+            return res.status(400).send({done: false, message: Messages.ERROR_INCORRECTFORMAT});
         }//if(body.hasOwnProperty('name') && body.hasOwnProperty('email') && body.hasOwnProperty('subject') && body.hasOwnProperty('message')){ 
     }//if(body != null){
-    return res.status(400).send({done: false, msg: Messages.ERROR_MISSINGDATA});
+    return res.status(400).send({done: false, message: Messages.ERROR_MISSINGDATA});
 }

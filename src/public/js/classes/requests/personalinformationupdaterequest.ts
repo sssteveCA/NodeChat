@@ -74,7 +74,7 @@ export class PersonalInformationUpdateRequest{
         }catch(e){
             this._errno = PersonalInformationUpdateRequest.ERR_FETCH;
             response = {
-                done: false, msg: this.error
+                done: false, message: this.error
             }
         }
         return response;

@@ -80,7 +80,7 @@ export class Accounts extends MongoDbModelsManager{
             console.warn(err);
             response = {
                 done: false,
-                msg: this.error
+                message: this.error
             };
         }).finally(()=>{
             super.close();

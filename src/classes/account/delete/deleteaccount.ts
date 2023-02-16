@@ -60,9 +60,13 @@ export class DeleteAccount{
         let response: object = {};
         this._errno = 0;
         await General.getAccountId(this._token_key).then(accountId => {
+            /* console.log("DeleteAccount deleteAccount getAccountId");
+            console.log(accountId); */
             if(accountId != null) return this.checkPassword(accountId);
             else throw new AccountNotFoundError("");
         }).then(cp_response => {
+            /* console.log("DeleteAccount deleteAccount checkPassword");
+            console.log(cp_response); */
             if(cp_response['authorized'] == true){
                 return this.deleteAccountOp(cp_response['accountId']);
             }
@@ -70,21 +74,21 @@ export class DeleteAccount{
         })
         .then(deleted => {
             if(deleted) 
-                response = {done: true, msg: "Il tuo account è stato rimosso con successo", code: 200}
+                response = {done: true, message: "Il tuo account è stato rimosso con successo", code: 200}
             else 
                 throw new Error("");
         }).catch(err => {
             if(err instanceof AccountNotFoundError){
                 this._errno = DeleteAccount.ERR_ACCOUNT_NOT_FOUND;
-                response = {done: false, msg: Messages.ERROR_ACCOUNT_DELETE, code: 404}
+                response = {done: false, message: Messages.ERROR_ACCOUNT_DELETE, code: 404}
             }
             else if(err instanceof InvalidCredentialsError){
                 this._errno = DeleteAccount.ERR_INVALID_CREDENTIALS;
-                response = {done: false, msg: this.error, code: 401}
+                response = {done: false, message: this.error, code: 401}
             }
             else{
                 this._errno = DeleteAccount.ERR_ACCOUNT_DELETE;
-                response = {done: false, msg: Messages.ERROR_ACCOUNT_DELETE, code: 500}
+                response = {done: false, message: Messages.ERROR_ACCOUNT_DELETE, code: 500}
             }
         });
         return response;
@@ -98,8 +102,10 @@ export class DeleteAccount{
     private async checkPassword(accountId: string): Promise<object>{
         let cp_response: object = {};
         await General.getAccountById(accountId).then(response => {
+            /* console.log("DeleteAccount checkPassword getAccountById");
+            console.log(response); */
             if(response[Constants.KEY_DONE] == true){
-                return bcrypt.compare(this._password,response['result']['password_hash']);
+                return bcrypt.compare(this._password,response['result']['password']);
             }//if(response[Constants.KEY_DONE] == true){
             else throw new InvalidCredentialsError("");
         }).then(isAuthorized =>{ 

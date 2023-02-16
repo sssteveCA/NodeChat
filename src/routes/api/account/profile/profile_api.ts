@@ -1,6 +1,7 @@
 
 import express from "express";
 import { loggedApi } from "../../middlewares/middlewares_api";
+import { delete_account } from "./functions/delete_account";
 import { search_api } from "./functions/search_api";
 import update_contacts_information from "./functions/update_contacts_information";
 import update_education from "./functions/update_education";
@@ -10,6 +11,8 @@ import { upload_cover_image } from "./functions/upload_cover_image";
 import { upload_profile_image } from "./functions/upload_profile_image";
 
 export const profile_routes_api = express.Router();
+
+profile_routes_api.post('/delete_account',loggedApi, delete_account);
 
 profile_routes_api.post('/search', loggedApi, search_api);
 

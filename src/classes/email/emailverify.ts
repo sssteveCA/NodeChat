@@ -93,7 +93,7 @@ export class EmailVerify{
                 this._errno = EmailVerify.ERR_SENDMAIL;
                 response = {
                     done: false,
-                    msg: this.error
+                    message: this.error
                 };
             }
         }).catch(err => {
@@ -101,7 +101,7 @@ export class EmailVerify{
             this._errno = EmailVerify.ERR_SENDMAIL;
             response = {
                 done: false,
-                msg: this.error
+                message: this.error
             };
         });
         return response;

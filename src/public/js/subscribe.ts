@@ -1,6 +1,7 @@
 import { MessageDialog, MessageDialogInterface } from "./classes/dialogs/messagedialog.js";
 import { SubscribeRequest, SubscribeRequestInterface } from "./classes/requests/subscriberequest.js";
 import { fMessageDialog } from "./functions/general.js";
+import { Constants } from "./namespaces/constants.js";
 
 $(()=>{
     let spinner = $('#subscribe-spinner');
@@ -21,7 +22,7 @@ $(()=>{
                 spinner.addClass("d-none");
                 let md_data: MessageDialogInterface = {
                     title: "Registrazione",
-                    message: obj['msg']
+                    message: obj[Constants.KEY_MESSAGE]
                 };
                 fMessageDialog(md_data);
             }).catch(err => {

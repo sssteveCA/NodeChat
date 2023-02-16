@@ -82,7 +82,7 @@ export class Subscribe{
             let acc_data: AccountInterface = {};
             let account: Account = new Account(mongodb_mmi,acc_data);
             await account.getAccount({activationCode: this._activation_code}).then(res => {
-                if(res['done'] == true){
+                if(res[Constants.KEY_DONE] == true){
                     if(res['result'] != null){
                         //Found the account with this activation_code
                         return account.updateAccount(
@@ -90,25 +90,25 @@ export class Subscribe{
                             {activationCode: null, verified: true});
                     }//if(res['result'] != null){
                     else throw new AccountNotFoundError("Codice non valido");
-                }//if(res['done'] == true){
+                }//if(res[Constants.KEY_DONE] == true){
                 else throw new Error("Errore durante l'attivazione dell'account");
             }).then(res => {
-                if(res['done'] == true && res['result'].modifiedCount > 0){
-                    response = {done: true,msg: "L'account è stato attivato", code: 200}
-                }//if(res['done'] == true && res['result'].modifiedCount > 0){
+                if(res[Constants.KEY_DONE] == true && res['result'].modifiedCount > 0){
+                    response = {done: true,message: "L'account è stato attivato", code: 200}
+                }//if(res[Constants.KEY_DONE] == true && res['result'].modifiedCount > 0){
                 else throw new Error("Errore durante l'attivazione dell'account");
             }).catch(err => {
                 throw err;
             });
         }catch(e: any){
-            response['done'] = false
+            response[Constants.KEY_DONE] = false
             if(e instanceof AccountNotFoundError){
-                response['msg'] = e.message;
-                response['code'] = 404;
+                response[Constants.KEY_MESSAGE] = e.message;
+                response[Constants.KEY_CODE] = 404;
             }
             else {
-                response['msg'] = "Errore durante l'attivazione dell'account";
-                response['code'] = 500;
+                response[Constants.KEY_MESSAGE] = "Errore durante l'attivazione dell'account";
+                response[Constants.KEY_CODE] = 500;
             }
         }
         return response;
@@ -185,10 +185,10 @@ export class Subscribe{
                       throw new Error(Subscribe.ERR_SUBSCRIBE_MSG);
                 }//else of if(res['errno'] == 0){
             }).then(res => {
-                if(res['done'] == true){
+                if(res[Constants.KEY_DONE] == true){
                     //Verification email sent
                     response = {
-                        done: true, msg: "Per completare la registrazione, verifica l'account nella tua casella di posta",
+                        done: true, message: "Per completare la registrazione, verifica l'account nella tua casella di posta",
                         code: 201
                     };
                 }//if(res['errno'] == 0){
@@ -200,14 +200,14 @@ export class Subscribe{
             });
         }catch(e: any){
             this._errno = Subscribe.ERR_SUBSCRIBE;
-            response['done'] = false; 
+            response[Constants.KEY_DONE] = false; 
             if(e instanceof MissingDataError || e instanceof DuplicateKeysError){
-                response['msg'] = e.message as string;
-                response['code'] = 400;
+                response[Constants.KEY_MESSAGE] = e.message as string;
+                response[Constants.KEY_CODE] = 400;
             }    
             else{
-                response['msg'] = this.error;
-                response['code'] = 500;
+                response[Constants.KEY_MESSAGE] = this.error;
+                response[Constants.KEY_CODE] = 500;
             }   
         }
         return response;

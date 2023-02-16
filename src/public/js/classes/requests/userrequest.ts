@@ -50,7 +50,7 @@ export class UserRequest{
             });
         }catch(e){
             this._errno = UserRequest.ERR_FETCH;
-            response = { done: false, msg: this.error }
+            response = { done: false, message: this.error }
         }
         return response;
     }

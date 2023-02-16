@@ -1,5 +1,6 @@
 import { MessageDialog, MessageDialogInterface } from "./classes/dialogs/messagedialog.js";
 import { EmailRequest, EmailRequestInterface } from "./classes/requests/emailrequest.js";
+import { Constants } from "./namespaces/constants.js";
 
 $(()=>{
     let spinner = $('#contacts-spinner');
@@ -18,7 +19,7 @@ $(()=>{
             spinner.addClass('d-none');
             let md_data:MessageDialogInterface = {
                 title: 'Richiesta assistenza',
-                message: obj['msg']
+                message: obj[Constants.KEY_MESSAGE]
             };
             fMessageDialog(md_data);
         });

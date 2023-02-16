@@ -49,7 +49,7 @@ export class DeleteAccountRequest{
             })
         }catch(e){
             this._errno = DeleteAccountRequest.ERR_FETCH;
-            response = {done: false, msg: this.error }
+            response = {done: false, message: this.error }
         }
         return response;
     }

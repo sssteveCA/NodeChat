@@ -52,7 +52,7 @@ export class ProfileImageUploadRequest{
         }catch(e){
             this._errno = ProfileImageUploadRequest.ERR_IMAGE_UPLOAD;
             response = {
-                done: false, msg: this.error
+                done: false, message: this.error
             };
         }
         return response;

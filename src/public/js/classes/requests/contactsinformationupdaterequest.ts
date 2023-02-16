@@ -51,7 +51,7 @@ export class ContactsInformationUpdateRequest{
             })
         }catch(e){
             this._errno = ContactsInformationUpdateRequest.ERR_FETCH;
-            response = {done: false, msg: this.error}
+            response = {done: false, message: this.error}
         }
         return response;
     }

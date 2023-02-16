@@ -10,12 +10,12 @@ export function send_email(req: Request, res: Response){
     em.sendMail().then(obj => {
         if(obj['done'] == true){
             output = {
-                done: true, msg: "La tua richiesta è stata inviata. Riceverai una risposta nel minor tempo possibile"
+                done: true, message: "La tua richiesta è stata inviata. Riceverai una risposta nel minor tempo possibile"
             };
             return res.status(200).send(output);
         }
         output = {
-            done: false, msg: em.error
+            done: false, message: em.error
         };
         return res.status(500).send(output);
     });

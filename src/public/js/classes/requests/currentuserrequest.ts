@@ -46,7 +46,7 @@ export class CurrentUserRequest{
             });
         }catch(e){
             this._errno = CurrentUserRequest.ERR_FETCH;
-            response = { done: false, msg: this.error }
+            response = { done: false, message: this.error }
         }
         return response;
     }

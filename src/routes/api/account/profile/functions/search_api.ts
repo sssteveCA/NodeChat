@@ -16,16 +16,16 @@ export async function search_api(req: Request, res: Response){
         await accounts.getAccounts({username: {$regex: `^${query}`, $options: "i"}}).then(result => {
             /* console.log("search_api getAccounts");
             console.log(result); */
-            let response: object = { done: true, msg: '', result: result['result'] };
+            let response: object = { done: true, message: '', result: result['result'] };
             const baseUrl: string = `${req.protocol}://${req.get('host')}`;
             response = setBaseUrl(baseUrl,response);
             return res.status(200).json(response);
         }).catch(err => {
-            return res.status(500).json({done: false, msg: Messages.ERROR_SERVER});
+            return res.status(500).json({done: false, message: Messages.ERROR_SERVER});
         });
     }//if(query && query != ""){
     else{
-        return res.status(400).json({done: false, msg: "Digita un termine di ricerca per continuare"});
+        return res.status(400).json({done: false, message: "Digita un termine di ricerca per continuare"});
     }
 }
 

@@ -40,12 +40,12 @@ export function current_user_api(req: Request, res: Response){
             });
         }//if(obj[Constants.KEY_DONE] == true){
         else{
-            return res.status(404).json({ done: false, msg: Messages.ERROR_USERNOTFOUND });
+            return res.status(404).json({ done: false, message: Messages.ERROR_USERNOTFOUND });
         }
     }).catch(err => {
         console.warn(err);
         return res.status(500).json({
-            done: false, msg: Messages.ERROR_SERVER
+            done: false, message: Messages.ERROR_SERVER
         });
     });
 }

@@ -66,7 +66,7 @@ export class Login{
                 throw err;
             });
         }catch(e){
-            response = { done: false,msg: this.error, code: 500};
+            response = { done: false,message: this.error, code: 500};
         }
         return response;
     }

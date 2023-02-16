@@ -28,10 +28,10 @@ export async function loggedApiMiddleware(req: Request, res: Response, next: Nex
         else throw new NotAuthenticatedError("");
     }catch(e){
         if(e instanceof NotAuthenticatedError){
-            return res.status(401).json({done: false, msg: Messages.ERROR_NOTAUTHENTICATED});
+            return res.status(401).json({done: false, message: Messages.ERROR_NOTAUTHENTICATED});
         }
         else{
-            return res.status(500).json({done: false, msg: Messages.ERROR_SERVER});
+            return res.status(500).json({done: false, message: Messages.ERROR_SERVER});
         }
     }
 }

@@ -2,6 +2,7 @@ import { MessageDialog, MessageDialogInterface } from "../classes/dialogs/messag
 import { SearchProfilesRequest, SearchProfilesRequestInterface } from "../classes/requests/searchprofilesrequest.js";
 import { SearchProfilesTable, SearchProfilesTableInterface } from "../classes/tables/searchprofilestable.js";
 import { fMessageDialog } from "../functions/general.js";
+import { Constants } from "../namespaces/constants.js";
 
 $(()=>{
     $('#ul_search').on('click',()=>{
@@ -26,7 +27,7 @@ $(()=>{
             }//if(obj['done'] == true){
             else{
                 let md_data: MessageDialogInterface = {
-                    title: 'Ricerca utenti', message: obj['msg']
+                    title: 'Ricerca utenti', message: obj[Constants.KEY_MESSAGE]
                 };
                 fMessageDialog(md_data);
             }

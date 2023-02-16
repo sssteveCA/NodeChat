@@ -20,17 +20,17 @@ export default function update_contacts_information(req: Request, res: Response)
                 let sci: SetContactsInformation = new SetContactsInformation(sciData);
                 sci.setContactsInformation().then(result => {
                     if(result[Constants.KEY_DONE] == true)
-                        return res.status(200).json({done: true, msg: "Informazioni di contatto aggiornate"});
+                        return res.status(200).json({done: true, message: "Informazioni di contatto aggiornate"});
                     else
-                        return res.status(500).json({done: false, msg: Messages.ERROR_CONTACTSINFORMATION_UPDATE});
+                        return res.status(500).json({done: false, message: Messages.ERROR_CONTACTSINFORMATION_UPDATE});
                 });
             }//if(emailOk){
             else
-                return res.status(400).json({done: false, msg: Messages.ERROR_INCORRECTFORMAT});
+                return res.status(400).json({done: false, message: Messages.ERROR_INCORRECTFORMAT});
         }//if(isset && notEmpty){
         else
-            return res.status(400).json({done: false, msg: Messages.ERROR_MISSINGDATA});
+            return res.status(400).json({done: false, message: Messages.ERROR_MISSINGDATA});
     }catch(e){
-        return res.status(500).json({done: false, msg: Messages.ERROR_CONTACTSINFORMATION_UPDATE});
+        return res.status(500).json({done: false, message: Messages.ERROR_CONTACTSINFORMATION_UPDATE});
     }
 }

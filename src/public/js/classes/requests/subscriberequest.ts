@@ -1,4 +1,5 @@
 import { ValidationError } from "../../errors/validationerror.js";
+import { Constants } from "../../namespaces/constants.js";
 
 export interface SubscribeRequestInterface{
     name: string, surname: string, username:string;
@@ -63,7 +64,7 @@ export class SubscribeRequest{
                 let obj = JSON.parse(res);
                 response = {
                     done: obj['done'],
-                    msg: obj['msg']
+                    message: obj[Constants.KEY_MESSAGE]
                 };
             }).catch(err => {
                 console.warn(err);
@@ -73,7 +74,7 @@ export class SubscribeRequest{
             this._errno = SubscribeRequest.ERR_SUBSCRIBE;
             response = {
                 done: false,
-                msg: this.error
+                message: this.error
             };
         }
         return response;

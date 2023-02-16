@@ -23,7 +23,7 @@ export async function upload_profile_image(req: Request, res: Response){
 
     form.on('error',()=>{
         return res.status(400).json({
-            done: false, msg: Messages.ERROR_PROFILE_IMAGE
+            done: false, message: Messages.ERROR_PROFILE_IMAGE
         });
     });
 
@@ -66,10 +66,10 @@ export async function upload_profile_image(req: Request, res: Response){
         const spif: SetProfileImageFolder = new SetProfileImageFolder(spifData);
         spif.setFolder().then(result => {
             if(result[Constants.KEY_DONE] == true){
-                return res.status(200).json({ dest: result["dest"], done: true, msg: "Upload completato" });
+                return res.status(200).json({ dest: result["dest"], done: true, message: "Upload completato" });
             }
             else{
-                return res.status(500).json({done: false, msg: Messages.ERROR_PROFILE_IMAGE });
+                return res.status(500).json({done: false, message: Messages.ERROR_PROFILE_IMAGE });
             }
         });
     });

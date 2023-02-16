@@ -52,7 +52,7 @@ export class EducationUpdateRequest{
             })
         }catch(e){
             this._errno = EducationUpdateRequest.ERR_FETCH;
-            response = {done: false, msg: this.error}
+            response = {done: false, message: this.error}
         }
         return response;
     }

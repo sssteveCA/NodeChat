@@ -104,6 +104,7 @@ export class Account extends MongoDbModelManager{
             if(conn == true) return super.delete(filter);
             else throw new DatabaseConnectionError(this.error as string);
         }).then(res => {
+            console.log("Account deleteAccount delete OK");
             console.log(res);
             response = { done: true };
         }).catch(err => {
@@ -155,7 +156,7 @@ export class Account extends MongoDbModelManager{
             console.warn(err);
             response = {
                 done: false,
-                msg: this.error
+                message: this.error
             };
         }).finally(()=>{
             super.close();
@@ -240,7 +241,7 @@ export class Account extends MongoDbModelManager{
             console.warn(err);
             response = {
                 done: false,
-                msg: err.message
+                message: err.message
             };
         }).finally(()=>{
             super.close();
@@ -272,7 +273,7 @@ export class Account extends MongoDbModelManager{
             console.warn(err);
             response = {
                 done: false,
-                msg: err.message
+                message: err.message
             };
         }).finally(()=>{
             super.close();

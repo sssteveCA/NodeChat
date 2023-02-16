@@ -71,7 +71,7 @@ export class EmailRequest{
             this._errno = EmailRequest.ERR_FETCH;
             response = {
                 done: false,
-                msg: this.error
+                message: this.error
             }
         }
         return response;

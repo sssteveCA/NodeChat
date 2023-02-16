@@ -12,8 +12,8 @@ export async function verify_code(req:Request, res: Response){
     };
     let sb: Subscribe = new Subscribe(sb_data);
     await sb.activateAccount().then(obj => {
-        verify_response = obj['msg'];
-        status_code = obj['code']; 
+        verify_response = obj[Constants.KEY_MESSAGE];
+        status_code = obj[Constants.KEY_CODE]; 
     });
     return res.status(status_code).render('code_verify',{
         bootstrap_css: '../'+Paths.BOOTSTRAP_CSS, bootstrap_js: '../'+Paths.BOOTSTRAP_JS,

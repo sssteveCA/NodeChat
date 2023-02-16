@@ -108,7 +108,7 @@ export class Token extends MongoDbModelManager{
             console.warn(err);
             response = {
                 done: false,
-                msg: this.error
+                message: this.error
             };
         }).finally(()=>{
             super.close();
@@ -190,7 +190,7 @@ export class Token extends MongoDbModelManager{
             console.warn(err);
             response = {
                 done: false,
-                msg: err.message
+                message: err.message
             };
         }).finally(()=>{
             super.close();
@@ -220,7 +220,7 @@ export class Token extends MongoDbModelManager{
             console.warn(err);
             response = {
                 done: false,
-                msg: err.message
+                message: err.message
             };
         }).finally(()=>{
             super.close();

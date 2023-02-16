@@ -49,7 +49,7 @@ export class EmploymentUpdateRequest{
         }catch(e){
             this._errno = EmploymentUpdateRequest.ERR_FETCH;
             response = {
-                done: false, msg: this.error
+                done: false, message: this.error
             }
         }
         return response;

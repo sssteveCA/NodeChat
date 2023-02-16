@@ -16,16 +16,16 @@ export default function update_education(req: Request, res: Response){
             let se: SetEducation = new SetEducation(seData);
             se.setEducation().then(result => {
                 if(result[Constants.KEY_DONE] == true)
-                    return res.status(200).json({done: true, msg: "Informazioni sull'istruzione aggiornate"});
+                    return res.status(200).json({done: true, message: "Informazioni sull'istruzione aggiornate"});
                 else 
-                    return res.status(500).json({done: false, msg: Messages.ERROR_EDUCATION_UPDATE});
+                    return res.status(500).json({done: false, message: Messages.ERROR_EDUCATION_UPDATE});
             }).catch(err => {
                 throw err;
             });
         }//if(isset && notEmpty){
         else 
-            return res.status(400).json({done: false, msg: Messages.ERROR_MISSINGDATA});
+            return res.status(400).json({done: false, message: Messages.ERROR_MISSINGDATA});
     }catch(e){
-        return res.status(500).json({done: false, msg: Messages.ERROR_EDUCATION_UPDATE});
+        return res.status(500).json({done: false, message: Messages.ERROR_EDUCATION_UPDATE});
     }
 }

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Login, LoginInterface } from "../../../classes/authentication/login";
+import { Constants } from "../../../namespaces/constants";
 
 export function login(req: Request, res: Response){
     let username: string = req.body.username;
@@ -13,7 +14,7 @@ export function login(req: Request, res: Response){
             req.session['token_key'] = obj['token_key'];
             return res.redirect("/");
         }
-        let msg_encoded: string = encodeURIComponent(obj['msg']);
+        let msg_encoded: string = encodeURIComponent(obj[Constants.KEY_MESSAGE]);
         return res.redirect('/login?message='+msg_encoded);  
          
     });

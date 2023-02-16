@@ -1,3 +1,4 @@
+import { Constants } from "../../namespaces/constants";
 
 export interface SearchProfilesRequestInterface{
     query: string;
@@ -51,8 +52,8 @@ export class SearchProfilesRequest{
                 let obj = JSON.parse(res);
                 //console.log(obj);
                 response = {
-                    done: obj['done'],
-                    msg: obj['msg'],
+                    done: obj[Constants.KEY_DONE],
+                    message: obj[Constants.KEY_MESSAGE],
                     profiles: obj['result']
                 };
                 this._profiles = response['profiles'];
@@ -64,7 +65,7 @@ export class SearchProfilesRequest{
             this._errno = SearchProfilesRequest.ERR_SEARCH_PROFILES;
             response = {
                 done: false,
-                msg: this.error
+                message: this.error
             };
         }
         return response;

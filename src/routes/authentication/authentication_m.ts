@@ -46,19 +46,19 @@ export const subscribe_validator = (req: Request, res: Response, next: NextFunct
                     return next();
                 }//if(email_regex.test(body["password"])){
                 return res.status(400).send({
-                    done: false, msg: "La password deve contenere almeno una lettera minuscola, almeno una lettera maiuscola e un numero"
+                    done: false, message: "La password deve contenere almeno una lettera minuscola, almeno una lettera maiuscola e un numero"
                 });
             }//if(email_regex.test(body["email"])){
             return res.status(400).send({
-                    done: false, msg: "L'indirizzo email inserito non è valido"
+                    done: false, message: "L'indirizzo email inserito non è valido"
                     });
         }//if(body["password"] == body["confPass"]){
         return res.status(400).send({
-            done: false, msg: "Le due password non coincidono"
+            done: false, message: "Le due password non coincidono"
         });
     }//if(propertyExists && notEmpty){
     return res.status(400).send({
-            done: false, msg: Messages.ERROR_MISSINGDATA
+            done: false, message: Messages.ERROR_MISSINGDATA
     });
 };
 
