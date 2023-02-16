@@ -44,7 +44,7 @@ export class EducationUpdateRequest{
         this._errno = 0;
         try{
             await this.edUpdatePromise().then(res => {
-                console.log(res);
+                //console.log(res);
                 response = JSON.parse(res);
             }).catch(err => {
                 console.warn(err);

@@ -165,8 +165,8 @@ export class Subscribe{
                 account = new Account(mongodb_mmi,account_data);
                 return account.insertAccount();
             }).then(res => {
-                console.log("Subscribe insertNewAccout after insert => ");
-                console.log(res);
+                /* console.log("Subscribe insertNewAccout after insert => ");
+                console.log(res); */
                 if(res['errno'] == 0){
                     //User added in DB
                     let ev_data: EmailVerifyInterface = {

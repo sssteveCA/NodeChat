@@ -75,8 +75,8 @@ export class PasswordConfirmDialog extends MessageDialog{
 
             },
             open: function(){
-                console.log("PasswordconfirmDialog message");
-                console.log(message);
+                /* console.log("PasswordconfirmDialog message");
+                console.log(message); */
                 $(this).html(message);
             }
         });
