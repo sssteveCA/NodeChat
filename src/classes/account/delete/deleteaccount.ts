@@ -8,6 +8,8 @@ import bcrypt from 'bcrypt';
 import { InvalidCredentialsError } from '../../errors/invalidcredentialserror';
 import { AccountNotFoundError } from '../../errors/accountnotfounderror';
 import { Messages } from '../../../namespaces/messages';
+import { MongoDbModelsManagerInterface } from '../../database/mongodbmodelsmanager';
+import { Tokens } from '../../database/models/tokens';
 
 export interface DeleteAccountInterface{
     token_key: string;
@@ -131,6 +133,21 @@ export class DeleteAccount{
         let account: Account = new Account(mmiData,{});
         const delete_response = await account.deleteAccount({_id: accountId});
         return delete_response[Constants.KEY_DONE];
+    }
+
+    /**
+     * Remove the tokens related to the account to delete
+     * @param accountId the tokens that have the accountId field with a certain value
+     * @returns 
+     */
+    private async deleteRelatedTokens(accountId: string): Promise<boolean>{
+        let mmisData: MongoDbModelsManagerInterface = {
+            collection_name: process.env.MONGODB_TOKENS_COLLECTION as string,
+            schema: Schemas.ACCOUNTS
+        }
+        let tokens: Tokens = new Tokens(mmisData,{});
+        const delete_tokens = tokens.deleteTokens({accountId: accountId});
+        return delete_tokens[Constants.KEY_DONE];
     }
     
 }
