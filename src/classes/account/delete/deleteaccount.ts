@@ -10,6 +10,7 @@ import { AccountNotFoundError } from '../../errors/accountnotfounderror';
 import { Messages } from '../../../namespaces/messages';
 import { MongoDbModelsManagerInterface } from '../../database/mongodbmodelsmanager';
 import { Tokens } from '../../database/models/tokens';
+import { Schema } from 'mongoose';
 
 export interface DeleteAccountInterface{
     token_key: string;
@@ -74,7 +75,7 @@ export class DeleteAccount{
             }
             else throw new InvalidCredentialsError("")
         }).then(deleted => {
-            if(deleted){
+            if(deleted[Constants.KEY_DONE]){
                 return this.deleteRelatedTokens(deleted['accountId']);
             }
             else 
@@ -83,6 +84,7 @@ export class DeleteAccount{
             response = {done: true, message: "Il tuo account è stato rimosso con successo", code: 200}
         }).
         catch(err => {
+            console.warn(err);
             if(err instanceof AccountNotFoundError){
                 this._errno = DeleteAccount.ERR_ACCOUNT_NOT_FOUND;
                 response = {done: false, message: Messages.ERROR_ACCOUNT_DELETE, code: 404}
@@ -149,7 +151,7 @@ export class DeleteAccount{
     private async deleteRelatedTokens(accountId: string): Promise<boolean>{
         let mmisData: MongoDbModelsManagerInterface = {
             collection_name: process.env.MONGODB_TOKENS_COLLECTION as string,
-            schema: Schemas.ACCOUNTS
+            schema: Schemas.TOKENS
         }
         let tokens: Tokens = new Tokens(mmisData,{});
         const delete_tokens = tokens.deleteTokens({accountId: accountId});

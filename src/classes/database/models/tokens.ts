@@ -37,7 +37,7 @@ export class Tokens extends MongoDbModelsManager{
             }
             else throw new DatabaseConnectionError(this.error as string);
         }).then(deleted => {
-            if(this._errno != 0) response = {done: true}
+            if(this._errno == 0) response = {done: true}
             else throw new Error("")
         }).catch(err => {
             response = {done: false}
