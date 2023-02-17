@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import session from "express-session";
 import { DeleteAccount, DeleteAccountInterface } from "../../../../../classes/account/delete/deleteaccount";
 import { Constants } from "../../../../../namespaces/constants";
 import { Messages } from "../../../../../namespaces/messages";
@@ -13,6 +14,10 @@ export async function delete_account(req:Request, res: Response){
             console.log(daData); */
             let da: DeleteAccount = new DeleteAccount(daData);
             const da_response: object = await da.deleteAccount();
+            if(da_response[Constants.KEY_DONE])
+                await new Promise<any>((resolve) =>{
+                    req.session.destroy(()=>{ resolve({}) });
+                });
             return res.status(da_response[Constants.KEY_CODE]).json({
                 done: da_response[Constants.KEY_DONE], message: da_response[Constants.KEY_MESSAGE]});
         }//if(req.body['password'] == req.body['conf_password']){

@@ -18,7 +18,7 @@ export function setAccountSectionEvents(): void{
             md.dialog.dialog('destroy');
             md.dialog.remove();
             if(response[Constants.KEY_DONE] == true){
-                
+                window.location.href = "/";
             }
         })
     });
