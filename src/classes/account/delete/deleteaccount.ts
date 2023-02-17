@@ -74,11 +74,15 @@ export class DeleteAccount{
             }
             else throw new InvalidCredentialsError("")
         }).then(deleted => {
-            if(deleted) 
-                response = {done: true, message: "Il tuo account è stato rimosso con successo", code: 200}
+            if(deleted){
+                return this.deleteRelatedTokens(deleted['accountId']);
+            }
             else 
                 throw new Error("");
-        }).catch(err => {
+        }).then(deletedTokens => {
+            response = {done: true, message: "Il tuo account è stato rimosso con successo", code: 200}
+        }).
+        catch(err => {
             if(err instanceof AccountNotFoundError){
                 this._errno = DeleteAccount.ERR_ACCOUNT_NOT_FOUND;
                 response = {done: false, message: Messages.ERROR_ACCOUNT_DELETE, code: 404}
@@ -125,14 +129,16 @@ export class DeleteAccount{
      * @param accountId the account id to the delete
      * @returns true if the account was deleted, false otherwise
      */
-    private async deleteAccountOp(accountId: string): Promise<boolean>{
+    private async deleteAccountOp(accountId: string): Promise<object>{
         let mmiData: MongoDbModelManagerInterface = {
             collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
             schema: Schemas.ACCOUNTS
         }
         let account: Account = new Account(mmiData,{});
         const delete_response = await account.deleteAccount({_id: accountId});
-        return delete_response[Constants.KEY_DONE];
+        return {
+            accountId: accountId, done: delete_response[Constants.KEY_DONE]
+        } 
     }
 
     /**
