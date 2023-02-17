@@ -37,6 +37,9 @@ export class Accounts extends MongoDbModelsManager{
             case Accounts.MISSINGDATA_ERROR:
                 this._error = Accounts.MISSINGDATA_ERROR_MSG;
                 break;
+			default:
+                this._error = null;
+                break;
         }
         return this._error;
     }
