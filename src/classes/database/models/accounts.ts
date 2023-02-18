@@ -13,7 +13,7 @@ export interface AccountsInterface{
 export class Accounts extends MongoDbModelsManager{
     
     /**
-     * Array of Account objects result
+     * Array of Account objects find result
      */
     private _results: Account[]; 
     
@@ -86,7 +86,7 @@ export class Accounts extends MongoDbModelsManager{
             /* console.log("getAccounts");
             console.log(res); */
             response[Constants.KEY_DONE] = true;
-            //Check if results is a non empty an Array of objects
+            //Check if results is a non empty Array of objects
             if(Array.isArray(res) && res.length > 0){
                 let mmi_data: MongoDbModelManagerInterface = {
                     collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
@@ -127,7 +127,7 @@ export class Accounts extends MongoDbModelsManager{
         let response: object = {};
         await super.connect().then(conn => {
             if(conn == true) return super.dropIndexes();
-            else throw new DatabaseConnectionError("");
+            else throw new DatabaseConnectionError(this.error as string);
         }).then(dropped => {
             return super.update(filter,set);
         }).then(updated => {

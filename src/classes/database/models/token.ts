@@ -5,8 +5,12 @@ import { MissingDataError } from "../../errors/missingdataerror";
 import { MongoDbModelManager, MongoDbModelManagerInterface } from "../mongodbmodelmanager";
 
 export interface TokenInterface{
+    id?: string;
     accountId?: string; 
     tokenKey?: string;
+    creationDate?: string;
+    expireDate?: string;
+
 }
 
 export class Token extends MongoDbModelManager{
@@ -124,7 +128,7 @@ export class Token extends MongoDbModelManager{
         this._errno = 0;
         let response: object = {};
         try{
-            if(this._accountId && this._tokenKey && this._creationDate && this._expireDate){
+            if(this._accountId && this._tokenKey){
                 await super.connect().then(conn => {
                     if(conn == true)return super.get({accountId: this._accountId});
                     else throw new DatabaseConnectionError(this.error as string);
@@ -143,6 +147,11 @@ export class Token extends MongoDbModelManager{
                     /* let document: object = {
                         accountId: this._accountId, tokenKey: this._tokenKey, creationDate: this._creationDate, expireDate: this._expireDate
                     } */
+                    let today: Date = new Date();
+                    this._creationDate = this.dateString(today);
+                    let expireTime: Date = new Date();
+                    expireTime.setMinutes(today.getMinutes() + 15);
+                    this._expireDate = this.dateString(expireTime);
                     let document: TokenType = {
                         accountId: this._accountId, tokenKey: this._tokenKey, creationDate: new Date(this._creationDate), 
                         expireDate: new Date(this._expireDate)
@@ -158,7 +167,7 @@ export class Token extends MongoDbModelManager{
                 }).finally(()=>{
                     super.close();
                 });
-            }//if(this._accountId && this._tokenKey && this._creationDate && this._expireDate){
+            }//if(this._accountId && this._tokenKey){
             else{
                 this._errno = Token.MISSINGDATA_ERROR;
                 throw new MissingDataError(this.error as string);
@@ -199,7 +208,7 @@ export class Token extends MongoDbModelManager{
     }
 
     /**
-     * Updated the first token from the collection that match with a filter with the set data
+     * Update the first token from the collection that match with a filter with the set data
      * @param filter the filter to search the first document to update
      * @param set the data to updated the matched document
      * @returns 
@@ -246,18 +255,10 @@ export class Token extends MongoDbModelManager{
     }
 
     private setValues(data: TokenInterface){
+        if(data.id)this._id = data.id;
         if(data.accountId) this._accountId = data.accountId;
-        if(data.tokenKey)this._tokenKey = data.tokenKey;
-        if(this._accountId && this._tokenKey){
-            let today: Date = new Date();
-            this._creationDate = this.dateString(today);
-            /* console.log("Token setValues creationDate => ");
-            console.log(this._creationDate); */
-            let expireTime: Date = new Date();
-            expireTime.setMinutes(today.getMinutes() + 15);
-            this._expireDate = this.dateString(expireTime);
-            /* console.log("Token setValues expireDate => ");
-            console.log(this._expireDate); */
-        }
+        if(data.tokenKey) this._tokenKey = data.tokenKey;
+        if(data.creationDate) this._creationDate = data.creationDate;
+        if(data.expireDate) this._expireDate = data.expireDate;
     }
 }
