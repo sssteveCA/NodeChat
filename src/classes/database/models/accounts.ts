@@ -12,7 +12,10 @@ export interface AccountsInterface{
 
 export class Accounts extends MongoDbModelsManager{
     
-    private _results: Account[]; //Array of Account objects result
+    /**
+     * Array of Account objects result
+     */
+    private _results: Account[]; 
     
     //Errors
     public static DUPLICATEKEYS_ERROR:number = 50;
@@ -42,6 +45,27 @@ export class Accounts extends MongoDbModelsManager{
                 break;
         }
         return this._error;
+    }
+
+    /**
+     * Delete the accounts from the collection that match with a filter
+     * @param filter the filter to search the documents to delete
+     * @returns 
+     */
+    public async deleteAccounts(filter: object): Promise<object>{
+        this._errno = 0;
+        let response: object = {};
+        await super.connect().then(conn => {
+            if(conn == true) return super.delete(filter);
+            else throw new DatabaseConnectionError(this.error as string);
+        }).then(res => {
+            response = {done: true};
+        }).catch(err => {
+            response = {done: false};
+        }).finally(()=> {
+            super.close();
+        })
+        return response;
     }
 
     /**
@@ -89,6 +113,33 @@ export class Accounts extends MongoDbModelsManager{
         }).finally(()=>{
             super.close();
         });
+        return response;
+    }
+
+    /**
+     * Update the accounts documents from the collection that match with a filter with the set data
+     * @param filter the filter to search the documents to update
+     * @param set the data to updated the matched documents
+     * @returns 
+     */
+    public async updateAccounts(filter: object, set: object): Promise<object>{
+        this._errno = 0;
+        let response: object = {};
+        await super.connect().then(conn => {
+            if(conn == true) return super.dropIndexes();
+            else throw new DatabaseConnectionError("");
+        }).then(dropped => {
+            return super.update(filter,set);
+        }).then(updated => {
+            response = {
+                done: true, result: updated
+            }
+        })
+        .catch(err => {
+            response = {done: false};
+        }).finally(()=> {
+            super.close();
+        })
         return response;
     }
 

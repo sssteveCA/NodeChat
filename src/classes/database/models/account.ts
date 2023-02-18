@@ -109,6 +109,7 @@ export class Account extends MongoDbModelManager{
             response = { done: true };
         }).catch(err => {
             console.warn(err);
+            response = { done: false};
         }).finally(()=>{
             super.close();
         });
@@ -250,7 +251,7 @@ export class Account extends MongoDbModelManager{
     }
 
     /**
-     * Updated the first account from the collection that match with a filter with the set data
+     * Update the first account from the collection that match with a filter with the set data
      * @param filter the filter to search the first document to update
      * @param set the data to updated the matched document
      * @returns 
