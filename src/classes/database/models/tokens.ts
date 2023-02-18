@@ -41,6 +41,8 @@ export class Tokens extends MongoDbModelsManager{
             else throw new Error("")
         }).catch(err => {
             response = {done: false}
+        }).finally(()=>{
+            super.close();
         })
         return response;
     }
