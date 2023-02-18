@@ -13,7 +13,7 @@ It includes:
       <li>Set a profile and cover image of the account</li>
       <li>*Add photos</li>
       <li>*Add videos</li>
-      <li>*Account delete</li>
+      <li>Account delete</li>
     </ul>
   </li>
   <li>User support with contact form</li>
