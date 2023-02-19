@@ -1,5 +1,11 @@
 # NodeChat
-Chat web application under development, using Node.js
+<div>Application deployed at <a href="http://ec2-3-134-84-105.us-east-2.compute.amazonaws.com/">http://ec2-3-134-84-105.us-east-2.compute.amazonaws.com/</a></div>
+
+<br><br>
+
+<div>Chat web application under development, using Node.js</div>
+
+<br><br>
 
 <div>
 It includes:
