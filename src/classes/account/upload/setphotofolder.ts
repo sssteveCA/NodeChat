@@ -4,6 +4,7 @@ import { Account } from "../../database/models/account";
 import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager";
 import fs from "fs/promises";
 import { Constants } from "../../../namespaces/constants";
+import { Photo, PhotoInterface } from "../../database/models/photo";
 
 
 export interface SetPhotoFolderInterface{
@@ -71,7 +72,7 @@ export class SetPhotoFolder{
     /**
      * Move the uploaded file to the user photos list folder
      * @param src the uploaded file path
-     * @param username the account username that has uploaded the image
+     * @param username the account username that has uploaded the photo
      * @returns true if the move operation was successfully done, false otherwise
      */
     private async moveFile(src: string, username: string): Promise<object>{
@@ -88,5 +89,31 @@ export class SetPhotoFolder{
             response[Constants.KEY_DONE] = false;
         })
         return response;
+    }
+
+    /**
+     * Add a new document to photos collection
+     * @param dest the filesystem path of the uploaded photo
+     * @returns an object that contains the url of the uploaded profile image, or false if error
+     */
+    private async addPhotoDocument(accountId: string, dest: string, username: string): Promise<object>{
+        let response = {absUrl:  "", done: false}
+        const imgIndex: number = dest.indexOf(`/img/photos/`);
+        const absoluteUrl: string = dest.substring(imgIndex);
+        let mmiData: MongoDbModelManagerInterface = {
+            collection_name: process.env.MONGODB_PHOTOS_COLLECTION as string,
+            schema: Schemas.PHOTOS
+        }
+        let photoData: PhotoInterface = {
+            accountId: accountId,
+            path: absoluteUrl
+        }
+        let photo: Photo = new Photo(mmiData,{});
+        await photo.insertPhoto().then(res => {
+            if(res[Constants.KEY_DONE] == true)
+                response = {absUrl: absoluteUrl, done: true}
+        })
+        return response;
+        
     }
 }

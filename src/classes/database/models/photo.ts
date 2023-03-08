@@ -117,7 +117,7 @@ export class Photo extends MongoDbModelManager{
      * Add a photo document to the collection
      * @returns 
      */
-    public async insertToken(): Promise<object>{
+    public async insertPhoto(): Promise<object>{
         this._errno = 0;
         let response: object = {};
         try{

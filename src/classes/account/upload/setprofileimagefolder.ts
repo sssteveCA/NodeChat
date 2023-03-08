@@ -125,7 +125,6 @@ export class SetProfileImageFolder{
 
     /**
      * Update the user profile image property in database
-     * @param baseUrl the baseUrl of the current server
      * @param dest the filesystem path of the user profile image
      * @param username the unique username property of the document to update
      * @returns an object that contains the url of the uploaded profile image, or false if error
