@@ -9,6 +9,7 @@ import { PersonalInformationItemsType } from "../types/personalinformationitemst
 import { addImages } from "./functions/profile/addimages.js";
 import { setAccountSectionEvents } from "./functions/profile/setaccountsectionevents.js";
 import { setInformationSectionEvents } from "./functions/profile/setinformationsectionevents.js";
+import setPhotosSectionEvents from "./functions/profile/setphotossectionevents.js";
 
 $(()=>{
     let cur_data: CurrentUserRequestInterface = {
@@ -55,6 +56,9 @@ $(()=>{
         if(idTarget == SectionLiItems.INFORMATION){
             setInformationSectionEvents();
         }//
+        else if(idTarget == SectionLiItems.PHOTOS){
+            setPhotosSectionEvents();
+        }
         else if(idTarget == SectionLiItems.ACCOUNT_SETTINGS){
             setAccountSectionEvents();
         }
