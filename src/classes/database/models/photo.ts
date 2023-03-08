@@ -1,3 +1,4 @@
+import { DatabaseConnectionError } from "../../errors/databaseconnectionerror";
 import { MongoDbModelManager, MongoDbModelManagerInterface } from "../mongodbmodelmanager";
 
 export interface PhotoInterface{
@@ -33,6 +34,32 @@ export class Photo extends MongoDbModelManager{
 
         }
         return this._error;
+    }
+
+    /**
+     * Delete the first photo from the collection that match with a filter
+     * @param filter the filter to search the first document to delete
+     * @returns 
+     */
+    public async deletePhoto(filter: object): Promise<object>{
+        this._errno = 0;
+        let response: object = {};
+        await super.connect().then(conn => {
+            if(conn == true){
+                return super.delete(filter);
+            }
+            else{
+                this._errno = MongoDbModelManager.CONNECTION_ERROR;
+                throw new DatabaseConnectionError(this.error as string);
+            }
+        }).then(res => {
+            //console.log(res);
+        }).catch(err => {
+            console.warn(err);
+        }).finally(()=>{
+            super.close();
+        });
+        return response;
     }
 
 }
