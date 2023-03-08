@@ -1,3 +1,4 @@
+import { PhotoType } from "../../../types/phototype";
 import { DatabaseConnectionError } from "../../errors/databaseconnectionerror";
 import { MissingDataError } from "../../errors/missingdataerror";
 import { General } from "../../general";
@@ -112,6 +113,10 @@ export class Photo extends MongoDbModelManager{
         return response;
     }
 
+    /**
+     * Add a photo document to the collection
+     * @returns 
+     */
     public async insertToken(): Promise<object>{
         this._errno = 0;
         let response: object = {};
@@ -119,7 +124,10 @@ export class Photo extends MongoDbModelManager{
             if(this._accountId && this._path){
                 await super.connect().then(conn => {
                     if(conn == true) return super.get({accountId: this._accountId});
-                    else throw new DatabaseConnectionError(this.error as string);
+                    else{
+                        this._errno = MongoDbModelManager.CONNECTION_ERROR;
+                        throw new DatabaseConnectionError(this.error as string);
+                    } 
                 }).then(result => {
                     if(result != null){
                         let document: object = {
@@ -131,15 +139,26 @@ export class Photo extends MongoDbModelManager{
                     }//if(result != null){
                     let today: Date = new Date();
                     this._creationDate = General.dateString(today);
-
-                })
+                    let document: PhotoType = {
+                        accountId: this._accountId,
+                        creationDate: new Date(this._creationDate),
+                        path: this._path
+                    }
+                    return super.insert(document);
+                }).then(res => {
+                    response = { done: true }
+                }).catch(err => {
+                    throw err;
+                }).finally(()=> {
+                    super.close();
+                });
             }//if(this._accountId && this._path){
             else{
                 this._errno = Photo.MISSINGDATA_ERROR;
                 throw new MissingDataError(this.error as string);
             }
         }catch(e){
-
+            response = {done: false};
         }
         return response;
     }

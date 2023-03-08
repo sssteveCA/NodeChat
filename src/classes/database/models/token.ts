@@ -122,7 +122,7 @@ export class Token extends MongoDbModelManager{
     }
 
     /**
-     * Add a token to the collection
+     * Add a token document to the collection
      * @returns 
      */
      public async insertToken(): Promise<object>{
@@ -156,7 +156,7 @@ export class Token extends MongoDbModelManager{
                     let document: TokenType = {
                         accountId: this._accountId, tokenKey: this._tokenKey, creationDate: new Date(this._creationDate), 
                         expireDate: new Date(this._expireDate)
-                    };
+                    }
                     return super.insert(document);
                 }).then(res => {
                     response = {
