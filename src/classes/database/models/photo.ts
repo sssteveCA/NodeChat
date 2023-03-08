@@ -163,4 +163,69 @@ export class Photo extends MongoDbModelManager{
         return response;
     }
 
+    /**
+     * Replace the photo that match the filter with new photo
+     * @param filter the filter to search the first document to replace
+     * @param document the new document to replace the matched document
+     * @returns 
+     */
+    public async replacePhoto(filter: object, document: object): Promise<object>{
+        this._errno = 0;
+        let response: object = {}
+        await super.connect().then(conn => {
+            if(conn == true) return super.replace(filter, document);
+            else{
+                this._errno = MongoDbModelManager.CONNECTION_ERROR;
+                throw new DatabaseConnectionError(this.error as string);
+            }
+        }).then(res => {
+            response = {
+                done: true,
+                result: res
+            }
+        }).catch(err => {
+            console.warn(err);
+            response = {
+                done: false,
+                message: this.error
+            }
+        }).finally(()=>{
+            super.close();
+        });
+        return response;
+    }
+
+    /**
+     * Update the first photo from the collection that match with a filter with the set data
+     * @param filter the filter to search the first document to update
+     * @param set the data to updated the matched document
+     * @returns 
+     */
+    public async updatePhoto(filter: object, set: object): Promise<object>{
+        this._errno = 0;
+        let response: object = {};
+        await super.connect().then(conn => {
+            if(conn == true) return super.update(filter,set);
+            else{
+                this._errno = MongoDbModelManager.CONNECTION_ERROR;
+                throw new DatabaseConnectionError(this.error as string);
+            } 
+        }).then(res => {
+            //console.log(res);
+            response = {
+                done: true,
+                result: res
+            };
+        }).catch(err => {
+            console.warn(err);
+            response = {
+                done: false,
+                message: this.error
+            };
+        }).finally(()=>{
+            super.close();
+        });
+        return response;
+    }
+
 }

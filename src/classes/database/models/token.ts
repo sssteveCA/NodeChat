@@ -187,10 +187,13 @@ export class Token extends MongoDbModelManager{
      */
     public async replaceToken(filter: object, document: object): Promise<object>{
         this._errno = 0;
-        let response: object = {};
+        let response: object = {}
         await super.connect().then(conn => {
             if(conn == true) return super.replace(filter,document);
-            else throw new DatabaseConnectionError('Errore durante la connessione al Database');
+            else{
+                this._errno = MongoDbModelManager.CONNECTION_ERROR;
+                throw new DatabaseConnectionError(this.error as string);
+            }
         }).then(res => {
             response = {
                 done: true,
@@ -200,7 +203,7 @@ export class Token extends MongoDbModelManager{
             console.warn(err);
             response = {
                 done: false,
-                message: err.message
+                message: this.error
             };
         }).finally(()=>{
             super.close();
@@ -219,7 +222,10 @@ export class Token extends MongoDbModelManager{
         let response: object = {};
         await super.connect().then(conn => {
             if(conn == true) return super.update(filter,set);
-            else throw new DatabaseConnectionError('Errore durante la connessione al Database');
+            else{
+                this._errno = MongoDbModelManager.CONNECTION_ERROR;
+                throw new DatabaseConnectionError(this.error as string);
+            } 
         }).then(res => {
             //console.log(res);
             response = {
@@ -230,7 +236,7 @@ export class Token extends MongoDbModelManager{
             console.warn(err);
             response = {
                 done: false,
-                message: err.message
+                message: this.error
             };
         }).finally(()=>{
             super.close();
