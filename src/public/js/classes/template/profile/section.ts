@@ -204,10 +204,14 @@ export class Section{
 
     private photosTemplate(): void{
         this._html = `
+<div class="sel-section-top-buttons d-flex justify-content-end">
+    <button type="button" class="btn btn-primary">AGGIUNGI FOTO</button>
+    <input type="file" id="upload-photo" class="d-none" name="photo" accept="image/png, image/jpeg">
+</div>
 <div class="sel-section-header">
         <h2 class="text-center">Foto</h2>
 </div>
-<div class="sel-section-content mt-5">
+<div id="photos-list" class="sel-section-content mt-5">
     <p class="fs-4 fw-bold text-center">Nessuna foto da mostrare</p>
 </div>
         `;
