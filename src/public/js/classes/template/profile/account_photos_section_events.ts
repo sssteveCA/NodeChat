@@ -21,7 +21,9 @@ export class AccountPhotosSectionEvents{
      * @param callback the callback to invoke when a response is returned
      */
     public addPhotoButtonClick(callback: (response: object) => void): void{
-        this._addPhotoInput.trigger('click');
+        this._addPhotoButton.on('click',()=>{
+            this._addPhotoInput.trigger('click');
+        });
         this._addPhotoInput.on('change',()=> {
             callback({done: true});
         })

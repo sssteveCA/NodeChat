@@ -1,4 +1,4 @@
-import { Constants } from "../../namespaces/constants";
+import { Constants } from "../../namespaces/constants.js";
 
 export interface SearchProfilesRequestInterface{
     query: string;

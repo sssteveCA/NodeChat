@@ -1,4 +1,4 @@
-import { AccountPhotosSectionEvents, AccountPhotosSectionEventsInterface } from "../../../classes/template/profile/account_photos_section_events";
+import { AccountPhotosSectionEvents, AccountPhotosSectionEventsInterface } from "../../../classes/template/profile/account_photos_section_events.js";
 
 export default function setPhotosSectionEvents(): void{
     let apseData: AccountPhotosSectionEventsInterface = {
@@ -7,6 +7,5 @@ export default function setPhotosSectionEvents(): void{
     }
     let apse: AccountPhotosSectionEvents = new AccountPhotosSectionEvents(apseData);
     apse.addPhotoButtonClick(response =>{
-        console.log(response);
     });
 }
