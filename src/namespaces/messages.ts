@@ -4,6 +4,7 @@ export namespace Messages{
     
     //Errors
     export const ERROR_ACCOUNT_DELETE: string = "Errore durante la rimozione del tuo account";
+    export const ERROR_ADD_PHOTO: string = "Errore durante l'aggiunta dell'immagine";
     export const ERROR_CONTACTSINFORMATION_UPDATE: string = "Errore durante la modifica delle informazioni di contatto";
     export const ERROR_EDUCATION_UPDATE: string = "Errore durante la modifica delle informazioni sull'istruzione";
     export const ERROR_EMPLOYMENT_UPDATE: string = "Errore durante la modifica delle informazioni sul lavoro";

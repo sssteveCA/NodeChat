@@ -27,9 +27,9 @@ export class AccountPhotosSectionEvents{
         });
         this._addPhotoInput.on('change',(e)=> {
             if(e.target.files){
-                let files: FileList = e.target.files as FileList;
                 let aprData: AddPhotoRequestInterface = {
-                    photo: e.target.files[0] as unknown as File
+                    photo: e.target.files[0] as File,
+                    token_key: $('input[name=token_key]').val() as string
                 }
                 let apr: AddPhotoRequest = new AddPhotoRequest(aprData);
                 apr.addPhoto().then(res => {

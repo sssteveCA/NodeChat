@@ -1,10 +1,12 @@
 
 export interface AddPhotoRequestInterface{
     photo: File;
+    token_key: string;
 }
 
 export class AddPhotoRequest{
 
+    private _token_key: string;
     private _photo: File;
     private _errno: number = 0;
     private _error: string|null = null;
@@ -15,7 +17,8 @@ export class AddPhotoRequest{
     private static FETCH_URL:string = "/";
 
     constructor(data: AddPhotoRequestInterface){
-
+        this._token_key = data.token_key;
+        this._photo = data.photo;
     }
 
     get photo(){ return this._photo; }
@@ -53,6 +56,7 @@ export class AddPhotoRequest{
 
     private async addPhotoPromise(): Promise<string>{
         let fd: FormData = new FormData();
+        fd.append('tokenKey',this._token_key);
         fd.append('photo', this._photo);
         return await new Promise<string>((resolve,reject)=>{
             fetch(AddPhotoRequest.FETCH_URL,{
