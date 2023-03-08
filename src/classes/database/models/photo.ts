@@ -1,4 +1,6 @@
 import { DatabaseConnectionError } from "../../errors/databaseconnectionerror";
+import { MissingDataError } from "../../errors/missingdataerror";
+import { General } from "../../general";
 import { MongoDbModelManager, MongoDbModelManagerInterface } from "../mongodbmodelmanager";
 
 export interface PhotoInterface{
@@ -13,6 +15,10 @@ export class Photo extends MongoDbModelManager{
     private _accountId: string;
     private _creationDate: string;
     private _path: string;
+
+    public static MISSINGDATA_ERROR: number = 50;
+
+    private static MISSINGDATA_ERROR_MSG: string = "Uno o più dati richiesti sono mancanti";
 
     constructor(data_mmi: MongoDbModelManagerInterface, data: PhotoInterface){
         super(data_mmi);
@@ -31,7 +37,12 @@ export class Photo extends MongoDbModelManager{
             return super.error;
         }
         switch(this._errno){
-
+            case Photo.MISSINGDATA_ERROR:
+                this._error = Photo.MISSINGDATA_ERROR_MSG;
+                break;
+            default:
+                this._error = null;
+                break;
         }
         return this._error;
     }
@@ -62,6 +73,11 @@ export class Photo extends MongoDbModelManager{
         return response;
     }
 
+    /**
+     * Get the first token from the collection that match with a filter
+     * @param filter the filter to search the first document to get
+     * @returns 
+     */
     public async getPhoto(filter: object): Promise<object>{
         this._errno = 0;
         let response: object = {};
@@ -93,6 +109,38 @@ export class Photo extends MongoDbModelManager{
         }).finally(()=>{
             super.close();
         });
+        return response;
+    }
+
+    public async insertToken(): Promise<object>{
+        this._errno = 0;
+        let response: object = {};
+        try{
+            if(this._accountId && this._path){
+                await super.connect().then(conn => {
+                    if(conn == true) return super.get({accountId: this._accountId});
+                    else throw new DatabaseConnectionError(this.error as string);
+                }).then(result => {
+                    if(result != null){
+                        let document: object = {
+                            accountId: this._accountId,
+                            creationDate: this._creationDate,
+                            path: this._path
+                        }
+                        return super.replace({accountId: this._accountId},document);
+                    }//if(result != null){
+                    let today: Date = new Date();
+                    this._creationDate = General.dateString(today);
+
+                })
+            }//if(this._accountId && this._path){
+            else{
+                this._errno = Photo.MISSINGDATA_ERROR;
+                throw new MissingDataError(this.error as string);
+            }
+        }catch(e){
+
+        }
         return response;
     }
 
