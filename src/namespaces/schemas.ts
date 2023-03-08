@@ -63,4 +63,10 @@ export namespace Schemas{
         expireDate: {type: Date, required: true}
     });
 
+    export const PHOTOS: Schema = new Schema({
+        accountId: {type: Schema.Types.ObjectId, required: true, index: {unique: true,}},
+        creationDate: {type: Date, default: Date.now},
+        path: {type: String, required: true}
+    });
+
 }
