@@ -1,3 +1,9 @@
+import { Paths } from "../../../namespaces/paths";
+import { Schemas } from "../../../namespaces/schemas";
+import { Account } from "../../database/models/account";
+import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager";
+import fs from "fs/promises";
+import { Constants } from "../../../namespaces/constants";
 
 
 export interface SetPhotoFolderInterface{
@@ -49,5 +55,38 @@ export class SetPhotoFolder{
                 break;
         }
         return this._error;
+    }
+
+    private async getAccountUsername(accountId: string): Promise<string|null>{
+        let accountUsername: string|null = null;
+        let mmiData: MongoDbModelManagerInterface = {
+            collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
+            schema: Schemas.ACCOUNTS
+        }
+        let account: Account = new Account(mmiData,{});
+        await account.getAccount({_id: accountId}).then(res => accountUsername = account.username );
+        return accountUsername;
+    }
+
+    /**
+     * Move the uploaded file to the user photos list folder
+     * @param src the uploaded file path
+     * @param username the account username that has uploaded the image
+     * @returns true if the move operation was successfully done, false otherwise
+     */
+    private async moveFile(src: string, username: string): Promise<object>{
+        let response: object = {dest: null, done: false}
+        let destDir: string = `${Paths.ROOTPATH}public${Paths.STATIC_IMG_PHOTOS}/${username}`;
+        let dest: string = `${destDir}`;
+        await fs.mkdir(destDir,{ recursive: true}).then(res => {
+            return fs.access(dest);
+        }).then(res => {
+            return fs.rename(src,dest);
+        }).then(res => {
+            response = {dest: dest, done: true};
+        }).catch(err => {
+            response[Constants.KEY_DONE] = false;
+        })
+        return response;
     }
 }
