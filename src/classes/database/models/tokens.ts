@@ -76,7 +76,7 @@ export class Tokens extends MongoDbModelsManager{
                 }
                 res.forEach(token => {
                   let tokenData: TokenInterface = {
-                    id: token['id'],
+                    id: token['_id'],
                     accountId: token['accountId'],
                     tokenKey: token['tokenKey'],
                     creationDate: token['creationDate'],
