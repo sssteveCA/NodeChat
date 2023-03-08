@@ -90,6 +90,7 @@ export class Token extends MongoDbModelManager{
                 return super.get(filter);
             }
             else{
+                this._errno = MongoDbModelManager.CONNECTION_ERROR;
                 throw new DatabaseConnectionError(this.error as string);
             }       
         }).then(res => { 
@@ -98,7 +99,7 @@ export class Token extends MongoDbModelManager{
             response = {
                 done: true,
                 result: res
-            };
+            }
             /* console.log("getToken");
             console.log(response); */
             if(res != null){
@@ -113,7 +114,7 @@ export class Token extends MongoDbModelManager{
             response = {
                 done: false,
                 message: this.error
-            };
+            }
         }).finally(()=>{
             super.close();
         });

@@ -62,4 +62,38 @@ export class Photo extends MongoDbModelManager{
         return response;
     }
 
+    public async getPhoto(filter: object): Promise<object>{
+        this._errno = 0;
+        let response: object = {};
+        await super.connect().then(conn => {
+            if(conn == true){
+                return super.get(filter);
+            }
+            else{
+                this._errno = MongoDbModelManager.CONNECTION_ERROR;
+                throw new DatabaseConnectionError(this.error as string);
+            }
+        }).then(res => {
+            response = {
+                done: true,
+                result: res
+            }
+            if(res != null){
+                if(res["_id"])this._id = res["_id"];
+                if(res["accountId"])this._accountId = res["accountId"];
+                if(res["creationDate"])this._creationDate = res["_creationDate"];
+                if(res["path"])this._path = res["path"];
+            }//if(res != null){
+        }).catch(err => {
+            console.warn(err);
+            response = {
+                done: false,
+                message: this.error
+            }
+        }).finally(()=>{
+            super.close();
+        });
+        return response;
+    }
+
 }
