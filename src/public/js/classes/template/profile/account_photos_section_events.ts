@@ -1,3 +1,4 @@
+import { AddPhotoRequest, AddPhotoRequestInterface } from "../../requests/addphotorequest";
 
 export interface AccountPhotosSectionEventsInterface{
     addPhotoButton: JQuery<HTMLButtonElement>;
@@ -24,8 +25,19 @@ export class AccountPhotosSectionEvents{
         this._addPhotoButton.on('click',()=>{
             this._addPhotoInput.trigger('click');
         });
-        this._addPhotoInput.on('change',()=> {
-            callback({done: true});
+        this._addPhotoInput.on('change',(e)=> {
+            if(e.target.files){
+                let files: FileList = e.target.files as FileList;
+                let aprData: AddPhotoRequestInterface = {
+                    photo: e.target.files[0] as unknown as File
+                }
+                let apr: AddPhotoRequest = new AddPhotoRequest(aprData);
+                apr.addPhoto().then(res => {
+                   callback(res); 
+                })
+            }
+            
+            
         })
     }
 }
