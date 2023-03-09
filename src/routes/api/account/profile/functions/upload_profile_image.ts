@@ -56,7 +56,7 @@ export async function upload_profile_image(req: Request, res: Response){
         console.error(error);
         //console.log(fields);
         tokenKey = fields["tokenKey"][0];
-        //console.log(files);
+        console.log(files);
         imagePath = files["image"][0]["path"];
         const spifData: SetProfileImageFolderInterface = {
             image_path: imagePath, token_key: tokenKey

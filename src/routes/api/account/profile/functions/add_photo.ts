@@ -32,7 +32,7 @@ export async function add_photo(req: Request, res: Response){
         const aup: AddUserPhoto = new AddUserPhoto(aupData);
         aup.addPhoto().then(result => {
             if(result[Constants.KEY_DONE] == true){
-                return res.status(201).json({ dest: result[""], done: true, message: "Immagine caricata correttamente"});
+                return res.status(201).json({ dest: result["dest"], done: true, message: "Immagine caricata correttamente"});
             }
             else{
                 return res.status(500).json({
