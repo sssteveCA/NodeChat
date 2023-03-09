@@ -125,17 +125,21 @@ export class AddUserPhoto{
         console.log("AddUserPhoto moveFile destDir => "+destDir);
         let dest: string = `${destDir}/${this._filename}`;
         console.log("AddUserPhoto moveFile dest => "+dest);
-        await fs.mkdir(destDir,{ recursive: true}).then(res => {
+        await fs.mkdir(destDir,{ recursive: true}).then(makedir => {
             console.log("fs mkdir OK");
-            fsapi.access(dest,(notexists)=>{
-                console.log("fsapi access OK");
-                if(notexists) return true;
-                else throw new FileAlreadyExistsError("");
+            return new Promise<boolean>((resolve,reject)=> {
+                fs.access(dest).then(accsess => {
+                    console.log("AddUserPhoto moveFile fs access exists");
+                    reject(new FileAlreadyExistsError(""));
+                }).catch(not_exist => {
+                    console.log("AddUserPhoto moveFile fs access not exists");
+                    resolve(true);
+                })
             });
-        }).then(res => {
+        }).then(accessed => {
             console.log("before fs.rename");
             return fs.rename(src,dest);
-        }).then(res => {
+        }).then(renamed => {
             response = {dest: dest, done: true};
         }).catch(err => {
             if(err instanceof FileAlreadyExistsError)
