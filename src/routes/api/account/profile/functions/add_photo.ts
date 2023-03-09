@@ -25,7 +25,7 @@ export async function add_photo(req: Request, res: Response){
     form.parse(req, (error, fields, files) => {
         tokenKey = fields["tokenKey"][0];
         photoPath = fields["photo"][0]["path"];
-        fileName = fields["photo"][0]["name"];
+        fileName = fields["photo"][0]["originalFileName"];
         const aupData: AddUserPhotoInterface = {
             filename: fileName, photo_path: photoPath, token_key: tokenKey
         }

@@ -3,6 +3,7 @@ import { Schemas } from "../../../namespaces/schemas";
 import { Account } from "../../database/models/account";
 import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager";
 import fs from "fs/promises";
+import fsapi from "fs";
 import { Constants } from "../../../namespaces/constants";
 import { Photo, PhotoInterface } from "../../database/models/photo";
 import { General } from "../../general";
@@ -115,7 +116,10 @@ export class AddUserPhoto{
         let destDir: string = `${Paths.ROOTPATH}public${Paths.STATIC_IMG_PHOTOS}/${username}`;
         let dest: string = `${destDir}/${this._filename}`;
         await fs.mkdir(destDir,{ recursive: true}).then(res => {
-            return fs.access(dest);
+            fsapi.access(dest,(notexists)=>{
+                if(notexists) return true;
+
+            });
         }).then(res => {
             return fs.rename(src,dest);
         }).then(res => {
