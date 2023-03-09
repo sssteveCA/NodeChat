@@ -7,13 +7,15 @@ import { Constants } from "../../../namespaces/constants";
 import { Photo, PhotoInterface } from "../../database/models/photo";
 import { General } from "../../general";
 
-export interface SetPhotoFolderInterface{
+export interface AddUserPhotoInterface{
+    filename: string;
     photo_path: string;
     token_key: string;
 }
 
-export class SetPhotoFolder{
+export class AddUserPhoto{
 
+    private _filename: string;
     private _photo_path: string;
     private _token_key: string;
     private _errno:number = 0;
@@ -29,27 +31,29 @@ export class SetPhotoFolder{
     private static ERR_MOVE_FILE_MSG:string = "Impossibile spostare l'immagine";
     private static ERR_ADD_PHOTO_MSG:string = "Errore durante l'aggiornamento del database";
 
-    constructor(data: SetPhotoFolderInterface){
+    constructor(data: AddUserPhotoInterface){
+        this._filename = data.filename;
         this._photo_path = data.photo_path;
         this._token_key = data.token_key;
     }
 
+    get filename(){ return this._filename; }
     get photo_path(){ return this._photo_path; }
     get token_key(){ return this._token_key; }
     get errno(){ return this._errno; }
     get error(){
         switch(this._errno){
-            case SetPhotoFolder.ERR_ACCOUNT_ID:
-                this._error = SetPhotoFolder.ERR_ACCOUNT_ID_MSG;
+            case AddUserPhoto.ERR_ACCOUNT_ID:
+                this._error = AddUserPhoto.ERR_ACCOUNT_ID_MSG;
                 break;
-            case SetPhotoFolder.ERR_ACCOUNT_USERNAME:
-                this._error = SetPhotoFolder.ERR_ACCOUNT_USERNAME_MSG;
+            case AddUserPhoto.ERR_ACCOUNT_USERNAME:
+                this._error = AddUserPhoto.ERR_ACCOUNT_USERNAME_MSG;
                 break;
-            case SetPhotoFolder.ERR_MOVE_FILE:
-                this._error = SetPhotoFolder.ERR_MOVE_FILE_MSG;
+            case AddUserPhoto.ERR_MOVE_FILE:
+                this._error = AddUserPhoto.ERR_MOVE_FILE_MSG;
                 break;
-            case SetPhotoFolder.ERR_ADD_PHOTO:
-                this._error = SetPhotoFolder.ERR_ADD_PHOTO_MSG;
+            case AddUserPhoto.ERR_ADD_PHOTO:
+                this._error = AddUserPhoto.ERR_ADD_PHOTO_MSG;
                 break;
             default:
                 this._error = null;
@@ -59,9 +63,9 @@ export class SetPhotoFolder{
     }
 
     /**
-     * Set the path of the new uploaded image
+     * Add the photo to the user photos list
      */
-    public async setFolder(): Promise<object>{
+    public async addPhoto(): Promise<object>{
         this._errno = 0;
         let response: object = {dest: null, done: false}
         let accountId: string|null = await General.getAccountId(this._token_key);
@@ -78,14 +82,14 @@ export class SetPhotoFolder{
                         }
                     }//if(addPhoto[Constants.KEY_DONE] == true){
                     else 
-                        this._errno = SetPhotoFolder.ERR_ADD_PHOTO;
+                        this._errno = AddUserPhoto.ERR_ADD_PHOTO;
                 }//if(moved[Constants.KEY_DONE] == true){
                 else
-                    this._errno = SetPhotoFolder.ERR_MOVE_FILE;
+                    this._errno = AddUserPhoto.ERR_MOVE_FILE;
             }//if(accountUsername != null){
         }//if(accountId != null){
         else
-            this._errno = SetPhotoFolder.ERR_ACCOUNT_ID;
+            this._errno = AddUserPhoto.ERR_ACCOUNT_ID;
         return response;
     }
 
@@ -109,7 +113,7 @@ export class SetPhotoFolder{
     private async moveFile(src: string, username: string): Promise<object>{
         let response: object = {dest: null, done: false}
         let destDir: string = `${Paths.ROOTPATH}public${Paths.STATIC_IMG_PHOTOS}/${username}`;
-        let dest: string = `${destDir}`;
+        let dest: string = `${destDir}/${this._filename}`;
         await fs.mkdir(destDir,{ recursive: true}).then(res => {
             return fs.access(dest);
         }).then(res => {
