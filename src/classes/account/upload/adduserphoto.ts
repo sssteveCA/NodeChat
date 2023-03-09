@@ -7,6 +7,7 @@ import fsapi from "fs";
 import { Constants } from "../../../namespaces/constants";
 import { Photo, PhotoInterface } from "../../database/models/photo";
 import { General } from "../../general";
+import { FileAlreadyExistsError } from "../../errors/filealreadyexistserror";
 
 export interface AddUserPhotoInterface{
     filename: string;
@@ -22,14 +23,16 @@ export class AddUserPhoto{
     private _errno:number = 0;
     private _error:string|null = null;
 
-    private static ERR_ACCOUNT_ID:number = 1;
-    private static ERR_ACCOUNT_USERNAME:number = 2;
-    private static ERR_MOVE_FILE:number = 3;
-    private static ERR_ADD_PHOTO:number = 4;
+    public static ERR_ACCOUNT_ID:number = 1;
+    public static ERR_ACCOUNT_USERNAME:number = 2;
+    public static ERR_MOVE_FILE:number = 3;
+    public static ERR_FILE_EXISTS:number = 4;
+    public static ERR_ADD_PHOTO:number = 5;
 
     private static ERR_ACCOUNT_ID_MSG:string = "L'id dell'account non è stato trovato";
     private static ERR_ACCOUNT_USERNAME_MSG:string = "Lo username dell'account non è stato trovato";
     private static ERR_MOVE_FILE_MSG:string = "Impossibile spostare l'immagine";
+    private static ERR_FILE_EXISTS_MSG: string = "Hai già una foto con questo nome";
     private static ERR_ADD_PHOTO_MSG:string = "Errore durante l'aggiornamento del database";
 
     constructor(data: AddUserPhotoInterface){
@@ -52,6 +55,9 @@ export class AddUserPhoto{
                 break;
             case AddUserPhoto.ERR_MOVE_FILE:
                 this._error = AddUserPhoto.ERR_MOVE_FILE_MSG;
+                break;
+            case AddUserPhoto.ERR_FILE_EXISTS:
+                this._error = AddUserPhoto.ERR_FILE_EXISTS_MSG;
                 break;
             case AddUserPhoto.ERR_ADD_PHOTO:
                 this._error = AddUserPhoto.ERR_ADD_PHOTO_MSG;
@@ -85,8 +91,10 @@ export class AddUserPhoto{
                     else 
                         this._errno = AddUserPhoto.ERR_ADD_PHOTO;
                 }//if(moved[Constants.KEY_DONE] == true){
-                else
-                    this._errno = AddUserPhoto.ERR_MOVE_FILE;
+                else{
+                    if(moved['exists']) this._errno = AddUserPhoto.ERR_FILE_EXISTS;
+                    else this._errno = AddUserPhoto.ERR_MOVE_FILE;
+                }
             }//if(accountUsername != null){
         }//if(accountId != null){
         else
@@ -112,19 +120,26 @@ export class AddUserPhoto{
      * @returns true if the move operation was successfully done, false otherwise
      */
     private async moveFile(src: string, username: string): Promise<object>{
-        let response: object = {dest: null, done: false}
+        let response: object = {dest: null, done: false, exists: false}
         let destDir: string = `${Paths.ROOTPATH}public${Paths.STATIC_IMG_PHOTOS}/${username}`;
+        console.log("AddUserPhoto moveFile destDir => "+destDir);
         let dest: string = `${destDir}/${this._filename}`;
+        console.log("AddUserPhoto moveFile dest => "+dest);
         await fs.mkdir(destDir,{ recursive: true}).then(res => {
+            console.log("fs mkdir OK");
             fsapi.access(dest,(notexists)=>{
+                console.log("fsapi access OK");
                 if(notexists) return true;
-
+                else throw new FileAlreadyExistsError("");
             });
         }).then(res => {
+            console.log("before fs.rename");
             return fs.rename(src,dest);
         }).then(res => {
             response = {dest: dest, done: true};
         }).catch(err => {
+            if(err instanceof FileAlreadyExistsError)
+                response['exists'] = true;
             response[Constants.KEY_DONE] = false;
         })
         return response;
@@ -143,11 +158,10 @@ export class AddUserPhoto{
             collection_name: process.env.MONGODB_PHOTOS_COLLECTION as string,
             schema: Schemas.PHOTOS
         }
-        let photoData: PhotoInterface = {
-            accountId: accountId,
-            path: absoluteUrl
-        }
-        let photo: Photo = new Photo(mmiData,{});
+        let photoData: PhotoInterface = { accountId: accountId, path: absoluteUrl }
+        console.log("AddUserPhoto addPhotoDocument photoData");
+        console.log(photoData);
+        let photo: Photo = new Photo(mmiData,photoData);
         await photo.insertPhoto().then(res => {
             if(res[Constants.KEY_DONE] == true)
                 response = {absUrl: absoluteUrl, done: true}
