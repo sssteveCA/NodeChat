@@ -13,7 +13,7 @@ export class EmploymentUpdateRequest{
 
     private static ERR_FETCH_MSG:string = "Errore durante l'esecuzione della richiesta";
 
-    private static FETCH_URL:string =  "/api/profile/update_employment";
+    private static FETCH_URL:string =  "/api/profile/update/employment";
 
     constructor(data: EmploymentUpdateRequestInterface){
         this._token_key = data.token_key;
@@ -58,7 +58,7 @@ export class EmploymentUpdateRequest{
     private async employmentUpdatePromise(): Promise<string>{
         return await new Promise<string>((resolve,reject) => {
             fetch(EmploymentUpdateRequest.FETCH_URL, {
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                     "Accept": "application/json", "Content-Type": "application/json"
                 },

@@ -14,7 +14,7 @@ export class AddPhotoRequest{
     public static ERR_FETCH:number = 1;
     private static ERR_FETCH_MSG: string = "Errore durante il caricamento della foto";
 
-    private static FETCH_URL:string = "/api/profile/add_photo";
+    private static FETCH_URL:string = "/api/profile/add/photo";
 
     constructor(data: AddPhotoRequestInterface){
         this._token_key = data.token_key;

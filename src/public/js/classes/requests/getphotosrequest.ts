@@ -12,7 +12,7 @@ export class GetPhotosRequest{
 
     private static ERR_FETCH_MSG:string = "Errore durante l'esecuzione della richiesta";
 
-    private static FETCH_URL:string = "/api/profile/get_photos";
+    private static FETCH_URL:string = "/api/profile/get/photos";
 
     constructor(data: GetPhotosRequestInterface){
         this._token_key = data.token_key;

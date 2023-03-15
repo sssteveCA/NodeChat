@@ -16,7 +16,7 @@ export class EducationUpdateRequest{
 
     private static ERR_FETCH_MSG:string = "Errore durante l'esecuzione della richiesta";
 
-    private static FETCH_URL:string = "/api/profile/update_education";
+    private static FETCH_URL:string = "/api/profile/update/education";
 
     constructor(data: EducationUpdateRequestInterface){
         this._token_key = data.token_key;
@@ -63,7 +63,7 @@ export class EducationUpdateRequest{
         }
         return await new Promise<string>((resolve,reject)=> {
             fetch(EducationUpdateRequest.FETCH_URL,{
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                     "Accept": "application/json", "Content-Type": "application/json"
                 },

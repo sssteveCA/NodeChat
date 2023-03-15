@@ -16,7 +16,7 @@ export class SearchProfilesRequest{
 
     private static ERR_SEARCH_PROFILES_MSG:string = "Errore durante la ricerca dei profili richiesti";
 
-    private static FETCH_URL: string = "api/profile/search";
+    private static FETCH_URL: string = "/api/profile/search";
 
     constructor(data: SearchProfilesRequestInterface){
         this._query = data.query;

@@ -25,7 +25,7 @@ export class PersonalInformationUpdateRequest{
 
     private static ERR_FETCH_MSG:string = "Errore durante l'esecuzione della richiesta";
 
-    private static FETCH_URL:string =  "/api/profile/update_personal_information";
+    private static FETCH_URL:string =  "/api/profile/update/personal_information";
 
     constructor(data: PersonalInformationUpdateRequestInterface){
         this.assignValues(data);
@@ -86,7 +86,7 @@ export class PersonalInformationUpdateRequest{
         }
         return await new Promise<string>((resolve,reject)=>{
             fetch(PersonalInformationUpdateRequest.FETCH_URL, {
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                     "Accept": "application/json", "Content-Type": "application/json"
                 },

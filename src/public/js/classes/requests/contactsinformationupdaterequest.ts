@@ -15,7 +15,7 @@ export class ContactsInformationUpdateRequest{
 
     private static ERR_FETCH_MSG:string = "Errore durante l'esecuzione della richiesta";
 
-    private static FETCH_URL:string =  "/api/profile/update_contacts_information";
+    private static FETCH_URL:string =  "/api/profile/update/contacts_information";
 
     constructor(data: ContactsInformationUpdateRequestInterface){
         this._token_key = data.token_key;
@@ -59,7 +59,7 @@ export class ContactsInformationUpdateRequest{
     private async ciUpdatePromise(): Promise<string>{
         return await new Promise<string>((resolve,reject)=> {
             fetch(ContactsInformationUpdateRequest.FETCH_URL,{
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                     "Accept": "application/json", "Content-Type": "application/json"
                 },

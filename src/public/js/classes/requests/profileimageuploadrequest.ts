@@ -17,7 +17,7 @@ export class ProfileImageUploadRequest{
 
     private static ERR_IMAGE_UPLOAD_MSG:string = "Errore durante il caricamento dell'immagine del profilo";
 
-    private static FETCH_URL: string = "../../api/profile/upload_profile_image";
+    private static FETCH_URL: string = "/api/profile/add/profile_image";
 
     constructor(data: ProfileImageUploadRequestInterface){
         this._token_key = data.token_key;

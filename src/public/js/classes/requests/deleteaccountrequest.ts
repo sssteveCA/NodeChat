@@ -16,7 +16,7 @@ export class DeleteAccountRequest{
 
     private static ERR_FETCH_MSG:string = "Errore durante la rimozione del tuo account";
 
-    private static FETCH_URL:string = "/api/profile/delete_account";
+    private static FETCH_URL:string = "/api/profile/delete/account";
 
     constructor(data: DeleteAccountRequestInterface){
         this._token_key = data.token_key;

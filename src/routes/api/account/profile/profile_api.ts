@@ -14,6 +14,7 @@ import { upload_profile_image } from "./add/function/upload_profile_image";
 import { profile_add_routes } from "./add/profile_add";
 import { profile_delete_routes } from "./delete/profile_delete";
 import { profile_get_routes } from "./get/profile_get";
+import { profile_update_routes } from "./update/profile_update";
 
 export const profile_routes_api = express.Router();
 
@@ -23,16 +24,6 @@ profile_routes_api.use('/delete',profile_delete_routes);
 
 profile_routes_api.use('/get',profile_get_routes);
 
+profile_routes_api.use('/update',profile_update_routes);
+
 profile_routes_api.post('/search', loggedApi, search_api);
-
-profile_routes_api.post('/upload_cover_image',upload_cover_image);
-
-profile_routes_api.post('/update_contacts_information', loggedApi, update_contacts_information);
-
-profile_routes_api.post('/update_education',loggedApi,update_education);
-
-profile_routes_api.post('/update_employment',loggedApi,update_employment);
-
-profile_routes_api.post('/update_personal_information', loggedApi, update_personal_information);
-
-profile_routes_api.post('/upload_profile_image',upload_profile_image);

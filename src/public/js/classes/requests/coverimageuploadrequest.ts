@@ -18,7 +18,7 @@ export class CoverImageUploadRequest{
 
     private static ERR_IMAGE_UPLOAD_MSG:string = "Errore durante il caricamento dell'immagine di copertina";
 
-    private static FETCH_URL: string = "../../api/profile/upload_cover_image";
+    private static FETCH_URL: string = "/api/profile/add/cover_image";
 
     constructor(data: CoverImageUploadRequestInterface){
         this._token_key = data.token_key;
