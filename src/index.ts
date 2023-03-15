@@ -5,6 +5,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import mustacheExpress from 'mustache-express';
+import listEndpoints from "express-list-endpoints";
 import { StaticPaths } from './modules/static_paths';
 import { styles_router } from './routes/css/styles';
 import { scripts_router } from './routes/js/scripts';
@@ -75,3 +76,5 @@ process.on('uncaughtException',(err) => {
     console.error("UncaughtException");
     console.error(err);
 });
+
+//console.log(listEndpoints(app));
