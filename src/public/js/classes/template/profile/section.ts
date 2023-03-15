@@ -211,8 +211,10 @@ export class Section{
 <div class="sel-section-header">
         <h2 class="text-center">Foto</h2>
 </div>
-<div id="photos-list" class="sel-section-content mt-5">
-    <p class="fs-4 fw-bold text-center">Nessuna foto da mostrare</p>
+<div id="photos-list" class="sel-section-content mt-5 container-fluid">
+        <div class="row g-2">
+            <p class="fs-4 fw-bold text-center">Nessuna foto da mostrare</p>
+        </div>
 </div>
         `;
     }

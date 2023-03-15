@@ -10,7 +10,14 @@ export default function setPhotosSectionEvents(): void{
     }
     let apse: AccountPhotosSectionEvents = new AccountPhotosSectionEvents(apseData);
     apse.getPhotos(response => {
-
+        let pl_row: JQuery<HTMLDivElement> = $('#photos-list').find('.row') as JQuery<HTMLDivElement>;
+        response['result'].forEach(photo => {
+            let img: string = `
+<div class="user-image col-12 col-sm-6 col-md-4 col-lg-3">
+    <img src="${photo['path']}" alt="" title="">
+</div>           
+            `;
+        })
     });
     apse.addPhotoButtonClick(response =>{
         let mdData: MessageDialogInterface = {
