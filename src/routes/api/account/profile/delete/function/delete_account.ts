@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import session from "express-session";
-import { DeleteAccount, DeleteAccountInterface } from "../../../../../classes/account/delete/deleteaccount";
-import { Constants } from "../../../../../namespaces/constants";
-import { Messages } from "../../../../../namespaces/messages";
+import { DeleteAccount, DeleteAccountInterface } from "../../../../../../classes/account/delete/deleteaccount";
+import { Constants } from "../../../../../../namespaces/constants";
+import { Messages } from "../../../../../../namespaces/messages";
 
 export async function delete_account(req:Request, res: Response){
     if(req.body['password'] && req.body['conf_password']){

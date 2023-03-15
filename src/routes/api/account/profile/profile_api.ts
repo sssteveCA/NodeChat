@@ -1,24 +1,27 @@
 
 import express from "express";
 import { loggedApi } from "../../middlewares/middlewares_api";
-import { add_photo } from "./functions/add_photo";
-import { delete_account } from "./functions/delete_account";
-import get_photos from "./functions/get_photos";
+import { add_photo } from "./add/function/add_photo";
+import { delete_account } from "./delete/function/delete_account";
+import get_photos from "./get/function/get_photos";
 import { search_api } from "./functions/search_api";
-import update_contacts_information from "./functions/update_contacts_information";
-import update_education from "./functions/update_education";
-import update_employment from "./functions/update_employment";
-import update_personal_information from "./functions/update_personal_information";
-import { upload_cover_image } from "./functions/upload_cover_image";
-import { upload_profile_image } from "./functions/upload_profile_image";
+import update_contacts_information from "./update/function/update_contacts_information";
+import update_education from "./update/function/update_education";
+import update_employment from "./update/function/update_employment";
+import update_personal_information from "./update/function/update_personal_information";
+import { upload_cover_image } from "./add/function/upload_cover_image";
+import { upload_profile_image } from "./add/function/upload_profile_image";
+import { profile_add_routes } from "./add/profile_add";
+import { profile_delete_routes } from "./delete/profile_delete";
+import { profile_get_routes } from "./get/profile_get";
 
 export const profile_routes_api = express.Router();
 
-profile_routes_api.post('/add_photo', add_photo);
+profile_routes_api.use('/add',profile_add_routes);
 
-profile_routes_api.post('/delete_account',loggedApi, delete_account);
+profile_routes_api.use('/delete',profile_delete_routes);
 
-profile_routes_api.post('/get_photos',loggedApi,get_photos);
+profile_routes_api.use('/get',profile_get_routes);
 
 profile_routes_api.post('/search', loggedApi, search_api);
 

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { SetEducation, SetEducationInterface } from "../../../../../classes/account/update/seteducation";
-import { Constants } from "../../../../../namespaces/constants";
-import { Messages } from "../../../../../namespaces/messages";
+import { SetEducation, SetEducationInterface } from "../../../../../../classes/account/update/seteducation";
+import { Constants } from "../../../../../../namespaces/constants";
+import { Messages } from "../../../../../../namespaces/messages";
 
 export default function update_education(req: Request, res: Response){
     let isset: boolean = (req.body["secondary_school"] && req.body["university"]);

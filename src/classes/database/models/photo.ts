@@ -129,14 +129,14 @@ export class Photo extends MongoDbModelManager{
                         throw new DatabaseConnectionError(this.error as string);
                     } 
                 }).then(result => {
-                    if(result != null){
+                    /* if(result != null ){
                         let document: object = {
                             accountId: this._accountId,
                             creationDate: this._creationDate,
                             path: this._path
                         }
                         return super.replace({accountId: this._accountId},document);
-                    }//if(result != null){
+                    }//if(result != null){ */
                     let today: Date = new Date();
                     this._creationDate = General.dateString(today);
                     let document: PhotoType = {
@@ -148,6 +148,7 @@ export class Photo extends MongoDbModelManager{
                 }).then(res => {
                     response = { done: true }
                 }).catch(err => {
+                    console.warn(err);
                     throw err;
                 }).finally(()=> {
                     super.close();

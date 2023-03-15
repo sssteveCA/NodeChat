@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { GetPhotos, GetPhotosInterface } from "../../../../../classes/account/get/getphotos";
-import { Constants } from "../../../../../namespaces/constants";
-import { Messages } from "../../../../../namespaces/messages";
+import { GetPhotos, GetPhotosInterface } from "../../../../../../classes/account/get/getphotos";
+import { Constants } from "../../../../../../namespaces/constants";
+import { Messages } from "../../../../../../namespaces/messages";
 
 export default function get_photos(req: Request, res: Response){
     try{

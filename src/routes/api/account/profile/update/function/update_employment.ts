@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { SetEmployment, SetEmploymentInterface } from "../../../../../classes/account/update/setemployment";
-import { Constants } from "../../../../../namespaces/constants";
-import { Messages } from "../../../../../namespaces/messages";
+import { SetEmployment, SetEmploymentInterface } from "../../../../../../classes/account/update/setemployment";
+import { Constants } from "../../../../../../namespaces/constants";
+import { Messages } from "../../../../../../namespaces/messages";
 
 export default function update_employment(req: Request, res: Response){
     try{

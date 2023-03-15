@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { SetPersonalInformation, SetPersonalInformationInterface } from "../../../../../classes/account/update/setpersonalinformation";
-import { Constants } from "../../../../../namespaces/constants";
-import { Messages } from "../../../../../namespaces/messages";
+import { SetPersonalInformation, SetPersonalInformationInterface } from "../../../../../../classes/account/update/setpersonalinformation";
+import { Constants } from "../../../../../../namespaces/constants";
+import { Messages } from "../../../../../../namespaces/messages";
 
 export default function update_personal_information(req: Request, res: Response){
     let isset: boolean = (req.body["name"] && req.body["surname"] && req.body["sex"] && req.body["birth_date"] && req.body["birth_place"] && req.body["living_place"]);

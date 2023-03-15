@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import multiparty from "multiparty";
-import { AddUserPhoto, AddUserPhotoInterface } from "../../../../../classes/account/upload/adduserphoto";
-import { Constants } from "../../../../../namespaces/constants";
-import { Messages } from "../../../../../namespaces/messages";
-import { Paths } from "../../../../../namespaces/paths";
+import { AddUserPhoto, AddUserPhotoInterface } from "../../../../../../classes/account/upload/adduserphoto";
+import { Constants } from "../../../../../../namespaces/constants";
+import { Messages } from "../../../../../../namespaces/messages";
+import { Paths } from "../../../../../../namespaces/paths";
 
 
 export async function add_photo(req: Request, res: Response){
@@ -35,6 +35,8 @@ export async function add_photo(req: Request, res: Response){
         }
         const aup: AddUserPhoto = new AddUserPhoto(aupData);
         aup.addPhoto().then(result => {
+            console.log("add_photo addPhoto result => ");
+            console.log(result);
             if(result[Constants.KEY_DONE] == true){
                 return res.status(201).json({ dest: result["dest"], done: true, message: "Immagine caricata correttamente"});
             }

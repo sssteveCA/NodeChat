@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { SetContactsInformation, SetContactsInformationInterface } from "../../../../../classes/account/update/setcontactsinformation";
-import { General } from "../../../../../classes/general";
-import { Constants } from "../../../../../namespaces/constants";
-import { Messages } from "../../../../../namespaces/messages";
-import { Regexs } from "../../../../../namespaces/regex";
+import { SetContactsInformation, SetContactsInformationInterface } from "../../../../../../classes/account/update/setcontactsinformation";
+import { General } from "../../../../../../classes/general";
+import { Constants } from "../../../../../../namespaces/constants";
+import { Messages } from "../../../../../../namespaces/messages";
+import { Regexs } from "../../../../../../namespaces/regex";
 
 export default function update_contacts_information(req: Request, res: Response){
     let isset: boolean = (req.body["email"] && req.body["telephone"]);

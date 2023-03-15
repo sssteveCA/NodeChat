@@ -64,7 +64,7 @@ export namespace Schemas{
     });
 
     export const PHOTOS: Schema = new Schema({
-        accountId: {type: Schema.Types.ObjectId, required: true, index: {unique: true,}},
+        accountId: {type: Schema.Types.ObjectId, required: true, index: true},
         creationDate: {type: Date, default: Date.now},
         path: {type: String, required: true}
     });
