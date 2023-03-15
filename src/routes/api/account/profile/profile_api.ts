@@ -3,6 +3,7 @@ import express from "express";
 import { loggedApi } from "../../middlewares/middlewares_api";
 import { add_photo } from "./functions/add_photo";
 import { delete_account } from "./functions/delete_account";
+import get_photos from "./functions/get_photos";
 import { search_api } from "./functions/search_api";
 import update_contacts_information from "./functions/update_contacts_information";
 import update_education from "./functions/update_education";
@@ -16,6 +17,8 @@ export const profile_routes_api = express.Router();
 profile_routes_api.post('/add_photo', add_photo);
 
 profile_routes_api.post('/delete_account',loggedApi, delete_account);
+
+profile_routes_api.post('/get_photos',loggedApi,get_photos);
 
 profile_routes_api.post('/search', loggedApi, search_api);
 
