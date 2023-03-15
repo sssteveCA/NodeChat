@@ -14,8 +14,8 @@ export class GetPhotos{
     private _errno: number = 0;
     private _error: string|null = null;
 
-    private static ERR_ACCOUNT_ID:number = 1;
-    private static ERR_GET_PHOTOS:number = 2;
+    public static ERR_ACCOUNT_ID:number = 1;
+    public static ERR_GET_PHOTOS:number = 2;
 
     private static ERR_ACCOUNT_ID_MSG:string = "L'id dell'account non è stato trovato";
     private static ERR_GET_PHOTOS_MSG:string = "Errore durante la lettura delle immagini";

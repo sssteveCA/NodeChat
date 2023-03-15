@@ -14,6 +14,7 @@ export namespace Messages{
     export const ERROR_NOTAUTHENTICATED: string = "Non sei autenticato";
     export const ERROR_PASSWORD_MISMATCH: string = "Le due password non coincidono";
     export const ERROR_PERSONALINFORMATION_UPDATE: string = "Errore durante la modifica delle informazioni personali";
+    export const ERROR_PHOTOS_GET: string = "Errore durante il caricamento delle tue foto";
     export const ERROR_COVER_IMAGE: string = "Errore durante la modifica dell'immagine di copertina";
     export const ERROR_PROFILE_IMAGE:string = "Errore durante la modifica dell'immagine del profilo";
     export const ERROR_SERVER: string = "Siamo spiacenti, il server non è in grado di elaborare la tua richiesta. "+ADMIN_CONTACT;
