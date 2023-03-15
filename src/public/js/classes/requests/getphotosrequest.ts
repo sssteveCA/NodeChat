@@ -42,9 +42,7 @@ export class GetPhotosRequest{
                 throw err;
             })
         }catch(e){
-            response = {
-                done: false, message: "Errore durante il caricamento delle tue foto"
-            }
+            response = { done: false, message: "Errore durante il caricamento delle tue foto" }
         }
         return response;
     }

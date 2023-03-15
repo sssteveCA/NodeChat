@@ -9,6 +9,9 @@ export default function setPhotosSectionEvents(): void{
         addPhotoInput: $('#upload-photo-input')
     }
     let apse: AccountPhotosSectionEvents = new AccountPhotosSectionEvents(apseData);
+    apse.getPhotos(response => {
+
+    });
     apse.addPhotoButtonClick(response =>{
         let mdData: MessageDialogInterface = {
             title: "Nuova foto", message: response[Constants.KEY_MESSAGE]

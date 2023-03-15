@@ -1,4 +1,5 @@
 import { AddPhotoRequest, AddPhotoRequestInterface } from "../../requests/addphotorequest.js";
+import { GetPhotosRequest, GetPhotosRequestInterface } from "../../requests/getphotosrequest.js";
 
 export interface AccountPhotosSectionEventsInterface{
     addPhotoButton: JQuery<HTMLButtonElement>;
@@ -35,9 +36,21 @@ export class AccountPhotosSectionEvents{
                 apr.addPhoto().then(res => {
                    callback(res); 
                 })
-            }
-            
-            
+            }  
+        })
+    }
+
+    /**
+     * Execute the HTTP request to get the user photos
+     * @param callback the callback to invoke when a response is returned
+     */
+    public getPhotos(callback: (response: object) => void): void{
+        let gprData: GetPhotosRequestInterface = {
+            token_key: $('input[name=token_key]').val() as string
+        }
+        let gpr: GetPhotosRequest = new GetPhotosRequest(gprData);
+        gpr.gpRequest().then(res => {
+            callback(res);
         })
     }
 }
