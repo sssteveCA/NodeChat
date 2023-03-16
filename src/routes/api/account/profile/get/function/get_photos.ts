@@ -1,10 +1,13 @@
 import { Request, Response } from "express";
 import { GetPhotos, GetPhotosInterface } from "../../../../../../classes/account/get/getphotos";
+import { General } from "../../../../../../classes/general";
 import { Constants } from "../../../../../../namespaces/constants";
 import { Messages } from "../../../../../../namespaces/messages";
 
 export default function get_photos(req: Request, res: Response){
     try{
+        console.log("get_photos");
+        General.getBearerToken(req);
         let gpData: GetPhotosInterface = {
             token_key: res.locals.tokenKey
         }

@@ -1,3 +1,4 @@
+import { Request } from "express";
 import { Constants } from "../namespaces/constants";
 import { Schemas } from "../namespaces/schemas";
 import { Account } from "./database/models/account";
@@ -58,6 +59,21 @@ export class General{
             if(res[Constants.KEY_DONE] == true) accountId = token.accountId;  
         });
         return accountId;
+    }
+
+    /**
+     * Get the token from the NodeChat custom Authorization header
+     * @param req the request instance
+     * @returns 
+     */
+    public static getAuthToken(req: Request): string|null{
+        let auth_header = req.get('NodeChatAuth');
+        console.log(auth_header);
+        if(typeof auth_header !== "undefined"){
+            let auth_header_arr: string[] = auth_header.split(" ",2);
+            return auth_header_arr[1];
+        }
+        return null;  
     }
 
     /**
