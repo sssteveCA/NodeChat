@@ -72,19 +72,22 @@ export class DeleteAccount{
             /* console.log("DeleteAccount deleteAccount checkPassword");
             console.log(cp_response); */
             if(cp_response['authorized'] == true){
-                return this.deleteAccountOp(cp_response['accountId']);
+                return this.deleteRelatedPhotos(cp_response['accountId']);
             }
             else throw new InvalidCredentialsError("")
-        }).then(deleted => {
-            if(deleted[Constants.KEY_DONE]){
-                return this.deleteRelatedTokens(deleted['accountId']);
+        }).then(photos_deleted => {
+            if(photos_deleted[Constants.KEY_DONE]){
+                return this.deleteRelatedTokens(photos_deleted['accountId']);
             }
-            else 
-                throw new Error("");
-        }).then(deletedTokens => {
+            else throw new Error("");
+        }).then(tokens_deleted => {
+            if(tokens_deleted[Constants.KEY_DONE]){
+                return this.deleteAccountOp(tokens_deleted['accountId']);
+            }
+            else throw new Error("")
+        }).then(account_delete => {
             response = {done: true, message: "Il tuo account è stato rimosso con successo", code: 200}
-        }).
-        catch(err => {
+        }).catch(err => {
             console.warn(err);
             if(err instanceof AccountNotFoundError){
                 this._errno = DeleteAccount.ERR_ACCOUNT_NOT_FOUND;
@@ -149,14 +152,16 @@ export class DeleteAccount{
      * @param accountId the accountId of the photos to remove
      * @returns 
      */
-    private async deleteRelatedPhotos(accountId: string): Promise<boolean>{
+    private async deleteRelatedPhotos(accountId: string): Promise<object>{
         let mmisData: MongoDbModelsManagerInterface = {
             collection_name: process.env.MONGODB_PHOTOS_COLLECTION as string,
             schema: Schemas.PHOTOS
         }
         let photos: Photos = new Photos(mmisData,{});
         const delete_photos = await photos.deletePhotos({accountId: accountId});
-        return delete_photos[Constants.KEY_DONE];
+        if(delete_photos[Constants.KEY_DONE])
+            return {done: true, accountId: accountId}
+        return {done: false}
     }
 
     /**
@@ -164,14 +169,16 @@ export class DeleteAccount{
      * @param accountId the accountId of the tokens to remove
      * @returns 
      */
-    private async deleteRelatedTokens(accountId: string): Promise<boolean>{
+    private async deleteRelatedTokens(accountId: string): Promise<object>{
         let mmisData: MongoDbModelsManagerInterface = {
             collection_name: process.env.MONGODB_TOKENS_COLLECTION as string,
             schema: Schemas.TOKENS
         }
         let tokens: Tokens = new Tokens(mmisData,{});
         const delete_tokens = await tokens.deleteTokens({accountId: accountId});
-        return delete_tokens[Constants.KEY_DONE];
+        if(delete_tokens[Constants.KEY_DONE])
+            return {done: true, accountId: accountId}
+        return {done: false}
     }
     
 }
