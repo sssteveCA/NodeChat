@@ -6,8 +6,8 @@ import { Messages } from "../../../../../../namespaces/messages";
 
 export default function get_photos(req: Request, res: Response){
     try{
-        console.log("get_photos");
-        General.getBearerToken(req);
+        /* console.log("get_photos");
+        General.getAuthToken(req); */
         let gpData: GetPhotosInterface = {
             token_key: res.locals.tokenKey
         }

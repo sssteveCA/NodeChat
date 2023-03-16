@@ -1,5 +1,6 @@
 
 export namespace Constants{
+
     //export const CONTAINER: string = "container"; //Class of page content body
     export const CONTAINER: string = "my-container"; //Class of page content body
     export const BACKGROUND: string = "background"; //Class of site background image

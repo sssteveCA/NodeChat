@@ -66,14 +66,14 @@ export class General{
      * @param req the request instance
      * @returns 
      */
-    public static getAuthToken(req: Request): string|null{
+    public static getAuthToken(req: Request): string{
         let auth_header = req.get('NodeChatAuth');
         console.log(auth_header);
         if(typeof auth_header !== "undefined"){
             let auth_header_arr: string[] = auth_header.split(" ",2);
             return auth_header_arr[1];
         }
-        return null;  
+        return "";  
     }
 
     /**

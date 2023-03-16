@@ -2,12 +2,14 @@ import { NextFunction, Request, Response } from "express";
 import { Token, TokenInterface } from "../../../../classes/database/models/token";
 import { MongoDbModelManagerInterface } from "../../../../classes/database/mongodbmodelmanager";
 import { NotAuthenticatedError } from "../../../../classes/errors/notauthenticatederror";
+import { General } from "../../../../classes/general";
 import { Constants } from "../../../../namespaces/constants";
 import { Messages } from "../../../../namespaces/messages";
 import { Schemas } from "../../../../namespaces/schemas";
 
 export async function loggedApiMiddleware(req: Request, res: Response, next: NextFunction){
-    let token_key: string = req.body['token_key'] ? req.body['token_key'] : null;
+    //let token_key: string = req.body['token_key'] ? req.body['token_key'] : null;
+    let token_key = General.getAuthToken(req);
     //console.log("middlewares_api loggedApi token_key => "+token_key);
     try{
         if(token_key){
