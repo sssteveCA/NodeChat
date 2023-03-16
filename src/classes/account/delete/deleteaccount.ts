@@ -11,6 +11,7 @@ import { Messages } from '../../../namespaces/messages';
 import { MongoDbModelsManagerInterface } from '../../database/mongodbmodelsmanager';
 import { Tokens } from '../../database/models/tokens';
 import { Schema } from 'mongoose';
+import { Photos } from '../../database/models/photos';
 
 export interface DeleteAccountInterface{
     token_key: string;
@@ -144,8 +145,23 @@ export class DeleteAccount{
     }
 
     /**
+     * Remove the photos related to the account to delete
+     * @param accountId the accountId of the photos to remove
+     * @returns 
+     */
+    private async deleteRelatedPhotos(accountId: string): Promise<boolean>{
+        let mmisData: MongoDbModelsManagerInterface = {
+            collection_name: process.env.MONGODB_PHOTOS_COLLECTION as string,
+            schema: Schemas.PHOTOS
+        }
+        let photos: Photos = new Photos(mmisData,{});
+        const delete_photos = await photos.deletePhotos({accountId: accountId});
+        return delete_photos[Constants.KEY_DONE];
+    }
+
+    /**
      * Remove the tokens related to the account to delete
-     * @param accountId the tokens that have the accountId field with a certain value
+     * @param accountId the accountId of the tokens to remove
      * @returns 
      */
     private async deleteRelatedTokens(accountId: string): Promise<boolean>{
@@ -154,7 +170,7 @@ export class DeleteAccount{
             schema: Schemas.TOKENS
         }
         let tokens: Tokens = new Tokens(mmisData,{});
-        const delete_tokens = tokens.deleteTokens({accountId: accountId});
+        const delete_tokens = await tokens.deleteTokens({accountId: accountId});
         return delete_tokens[Constants.KEY_DONE];
     }
     
