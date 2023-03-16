@@ -8,7 +8,7 @@ import { Schemas } from "../../../../namespaces/schemas";
 import { setUsernameObject } from "./account_api_functions";
 
 export function user_info_api(req: Request, res: Response){
-    let user_id: string = req.body["user_id"];
+    let user_id: string = req.query["user_id"] as string;
     let mmi_data: MongoDbModelManagerInterface = {
         collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
         schema: Schemas.ACCOUNTS

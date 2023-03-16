@@ -56,13 +56,14 @@ export class DeleteAccountRequest{
 
     private async deleteAccountPromise(): Promise<string>{
         let body: object = {
-            token_key: this._token_key, password: this._password, conf_password: this._conf_password
+            password: this._password, conf_password: this._conf_password
         };
         return await new Promise<string>((resolve,reject)=>{
             fetch(DeleteAccountRequest.FETCH_URL,{
                 method: 'POST',
                 headers: {
-                    'Accept': 'application/json', 'Content-Type': 'application/json'
+                    'Accept': 'application/json', 'Content-Type': 'application/json',
+                    'NodeChatAuth': this._token_key
                 },
                 body: JSON.stringify(body)
             }).then(res => {

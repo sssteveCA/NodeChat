@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import multiparty from "multiparty";
 import { parse } from "path";
 import { SetCoverImageFolder, SetCoverImageFolderInterface } from "../../../../../../classes/account/upload/setcoverimagefolder";
+import { General } from "../../../../../../classes/general";
 import { Constants } from "../../../../../../namespaces/constants";
 import { Messages } from "../../../../../../namespaces/messages";
 import { Paths } from "../../../../../../namespaces/paths";
@@ -23,7 +24,7 @@ export async function upload_cover_image(req: Request, res: Response){
         //console.log("Upload profile image parse");
         console.error(error);
         //console.log(fields);
-        tokenKey = fields["tokenKey"][0];
+        tokenKey = General.getAuthToken(req);
         //console.log(files);
         imagePath = files["image"][0]["path"];
         const scifData: SetCoverImageFolderInterface = {

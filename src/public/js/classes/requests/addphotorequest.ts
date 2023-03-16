@@ -1,4 +1,6 @@
 
+import { Constants } from "../../namespaces/constants";
+
 export interface AddPhotoRequestInterface{
     photo: File;
     token_key: string;
@@ -56,10 +58,12 @@ export class AddPhotoRequest{
 
     private async addPhotoPromise(): Promise<string>{
         let fd: FormData = new FormData();
-        fd.append('tokenKey',this._token_key);
         fd.append('photo', this._photo);
         return await new Promise<string>((resolve,reject)=>{
             fetch(AddPhotoRequest.FETCH_URL,{
+                headers: {
+                    'NodeChatAuth': this._token_key
+                },
                 method: 'POST',
                 body: fd
             }).then(res => {

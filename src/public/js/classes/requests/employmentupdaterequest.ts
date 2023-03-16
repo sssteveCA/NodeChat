@@ -60,10 +60,10 @@ export class EmploymentUpdateRequest{
             fetch(EmploymentUpdateRequest.FETCH_URL, {
                 method: 'PUT',
                 headers: {
-                    "Accept": "application/json", "Content-Type": "application/json"
+                    "Accept": "application/json", "Content-Type": "application/json",
+                    'NodeChatAuth': this._token_key
                 },
                 body: JSON.stringify({
-                    token_key: this._token_key, 
                     employment: this._employment
                 })
             }).then(res => {

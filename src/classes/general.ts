@@ -68,11 +68,9 @@ export class General{
      */
     public static getAuthToken(req: Request): string{
         let auth_header = req.get('NodeChatAuth');
-        console.log(auth_header);
-        if(typeof auth_header !== "undefined"){
-            let auth_header_arr: string[] = auth_header.split(" ",2);
-            return auth_header_arr[1];
-        }
+        //console.log(auth_header);
+        if(typeof auth_header !== "undefined")
+           return auth_header;
         return "";  
     }
 

@@ -4,6 +4,7 @@ import { SetProfileImageFolder, SetProfileImageFolderInterface } from "../../../
 import { Paths } from "../../../../../../namespaces/paths";
 import { Messages } from "../../../../../../namespaces/messages";
 import { Constants } from "../../../../../../namespaces/constants";
+import { General } from "../../../../../../classes/general";
 
 export async function upload_profile_image(req: Request, res: Response){
     let tokenKey: string = "";
@@ -55,7 +56,7 @@ export async function upload_profile_image(req: Request, res: Response){
         //console.log("Upload profile image parse");
         console.error(error);
         console.log(fields);
-        tokenKey = fields["tokenKey"][0];
+        tokenKey = General.getAuthToken(req);
         console.log(files);
         imagePath = files["image"][0]["path"];
         const spifData: SetProfileImageFolderInterface = {

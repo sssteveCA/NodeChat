@@ -82,13 +82,14 @@ export class PersonalInformationUpdateRequest{
 
     private async piUpdatePromise(): Promise<string>{
         let body: object = {
-            token_key: this._token_key, name: this._name, surname: this._surname, sex: this._sex, birth_date: this._birth_date, birth_place: this._birth_place, living_place: this._living_place
+            name: this._name, surname: this._surname, sex: this._sex, birth_date: this._birth_date, birth_place: this._birth_place, living_place: this._living_place
         }
         return await new Promise<string>((resolve,reject)=>{
             fetch(PersonalInformationUpdateRequest.FETCH_URL, {
                 method: 'PUT',
                 headers: {
-                    "Accept": "application/json", "Content-Type": "application/json"
+                    "Accept": "application/json", "Content-Type": "application/json",
+                    'NodeChatAuth': this._token_key as string
                 },
                 body: JSON.stringify(body)
             }).then(res => {

@@ -59,13 +59,15 @@ export class EducationUpdateRequest{
 
     private async edUpdatePromise(): Promise<string>{
         let body: object = {
-            token_key: this._token_key, secondary_school: this._secondary_school, university: this._university
+            secondary_school: this._secondary_school, university: this._university
         }
+        console.log(body);
         return await new Promise<string>((resolve,reject)=> {
             fetch(EducationUpdateRequest.FETCH_URL,{
                 method: 'PUT',
                 headers: {
-                    "Accept": "application/json", "Content-Type": "application/json"
+                    "Accept": "application/json", "Content-Type": "application/json",
+                    'NodeChatAuth': this._token_key
                 },
                 body: JSON.stringify(body)
             }).then(res => {

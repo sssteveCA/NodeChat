@@ -57,14 +57,12 @@ export class UserRequest{
 
     private async userInfoPromise(): Promise<string>{
         return await new Promise<string>((resolve, reject) => {
-            fetch(UserRequest.FETCH_URL,{
-                method: "POST",
+            fetch(`${UserRequest.FETCH_URL}?user_id=${this._user_id}`,{
+                method: "GET",
                 headers: {
-                    "Accept": "application/json", "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    token_key: this._token_key, user_id: this._user_id
-                })
+                    "Accept": "application/json",
+                    'NodeChatAuth': this._token_key
+                }
             }).then(res => {
                 resolve(res.text());
             }).catch(err => {

@@ -50,11 +50,11 @@ export class GetPhotosRequest{
     private async gpRequestPromise(): Promise<string>{
         return await new Promise<string>((resolve,reject)=>{
             fetch(GetPhotosRequest.FETCH_URL,{
-                method: 'POST',
+                method: 'GET',
                 headers: {
-                    "Accept": "application/json", "Content-Type": "application/json"
+                    "Accept": "application/json",
+                    'NodeChatAuth': this._token_key
                 },
-                body: JSON.stringify({token_key: this._token_key})
             }).then(res => {
                 resolve(res.text());
             }).catch(err => {

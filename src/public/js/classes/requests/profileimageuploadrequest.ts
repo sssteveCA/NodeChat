@@ -62,10 +62,12 @@ export class ProfileImageUploadRequest{
         return await new Promise<string>((resolve,reject)=>{
             let url: string = ProfileImageUploadRequest.FETCH_URL;
             let formData = new FormData();
-            formData.append('tokenKey',this._token_key);
             formData.append('image',this._image);
             fetch(url,{
-                method: 'POST', body: formData
+                method: 'POST', body: formData, 
+                headers: {
+                    'NodeChatAuth': this._token_key as string
+                }
             }).then(res => {
                 resolve(res.text());
             }).catch(err => {

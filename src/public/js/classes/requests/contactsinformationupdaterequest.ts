@@ -61,10 +61,10 @@ export class ContactsInformationUpdateRequest{
             fetch(ContactsInformationUpdateRequest.FETCH_URL,{
                 method: 'PUT',
                 headers: {
-                    "Accept": "application/json", "Content-Type": "application/json"
+                    "Accept": "application/json", "Content-Type": "application/json",
+                    'NodeChatAuth': this._token_key
                 },
                 body: JSON.stringify({
-                    token_key: this._token_key,
                     telephone: this._telephone,
                     email: this._email
                 })
