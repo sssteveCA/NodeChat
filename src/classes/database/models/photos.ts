@@ -34,6 +34,25 @@ export class Photos extends MongoDbModelsManager{
         return this._error;
     }
 
+    public async deletePhotos(filter: object): Promise<object>{
+        let response: object = {}
+        this._errno = 0;
+        await super.connect().then(conn => {
+            if(conn == true){
+                return super.delete(filter);
+            }
+            else throw new DatabaseConnectionError(this.error as string);
+        }).then(deleted => {
+            if(this._errno == 0) response = {done: true}
+            else throw new Error("")
+        }).catch(err => {
+            response = {done: false}
+        }).finally(()=>{
+            super.close();
+        });
+        return response;
+    }
+
     public async getPhotos(filter: object): Promise<object>{
         this._errno = 0;
         this._results = [];
