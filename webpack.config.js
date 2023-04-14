@@ -32,7 +32,7 @@ module.exports = {
         'js/menu': join(publicJsSrc,'menu.ts'),
         'js/subscribe': join(publicJsSrc,'subscribe.ts'),
         'js/verify': join(publicJsSrc,'verify.ts'),
-        'js/logged/index_logged': join(publicJsSrc,'logged/logged.ts'),
+        'js/logged/index_logged': join(publicJsSrc,'logged/index_logged.ts'),
         'js/logged/profile': join(publicJsSrc,'logged/profile.ts'),
         'js/logged/user_profile': join(publicJsSrc,'logged/user_profile.ts'),
     },
@@ -66,6 +66,16 @@ module.exports = {
             {
                 test: /\.(css|s[ac]ss)$/,
                 use: [MiniCssExtractPlugin.loader,'css-loader','sass-loader'],
+                use: [
+                    {loader: MiniCssExtractPlugin.loader},
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            url: false
+                        }
+                    },
+                    {loader: 'sass-loader'}
+                ],
                 exclude: [ /node_modules/]
             }
         ]
