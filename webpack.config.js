@@ -5,6 +5,7 @@ const srcPath = join(__dirname,'src');
 const distPath = join(__dirname,'dist');
 const publicCssSrc = join(srcPath,'public','css');
 const publicJsSrc = join(srcPath,'public','js');
+const publicImgPath = join(srcPath,'public','img');
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
@@ -39,7 +40,8 @@ module.exports = {
     output: {
         path: resolve(distPath,'public'),
         filename: '[name].js',
-        clean: true
+        clean: true,
+        assetModuleFilename: '[file]'
     },
     module: {
         rules: [
@@ -77,6 +79,10 @@ module.exports = {
                     {loader: 'sass-loader'}
                 ],
                 exclude: [ /node_modules/]
+            },
+            {
+                test: /\.(jpe?g|jfif|png|gif|ttf)$/,
+                type: 'asset/resource'
             }
         ]
     },

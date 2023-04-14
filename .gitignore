@@ -5,8 +5,6 @@ node_modules
 !webpack.config.js
 *.map
 dist/public/css/*.map
-dist/public/img/photos/*
-dist/public/img/profiles/*
 dist/views/partials/cookie_banner.mustache
 .env
 src/policies/cookiepolicy.ts
