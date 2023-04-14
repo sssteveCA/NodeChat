@@ -2,6 +2,7 @@ dist/public/bootstrap-icons
 node_modules
 *.css
 *.js
+!webpack.config.js
 *.map
 dist/public/css/*.map
 dist/public/img/photos/*
