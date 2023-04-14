@@ -1,6 +1,6 @@
-import { MessageDialog, MessageDialogInterface } from "./classes/dialogs/messagedialog.js";
-import { EmailRequest, EmailRequestInterface } from "./classes/requests/emailrequest.js";
-import { Constants } from "./namespaces/constants.js";
+import { MessageDialog, MessageDialogInterface } from "./classes/dialogs/messagedialog";
+import { EmailRequest, EmailRequestInterface } from "./classes/requests/emailrequest";
+import { Constants } from "./namespaces/constants";
 
 $(()=>{
     let spinner = $('#contacts-spinner');

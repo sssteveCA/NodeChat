@@ -1,15 +1,12 @@
-import { ConfirmDialog, ConfirmDialogInterface } from "../classes/dialogs/confirmdialog.js";
-import { CurrentUserRequest, CurrentUserRequestInterface } from "../classes/requests/currentuserrequest.js";
-import { Section, SectionInterface } from "../classes/template/profile/section.js";
-import { SectionEvents, SectionEventsInterface } from "../classes/template/profile/section_events.js";
-import { MyProfileSections, SectionLiItems } from "../enums/enums.js";
-import Account from "../models/account.js";
-import { Constants } from "../namespaces/constants.js";
-import { PersonalInformationItemsType } from "../types/personalinformationitemstype.js";
-import { addImages } from "./functions/profile/addimages.js";
-import { setAccountSectionEvents } from "./functions/profile/setaccountsectionevents.js";
-import { setInformationSectionEvents } from "./functions/profile/setinformationsectionevents.js";
-import setPhotosSectionEvents from "./functions/profile/setphotossectionevents.js";
+import { CurrentUserRequest, CurrentUserRequestInterface } from "../classes/requests/currentuserrequest";
+import { Section, SectionInterface } from "../classes/template/profile/section";
+import { MyProfileSections, SectionLiItems } from "../enums/enums";
+import Account from "../models/account";
+import { Constants } from "../namespaces/constants";
+import { addImages } from "./functions/profile/addimages";
+import { setAccountSectionEvents } from "./functions/profile/setaccountsectionevents";
+import { setInformationSectionEvents } from "./functions/profile/setinformationsectionevents";
+import setPhotosSectionEvents from "./functions/profile/setphotossectionevents";
 
 $(()=>{
     let cur_data: CurrentUserRequestInterface = {

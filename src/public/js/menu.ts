@@ -1,4 +1,4 @@
-import { ConfirmDialog, ConfirmDialogInterface } from "./classes/dialogs/confirmdialog.js";
+import { ConfirmDialog, ConfirmDialogInterface } from "./classes/dialogs/confirmdialog";
 
 $(()=>{
     logout();

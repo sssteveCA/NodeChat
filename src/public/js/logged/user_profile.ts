@@ -1,10 +1,10 @@
-import { CurrentUserRequest, CurrentUserRequestInterface } from "../classes/requests/currentuserrequest.js";
-import { UserRequest, UserRequestInterface } from "../classes/requests/userrequest.js";
-import { Section, SectionInterface } from "../classes/template/profile/section.js";
-import { UserSection, UserSectionInterface } from "../classes/template/profile/user_section.js";
-import { MyProfileSections, SectionLiItems } from "../enums/enums.js";
-import Account from "../models/account.js";
-import { Constants } from "../namespaces/constants.js";
+import { CurrentUserRequest, CurrentUserRequestInterface } from "../classes/requests/currentuserrequest";
+import { UserRequest, UserRequestInterface } from "../classes/requests/userrequest";
+import { Section, SectionInterface } from "../classes/template/profile/section";
+import { UserSection, UserSectionInterface } from "../classes/template/profile/user_section";
+import { MyProfileSections, SectionLiItems } from "../enums/enums";
+import Account from "../models/account";
+import { Constants } from "../namespaces/constants";
 
 $(()=>{
     let ur_data: UserRequestInterface = {

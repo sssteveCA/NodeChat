@@ -1,7 +1,7 @@
-import { MessageDialog, MessageDialogInterface } from "./classes/dialogs/messagedialog.js";
-import { SubscribeRequest, SubscribeRequestInterface } from "./classes/requests/subscriberequest.js";
-import { fMessageDialog } from "./functions/general.js";
-import { Constants } from "./namespaces/constants.js";
+import { MessageDialog, MessageDialogInterface } from "./classes/dialogs/messagedialog";
+import { SubscribeRequest, SubscribeRequestInterface } from "./classes/requests/subscriberequest";
+import { fMessageDialog } from "./functions/general";
+import { Constants } from "./namespaces/constants";
 
 $(()=>{
     let spinner = $('#subscribe-spinner');

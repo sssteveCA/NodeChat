@@ -1,5 +1,5 @@
-import { MyProfileSections } from "../../../enums/enums.js";
-import Account from "../../../models/account.js";
+import { MyProfileSections } from "../../../enums/enums";
+import Account from "../../../models/account";
 
 
 export interface SectionInterface {

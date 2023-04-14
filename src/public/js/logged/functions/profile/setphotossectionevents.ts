@@ -1,7 +1,7 @@
-import { MessageDialogInterface } from "../../../classes/dialogs/messagedialog.js";
-import { AccountPhotosSectionEvents, AccountPhotosSectionEventsInterface } from "../../../classes/template/profile/account_photos_section_events.js";
-import { fMessageDialog } from "../../../functions/general.js";
-import { Constants } from "../../../namespaces/constants.js";
+import { MessageDialogInterface } from "../../../classes/dialogs/messagedialog";
+import { AccountPhotosSectionEvents, AccountPhotosSectionEventsInterface } from "../../../classes/template/profile/account_photos_section_events";
+import { fMessageDialog } from "../../../functions/general";
+import { Constants } from "../../../namespaces/constants";
 
 export default function setPhotosSectionEvents(): void{
     let apseData: AccountPhotosSectionEventsInterface = {

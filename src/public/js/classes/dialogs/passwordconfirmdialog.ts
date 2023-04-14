@@ -1,4 +1,4 @@
-import { MessageDialog, MessageDialogInterface } from "./messagedialog.js";
+import { MessageDialog, MessageDialogInterface } from "./messagedialog";
 
 export interface PasswordConfirmDialogInterface extends MessageDialogInterface{
 

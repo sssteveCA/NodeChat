@@ -1,17 +1,9 @@
-import { ConfirmDialog, ConfirmDialogInterface } from "../../../classes/dialogs/confirmdialog.js";
-import { MessageDialogInterface } from "../../../classes/dialogs/messagedialog.js";
-import { ContactsInformationUpdateRequest, ContactsInformationUpdateRequestInterface } from "../../../classes/requests/contactsinformationupdaterequest.js";
-import { EducationUpdateRequest, EducationUpdateRequestInterface } from "../../../classes/requests/educationupdaterequest.js";
-import { EmploymentUpdateRequest, EmploymentUpdateRequestInterface } from "../../../classes/requests/employmentupdaterequest.js";
-import { PersonalInformationUpdateRequest, PersonalInformationUpdateRequestInterface } from "../../../classes/requests/personalinformationupdaterequest.js";
-import { SectionEvents, SectionEventsInterface } from "../../../classes/template/profile/section_events.js";
-import { fMessageDialog } from "../../../functions/general.js";
-import { Constants } from "../../../namespaces/constants.js";
-import { PersonalInformationItemsType } from "../../../types/personalinformationitemstype.js";
-import onContactInfoButtonClick from "./sise_folder/oncontactinfobuttonclick.js";
-import onEducationButtonClick from "./sise_folder/oneducationbuttonclick.js";
-import onPersonalInfoButtonClick from "./sise_folder/onpersonalinfobuttonclick.js";
-import onWorkButtonClick from "./sise_folder/onworkbuttonclick.js";
+import { SectionEvents, SectionEventsInterface } from "../../../classes/template/profile/section_events";
+import { PersonalInformationItemsType } from "../../../types/personalinformationitemstype";
+import onContactInfoButtonClick from "./sise_folder/oncontactinfobuttonclick";
+import onEducationButtonClick from "./sise_folder/oneducationbuttonclick";
+import onPersonalInfoButtonClick from "./sise_folder/onpersonalinfobuttonclick";
+import onWorkButtonClick from "./sise_folder/onworkbuttonclick";
 
 export function setInformationSectionEvents(): void{
     let piit: PersonalInformationItemsType = {

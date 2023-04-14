@@ -1,7 +1,7 @@
-import { MessageDialog, MessageDialogInterface } from "../../../classes/dialogs/messagedialog.js";
-import { CoverImageUploadRequest, CoverImageUploadRequestInterface } from "../../../classes/requests/coverimageuploadrequest.js";
-import { ProfileImageUploadRequest, ProfileImageUploadRequestInterface } from "../../../classes/requests/profileimageuploadrequest.js";
-import { Constants } from "../../../namespaces/constants.js";
+import { MessageDialog, MessageDialogInterface } from "../../../classes/dialogs/messagedialog";
+import { CoverImageUploadRequest, CoverImageUploadRequestInterface } from "../../../classes/requests/coverimageuploadrequest";
+import { ProfileImageUploadRequest, ProfileImageUploadRequestInterface } from "../../../classes/requests/profileimageuploadrequest";
+import { Constants } from "../../../namespaces/constants";
 
 export function addImages(profile: string, cover: string): void{
     $('.profile-image').html(`

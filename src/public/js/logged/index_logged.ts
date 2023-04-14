@@ -1,8 +1,8 @@
-import { MessageDialog, MessageDialogInterface } from "../classes/dialogs/messagedialog.js";
-import { SearchProfilesRequest, SearchProfilesRequestInterface } from "../classes/requests/searchprofilesrequest.js";
-import { SearchProfilesTable, SearchProfilesTableInterface } from "../classes/tables/searchprofilestable.js";
-import { fMessageDialog } from "../functions/general.js";
-import { Constants } from "../namespaces/constants.js";
+import { MessageDialog, MessageDialogInterface } from "../classes/dialogs/messagedialog";
+import { SearchProfilesRequest, SearchProfilesRequestInterface } from "../classes/requests/searchprofilesrequest";
+import { SearchProfilesTable, SearchProfilesTableInterface } from "../classes/tables/searchprofilestable";
+import { fMessageDialog } from "../functions/general";
+import { Constants } from "../namespaces/constants";
 
 $(()=>{
     $('#ul_search').on('click',()=>{

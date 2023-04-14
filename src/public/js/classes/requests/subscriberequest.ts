@@ -1,5 +1,4 @@
-import { ValidationError } from "../../errors/validationerror.js";
-import { Constants } from "../../namespaces/constants.js";
+import { Constants } from "../../namespaces/constants";
 
 export interface SubscribeRequestInterface{
     name: string, surname: string, username:string;

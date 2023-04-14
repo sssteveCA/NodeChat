@@ -1,6 +1,6 @@
-import { MessageDialog, MessageDialogInterface } from "./classes/dialogs/messagedialog.js";
-import { VerifyRequest, VerifyRequestInterface } from "./classes/requests/verifyrequest.js";
-import { fMessageDialog } from "./functions/general.js";
+import { MessageDialog, MessageDialogInterface } from "./classes/dialogs/messagedialog";
+import { VerifyRequest, VerifyRequestInterface } from "./classes/requests/verifyrequest";
+import { fMessageDialog } from "./functions/general";
 
 $(()=>{
     $('#fVerify').on('submit',(e)=>{

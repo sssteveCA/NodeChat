@@ -1,7 +1,6 @@
-import { ProfileSectionEditContainer } from "../../../types/types.js";
-import { ConfirmDialog, ConfirmDialogInterface } from "../../dialogs/confirmdialog.js";
-import { PasswordConfirmDialog, PasswordConfirmDialogInterface } from "../../dialogs/passwordconfirmdialog.js";
-import { DeleteAccountRequest, DeleteAccountRequestInterface } from "../../requests/deleteaccountrequest.js";
+import { ConfirmDialog, ConfirmDialogInterface } from "../../dialogs/confirmdialog";
+import { PasswordConfirmDialog, PasswordConfirmDialogInterface } from "../../dialogs/passwordconfirmdialog";
+import { DeleteAccountRequest, DeleteAccountRequestInterface } from "../../requests/deleteaccountrequest";
 
 export interface AccountSettingsSectionInterface{
     deleteAccountButton: JQuery<HTMLButtonElement>;

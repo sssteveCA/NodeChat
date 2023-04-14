@@ -1,5 +1,5 @@
-import { AddPhotoRequest, AddPhotoRequestInterface } from "../../requests/addphotorequest.js";
-import { GetPhotosRequest, GetPhotosRequestInterface } from "../../requests/getphotosrequest.js";
+import { AddPhotoRequest, AddPhotoRequestInterface } from "../../requests/addphotorequest";
+import { GetPhotosRequest, GetPhotosRequestInterface } from "../../requests/getphotosrequest";
 
 export interface AccountPhotosSectionEventsInterface{
     addPhotoButton: JQuery<HTMLButtonElement>;

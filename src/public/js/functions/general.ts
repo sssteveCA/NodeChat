@@ -1,4 +1,4 @@
-import { MessageDialog, MessageDialogInterface } from "../classes/dialogs/messagedialog.js";
+import { MessageDialog, MessageDialogInterface } from "../classes/dialogs/messagedialog";
 
 export function fMessageDialog(md_data: MessageDialogInterface): void{
     let md: MessageDialog = new MessageDialog(md_data);

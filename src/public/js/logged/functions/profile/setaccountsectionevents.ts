@@ -1,7 +1,6 @@
-import { MessageDialog, MessageDialogInterface } from "../../../classes/dialogs/messagedialog.js";
-import { AccountSettingsSection, AccountSettingsSectionInterface } from "../../../classes/template/profile/account_settings_section_events.js";
-import { fMessageDialog } from "../../../functions/general.js";
-import { Constants } from "../../../namespaces/constants.js";
+import { MessageDialog, MessageDialogInterface } from "../../../classes/dialogs/messagedialog";
+import { AccountSettingsSection, AccountSettingsSectionInterface } from "../../../classes/template/profile/account_settings_section_events";
+import { Constants } from "../../../namespaces/constants";
 
 export function setAccountSectionEvents(): void{
     let asseData: AccountSettingsSectionInterface = {
