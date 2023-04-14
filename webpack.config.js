@@ -21,6 +21,13 @@ module.exports = {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
                 exclude: [/node_modules/,
+                    join(srcPath,'classes'),
+                    join(srcPath,'enums'),
+                    join(srcPath,'modules'),
+                    join(srcPath,'namespaces'),
+                    join(srcPath,'policies'),
+                    join(srcPath,'routes'),
+                    join(srcPath,'types'),
                     ]
             },
             {
