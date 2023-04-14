@@ -5,7 +5,10 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "ts-node ./src/index.ts",
-    "nodemon": "nodemon ./dist/index.js"
+    "nodemon": "nodemon ./dist/index.js",
+    "build": "webpack --mode=production",
+    "dev": "webpack --mode=development",
+    "serve": "webpack server"
   },
   "author": "sssteveCA",
   "license": "ISC",

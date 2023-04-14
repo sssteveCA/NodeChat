@@ -45,8 +45,15 @@ module.exports = {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: 'ts-loader',
-                exclude: [/node_modules/,
+                use: [
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            configFile: resolve(publicJsSrc,'tsconfig.json')
+                        }
+                    }
+                ],
+                exclude: [/node_modules/, /index.ts/,
                     join(srcPath,'classes'),
                     join(srcPath,'enums'),
                     join(srcPath,'modules'),
