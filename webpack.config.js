@@ -44,8 +44,7 @@ module.exports = {
     output: {
         path: resolve(distPath,'public'),
         filename: '[name].js',
-        clean: true,
-        assetModuleFilename: '[file]'
+        clean: true
     },
     module: {
         rules: [
@@ -84,10 +83,6 @@ module.exports = {
                 ],
                 exclude: [ /node_modules/]
             },
-            {
-                test: /\.(jpe?g|jfif|png|gif|ttf)$/,
-                type: 'asset/resource'
-            }
         ]
     },
     plugins: [
@@ -98,7 +93,8 @@ module.exports = {
         new CopyPlugin({
             patterns: [
                 { from: srcImg, to: srcImgDist },
-                { from: srcFonts, to: srcFontsDist}
+                { from: srcFonts, to: srcFontsDist},
+                { from: srcPath+'/public/favicon.ico', to: distPath+'/public/favicon.ico' }
             ]
         })
     ],

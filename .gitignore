@@ -4,7 +4,7 @@ node_modules
 *.js
 !webpack.config.js
 *.map
-dist/public/css/*.map
+dist/public/*
 dist/views/partials/cookie_banner.mustache
 .env
 src/policies/cookiepolicy.ts
