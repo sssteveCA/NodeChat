@@ -6,7 +6,7 @@ import path from 'path'
 import fs from 'fs/promises'
 import mustache from 'mustache'
 
-export async function verify_code(req:Request, res: Response){
+export default async function verify_code(req:Request, res: Response){
 
     let code = req.params.code;
     let status_code: number = 200;

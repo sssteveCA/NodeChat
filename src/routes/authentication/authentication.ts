@@ -11,7 +11,7 @@ import { Regexs } from '../../namespaces/regex';
 import { guest } from '../middlewares/middlewares';
 import { login_validator, subscribe_validator, verify_credentials } from './authentication_m';
 import session from 'express-session';
-import { verify_code } from './functions/verify_code';
+import verify_code from './functions/verify_code';
 import { login_get, login_post } from './functions/login';
 import { new_account } from './functions/new_account';
 import { subscribe_post } from './functions/subscribe';
