@@ -94,7 +94,8 @@ module.exports = {
             patterns: [
                 { from: srcImg, to: srcImgDist },
                 { from: srcFonts, to: srcFontsDist},
-                { from: srcPath+'/public/favicon.ico', to: distPath+'/public/favicon.ico' }
+                { from: srcPath+'/public/favicon.ico', to: distPath+'/public/favicon.ico' },
+                { from: __dirname+'/node_modules/bootstrap-icons', to: distPath+'/public/bootstrap-icons'}
             ]
         })
     ],
