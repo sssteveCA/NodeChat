@@ -72,7 +72,6 @@ module.exports = {
             },
             {
                 test: /\.(css|s[ac]ss)$/,
-                use: [MiniCssExtractPlugin.loader,'css-loader','sass-loader'],
                 use: [
                     {loader: MiniCssExtractPlugin.loader},
                     {

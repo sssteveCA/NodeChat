@@ -11,7 +11,6 @@ export async function about_us(req: Request, res: Response){
         {rel: 'stylesheet', href: Paths.BOOTSTRAP_CSS},
         {rel: 'stylesheet', href: Paths.JQUERY_UI_CSS},
         {rel: 'stylesheet', href: '/css/aboutus.css'},
-        {rel: 'stylesheet', href: '/css/menu.css'},
         {rel: 'stylesheet', href: '/css/footer.css'},
     ]
     let scripts_list: object[] = [
@@ -24,6 +23,16 @@ export async function about_us(req: Request, res: Response){
     let partial_data: object = {}
     if(req.session[Constants.KEY_USERNAME]){
         partial_data = {token_key: req.session[Constants.KEY_TOKEN], username: req.session[Constants.KEY_USERNAME]}
+        links_list = [
+            ...links_list,
+            {rel: 'stylesheet', href: '/css/logged/menu_logged.css'},
+        ]
+    }
+    else{
+        links_list = [
+            ...links_list,
+            {rel: 'stylesheet', href: '/css/menu.css'},
+        ]
     }
     let content = await fs.readFile(about_us, {encoding: 'utf-8'})
     content = mustache.render(content,partial_data)

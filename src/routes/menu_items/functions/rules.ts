@@ -24,6 +24,16 @@ export async function rules(req: Request, res: Response){
     let partial_data: object = {}
     if(req.session[Constants.KEY_USERNAME]){
         partial_data = {token_key: req.session[Constants.KEY_TOKEN], username: req.session[Constants.KEY_USERNAME]}
+        links_list = [
+            ...links_list,
+            {rel: 'stylesheet', href: '/css/logged/menu_logged.css'},
+        ]
+    }
+    else{
+        links_list = [
+            ...links_list,
+            {rel: 'stylesheet', href: '/css/menu.css'},
+        ]
     }
     let content = await fs.readFile(rules, {encoding: 'utf-8'})
     content = mustache.render(content,partial_data)

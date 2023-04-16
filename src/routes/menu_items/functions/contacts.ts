@@ -11,7 +11,6 @@ export async function contacts(req: Request,res: Response){
         {rel: 'stylesheet', href: Paths.BOOTSTRAP_CSS},
         {rel: 'stylesheet', href: Paths.JQUERY_UI_CSS},
         {rel: 'stylesheet', href: '/css/contacts.css'},
-        {rel: 'stylesheet', href: '/css/menu.css'},
         {rel: 'stylesheet', href: '/css/footer.css'},
     ]
     let scripts_list: object[] = [
@@ -25,6 +24,16 @@ export async function contacts(req: Request,res: Response){
     let partial_data: object = {}
     if(req.session){
         partial_data = {token_key: req.session[Constants.KEY_TOKEN], username: req.session['username']}
+        links_list = [
+            ...links_list,
+            {rel: 'stylesheet', href: '/css/logged/menu_logged.css'},
+        ]
+    }
+    else{
+        links_list = [
+            ...links_list,
+            {rel: 'stylesheet', href: '/css/menu.css'},
+        ]
     }
     let content = await fs.readFile(contacts, {encoding: 'utf-8'})
     content = mustache.render(content,partial_data)

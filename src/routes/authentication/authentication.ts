@@ -34,6 +34,6 @@ authentication_routes.get('/verify', guest, verify);
 
 authentication_routes.get('/verify/:code', guest, verify_code);
 
-authentication_routes.post('/login', [login_validator, verify_credentials], login_post);
+authentication_routes.post('/login', [guest, login_validator, verify_credentials], login_post);
 
 authentication_routes.post('/newAccount',[guest,subscribe_validator],subscribe_post);
