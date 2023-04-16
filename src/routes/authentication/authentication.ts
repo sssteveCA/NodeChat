@@ -14,7 +14,8 @@ import session from 'express-session';
 import verify_code from './functions/verify_code';
 import { login_get, login_post } from './functions/login';
 import { new_account } from './functions/new_account';
-import { subscribe_post } from './functions/subscribe';
+import { subscribe_get, subscribe_post } from './functions/subscribe';
+import verify from './functions/verify';
 
 export const authentication_routes = express.Router();
 
@@ -34,28 +35,9 @@ authentication_routes.get('/logout', async (req,res)=>{
     }); 
 });
 
-authentication_routes.get('/subscribe', guest, (req,res)=>{
-    res.render('subscribe',{
-        bootstrap_css: Paths.BOOTSTRAP_CSS,
-        bootstrap_js: Paths.BOOTSTRAP_JS,
-        jquery_js: Paths.JQUERY_JS,
-        jquery_ui_css: Paths.JQUERY_UI_CSS,
-        jquery_ui_js: Paths.JQUERY_UI_JS,
-        container: Constants.CONTAINER,
-        newAccount: Paths.NEWACCOUNT
-    });
-});
+authentication_routes.get('/subscribe', guest, subscribe_get);
 
-authentication_routes.get('/verify', guest, (req,res)=>{
-    res.render('verify',{
-        bootstrap_css: '../'+Paths.BOOTSTRAP_CSS,
-        bootstrap_js: '../'+Paths.BOOTSTRAP_JS,
-        container: Constants.CONTAINER,
-        jquery_js: '../'+Paths.JQUERY_JS,
-        jquery_ui_css: '../'+Paths.JQUERY_UI_CSS,
-        jquery_ui_js: '../'+Paths.JQUERY_UI_JS,
-    });
-});
+authentication_routes.get('/verify', guest, verify);
 
 authentication_routes.get('/verify/:code', guest, verify_code);
 
