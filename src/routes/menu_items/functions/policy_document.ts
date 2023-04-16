@@ -43,7 +43,8 @@ export default async function policy_document(req: Request, res: Response){
     let content = await fs.readFile(cookie_policy_view, {encoding: 'utf-8'})
     content = mustache.render(content,partial_data)
     const data = {
-        session: req.session,
+        token_key: req.session[Constants.KEY_TOKEN],
+        username: req.session[Constants.KEY_USERNAME],
         title: "Cookie Policy",
         links: {
             list: links_list,
