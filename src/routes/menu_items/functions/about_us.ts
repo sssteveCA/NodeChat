@@ -10,16 +10,16 @@ export async function about_us(req: Request, res: Response){
     let links_list: object[] = [
         {rel: 'stylesheet', href: Paths.BOOTSTRAP_CSS},
         {rel: 'stylesheet', href: Paths.JQUERY_UI_CSS},
-        {rel: 'stylesheet', href: 'css/aboutus.css'},
-        {rel: 'stylesheet', href: 'css/menu.css'},
-        {rel: 'stylesheet', href: 'css/footer.css'},
+        {rel: 'stylesheet', href: '/css/aboutus.css'},
+        {rel: 'stylesheet', href: '/css/menu.css'},
+        {rel: 'stylesheet', href: '/css/footer.css'},
     ]
     let scripts_list: object[] = [
         {src: Paths.BOOTSTRAP_JS},
         {src: Paths.JQUERY_JS},
         {src: Paths.JQUERY_UI_JS},
-        {type: 'module', src: 'js/menu.js'},
-        {src: 'js/footer.js'},
+        {type: 'module', src: '/js/menu.js'},
+        {src: '/js/footer.js'},
     ]
     let partial_data: object = {}
     if(req.session[Constants.KEY_USERNAME]){

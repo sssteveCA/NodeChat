@@ -17,17 +17,17 @@ export default async function index_route(req: Request, res: Response){
         links_list = [
             {rel: 'stylesheet', href: Paths.BOOTSTRAP_CSS},
             {rel: 'stylesheet', href: Paths.JQUERY_UI_CSS},
-            {rel: 'stylesheet', href: 'css/logged/index_logged.css'},
-            {rel: 'stylesheet', href: 'css/logged/menu_logged.css'},
-            {rel: 'stylesheet', href: 'css/footer.css'},
+            {rel: 'stylesheet', href: '/css/logged/index_logged.css'},
+            {rel: 'stylesheet', href: '/css/logged/menu_logged.css'},
+            {rel: 'stylesheet', href: '/css/footer.css'},
         ]
         scripts_list = [
             {src: Paths.BOOTSTRAP_JS},
             {src: Paths.JQUERY_JS},
             {src: Paths.JQUERY_UI_JS},
-            {type: 'module', src: 'js/menu.js'},
-            {type: 'module', src: 'js/logged/index_logged.js'},
-            {src: 'js/footer.js'},
+            {type: 'module', src: '/js/menu.js'},
+            {type: 'module', src: '/js/logged/index_logged.js'},
+            {src: '/js/footer.js'},
         ],
         partial_data = {token_key: req.session[Constants.KEY_TOKEN], username: req.session[Constants.KEY_USERNAME]}
     }
@@ -35,15 +35,15 @@ export default async function index_route(req: Request, res: Response){
         index = path.resolve(Paths.ROOTPATH,'dist/views/partials/index.mustache')
         links_list = [
             { rel: 'stylesheet', href: Paths.BOOTSTRAP_CSS },
-            { rel: 'stylesheet', href: 'css/index.css' },
-            { rel: 'stylesheet', href: 'css/menu.css' },
-            { rel: 'stylesheet', href: 'css/footer.css' },
+            { rel: 'stylesheet', href: '/css/index.css' },
+            { rel: 'stylesheet', href: '/css/menu.css' },
+            { rel: 'stylesheet', href: '/css/footer.css' },
         ]
         scripts_list = [
             {src: Paths.BOOTSTRAP_JS},
             {src: Paths.JQUERY_JS},
-            {type: 'module', src: 'js/menu.js'},
-            {src: 'js/footer.js'},
+            {type: 'module', src: '/js/menu.js'},
+            {src: '/js/footer.js'},
         ]
     }
     let content = await fs.readFile(index, {encoding: 'utf-8'})

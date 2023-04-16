@@ -14,26 +14,30 @@ export default async function policy_document(req: Request, res: Response){
     let links_list: object[] = [
         {rel: 'stylesheet', href: Paths.BOOTSTRAP_CSS},
         {rel: 'stylesheet', href: Paths.JQUERY_UI_CSS},
-        {rel: 'stylesheet', href: 'css/terms.css'},
-        {rel: 'stylesheet', href: 'css/menu.css'},
-        {rel: 'stylesheet', href: 'css/footer.css'},
+        {rel: 'stylesheet', href: '/css/terms.css'},
+        {rel: 'stylesheet', href: '/css/menu.css'},
+        {rel: 'stylesheet', href: '/css/footer.css'},
     ]
     let scripts_list: object[] = [
         {src: Paths.BOOTSTRAP_JS},
         {src: Paths.JQUERY_JS},
         {src: Paths.JQUERY_UI_JS},
-        {type: 'module', src: 'js/menu.js'},
-        {src: 'js/footer.js'},
+        {type: 'module', src: '/js/menu.js'},
+        {src: '/js/footer.js'},
     ]
     let partial_data: object = {}
+    let title = ''
     switch(req.path){
         case '/cookie_policy':
+            title = 'Cookie Policy'
             partial_data = { document: CookiePolicy.getDocument()}
             break;
         case '/privacy_policy':
+            title = 'Privacy Policy'
             partial_data = { document: PrivacyPolicy.getDocument()}
             break;
         default:
+            title = 'Termini e condizioni'
             partial_data = { document: TermsAndConditions.getDocument()}
             break;
     }
@@ -45,7 +49,7 @@ export default async function policy_document(req: Request, res: Response){
     const data = {
         token_key: req.session[Constants.KEY_TOKEN],
         username: req.session[Constants.KEY_USERNAME],
-        title: "Cookie Policy",
+        title: title,
         links: {
             list: links_list,
             link: function(){ return `<link rel="${(<any>this).rel}" href="${(<any>this).href}">`; }
