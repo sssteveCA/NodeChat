@@ -12,7 +12,7 @@ import { guest } from '../middlewares/middlewares';
 import { login_validator, subscribe_validator, verify_credentials } from './authentication_m';
 import session from 'express-session';
 import { verify_code } from './functions/verify_code';
-import { login } from './functions/login';
+import { login_get, login_post } from './functions/login';
 import { new_account } from './functions/new_account';
 
 export const authentication_routes = express.Router();
@@ -69,6 +69,6 @@ authentication_routes.get('/verify', guest, (req,res)=>{
 
 authentication_routes.get('/verify/:code', guest, verify_code);
 
-authentication_routes.post('/login', [login_validator, verify_credentials], login);
+authentication_routes.post('/login', [login_validator, verify_credentials], login_post);
 
 authentication_routes.post('/newAccount',[guest,subscribe_validator],new_account);
