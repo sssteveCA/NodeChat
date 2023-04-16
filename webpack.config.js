@@ -27,6 +27,8 @@ module.exports = {
         'css/subscribe': join(srcCss,'subscribe.sass'),
         'css/terms': join(srcCss,'terms.sass'),
         'css/verify': join(srcCss,'verify.sass'),
+        'css/error/not_found': join(srcCss,'error/not_found.sass'),
+        'css/error/server_error': join(srcCss,'error/server_error.sass'),
         'css/logged/index_logged': join(srcCss,'logged/index_logged.sass'),
         'css/logged/menu_logged': join(srcCss,'logged/menu_logged.sass'),
         'css/logged/profile': join(srcCss,'logged/profile.sass'),
