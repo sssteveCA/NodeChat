@@ -21,7 +21,7 @@ export default async function verify_code(req:Request, res: Response){
     let scripts_list: object[] = [
         {src: Paths.BOOTSTRAP_JS},
         {src: Paths.JQUERY_JS},
-        {src: 'js/login.js'},
+        {src: '../js/login.js'},
         {type: 'module', src: '../js/menu.js'},
         {src: '../js/footer.js'},
     ]
