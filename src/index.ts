@@ -56,7 +56,7 @@ app.get('/',async (req: Request, res: Response)=>{
     let scripts_list: object[] = []
     let partial_data: object = {}
     if(req.session){
-        index = path.resolve(__dirname,'dist/views/index_logged.mustache')
+        index = path.resolve(__dirname,'dist/views/partials/index_logged.mustache')
         links_list = [
             {rel: 'stylesheet', href: Paths.BOOTSTRAP_CSS},
             {rel: 'stylesheet', href: Paths.JQUERY_UI_CSS},
