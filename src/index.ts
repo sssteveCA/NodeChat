@@ -21,6 +21,7 @@ import session from 'express-session';
 import { account_routes } from './routes/account/account';
 import { errors_router } from './routes/errors/errors';
 import { account_routes_api } from './routes/api/account/account_api';
+import index_route from './index_route';
 
 dotenv.config(); //Load .env file
 
@@ -50,65 +51,7 @@ app.engine('mustache', mustacheExpress(Paths.SRCPATH+'/views/partials','.mustach
 app.set('view engine','mustache');
 app.set('views', Paths.SRCPATH+'/views');
 app.use(express.static(StaticPaths.PUBLIC_PATH));
-app.get('/',async (req: Request, res: Response)=>{
-    let index = ''
-    let links_list: object[] = []
-    let scripts_list: object[] = []
-    let partial_data: object = {}
-    if(req.session['username']){
-        index = path.resolve(Paths.ROOTPATH,'dist/views/partials/logged/index_logged.mustache')
-        links_list = [
-            {rel: 'stylesheet', href: Paths.BOOTSTRAP_CSS},
-            {rel: 'stylesheet', href: Paths.JQUERY_UI_CSS},
-            {rel: 'stylesheet', href: 'css/logged/index_logged.css'},
-            {rel: 'stylesheet', href: 'css/logged/menu_logged.css'},
-            {rel: 'stylesheet', href: 'css/footer.css'},
-        ]
-        scripts_list = [
-            {src: Paths.BOOTSTRAP_JS},
-            {src: Paths.JQUERY_JS},
-            {src: Paths.JQUERY_UI_JS},
-            {type: 'module', src: 'js/menu.js'},
-            {type: 'module', src: 'js/logged/index_logged.js'},
-            {src: 'js/footer.js'},
-        ],
-        partial_data = {token_key: req.session['token_key'], username: req.session['username']}
-    }
-    else{
-        index = path.resolve(Paths.ROOTPATH,'dist/views/partials/index.mustache')
-        links_list = [
-            { rel: 'stylesheet', href: Paths.BOOTSTRAP_CSS },
-            { rel: 'stylesheet', href: 'css/index.css' },
-            { rel: 'stylesheet', href: 'css/menu.css' },
-            { rel: 'stylesheet', href: 'css/footer.css' },
-        ]
-        scripts_list = [
-            {src: Paths.BOOTSTRAP_JS},
-            {src: Paths.JQUERY_JS},
-            {type: 'module', src: 'js/menu.js'},
-            {src: 'js/footer.js'},
-        ]
-    }
-    let content = await fs.readFile(index, {encoding: 'utf-8'})
-    content = mustache.render(content,partial_data)
-    const data = {
-        session: req.session,
-        title: "NodeChat",
-        links: {
-            list: links_list,
-            link: function(){ return `<link rel="${(<any>this).rel}" href="${(<any>this).href}">`; }
-        },
-        scripts: {
-            list: scripts_list,
-            script: function(){
-                const type = ('type' in (<any>this)) ? (<any>this).type : "";
-                return `<script type="${type}" src="${(<any>this).src}"></script>`;
-            }
-        },
-        content : content
-    };
-    return res.render('layout',data)
-});
+app.get('/', index_route);
 
 app.listen(Constants.PORT,Constants.HOSTNAME,()=>{
     console.log(`Server in esecuzione su ${Constants.MAIN_URL}`);

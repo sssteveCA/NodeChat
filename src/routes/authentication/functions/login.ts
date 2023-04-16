@@ -22,11 +22,12 @@ export async function login_get(req: Request, res: Response){
         {type: 'module', src: 'js/menu.js'},
         {src: 'js/footer.js'},
     ]
-    let partial_data: object = {}
+    let partial_data: object = {
+        login: Paths.LOGIN, message: message, subscribe: Paths.SUBSCRIBE
+    }
     let content = await fs.readFile(login_get, {encoding: 'utf-8'})
     content = mustache.render(content,partial_data)
     const data = {
-        message: message,
         title: "Login",
         links: {
             list: links_list,
