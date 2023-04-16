@@ -3,7 +3,9 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import express from 'express';
+import express, { Request, Response } from 'express';
+import fs from 'fs/promises';
+import path from 'path';
 import mustacheExpress from 'mustache-express';
 import listEndpoints from "express-list-endpoints";
 import { StaticPaths } from './modules/static_paths';
@@ -47,7 +49,61 @@ app.engine('mustache', mustacheExpress(Paths.ROOTPATH+'/views/partials','.mustac
 app.set('view engine','mustache');
 app.set('views', Paths.ROOTPATH+'/views');
 app.use(express.static(StaticPaths.PUBLIC_PATH));
-app.get('/',(req,res)=>{
+app.get('/',async (req: Request, res: Response)=>{
+    let index = ''
+    let links_list: object[] = []
+    let scripts_list: object[] = []
+    if(req.session){
+        index = path.resolve(__dirname,'dist/views/index_logged.mustache')
+        links_list = [
+            {rel: 'stylesheet', href: Paths.BOOTSTRAP_CSS},
+            {rel: 'stylesheet', href: Paths.JQUERY_UI_CSS},
+            {rel: 'stylesheet', href: 'css/logged/index_logged.css'},
+            {rel: 'stylesheet', href: 'css/logged/menu_logged.css'},
+            {rel: 'stylesheet', href: 'css/footer.css'},
+        ]
+        scripts_list = [
+            {src: Paths.BOOTSTRAP_JS},
+            {src: Paths.JQUERY_JS},
+            {src: Paths.JQUERY_UI_JS},
+            {type: 'module', src: 'js/menu.js'},
+            {type: 'module', src: 'js/logged/index_logged.js'},
+            {src: 'js/footer.js'},
+        ]
+    }
+    else{
+        index = path.resolve(__dirname,'dist/views/index.mustache')
+        links_list = [
+            { rel: 'stylesheet', href: Paths.BOOTSTRAP_CSS },
+            { rel: 'stylesheet', href: 'css/index.css' },
+            { rel: 'stylesheet', href: 'css/menu.css' },
+            { rel: 'stylesheet', href: 'css/footer.css' },
+        ]
+        scripts_list = [
+            {src: Paths.BOOTSTRAP_JS},
+            {src: Paths.JQUERY_JS},
+            {type: 'module', src: 'js/menu.js'},
+            {src: 'js/footer.js'},
+        ]
+    }
+    const content = await fs.readFile(index, {encoding: 'utf-8'})
+    const data = {
+        session: req.session,
+        title: "NodeChat",
+        links: {
+            list: links_list,
+            link: () => { return `<link rel="${(<any>this).rel}" href="${(<any>this).href}">`; }
+        },
+        scripts: {
+            list: scripts_list,
+            script: () => {
+                const type = ('type' in (<any>this)) ? (<any>this).type : "";
+                return `<script type="${type}" src="${(<any>this).src}"></script>`;
+            }
+        },
+        content : content
+    };
+    return res.render('layout',data)
     /* console.log("session => ");
     console.log(req.session); */
     if(req.session['username'] && req.session['token_key']){
