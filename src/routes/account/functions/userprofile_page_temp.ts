@@ -8,7 +8,7 @@ import path from 'path'
 import fs from 'fs/promises'
 import mustache from 'mustache'
 
-export async function userprofile_page(req: Request, res: Response){
+export async function userprofile_page_temp(req: Request, res: Response){
 
     let username_inserted: string = req.params.username;
     let current_username: string = req.session[Constants.KEY_USERNAME];
