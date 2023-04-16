@@ -5,12 +5,13 @@ import { Schemas } from '../../namespaces/schemas';
 import {TokenInterface, Token} from '../../classes/database/models/token'
 import { Messages } from '../../namespaces/messages';
 import { loggedMiddleware } from './functions/logged';
+import { Constants } from '../../namespaces/constants';
 
 /**
  * Pass to the next hop if user is not logged 
  */
  export const guest = (req: Request, res: Response, next: NextFunction) => {
-    if(req.session['username'] && req.session['token_key'])
+    if(req.session[Constants.KEY_USERNAME] && req.session[Constants.KEY_TOKEN])
         return res.redirect("/");
     else return next();
 };

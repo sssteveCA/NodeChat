@@ -3,6 +3,7 @@ import path from 'path'
 import fs from 'fs/promises'
 import mustache from 'mustache'
 import { Paths } from "../../../namespaces/paths";
+import { Constants } from "../../../namespaces/constants";
 
 export async function contacts(req: Request,res: Response){
     let contacts = path.resolve(Paths.ROOTPATH,'dist/views/partials/contacts.mustache')
@@ -23,12 +24,13 @@ export async function contacts(req: Request,res: Response){
     ]
     let partial_data: object = {}
     if(req.session){
-        partial_data = {token_key: req.session['token_key'], username: req.session['username']}
+        partial_data = {token_key: req.session[Constants.KEY_TOKEN], username: req.session['username']}
     }
     let content = await fs.readFile(contacts, {encoding: 'utf-8'})
     content = mustache.render(content,partial_data)
     const data = {
-        session: req.session,
+        token_key: req.session[Constants.KEY_TOKEN],
+        username: req.session[Constants.KEY_USERNAME],
         title: "Contatti",
         links: {
             list: links_list,

@@ -3,6 +3,7 @@ import path from 'path'
 import fs from 'fs/promises'
 import mustache from 'mustache'
 import { Paths } from "../../../namespaces/paths";
+import { Constants } from "../../../namespaces/constants";
 
 export async function rules(req: Request, res: Response){
     let rules = path.resolve(Paths.ROOTPATH,'dist/views/partials/rules.mustache')
@@ -21,13 +22,14 @@ export async function rules(req: Request, res: Response){
         {src: 'js/footer.js'},
     ]
     let partial_data: object = {}
-    if(req.session['username']){
-        partial_data = {token_key: req.session['token_key'], username: req.session['username']}
+    if(req.session[Constants.KEY_USERNAME]){
+        partial_data = {token_key: req.session[Constants.KEY_TOKEN], username: req.session[Constants.KEY_USERNAME]}
     }
     let content = await fs.readFile(rules, {encoding: 'utf-8'})
     content = mustache.render(content,partial_data)
     const data = {
-        session: req.session,
+        token_key: req.session[Constants.KEY_TOKEN],
+        username: req.session[Constants.KEY_USERNAME],
         title: "Regolamento",
         links: {
             list: links_list,

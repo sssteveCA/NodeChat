@@ -3,14 +3,16 @@ import { Paths } from "./namespaces/paths"
 import fs from 'fs/promises'
 import mustache from 'mustache'
 import path from 'path'
+import { Constants } from "./namespaces/constants"
 
 
 export default async function index_route(req: Request, res: Response){
+    console.log(req.session);
     let index = ''
     let links_list: object[] = []
     let scripts_list: object[] = []
     let partial_data: object = {}
-    if(req.session['username']){
+    if(req.session[Constants.KEY_USERNAME]){
         index = path.resolve(Paths.ROOTPATH,'dist/views/partials/logged/index_logged.mustache')
         links_list = [
             {rel: 'stylesheet', href: Paths.BOOTSTRAP_CSS},
@@ -27,7 +29,7 @@ export default async function index_route(req: Request, res: Response){
             {type: 'module', src: 'js/logged/index_logged.js'},
             {src: 'js/footer.js'},
         ],
-        partial_data = {token_key: req.session['token_key'], username: req.session['username']}
+        partial_data = {token_key: req.session[Constants.KEY_TOKEN], username: req.session[Constants.KEY_USERNAME]}
     }
     else{
         index = path.resolve(Paths.ROOTPATH,'dist/views/partials/index.mustache')
@@ -47,7 +49,8 @@ export default async function index_route(req: Request, res: Response){
     let content = await fs.readFile(index, {encoding: 'utf-8'})
     content = mustache.render(content,partial_data)
     const data = {
-        session: req.session,
+        token_key: req.session[Constants.KEY_TOKEN],
+        username: req.session[Constants.KEY_USERNAME],
         title: "NodeChat",
         links: {
             list: links_list,

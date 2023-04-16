@@ -6,6 +6,7 @@ import CookiePolicy from "../../../policies/cookiepolicy";
 import { Paths } from "../../../namespaces/paths";
 import PrivacyPolicy from "../../../policies/privacypolicy";
 import TermsAndConditions from "../../../policies/termsandconditions";
+import { Constants } from "../../../namespaces/constants";
 
 export default async function policy_document(req: Request, res: Response){
 
@@ -36,8 +37,8 @@ export default async function policy_document(req: Request, res: Response){
             partial_data = { document: TermsAndConditions.getDocument()}
             break;
     }
-    if(req.session['username']){
-        partial_data = Object.assign(partial_data, {token_key: req.session['token_key'], username: req.session['username']} )
+    if(req.session[Constants.KEY_USERNAME]){
+        partial_data = Object.assign(partial_data, {token_key: req.session[Constants.KEY_TOKEN], username: req.session[Constants.KEY_USERNAME]} )
     }
     let content = await fs.readFile(cookie_policy_view, {encoding: 'utf-8'})
     content = mustache.render(content,partial_data)

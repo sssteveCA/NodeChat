@@ -7,8 +7,8 @@ import { Schemas } from "../../../namespaces/schemas";
 export async function loggedMiddleware(req: Request, res: Response, next: NextFunction){
     let redirect_string: string = "/login";
     let next_hop: boolean = false;
-    if(req.session['username'] && req.session['token_key']){
-        let token_key: string = req.session['token_key'];
+    if(req.session[Constants.KEY_USERNAME] && req.session[Constants.KEY_TOKEN]){
+        let token_key: string = req.session[Constants.KEY_TOKEN];
         let mongo_mmi: MongoDbModelManagerInterface = {
             collection_name: process.env.MONGODB_TOKENS_COLLECTION as string,
             schema: Schemas.TOKENS
@@ -28,16 +28,16 @@ export async function loggedMiddleware(req: Request, res: Response, next: NextFu
         });
         if(next_hop)
         {
-            res.locals.tokenKey = req.session['token_key'];
+            res.locals.tokenKey = req.session[Constants.KEY_TOKEN];
             return next();
         }
         //console.log("Before delete token");
         await token.deleteToken({tokenKey: token_key});
-        req.session['username'] = null;
-        req.session['token_key'] = null;
+        req.session[Constants.KEY_USERNAME] = null;
+        req.session[Constants.KEY_TOKEN] = null;
         req.session.destroy(()=>{
             return res.redirect(redirect_string);
         });
-    }//if(req.session['username'] && req.session['token_key']){
+    }//if(req.session[Constants.KEY_USERNAME] && req.session[Constants.KEY_TOKEN]){
     else return res.redirect(redirect_string);
 } 

@@ -13,7 +13,7 @@ errors_router.use(session({
 }));
 
 errors_router.get('/not_found',(req,res)=>{
-    let username: string = req.session['username'] ? req.session['username'] : null;
+    let username: string = req.session[Constants.KEY_USERNAME] ? req.session[Constants.KEY_USERNAME] : null;
     let guest: boolean = !username ? true : false;
     return res.status(404).render('error/not_found',{
         bootstrap_css: Paths.BOOTSTRAP_CSS, bootstrap_js: Paths.BOOTSTRAP_JS,
@@ -22,7 +22,7 @@ errors_router.get('/not_found',(req,res)=>{
 });
 
 errors_router.get('/server_error',(req,res) => {
-    let username: string = req.session['username'] ? req.session['username'] : null;
+    let username: string = req.session[Constants.KEY_USERNAME] ? req.session[Constants.KEY_USERNAME] : null;
     let guest: boolean = !username ? true : false;
     return res.status(500).render('error/server_error',{
         bootstrap_css: Paths.BOOTSTRAP_CSS, bootstrap_js: Paths.BOOTSTRAP_JS,

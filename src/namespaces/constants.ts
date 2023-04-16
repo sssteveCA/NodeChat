@@ -21,4 +21,6 @@ export namespace Constants{
     export const KEY_CODE: string = "code";
     export const KEY_DONE: string = "done";
     export const KEY_MESSAGE: string = "message";
+    export const KEY_TOKEN: string = "token_key";
+    export const KEY_USERNAME: string = "username";
 }

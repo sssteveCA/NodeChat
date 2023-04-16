@@ -7,7 +7,7 @@ import { Schemas } from "../../../namespaces/schemas";
 
 export function userprofile_page(req: Request, res: Response){
     let username_inserted: string = req.params.username;
-    let current_username: string = req.session['username'];
+    let current_username: string = req.session[Constants.KEY_USERNAME];
     let view_params: object = {
         bootstrap_css: "../"+Paths.BOOTSTRAP_CSS,
         bootstrap_js: "../"+Paths.BOOTSTRAP_JS,
@@ -16,7 +16,7 @@ export function userprofile_page(req: Request, res: Response){
     };
     if(username_inserted == current_username){
         //Personal profile
-        view_params["token_key"] = res.locals["tokenKey"];
+        view_params[Constants.KEY_TOKEN] = res.locals["tokenKey"];
         return res.render('logged/profile', view_params);
     }//if(username == current_username){
     else{
@@ -30,7 +30,7 @@ export function userprofile_page(req: Request, res: Response){
         ac.getAccount({username: username_inserted}).then(obj =>{
             if(obj['result'] != null){
                 //Account found
-                view_params["token_key"] = res.locals["tokenKey"];
+                view_params[Constants.KEY_TOKEN] = res.locals["tokenKey"];
                 view_params["user_id"] = ac.id;
                 return res.render('logged/user_profile',view_params);
             }//if(obj['result'] != null){

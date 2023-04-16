@@ -22,13 +22,14 @@ export async function about_us(req: Request, res: Response){
         {src: 'js/footer.js'},
     ]
     let partial_data: object = {}
-    if(req.session['username']){
-        partial_data = {token_key: req.session['token_key'], username: req.session['username']}
+    if(req.session[Constants.KEY_USERNAME]){
+        partial_data = {token_key: req.session[Constants.KEY_TOKEN], username: req.session[Constants.KEY_USERNAME]}
     }
     let content = await fs.readFile(about_us, {encoding: 'utf-8'})
     content = mustache.render(content,partial_data)
     const data = {
-        session: req.session,
+        token_key: req.session[Constants.KEY_TOKEN],
+        username: req.session[Constants.KEY_USERNAME],
         title: "Chi siamo",
         links: {
             list: links_list,

@@ -53,8 +53,8 @@ export function login_post(req: Request, res: Response){
     let login: Login = new Login(login_data);
     login.login().then(obj => {
         if(obj[Constants.KEY_DONE] == true){
-            req.session['username'] = username;
-            req.session['token_key'] = obj['token_key'];
+            req.session[Constants.KEY_USERNAME] = username;
+            req.session[Constants.KEY_TOKEN] = obj[Constants.KEY_TOKEN];
             return res.redirect("/");
         }
         let msg_encoded: string = encodeURIComponent(obj[Constants.KEY_MESSAGE]);

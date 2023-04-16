@@ -38,7 +38,7 @@ authentication_routes.get('/login', guest, (req,res)=>{
 
 authentication_routes.get('/logout', async (req,res)=>{
     if(req.session['username'])req.session['username'] = null;
-    if(req.session['token_key'])req.session['token_key'] = null;
+    if(req.session[Constants.KEY_TOKEN])req.session[Constants.KEY_TOKEN] = null;
     req.session.destroy(()=>{
         return res.redirect("/");
     }); 
