@@ -22,7 +22,7 @@ export async function about_us(req: Request, res: Response){
         {src: 'js/footer.js'},
     ]
     let partial_data: object = {}
-    if(req.session){
+    if(req.session['username']){
         partial_data = {token_key: req.session['token_key'], username: req.session['username']}
     }
     let content = await fs.readFile(about_us, {encoding: 'utf-8'})
