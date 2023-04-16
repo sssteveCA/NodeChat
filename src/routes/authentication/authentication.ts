@@ -1,19 +1,12 @@
 //Authentiction routes (login,subscribe,account verify,password recovery)
 
 import express, { NextFunction, Request, Response } from 'express';
-import mustacheExpress from 'mustache-express';
-import { Login, LoginInterface } from '../../classes/authentication/login';
-import { Subscribe, SubscribeInterface } from '../../classes/authentication/subscribe';
-import { Account } from '../../classes/database/models/account';
 import { Constants } from '../../namespaces/constants';
-import { Paths } from '../../namespaces/paths';
-import { Regexs } from '../../namespaces/regex';
 import { guest } from '../middlewares/middlewares';
 import { login_validator, subscribe_validator, verify_credentials } from './authentication_m';
 import session from 'express-session';
 import verify_code from './functions/verify_code';
 import { login_get, login_post } from './functions/login';
-import { new_account } from './functions/new_account';
 import { subscribe_get, subscribe_post } from './functions/subscribe';
 import verify from './functions/verify';
 

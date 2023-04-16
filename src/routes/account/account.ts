@@ -7,9 +7,8 @@ import { Constants } from '../../namespaces/constants';
 import { Paths } from '../../namespaces/paths';
 import { Schemas} from '../../namespaces/schemas';
 import {Account, AccountInterface} from '../../classes/database/models/account';
-import { userprofile_page } from './functions/userprofile_page';
-import { userprofile_page_temp } from './functions/userprofile_page_temp';
+import userprofile_page from './functions/userprofile_page';
 
 export const account_routes = express.Router();
 
-account_routes.get("/profile/:username", logged, userprofile_page_temp);
+account_routes.get("/profile/:username", logged, userprofile_page);
