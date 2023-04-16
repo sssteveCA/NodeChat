@@ -10,7 +10,7 @@ import { Schemas } from "../../../../namespaces/schemas";
 export async function loggedApiMiddleware(req: Request, res: Response, next: NextFunction){
     //let token_key: string = req.body[Constants.KEY_TOKEN] ? req.body[Constants.KEY_TOKEN] : null;
     let token_key = General.getAuthToken(req);
-    //console.log("middlewares_api loggedApi token_key => "+token_key);
+    console.log("middlewares_api loggedApi token_key => "+token_key);
     try{
         if(token_key){
             let mmmi_data: MongoDbModelManagerInterface = {

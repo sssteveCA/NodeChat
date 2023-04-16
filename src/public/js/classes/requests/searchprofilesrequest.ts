@@ -74,14 +74,15 @@ export class SearchProfilesRequest{
     private async searchProfilePromise(): Promise<string>{
         return await new Promise<string>((resolve,reject)=>{
             let url: string = SearchProfilesRequest.FETCH_URL;
-            let body_data: SearchProfilesRequestInterface = {
-                query: this._query, token_key: this._token_key
+            let body_data: object = {
+                query: this._query
             };
             fetch(url,{
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'NodeChatAuth': this._token_key
                 },
                 body: JSON.stringify(body_data)
             }).then(res => {
