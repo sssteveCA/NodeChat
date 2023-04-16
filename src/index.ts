@@ -96,11 +96,11 @@ app.get('/',async (req: Request, res: Response)=>{
         title: "NodeChat",
         links: {
             list: links_list,
-            link: () => { return `<link rel="${(<any>this).rel}" href="${(<any>this).href}">`; }
+            link: function(){ return `<link rel="${(<any>this).rel}" href="${(<any>this).href}">`; }
         },
         scripts: {
             list: scripts_list,
-            script: () => {
+            script: function(){
                 const type = ('type' in (<any>this)) ? (<any>this).type : "";
                 return `<script type="${type}" src="${(<any>this).src}"></script>`;
             }
