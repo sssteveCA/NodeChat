@@ -17,15 +17,15 @@ export default async function userprofile_page(req: Request, res: Response){
     let links_list: object[] = [
         {rel: 'stylesheet', href: Paths.BOOTSTRAP_CSS},
         {rel: 'stylesheet', href: Paths.JQUERY_UI_CSS},
-        {rel: 'stylesheet', href: '../css/logged/menu_logged.css'},
-        {rel: 'stylesheet', href: '../css/footer.css'},
+        {rel: 'stylesheet', href: '/css/logged/menu_logged.css'},
+        {rel: 'stylesheet', href: '/css/footer.css'},
     ]
     let scripts_list: object[] = [
         {src: Paths.BOOTSTRAP_JS},
         {src: Paths.JQUERY_JS},
-        {src: Paths.JQUERY_UI_CSS},
-        {type: 'module', src: '../js/menu.js'},
-        {src: '../js/footer.js'},
+        {src: Paths.JQUERY_UI_JS},
+        {type: 'module', src: '/js/menu.js'},
+        {src: '/js/footer.js'},
     ]
     let partial_data: object = {}
     if(username_inserted == current_username){
@@ -35,12 +35,12 @@ export default async function userprofile_page(req: Request, res: Response){
         })
         links_list = [
             ...links_list,
-            {rel: 'stylesheet', href: '../bootstrap-icons/font/bootstrap-icons.css'},
-            {rel: 'stylesheet', href: '../css/logged/profile.css'},
+            {rel: 'stylesheet', href: '/bootstrap-icons/font/bootstrap-icons.css'},
+            {rel: 'stylesheet', href: '/css/logged/profile.css'},
         ]
         scripts_list = [
             ...scripts_list,
-            {type: 'module', src: '../js/logged/profile.js'}
+            {type: 'module', src: '/js/logged/profile.js'}
         ]
         template = path.resolve(Paths.ROOTPATH,'dist/views/partials/profile_logged.mustache')
     }

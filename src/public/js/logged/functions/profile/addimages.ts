@@ -30,8 +30,8 @@ export function addImages(profile: string, cover: string): void{
         //console.log(piuData);
         let piur: ProfileImageUploadRequest = new ProfileImageUploadRequest(piurData);
         piur.uploadImage().then(obj => {
-            //console.log("piu uploadImage => ");
-            //console.log(obj);
+            console.log("piu uploadImage => ");
+            console.log(obj);
             const cdData: MessageDialogInterface = { title: "Immagine del profilo", message: obj[Constants.KEY_MESSAGE] };
             let cd: MessageDialog = new MessageDialog(cdData);
             cd.btOk.on('click',()=>{
