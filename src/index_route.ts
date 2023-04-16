@@ -13,7 +13,7 @@ export default async function index_route(req: Request, res: Response){
     let scripts_list: object[] = []
     let partial_data: object = {}
     if(req.session[Constants.KEY_USERNAME]){
-        index = path.resolve(Paths.ROOTPATH,'dist/views/partials/logged/index_logged.mustache')
+        index = path.resolve(Paths.ROOTPATH,'dist/views/partials/index_logged.mustache')
         links_list = [
             {rel: 'stylesheet', href: Paths.BOOTSTRAP_CSS},
             {rel: 'stylesheet', href: Paths.JQUERY_UI_CSS},

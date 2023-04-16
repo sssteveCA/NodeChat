@@ -42,7 +42,7 @@ export async function userprofile_page_temp(req: Request, res: Response){
             ...scripts_list,
             {type: 'module', src: '../js/logged/profile.js'}
         ]
-        template = path.resolve(Paths.ROOTPATH,'dist/views/partials/profile.mustache')
+        template = path.resolve(Paths.ROOTPATH,'dist/views/partials/profile_logged.mustache')
     }
     else{
         let mmi_data: MongoDbModelManagerInterface = {
@@ -76,7 +76,7 @@ export async function userprofile_page_temp(req: Request, res: Response){
             ...scripts_list,
             {type: 'module', src: '../js/logged/user_profile.js'}
         ]
-        template = path.resolve(Paths.ROOTPATH,'dist/views/partials/user_profile.mustache')
+        template = path.resolve(Paths.ROOTPATH,'dist/views/partials/user_profile_logged.mustache')
     }
 
     let content = await fs.readFile(template, {encoding: 'utf-8'})

@@ -14,12 +14,12 @@
         {{/preferences}}
     </head>
     <body>
-        {{#session}}
+        {{#username}}
             {{> menu_logged}}
-        {{/session}}
-        {{^session}}
+        {{/username}}
+        {{^username}}
             {{> menu}}
-        {{/session}}
+        {{/username}}
         <div class="my-container">
             {{&content}}
         </div>
