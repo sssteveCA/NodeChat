@@ -6,6 +6,9 @@ import { Paths } from "../../../namespaces/paths";
 import { Schemas } from "../../../namespaces/schemas";
 
 export function userprofile_page(req: Request, res: Response){
+
+    
+
     let username_inserted: string = req.params.username;
     let current_username: string = req.session[Constants.KEY_USERNAME];
     let view_params: object = {
