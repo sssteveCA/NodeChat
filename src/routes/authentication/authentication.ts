@@ -24,18 +24,7 @@ authentication_routes.use(session({
     resave: false
 }));
 
-authentication_routes.get('/login', guest, (req,res)=>{
-    let message: string|null = (req.query.message != null) ? req.query.message as string : null;
-    res.render('login',{
-        bootstrap_css: Paths.BOOTSTRAP_CSS,
-        bootstrap_js: Paths.BOOTSTRAP_JS,
-        container: Constants.CONTAINER,
-        jquery_js: Paths.JQUERY_JS,
-        login: Paths.LOGIN,
-        message: message,
-        subscribe: Paths.SUBSCRIBE
-    });
-});
+authentication_routes.get('/login', guest, login_get);
 
 authentication_routes.get('/logout', async (req,res)=>{
     if(req.session['username'])req.session['username'] = null;
