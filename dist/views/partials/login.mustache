@@ -1,0 +1,48 @@
+ <div class="loginDiv">
+    <form id="fLogin" method="post" action="{{login}}">
+        <fieldset>
+            <legend>Accedi al tuo account</legend>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <label for="username" class="form-label">Nome utente</label>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <input type="text" id="username" class="form-control" name="username" value="user">
+                    </div>      
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <label for="password" class="form-label">Password</label>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <input type="password" id="password" class="form-control" name="password" value="a123456B">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <input type="checkbox" id="showPass" class="form-check-input">
+                        <label for="showPass" class="form-label">Mostra password</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center">
+                        <button type="submit" id="bLogin" class="btn btn-primary">LOGIN</button>
+                        <button type="reset" id="bReset" class="btn btn-danger">ANNULLA</button>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+{{#message}}
+<div class="error my-4">
+    <div class="alert alert-danger text-center" role="alert">
+    {{message}}
+    </div>
+</div>
+{{/message}}
+<div class="notSubscribed my-4">
+    <p>Non sei registrato? <a href="{{subscribe}}">Iscriviti</a></p>
+</div>
+</div>
