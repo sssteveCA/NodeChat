@@ -10,7 +10,7 @@ import TermsAndConditions from '../../policies/termsandconditions';
 import { about_us } from './functions/about_us';
 import { contacts } from './functions/contacts';
 import { rules } from './functions/rules';
-import { cookie_policy } from './functions/cookie_policy';
+import policy_document from './functions/policy_document';
 
 export const menu_items_routes = express.Router();
 
@@ -24,7 +24,7 @@ menu_items_routes.get('/about_us', about_us);
 
 menu_items_routes.get('/contacts', contacts);
 
-menu_items_routes.get('/cookie_policy', cookie_policy);
+menu_items_routes.get('/cookie_policy', policy_document);
 
 menu_items_routes.get('/privacy_policy',(req,res)=>{
     let username: string = req.session['username'] ? req.session['username'] : null;
