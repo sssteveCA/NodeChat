@@ -4,6 +4,8 @@ import fs from 'fs/promises'
 import mustache from 'mustache'
 import CookiePolicy from "../../../policies/cookiepolicy";
 import { Paths } from "../../../namespaces/paths";
+import PrivacyPolicy from "../../../policies/privacypolicy";
+import TermsAndConditions from "../../../policies/termsandconditions";
 
 export default async function policy_document(req: Request, res: Response){
 
@@ -28,8 +30,10 @@ export default async function policy_document(req: Request, res: Response){
             partial_data = { document: CookiePolicy.getDocument()}
             break;
         case '/privacy_policy':
+            partial_data = { document: PrivacyPolicy.getDocument()}
             break;
         default:
+            partial_data = { document: TermsAndConditions.getDocument()}
             break;
     }
     if(req.session['username']){

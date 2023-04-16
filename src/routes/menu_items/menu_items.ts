@@ -26,41 +26,9 @@ menu_items_routes.get('/contacts', contacts);
 
 menu_items_routes.get('/cookie_policy', policy_document);
 
-menu_items_routes.get('/privacy_policy',(req,res)=>{
-    let username: string = req.session['username'] ? req.session['username'] : null;
-    let guest: boolean = !username ? true : false;
-    let privacy_policy: string = PrivacyPolicy.getDocument();
-    return res.render('policy_document',{
-        bootstrap_css: Paths.BOOTSTRAP_CSS,
-        bootstrap_js: Paths.BOOTSTRAP_JS,
-        container: Constants.CONTAINER,
-        document: privacy_policy,
-        guest: guest,
-        jquery_js: Paths.JQUERY_JS,
-        jquery_ui_css: Paths.JQUERY_UI_CSS,
-        jquery_ui_js: Paths.JQUERY_UI_JS,
-        title: 'Privacy Policy',
-        username: username
-    });
-});
+menu_items_routes.get('/privacy_policy', policy_document);
 
 menu_items_routes.get('/rules', rules);
 
-menu_items_routes.get('/terms',(req,res)=>{
-    let username: string = req.session['username'] ? req.session['username'] : null;
-    let guest: boolean = !username ? true : false;
-    let terms_and_conditions: string = TermsAndConditions.getDocument();
-    return res.render('policy_document',{
-        bootstrap_css: Paths.BOOTSTRAP_CSS, 
-        bootstrap_js: Paths.BOOTSTRAP_JS, 
-        container: Constants.CONTAINER, 
-        document: terms_and_conditions,
-        guest: guest, 
-        jquery_js: Paths.JQUERY_JS, 
-        jquery_ui_css: Paths.JQUERY_UI_CSS, 
-        jquery_ui_js: Paths.JQUERY_UI_JS,
-        title: 'Termini e condizioni', 
-        username: username 
-    });
-});
+menu_items_routes.get('/terms', policy_document);
 
