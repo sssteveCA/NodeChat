@@ -10,17 +10,17 @@ export default async function verify(req: Request, res: Response){
     let links_list: object[] = [
         {rel: 'stylesheet', href: Paths.BOOTSTRAP_CSS},
         {rel: 'stylesheet', href: Paths.JQUERY_UI_CSS},
-        {rel: 'stylesheet', href: '../css/menu.css'},
-        {rel: 'stylesheet', href: '../css/verify.css'},
-        {rel: 'stylesheet', href: '../css/footer.css'},
+        {rel: 'stylesheet', href: '/css/menu.css'},
+        {rel: 'stylesheet', href: '/css/verify.css'},
+        {rel: 'stylesheet', href: '/css/footer.css'},
     ]
     let scripts_list: object[] = [
         {src: Paths.BOOTSTRAP_JS},
         {src: Paths.JQUERY_JS},
         {src: Paths.JQUERY_UI_JS},
-        {type: 'module', src: '../js/menu.js'},
-        {type: 'module', src: '../js/verify.js'},
-        {src: '../js/footer.js'},
+        {type: 'module', src: '/js/menu.js'},
+        {type: 'module', src: '/js/verify.js'},
+        {src: '/js/footer.js'},
     ]
     let partial_data: object = {}
     let content = await fs.readFile(verify, {encoding: 'utf-8'})
@@ -41,16 +41,4 @@ export default async function verify(req: Request, res: Response){
         content : content
     };
     return res.render('layout',data);
-
-
-
-
-    return res.render('verify',{
-        bootstrap_css: '../'+Paths.BOOTSTRAP_CSS,
-        bootstrap_js: '../'+Paths.BOOTSTRAP_JS,
-        container: Constants.CONTAINER,
-        jquery_js: '../'+Paths.JQUERY_JS,
-        jquery_ui_css: '../'+Paths.JQUERY_UI_CSS,
-        jquery_ui_js: '../'+Paths.JQUERY_UI_JS,
-    });
 }

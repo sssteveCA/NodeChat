@@ -11,16 +11,16 @@ export async function login_get(req: Request, res: Response){
     let login_get = path.resolve(Paths.ROOTPATH,'dist/views/partials/login.mustache')
     let links_list: object[] = [
         {rel: 'stylesheet', href: Paths.BOOTSTRAP_CSS},
-        {rel: 'stylesheet', href: 'css/login.css'},
-        {rel: 'stylesheet', href: 'css/menu.css'},
-        {rel: 'stylesheet', href: 'css/footer.css'},
+        {rel: 'stylesheet', href: '/css/login.css'},
+        {rel: 'stylesheet', href: '/css/menu.css'},
+        {rel: 'stylesheet', href: '/css/footer.css'},
     ]
     let scripts_list: object[] = [
         {src: Paths.BOOTSTRAP_JS},
         {src: Paths.JQUERY_JS},
-        {src: 'js/login.js'},
-        {type: 'module', src: 'js/menu.js'},
-        {src: 'js/footer.js'},
+        {src: '/js/login.js'},
+        {type: 'module', src: '/js/menu.js'},
+        {src: '/js/footer.js'},
     ]
     let partial_data: object = {
         login: Paths.LOGIN, message: message, subscribe: Paths.SUBSCRIBE
@@ -61,4 +61,12 @@ export function login_post(req: Request, res: Response){
         return res.redirect('/login?message='+msg_encoded);  
          
     });
+}
+
+export async function logout(req: Request, res: Response){
+    if(req.session[Constants.KEY_USERNAME])req.session[Constants.KEY_USERNAME] = null;
+    if(req.session[Constants.KEY_TOKEN])req.session[Constants.KEY_TOKEN] = null;
+    req.session.destroy(()=>{
+        return res.redirect("/");
+    }); 
 }

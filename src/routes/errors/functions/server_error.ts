@@ -42,5 +42,5 @@ export default async function server_error(req: Request, res: Response){
         },
         content : content
     };
-    return res.render('layout',data)
+    return res.status(500).render('layout',data)
 }

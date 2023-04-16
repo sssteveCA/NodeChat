@@ -6,7 +6,7 @@ import { guest } from '../middlewares/middlewares';
 import { login_validator, subscribe_validator, verify_credentials } from './authentication_m';
 import session from 'express-session';
 import verify_code from './functions/verify_code';
-import { login_get, login_post } from './functions/login';
+import { login_get, login_post, logout } from './functions/login';
 import { subscribe_get, subscribe_post } from './functions/subscribe';
 import verify from './functions/verify';
 
@@ -20,13 +20,7 @@ authentication_routes.use(session({
 
 authentication_routes.get('/login', guest, login_get);
 
-authentication_routes.get('/logout', async (req,res)=>{
-    if(req.session['username'])req.session['username'] = null;
-    if(req.session[Constants.KEY_TOKEN])req.session[Constants.KEY_TOKEN] = null;
-    req.session.destroy(()=>{
-        return res.redirect("/");
-    }); 
-});
+authentication_routes.get('/logout', logout);
 
 authentication_routes.get('/subscribe', guest, subscribe_get);
 

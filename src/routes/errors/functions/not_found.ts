@@ -42,5 +42,5 @@ export default async function not_found(req: Request, res: Response){
         },
         content : content
     };
-    return res.render('layout',data)
+    return res.status(404).render('layout',data)
 }

@@ -70,11 +70,11 @@ export default async function userprofile_page(req: Request, res: Response){
         })
         links_list = [
             ...links_list,
-            {rel: 'stylesheet', href: '../css/logged/user_profile.css'},
+            {rel: 'stylesheet', href: '/css/logged/user_profile.css'},
         ]
         scripts_list = [
             ...scripts_list,
-            {type: 'module', src: '../js/logged/user_profile.js'}
+            {type: 'module', src: '/js/logged/user_profile.js'}
         ]
         template = path.resolve(Paths.ROOTPATH,'dist/views/partials/user_profile_logged.mustache')
     }

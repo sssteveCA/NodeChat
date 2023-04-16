@@ -11,17 +11,17 @@ export async function subscribe_get(req: Request, res: Response){
     let links_list: object[] = [
         {rel: 'stylesheet', href: Paths.BOOTSTRAP_CSS},
         {rel: 'stylesheet', href: Paths.JQUERY_UI_CSS},
-        {rel: 'stylesheet', href: 'css/subscribe.css'},
-        {rel: 'stylesheet', href: 'css/menu.css'},
-        {rel: 'stylesheet', href: 'css/footer.css'},
+        {rel: 'stylesheet', href: '/css/subscribe.css'},
+        {rel: 'stylesheet', href: '/css/menu.css'},
+        {rel: 'stylesheet', href: '/css/footer.css'},
     ]
     let scripts_list: object[] = [
         {src: Paths.BOOTSTRAP_JS},
         {src: Paths.JQUERY_JS},
         {src: Paths.JQUERY_UI_JS},
-        {type: 'module', src: 'js/menu.js'},
-        {type: 'module', src: 'js/subscribe.js'},
-        {src: 'js/footer.js'},
+        {type: 'module', src: '/js/menu.js'},
+        {type: 'module', src: '/js/subscribe.js'},
+        {src: '/js/footer.js'},
     ]
     let partial_data: object = { subscribe: Paths.SUBSCRIBE }
     let content = await fs.readFile(subscribe_get, {encoding: 'utf-8'})
