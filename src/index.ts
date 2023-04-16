@@ -45,18 +45,18 @@ app.use('/api',account_routes_api);
 app.use('/',errors_router);
 
 app.engine('mustache',mustacheExpress());
-app.engine('mustache', mustacheExpress(Paths.ROOTPATH+'/views/partials','.mustache')); //Partials directory
-//app.engine('mustache', mustacheExpress(Paths.ROOTPATH+'/views/logged','.mustache')); //Logged views directory
+app.engine('mustache', mustacheExpress(Paths.SRCPATH+'/views/partials','.mustache')); //Partials directory
+//app.engine('mustache', mustacheExpress(Paths.SRCPATH+'/views/logged','.mustache')); //Logged views directory
 app.set('view engine','mustache');
-app.set('views', Paths.ROOTPATH+'/views');
+app.set('views', Paths.SRCPATH+'/views');
 app.use(express.static(StaticPaths.PUBLIC_PATH));
 app.get('/',async (req: Request, res: Response)=>{
     let index = ''
     let links_list: object[] = []
     let scripts_list: object[] = []
     let partial_data: object = {}
-    if(req.session){
-        index = path.resolve(__dirname,'dist/views/partials/index_logged.mustache')
+    if(req.session['username']){
+        index = path.resolve(Paths.ROOTPATH,'dist/views/partials/logged/index_logged.mustache')
         links_list = [
             {rel: 'stylesheet', href: Paths.BOOTSTRAP_CSS},
             {rel: 'stylesheet', href: Paths.JQUERY_UI_CSS},
@@ -75,7 +75,7 @@ app.get('/',async (req: Request, res: Response)=>{
         partial_data = {token_key: req.session['token_key'], username: req.session['username']}
     }
     else{
-        index = path.resolve(__dirname,'dist/views/partials/index.mustache')
+        index = path.resolve(Paths.ROOTPATH,'dist/views/partials/index.mustache')
         links_list = [
             { rel: 'stylesheet', href: Paths.BOOTSTRAP_CSS },
             { rel: 'stylesheet', href: 'css/index.css' },

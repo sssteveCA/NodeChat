@@ -107,7 +107,7 @@ export class SetCoverImageFolder{
      */
     private async moveFile(src: string, username: string): Promise<object>{
         let response: object = { dest: null, done: false };
-        let destDir: string = `${Paths.ROOTPATH}public${Paths.STATIC_IMG_PROFILES}/${username}`;
+        let destDir: string = `${Paths.SRCPATH}public${Paths.STATIC_IMG_PROFILES}/${username}`;
         let dest: string = `${destDir}/cover.jpg`;
         await fs.mkdir(destDir,{ recursive: true}).then(res => {
             return fs.rename(src,dest);

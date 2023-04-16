@@ -121,7 +121,7 @@ export class AddUserPhoto{
      */
     private async moveFile(src: string, username: string): Promise<object>{
         let response: object = {dest: null, done: false, exists: false}
-        let destDir: string = `${Paths.ROOTPATH}public${Paths.STATIC_IMG_PHOTOS}/${username}`;
+        let destDir: string = `${Paths.SRCPATH}public${Paths.STATIC_IMG_PHOTOS}/${username}`;
         console.log("AddUserPhoto moveFile destDir => "+destDir);
         let dest: string = `${destDir}/${this._filename}`;
         console.log("AddUserPhoto moveFile dest => "+dest);

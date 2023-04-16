@@ -4,15 +4,15 @@
         <title>{{title}}</title>
         <meta charset="utf-8">
         {{#links.list}}
-            {{link}}
+            {{&links.link}}
         {{/links.list}}
         {{#scripts.list}}
-            {{script}}
+            {{&scripts.script}}
         {{/scripts.list}}
         {{^preferences}}
             {{> cookie_banner}}
         {{/preferences}}
-    <head>
+    </head>
     <body>
         {{#session}}
             {{> menu_logged}}
@@ -21,7 +21,7 @@
             {{> menu}}
         {{/session}}
         <div class="my-container">
-            {{content}}
+            {{&content}}
         </div>
         {{> footer}}
     </body>

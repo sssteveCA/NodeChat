@@ -6,7 +6,7 @@ import fs from 'fs/promises'
 import mustache from 'mustache'
 
 export async function about_us(req: Request, res: Response){
-    let index = path.resolve(__dirname,'dist/views/partials/about_us.mustache')
+    let about_us = path.resolve(Paths.ROOTPATH,'dist/views/partials/about_us.mustache')
     let links_list: object[] = [
         {rel: 'stylesheet', href: Paths.BOOTSTRAP_CSS},
         {rel: 'stylesheet', href: Paths.JQUERY_UI_CSS},
@@ -25,7 +25,7 @@ export async function about_us(req: Request, res: Response){
     if(req.session){
         partial_data = {token_key: req.session['token_key'], username: req.session['username']}
     }
-    let content = await fs.readFile(index, {encoding: 'utf-8'})
+    let content = await fs.readFile(about_us, {encoding: 'utf-8'})
     content = mustache.render(content,partial_data)
     const data = {
         session: req.session,

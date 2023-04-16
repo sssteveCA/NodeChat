@@ -1,0 +1,54 @@
+<div class="contactsDiv">
+    <form id="fContacts" method="post" action="/send_email">
+        <fieldset>
+            <legend>Contatti</legend>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <label for="name" class="form-label">Il tuo nome</label>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <input type="text" id="name" class="form-control" name="name">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <label for="email" class="form-label">Il tuo indirizzo email</label>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <input type="email" id="email" class="form-control" name="email">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <label for="subject" class="form-label">Oggetto</label>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <input type="text" id="subject" class="form-control" name="subject">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <label for="message" class="form-label">Messaggio</label>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <textarea id="message" name="message"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-12 d-flex justify-content-center">
+                        <button type="submit" id="bSend" class="btn btn-primary">INVIA</button>
+                        <button type="reset" id="bReset" class="btn btn-danger">ANNULLA</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center">
+                        <div id="contacts-spinner" class="spinner-border d-none" style="width: 3rem; height: 3rem;" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
