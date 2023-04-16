@@ -1,0 +1,23 @@
+<div class="header">
+    <h1>Benvenuto {{username}}</h1>
+</div>
+<div class="search-box container-fluid">
+    <div class="row mt-5">
+        <div class="col-12 col-md-8 mt-5">
+            <input type="text" id="users_list_query" class="form-control" name="users_list_query" placeholder="Cerca una o più persone">
+            <input type="hidden" name="token_key" value="{{token_key}}">
+        </div>
+        <div class="col-4 offset-4 col-md-2 offset-md-2 mt-5 d-flex justify-content-center align-items-center">
+            <button id="ul_search" type="button" class="btn btn-success">CERCA</button>
+            <div id="search-spinner" class="spinner-border invisible ms-3" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-12">
+            <div id="users-results">
+            </div>
+        </div>
+    </div>
+</div>
