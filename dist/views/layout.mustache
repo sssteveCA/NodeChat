@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <title>{{title}}</title>
+        <meta charset="utf-8">
+        {{#links.list}}
+            {{link}}
+        {{/links.list}}
+        {{#scripts.list}}
+            {{script}}
+        {{/scripts.list}}
+        {{^preferences}}
+            {{> cookie_banner}}
+        {{/preferences}}
+    <head>
+    <body>
+        {{#session}}
+            {{> menu_logged}}
+        {{/session}}
+        {{^session}}
+            {{> menu}}
+        {{/session}}
+        <div class="my-container">
+        </div>
+        {{> footer}}
+    </body>
+</html>
