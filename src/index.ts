@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import express, { Request, Response } from 'express';
 import fs from 'fs/promises';
 import path from 'path';
+import mustache from 'mustache';
 import mustacheExpress from 'mustache-express';
 import listEndpoints from "express-list-endpoints";
 import { StaticPaths } from './modules/static_paths';
@@ -53,6 +54,7 @@ app.get('/',async (req: Request, res: Response)=>{
     let index = ''
     let links_list: object[] = []
     let scripts_list: object[] = []
+    let partial_data: object = {}
     if(req.session){
         index = path.resolve(__dirname,'dist/views/index_logged.mustache')
         links_list = [
@@ -69,10 +71,11 @@ app.get('/',async (req: Request, res: Response)=>{
             {type: 'module', src: 'js/menu.js'},
             {type: 'module', src: 'js/logged/index_logged.js'},
             {src: 'js/footer.js'},
-        ]
+        ],
+        partial_data = {token_key: req.session['token_key'], username: req.session['username']}
     }
     else{
-        index = path.resolve(__dirname,'dist/views/index.mustache')
+        index = path.resolve(__dirname,'dist/views/partials/index.mustache')
         links_list = [
             { rel: 'stylesheet', href: Paths.BOOTSTRAP_CSS },
             { rel: 'stylesheet', href: 'css/index.css' },
@@ -86,7 +89,8 @@ app.get('/',async (req: Request, res: Response)=>{
             {src: 'js/footer.js'},
         ]
     }
-    const content = await fs.readFile(index, {encoding: 'utf-8'})
+    let content = await fs.readFile(index, {encoding: 'utf-8'})
+    content = mustache.render(content,partial_data)
     const data = {
         session: req.session,
         title: "NodeChat",
@@ -104,19 +108,6 @@ app.get('/',async (req: Request, res: Response)=>{
         content : content
     };
     return res.render('layout',data)
-    /* console.log("session => ");
-    console.log(req.session); */
-    if(req.session['username'] && req.session['token_key']){
-        return res.render('logged/index_logged',{
-            bootstrap_css: Paths.BOOTSTRAP_CSS, bootstrap_js: Paths.BOOTSTRAP_JS,
-            container: Constants.CONTAINER, jquery_js: Paths.JQUERY_JS, jquery_ui_css: Paths.JQUERY_UI_CSS, 
-            jquery_ui_js: Paths.JQUERY_UI_JS, token_key: req.session['token_key'], username: req.session['username']
-        });
-    }
-    return res.render('index',{
-        bootstrap_css: Paths.BOOTSTRAP_CSS, bootstrap_js: Paths.BOOTSTRAP_JS,container: Constants.CONTAINER,
-        jquery_js: Paths.JQUERY_JS
-    });
 });
 
 app.listen(Constants.PORT,Constants.HOSTNAME,()=>{
