@@ -3,7 +3,7 @@
 
 <br><br>
 
-<div>Chat web application under development, using Node.js</div>
+<div>Simple chat web application, that allows users to exchange messages.</div>
 
 <br><br>
 
