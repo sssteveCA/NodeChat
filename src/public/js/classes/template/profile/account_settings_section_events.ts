@@ -45,10 +45,8 @@ export class AccountSettingsSection{
                         password: pcd.password.val() as string,
                         conf_password: pcd.conf_password.val() as string
                     }
-                    /* console.log("deleteAccountButtonClick darData");
-                    console.log(darData); */
                     let dar: DeleteAccountRequest = new DeleteAccountRequest(darData);
-                    let da_spinner = $('delete-account-spinner');
+                    let da_spinner = $('#delete-account-spinner');
                     da_spinner.toggleClass('invisible');
                     dar.deleteAccount().then(obj => {
                         da_spinner.toggleClass('invisible');

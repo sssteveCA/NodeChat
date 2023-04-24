@@ -40,7 +40,6 @@ export class EmploymentUpdateRequest{
         this._errno = 0;
         try{
             await this.employmentUpdatePromise().then(res => {
-                //console.log(res);
                 response = JSON.parse(res);
             }).catch(err => {
                 console.warn(err);

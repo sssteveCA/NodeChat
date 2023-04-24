@@ -67,14 +67,10 @@ export class SetProfileImageFolder{
         this._errno = 0;
         let response: object = {dest: null, done: false};
         let accountId: string|null = await General.getAccountId(this._token_key);
-        //console.log("SetProfileImageFolder accountId => "+accountId);
         if(accountId != null){
             let accountUsername: string|null = await this.getAccountUsername(accountId);
-            //console.log("SetProfileImageFolder accountUsername => "+accountUsername);
             if(accountUsername != null){
                 let moved: object = await this.moveFile(this._image_path,accountUsername);
-                //console.log("SetProfileImageFolder moved => ");
-                //console.log(moved);
                 if(moved[Constants.KEY_DONE] == true){
                     let updateProperty: object = await this.updateProfileImageProperty(moved["dest"],accountUsername);
                     if(updateProperty[Constants.KEY_DONE] == true)
@@ -118,7 +114,6 @@ export class SetProfileImageFolder{
             response = {dest: dest, done: true};
         }).catch(err => {
             response[Constants.KEY_DONE] = false;
-            console.log(err); 
         });
         return response;
     }
@@ -133,7 +128,6 @@ export class SetProfileImageFolder{
         let response = { absUrl: "", done: false };
         const imgIndex: number = dest.indexOf("/img/profiles/");
         const absoluteUrl: string = dest.substring(imgIndex);
-        //console.log("absUrl => "+absoluteUrl);
         let mmiData: MongoDbModelManagerInterface = {
             collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
             schema: Schemas.ACCOUNTS
@@ -141,8 +135,6 @@ export class SetProfileImageFolder{
         let accountData: AccountInterface = { username: username };
         let account: Account = new Account(mmiData,accountData);
         await account.updateAccount({username: account.username},{"images.profileImage": absoluteUrl}).then(res => {
-            /* console.log("profile image update => ");
-            console.log(res); */
             if(res[Constants.KEY_DONE] == true) response = {absUrl: absoluteUrl, done: true};
         });
         return response;

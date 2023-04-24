@@ -31,8 +31,6 @@ export class UserSection{
 
     constructor(data: UserSectionInterface){
         this._account = data.account;
-        /* console.log("UserSection constructor account => ");
-        console.log(this._account); */
         this._container = data.container;
         this._section = data.section;
         this.setTemplate();

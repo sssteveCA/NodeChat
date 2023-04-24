@@ -19,7 +19,6 @@ export async function upload_profile_image(req: Request, res: Response){
     });
 
     form.on('close',()=>{
-        //console.log("Upload profile image close");
     });
 
     form.on('error',()=>{
@@ -29,41 +28,25 @@ export async function upload_profile_image(req: Request, res: Response){
     });
 
     form.on('field',(name,value)=>{
-        /* console.log("Upload profile image field");
-        console.log(name);
-        console.log(value); */
     });
 
     form.on('file',(name,file)=>{
-        /* console.log("Upload profile image file");
-        console.log(name);
-        console.log(file); */
     });
 
     form.on('part',(part)=>{
-        /* console.log("Upload profile image part");
-        console.log(part); */
         part.resume();
     });
 
     form.on('progress',(bytesReceived, bytesExpected)=>{
-        /* console.log("Upload profile image progress");
-        console.log(bytesReceived);
-        console.log(bytesExpected); */
     })
 
     form.parse(req,(error,fields,files)=>{
-        //console.log("Upload profile image parse");
         console.error(error);
-        console.log(fields);
         tokenKey = General.getAuthToken(req);
-        console.log(files);
         imagePath = files["image"][0]["path"];
         const spifData: SetProfileImageFolderInterface = {
             image_path: imagePath, token_key: tokenKey
         };
-        /* console.log("spifData");
-        console.log(spifData); */
         const spif: SetProfileImageFolder = new SetProfileImageFolder(spifData);
         spif.setFolder().then(result => {
             if(result[Constants.KEY_DONE] == true){

@@ -18,8 +18,6 @@ export function user_info_api(req: Request, res: Response){
         if(obj[Constants.KEY_DONE] == true){
             let baseUrl: string = `${req.protocol}://${req.get('host')}`;
             let account: object = setUsernameObject(obj,baseUrl);
-            /* console.log("account_api user_info account => ");
-            console.log(account); */
             return res.status(200).json({
                 done: obj[Constants.KEY_DONE],
                 account: account

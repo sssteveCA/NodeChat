@@ -47,10 +47,7 @@ export class SearchProfilesRequest{
         this._errno = 0;
         try{
             await this.searchProfilePromise().then(res => {
-                //console.log("searchprofilesrequest =>");
-                //console.log(res);
                 let obj = JSON.parse(res);
-                //console.log(obj);
                 response = {
                     done: obj[Constants.KEY_DONE],
                     message: obj[Constants.KEY_MESSAGE],

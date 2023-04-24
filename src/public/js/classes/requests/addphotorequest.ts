@@ -42,7 +42,6 @@ export class AddPhotoRequest{
         this._errno = 0;
         try{
             await this.addPhotoPromise().then(res => {
-                console.log(res);
                 response = JSON.parse(res);
             }).catch(err => {
                 throw err;

@@ -35,7 +35,6 @@ export class GetPhotosRequest{
         let response: object = {};
         try{
             await this.gpRequestPromise().then(res => {
-                console.log(res);
                 response = JSON.parse(res);
             }).catch(err => {
                 console.warn(err);

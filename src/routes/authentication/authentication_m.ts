@@ -16,7 +16,6 @@ import { AccountNotActivatedError } from '../../classes/errors/accountnotactivat
  */
 export const login_validator = (req: Request, res: Response, next: NextFunction) => {
     let body: object = req.body;
-    let passed: boolean = false;
     if(body.hasOwnProperty("username") && body.hasOwnProperty("password")){
         if(body['username'] != "" && body['password'] != ""){
             return next();
@@ -31,8 +30,6 @@ export const login_validator = (req: Request, res: Response, next: NextFunction)
  */
 export const subscribe_validator = (req: Request, res: Response, next: NextFunction) =>{
     let body: object = req.body as object;
-    /* console.log("authentication_m.ts subscribe_validator body => ");
-    console.log(body); */
     let propertyExists: boolean = (
         body.hasOwnProperty("name") && body.hasOwnProperty("surname") &&
         body.hasOwnProperty("username") && body.hasOwnProperty("email") && body.hasOwnProperty("password") && body.hasOwnProperty("confPass"));
@@ -77,15 +74,11 @@ export const verify_credentials = async (req: Request, res: Response, next: Next
     let ac_data: AccountInterface = {};
     let ac: Account = new Account(mongo_mmi,ac_data);
     await ac.getAccount({username: username}).then(res => {
-        /* console.log("verify_credentials getAccount => ");
-        console.log(res); */
         if(res[Constants.KEY_DONE] == true && res['result'] != null && username == res['result']['username']){
             return brcypt.compare(password, res['result']['password']);
         }
         else throw new InvalidCredentialsError(Messages.ERROR_INVALIDCREDENTIALS);
     }).then(result =>{
-        /* console.log("verify_credentials bcrypt => ");
-        console.log(res); */
         if(result == true){
             if(ac.verified == true){
                 res.locals.accountId = ac.id;
@@ -95,8 +88,7 @@ export const verify_credentials = async (req: Request, res: Response, next: Next
         }
         else throw new InvalidCredentialsError(Messages.ERROR_INVALIDCREDENTIALS);
     }).catch(err => {
-        /* console.log("verify_credentials error => ");
-        console.error(err); */
+        console.error(err); 
         if(err instanceof InvalidCredentialsError || err instanceof AccountNotActivatedError){
             let message: string = encodeURIComponent(err.message);
             return res.redirect("/login?message="+message);

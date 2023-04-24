@@ -47,8 +47,6 @@ app.use('/',errors_router);
 
 app.engine('mustache',mustacheExpress());
 app.engine('mustache', mustacheExpress(Paths.ROOTPATH+'/dist/views/partials','.mustache'));
-//app.engine('mustache', mustacheExpress(Paths.ROOTPATH+'/dist/views/partials/logged','.mustache'));
-//app.engine('mustache', mustacheExpress(Paths.SRCPATH+'/views/logged','.mustache')); //Logged views directory
 app.set('view engine','mustache');
 app.set('views', Paths.ROOTPATH+'/dist/views');
 app.use(express.static(StaticPaths.PUBLIC_PATH));

@@ -44,7 +44,6 @@ export class EducationUpdateRequest{
         this._errno = 0;
         try{
             await this.edUpdatePromise().then(res => {
-                //console.log(res);
                 response = JSON.parse(res);
             }).catch(err => {
                 console.warn(err);
@@ -61,7 +60,6 @@ export class EducationUpdateRequest{
         let body: object = {
             secondary_school: this._secondary_school, university: this._university
         }
-        console.log(body);
         return await new Promise<string>((resolve,reject)=> {
             fetch(EducationUpdateRequest.FETCH_URL,{
                 method: 'PUT',

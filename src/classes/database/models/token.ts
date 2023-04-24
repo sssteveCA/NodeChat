@@ -66,7 +66,6 @@ export class Token extends MongoDbModelManager{
                 throw new DatabaseConnectionError(this.error as string);
             }
         }).then(res => {
-            //console.log(res);
         }).catch(err => {
             console.warn(err);
         }).finally(()=>{
@@ -81,8 +80,6 @@ export class Token extends MongoDbModelManager{
      * @returns 
      */
      public async getToken(filter: object): Promise<object>{
-        /* console.log("getToken filter => ");
-        console.log(filter); */
         this._errno = 0;
         let response: object = {};
         await super.connect().then(conn => {
@@ -94,14 +91,10 @@ export class Token extends MongoDbModelManager{
                 throw new DatabaseConnectionError(this.error as string);
             }       
         }).then(res => { 
-            /* console.log("Token get response => ");  
-            console.log(res); */
             response = {
                 done: true,
                 result: res
             }
-            /* console.log("getToken");
-            console.log(response); */
             if(res != null){
                 if(res["_id"])this._id = res["_id"];
                 if(res["accountId"])this._accountId = res["accountId"];
@@ -134,17 +127,12 @@ export class Token extends MongoDbModelManager{
                     if(conn == true)return super.get({accountId: this._accountId});
                     else throw new DatabaseConnectionError(this.error as string);
                 }).then(result => {
-                    /* console.log("insertToken get result => ");
-                    console.log(result); */
                     if(result != null){
-                        //console.log("Token insertToken result != null");
-                        //console.log(`Token get before insert => ${result} `);
                         let document: object = {
                             accountId: this._accountId, tokenKey: this._tokenKey, creationDate: this._creationDate, expireDate: this._expireDate
                         };
                         return super.replace({accountId: this._accountId},document);
                     }//if(result != null){
-                    //console.log("Token insertToken result == null");
                     /* let document: object = {
                         accountId: this._accountId, tokenKey: this._tokenKey, creationDate: this._creationDate, expireDate: this._expireDate
                     } */
@@ -227,7 +215,6 @@ export class Token extends MongoDbModelManager{
                 throw new DatabaseConnectionError(this.error as string);
             } 
         }).then(res => {
-            //console.log(res);
             response = {
                 done: true,
                 result: res

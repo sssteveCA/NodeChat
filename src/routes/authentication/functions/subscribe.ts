@@ -48,7 +48,6 @@ export async function subscribe_get(req: Request, res: Response){
 export function subscribe_post(req: Request, res: Response){
     let body: object = req.body as object;
     let home_url: string = process.env.MAIN_URL+Paths.VERIFY as string;
-    //console.log("home_url => "+home_url);
     let subscribe_data: SubscribeInterface = {
         name: body['name'], surname: body['surname'], username: body['username'],
         email: body['email'], password: body['password'], home_url: home_url

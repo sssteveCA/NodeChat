@@ -44,7 +44,6 @@ export class CoverImageUploadRequest{
         let response: object = {};
         try{
             await this.uploadImagePromise().then(res => {
-                //console.log(res);
                 response = JSON.parse(res);
             }).catch(err => {
                 throw err;

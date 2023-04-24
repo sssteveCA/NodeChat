@@ -122,22 +122,16 @@ export class AddUserPhoto{
     private async moveFile(src: string, username: string): Promise<object>{
         let response: object = {dest: null, done: false, exists: false}
         let destDir: string = `${Paths.SRCPATH}public${Paths.STATIC_IMG_PHOTOS}/${username}`;
-        console.log("AddUserPhoto moveFile destDir => "+destDir);
         let dest: string = `${destDir}/${this._filename}`;
-        console.log("AddUserPhoto moveFile dest => "+dest);
         await fs.mkdir(destDir,{ recursive: true}).then(makedir => {
-            console.log("fs mkdir OK");
             return new Promise<boolean>((resolve,reject)=> {
                 fs.access(dest).then(accsess => {
-                    console.log("AddUserPhoto moveFile fs access exists");
                     reject(new FileAlreadyExistsError(""));
                 }).catch(not_exist => {
-                    console.log("AddUserPhoto moveFile fs access not exists");
                     resolve(true);
                 })
             });
         }).then(accessed => {
-            console.log("before fs.rename");
             return fs.rename(src,dest);
         }).then(renamed => {
             response = {dest: dest, done: true};
@@ -163,8 +157,6 @@ export class AddUserPhoto{
             schema: Schemas.PHOTOS
         }
         let photoData: PhotoInterface = { accountId: accountId, path: absoluteUrl }
-        console.log("AddUserPhoto addPhotoDocument photoData");
-        console.log(photoData);
         let photo: Photo = new Photo(mmiData,photoData);
         await photo.insertPhoto().then(res => {
             if(res[Constants.KEY_DONE] == true)

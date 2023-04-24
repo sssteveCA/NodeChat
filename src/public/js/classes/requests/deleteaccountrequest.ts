@@ -42,7 +42,6 @@ export class DeleteAccountRequest{
         this._errno = 0;
         try{
             await this.deleteAccountPromise().then(res => {
-                //console.log(res);
                 response = JSON.parse(res);
             }).catch(err => {
                 throw err;

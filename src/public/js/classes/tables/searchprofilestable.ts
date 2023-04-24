@@ -25,8 +25,6 @@ export class SearchProfilesTable{
      */
     private setTable(): void{
         if(this._profiles && this._profiles.length > 0){
-            /* console.log("SearchProfileTable profiles => ");
-            console.log(this._profiles); */
             this._html_table = `
 <table class="table table-striped">
     <thead>

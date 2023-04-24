@@ -50,12 +50,8 @@ export class General{
             collection_name: process.env.MONGODB_TOKENS_COLLECTION as string,
             schema: Schemas.TOKENS
         }
-        /* console.log ("GetAccountId tokenData => ");
-        console.log(tokenData); */
         let token: Token = new Token(mmiData,{});
         await token.getToken({tokenKey: token_key}).then(res =>{
-           /*  console.log("General getAccountId getToken then => ");
-            console.log(res); */
             if(res[Constants.KEY_DONE] == true) accountId = token.accountId;  
         });
         return accountId;
@@ -68,7 +64,6 @@ export class General{
      */
     public static getAuthToken(req: Request): string{
         let auth_header = req.get('NodeChatAuth');
-        //console.log(auth_header);
         if(typeof auth_header !== "undefined")
            return auth_header;
         return "";  

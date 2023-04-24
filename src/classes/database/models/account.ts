@@ -104,8 +104,6 @@ export class Account extends MongoDbModelManager{
             if(conn == true) return super.delete(filter);
             else throw new DatabaseConnectionError(this.error as string);
         }).then(res => {
-            /* console.log("Account deleteAccount delete OK");
-            console.log(res); */
             response = { done: true };
         }).catch(err => {
             console.warn(err);
@@ -174,7 +172,6 @@ export class Account extends MongoDbModelManager{
             if(this._name && this._surname && this._username && this._email && this._password_hash && this._activationCode){
                 let current: Date = new Date();
                 this._creationDate = General.dateString(current);
-                //console.log("account.ts insertAccount creationDate => "+this._creationDate);
                 /* let document: object = {
                     name: this._name, surname: this._surname,
                     username: this._username,email: this._email,password: this._password_hash,
@@ -192,7 +189,6 @@ export class Account extends MongoDbModelManager{
                     return super.get({$or: [{username: this._username},{email: this._email}]});
                 }).then(result => {
                     if(result != null){
-                        //console.log(`Account get before insert => ${result} `);
                         if(result['username'] == this._username || result['email'] == this._email){
                             this._errno = Account.DUPLICATEKEYS_ERROR;
                             throw new DuplicateKeysError(this.error as string);
@@ -200,7 +196,6 @@ export class Account extends MongoDbModelManager{
                     }
                     return super.insert(document);
                 }).then(res => {
-                    //console.log(res);
                     response['errno'] = 0;
                 }).catch(err => {
                     console.warn(err);
@@ -263,7 +258,6 @@ export class Account extends MongoDbModelManager{
         }).then(res => {
             return super.update(filter,set);
         }).then(res => {
-            //console.log(res);
             response = {
                 done: true,
                 result: res

@@ -14,8 +14,6 @@ export async function search_api(req: Request, res: Response){
         let accounts_data: AccountsInterface = {};
         let accounts: Accounts = new Accounts(mmis_data,accounts_data);
         await accounts.getAccounts({username: {$regex: `^${query}`, $options: "i"}}).then(result => {
-            /* console.log("search_api getAccounts");
-            console.log(result); */
             let response: object = { done: true, message: '', result: result['result'] };
             const baseUrl: string = `${req.protocol}://${req.get('host')}`;
             response = setBaseUrl(baseUrl,response);
@@ -37,8 +35,6 @@ export async function search_api(req: Request, res: Response){
  */
 function setBaseUrl(baseUrl: string, response: object): object{
     let responseCopy = JSON.parse(JSON.stringify(response));
-    /* console.log("setBaseUrl responseCopy => ");
-    console.log(responseCopy); */
     if(Array.isArray(responseCopy['result'])){
         let results = responseCopy['result'].map((account => {
             if(account['_images'] && account['_images']['profileImage'] && account['_images']['profileImage'] != '')
@@ -49,8 +45,6 @@ function setBaseUrl(baseUrl: string, response: object): object{
             
         }));
         responseCopy['result'] = results;
-        /* console.log("responseCopy result => ");
-        console.log(responseCopy['result']); */
     }//if(Array.isArray(responseCopy['result'])){
     return responseCopy;
 }

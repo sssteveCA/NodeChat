@@ -94,7 +94,6 @@ export class Email{
         this._errno = 0;
         try{
             await this._transport.sendMail(this._message_object).then(res => {
-                //console.log(res);
                 response = {
                     done: true,
                 };

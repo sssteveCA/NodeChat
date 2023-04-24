@@ -12,14 +12,11 @@ $(()=>{
         user_id: $('input[name=user_id]').val() as string
     };
     let account: Account = new Account();
-    //console.log(cur_data);
     let ur: UserRequest = new UserRequest(ur_data);
     ur.userInfo().then(obj => {
-        //console.log(obj);
         if(obj[Constants.KEY_DONE] == true){
             account = setAccount(obj["account"]);
             addImages(account["images"]["profileImage"], account["images"]["coverImage"]);
-            //console.log(account);
             $('#'+SectionLiItems.INFORMATION+' a').trigger('click');
         }//if(obj[Constants.KEY_DONE] == true){
     });

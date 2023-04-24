@@ -165,16 +165,12 @@ export class Subscribe{
                 account = new Account(mongodb_mmi,account_data);
                 return account.insertAccount();
             }).then(res => {
-                /* console.log("Subscribe insertNewAccout after insert => ");
-                console.log(res); */
                 if(res['errno'] == 0){
                     //User added in DB
                     let ev_data: EmailVerifyInterface = {
                         username: account.username, email: account.email, email_verify_url: this._home_url,
                         activation_code: account.activationCode as string
                     }
-                    /* console.log("ev_data => ");
-                    console.log(ev_data); */
                     let ev: EmailVerify = new EmailVerify(ev_data);
                     return ev.sendEmailVerify();
                 }//if(res['errno'] == 0){

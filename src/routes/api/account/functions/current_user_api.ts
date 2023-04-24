@@ -4,7 +4,6 @@ import { Token } from "../../../../classes/database/models/token";
 import { MongoDbModelManagerInterface } from "../../../../classes/database/mongodbmodelmanager";
 import { Constants } from "../../../../namespaces/constants";
 import { Messages } from "../../../../namespaces/messages";
-import { Paths } from "../../../../namespaces/paths";
 import { Schemas } from "../../../../namespaces/schemas";
 import { setUsernameObject } from "./account_api_functions";
 
@@ -28,12 +27,9 @@ export function current_user_api(req: Request, res: Response){
         let account: Account = new Account(mmi_data,{});
         return account.getAccount({_id: accountId});
     }).then(obj => {
-        //console.log(obj);
         if(obj[Constants.KEY_DONE] == true){
             let baseUrl: string = `${req.protocol}://${req.get('host')}`;
             let account: object = setUsernameObject(obj,baseUrl);
-            /* console.log("account_api current_user account => ");
-            console.log(account); */
             return res.status(200).json({
                 done: obj[Constants.KEY_DONE],
                 account: account

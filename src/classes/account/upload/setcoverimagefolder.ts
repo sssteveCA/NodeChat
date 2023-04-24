@@ -114,7 +114,6 @@ export class SetCoverImageFolder{
         }).then(res => {
             response = {dest: dest, done: true};
         }).catch(err => {
-            console.log(err); 
         });
         return response;
     }
@@ -130,7 +129,6 @@ export class SetCoverImageFolder{
         let response = { absUrl: "", done: false };
         const imgIndex: number = dest.indexOf("/img/profiles");
         const absoluteUrl: string = dest.substring(imgIndex);
-        //console.log("absUrl => "+absoluteUrl);
         let mmiData: MongoDbModelManagerInterface = {
             collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
             schema: Schemas.ACCOUNTS

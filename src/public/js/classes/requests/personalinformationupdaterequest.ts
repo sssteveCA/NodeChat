@@ -65,7 +65,6 @@ export class PersonalInformationUpdateRequest{
         this._errno = 0;
         try{
             await this.piUpdatePromise().then(res => {
-                //console.log(res);
                 response = JSON.parse(res);
             }).catch(err => {
                 console.warn(err);

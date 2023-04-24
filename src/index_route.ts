@@ -7,7 +7,6 @@ import { Constants } from "./namespaces/constants"
 
 
 export default async function index_route(req: Request, res: Response){
-    console.log(req.session);
     let index = ''
     let links_list: object[] = []
     let scripts_list: object[] = []

@@ -43,7 +43,6 @@ export class ContactsInformationUpdateRequest{
         this._errno = 0;
         try{
             await this.ciUpdatePromise().then(res => {
-                //console.log(res);
                 response = JSON.parse(res);
             }).catch(err => {
                 console.warn(err);

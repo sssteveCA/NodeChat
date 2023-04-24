@@ -31,7 +31,6 @@ export async function loggedMiddleware(req: Request, res: Response, next: NextFu
             res.locals.tokenKey = req.session[Constants.KEY_TOKEN];
             return next();
         }
-        //console.log("Before delete token");
         await token.deleteToken({tokenKey: token_key});
         req.session[Constants.KEY_USERNAME] = null;
         req.session[Constants.KEY_TOKEN] = null;

@@ -65,7 +65,6 @@ export class Photo extends MongoDbModelManager{
                 throw new DatabaseConnectionError(this.error as string);
             }
         }).then(res => {
-            //console.log(res);
         }).catch(err => {
             console.warn(err);
         }).finally(()=>{
@@ -212,7 +211,6 @@ export class Photo extends MongoDbModelManager{
                 throw new DatabaseConnectionError(this.error as string);
             } 
         }).then(res => {
-            //console.log(res);
             response = {
                 done: true,
                 result: res

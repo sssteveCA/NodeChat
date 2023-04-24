@@ -43,7 +43,6 @@ export class UserRequest{
         let response: object = {};
         try{
             await this.userInfoPromise().then(res => {
-                //console.log(res);
                 response = JSON.parse(res);
             }).catch(err => {
                 throw err;

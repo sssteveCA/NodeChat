@@ -10,8 +10,6 @@ export async function delete_account(req:Request, res: Response){
             let daData: DeleteAccountInterface = {
                 token_key: res.locals.tokenKey, password: req.body['password']
             }
-            /* console.log("delete_account.ts DeleteAccountInterface");
-            console.log(daData); */
             let da: DeleteAccount = new DeleteAccount(daData);
             const da_response: object = await da.deleteAccount();
             if(da_response[Constants.KEY_DONE])

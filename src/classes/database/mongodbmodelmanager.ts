@@ -86,8 +86,6 @@ export abstract class MongoDbModelManager{
         this._collection_name = data.collection_name;
         this._schema = data.schema;
         this._model = mongoose.model(this._collection_name,this._schema);
-        /* console.log("MongoDbModelManager class assignValues model schema => ");
-        console.log(this._model.schema); */
         if(data.environment)
             this._environment = data.environment;
         if(data.mongodb_string)
@@ -98,8 +96,6 @@ export abstract class MongoDbModelManager{
             else
                 this._mongodb_string = process.env.MONGODB_LOCAL_URL as string;
         }
-        /* console.log(`mongoDB string => ${this._mongodb_string}`);
-        console.log(`collection name => ${this._collection_name}`); */
     }
 
     /**
@@ -110,7 +106,6 @@ export abstract class MongoDbModelManager{
         this._errno = 0;
         try{
             await mongoose.connect(this._mongodb_string).then(conn => {
-                //console.log(conn);
                 this._connected = true;
             }).catch(err => {
                 throw err;

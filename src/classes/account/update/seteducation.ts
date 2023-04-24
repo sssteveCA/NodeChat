@@ -76,8 +76,6 @@ export class SetEducation{
         await account.updateAccount({_id: accountId},
             {"education.secondary": this._secondary_school, 
             "education.university": this._university}).then( res => {
-                /* console.log("setEducation updateAccount then => ");
-                console.log(res); */
                 updated = res[Constants.KEY_DONE]
             });
         return updated;

@@ -21,11 +21,8 @@ export async function upload_cover_image(req: Request, res: Response){
     });
 
     form.parse(req, (error,fields,files)=>{
-        //console.log("Upload profile image parse");
         console.error(error);
-        //console.log(fields);
         tokenKey = General.getAuthToken(req);
-        //console.log(files);
         imagePath = files["image"][0]["path"];
         const scifData: SetCoverImageFolderInterface = {
             image_path: imagePath, token_key: tokenKey

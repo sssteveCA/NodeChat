@@ -64,13 +64,9 @@ export class DeleteAccount{
         let response: object = {};
         this._errno = 0;
         await General.getAccountId(this._token_key).then(accountId => {
-            /* console.log("DeleteAccount deleteAccount getAccountId");
-            console.log(accountId); */
             if(accountId != null) return this.checkPassword(accountId);
             else throw new AccountNotFoundError("");
         }).then(cp_response => {
-            /* console.log("DeleteAccount deleteAccount checkPassword");
-            console.log(cp_response); */
             if(cp_response['authorized'] == true){
                 return this.deleteRelatedPhotos(cp_response['accountId']);
             }
@@ -113,8 +109,6 @@ export class DeleteAccount{
     private async checkPassword(accountId: string): Promise<object>{
         let cp_response: object = {};
         await General.getAccountById(accountId).then(response => {
-            /* console.log("DeleteAccount checkPassword getAccountById");
-            console.log(response); */
             if(response[Constants.KEY_DONE] == true){
                 return bcrypt.compare(this._password,response['result']['password']);
             }//if(response[Constants.KEY_DONE] == true){
