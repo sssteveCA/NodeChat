@@ -1,4 +1,4 @@
-import { MessageDialog, MessageDialogInterface } from "./classes/dialogs/messagedialog";
+import { MessageDialogInterface } from "./classes/dialogs/messagedialog";
 import { SubscribeRequest, SubscribeRequestInterface } from "./classes/requests/subscriberequest";
 import { fMessageDialog } from "./functions/general";
 import { Constants } from "./namespaces/constants";

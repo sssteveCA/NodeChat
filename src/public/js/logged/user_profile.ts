@@ -1,6 +1,4 @@
-import { CurrentUserRequest, CurrentUserRequestInterface } from "../classes/requests/currentuserrequest";
 import { UserRequest, UserRequestInterface } from "../classes/requests/userrequest";
-import { Section, SectionInterface } from "../classes/template/profile/section";
 import { UserSection, UserSectionInterface } from "../classes/template/profile/user_section";
 import { MyProfileSections, SectionLiItems } from "../enums/enums";
 import Account from "../models/account";

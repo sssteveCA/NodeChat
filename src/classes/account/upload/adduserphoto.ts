@@ -3,7 +3,6 @@ import { Schemas } from "../../../namespaces/schemas";
 import { Account } from "../../database/models/account";
 import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager";
 import fs from "fs/promises";
-import fsapi from "fs";
 import { Constants } from "../../../namespaces/constants";
 import { Photo, PhotoInterface } from "../../database/models/photo";
 import { General } from "../../general";

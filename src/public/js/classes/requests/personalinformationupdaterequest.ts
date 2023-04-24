@@ -1,4 +1,3 @@
-import { resolve } from "path";
 
 export interface PersonalInformationUpdateRequestInterface {
     token_key: string;

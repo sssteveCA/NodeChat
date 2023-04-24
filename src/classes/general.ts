@@ -2,7 +2,7 @@ import { Request } from "express";
 import { Constants } from "../namespaces/constants";
 import { Schemas } from "../namespaces/schemas";
 import { Account } from "./database/models/account";
-import { Token, TokenInterface } from "./database/models/token";
+import { Token } from "./database/models/token";
 import { MongoDbModelManagerInterface } from "./database/mongodbmodelmanager";
 
 export class General{

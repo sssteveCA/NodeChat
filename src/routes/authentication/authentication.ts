@@ -1,7 +1,6 @@
 //Authentiction routes (login,subscribe,account verify,password recovery)
 
-import express, { NextFunction, Request, Response } from 'express';
-import { Constants } from '../../namespaces/constants';
+import express from 'express';
 import { guest } from '../middlewares/middlewares';
 import { login_validator, subscribe_validator, verify_credentials } from './authentication_m';
 import session from 'express-session';

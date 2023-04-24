@@ -1,7 +1,5 @@
 
 import mysql from 'mysql2';
-import mysqlPromise from 'mysql2/promise';
-import dotenv from 'dotenv';
 
 export interface MySqlManagerInterface{
      host?: string;

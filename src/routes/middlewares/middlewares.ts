@@ -1,9 +1,5 @@
 //Middlewares used in different routes
-import express, { NextFunction, Request, Response } from 'express';
-import { MongoDbModelManagerInterface } from '../../classes/database/mongodbmodelmanager';
-import { Schemas } from '../../namespaces/schemas';
-import {TokenInterface, Token} from '../../classes/database/models/token'
-import { Messages } from '../../namespaces/messages';
+import { NextFunction, Request, Response } from 'express';
 import { loggedMiddleware } from './functions/logged';
 import { Constants } from '../../namespaces/constants';
 

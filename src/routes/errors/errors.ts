@@ -1,8 +1,6 @@
 
 import express from 'express';
 import session from 'express-session';
-import { Constants } from '../../namespaces/constants';
-import { Paths } from '../../namespaces/paths';
 import not_found from './functions/not_found';
 import server_error from './functions/server_error';
 

@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import session from "express-session";
 import { DeleteAccount, DeleteAccountInterface } from "../../../../../../classes/account/delete/deleteaccount";
 import { Constants } from "../../../../../../namespaces/constants";
 import { Messages } from "../../../../../../namespaces/messages";

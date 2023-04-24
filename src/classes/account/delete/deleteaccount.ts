@@ -10,7 +10,6 @@ import { AccountNotFoundError } from '../../errors/accountnotfounderror';
 import { Messages } from '../../../namespaces/messages';
 import { MongoDbModelsManagerInterface } from '../../database/mongodbmodelsmanager';
 import { Tokens } from '../../database/models/tokens';
-import { Schema } from 'mongoose';
 import { Photos } from '../../database/models/photos';
 
 export interface DeleteAccountInterface{

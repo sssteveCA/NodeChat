@@ -1,4 +1,3 @@
-import e from "express";
 
 export interface CoverImageUploadRequestInterface{
     token_key: string;

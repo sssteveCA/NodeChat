@@ -1,4 +1,3 @@
-import { Messages } from "../../../namespaces/messages";
 import { TokenType } from "../../../types/tokentype";
 import { DatabaseConnectionError } from "../../errors/databaseconnectionerror";
 import { MissingDataError } from "../../errors/missingdataerror";

@@ -1,10 +1,8 @@
-import { rejects } from "assert";
 import bcrypt from "bcrypt";
-import mongoose, { StringSchemaDefinition } from "mongoose";
 import { Constants } from "../../namespaces/constants";
 import { Schemas } from "../../namespaces/schemas";
 import { Account, AccountInterface } from "../database/models/account";
-import { MongoDbModelManager, MongoDbModelManagerInterface } from "../database/mongodbmodelmanager";
+import { MongoDbModelManagerInterface } from "../database/mongodbmodelmanager";
 import { EmailVerify, EmailVerifyInterface } from "../email/emailverify";
 import { AccountNotFoundError } from "../errors/accountnotfounderror";
 import { DuplicateKeysError } from "../errors/duplicatekeyserror";

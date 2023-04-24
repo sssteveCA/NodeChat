@@ -1,6 +1,4 @@
 
-import { Constants } from "../../namespaces/constants";
-
 export interface AddPhotoRequestInterface{
     photo: File;
     token_key: string;

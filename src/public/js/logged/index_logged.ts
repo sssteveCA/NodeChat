@@ -1,4 +1,4 @@
-import { MessageDialog, MessageDialogInterface } from "../classes/dialogs/messagedialog";
+import { MessageDialogInterface } from "../classes/dialogs/messagedialog";
 import { SearchProfilesRequest, SearchProfilesRequestInterface } from "../classes/requests/searchprofilesrequest";
 import { SearchProfilesTable, SearchProfilesTableInterface } from "../classes/tables/searchprofilestable";
 import { fMessageDialog } from "../functions/general";

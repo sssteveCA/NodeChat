@@ -1,4 +1,3 @@
-import path from "path";
 
 export namespace Paths{
     export const ROOTPATH = __dirname+"/../../";

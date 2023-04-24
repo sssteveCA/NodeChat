@@ -1,7 +1,6 @@
 import { Paths } from "../../../namespaces/paths";
 import { Schemas } from "../../../namespaces/schemas";
 import { Account, AccountInterface } from "../../database/models/account";
-import { Token, TokenInterface } from "../../database/models/token";
 import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager";
 import fs from "fs/promises";
 import { General } from "../../general";

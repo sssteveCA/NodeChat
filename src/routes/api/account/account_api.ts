@@ -1,13 +1,5 @@
 
 import express from 'express';
-import { ObjectId } from 'mongoose';
-import { Account } from '../../../classes/database/models/account';
-import { Accounts, AccountsInterface } from '../../../classes/database/models/accounts';
-import { Token } from '../../../classes/database/models/token';
-import { MongoDbModelManagerInterface } from '../../../classes/database/mongodbmodelmanager';
-import { MongoDbModelsManagerInterface } from '../../../classes/database/mongodbmodelsmanager';
-import { Messages } from '../../../namespaces/messages';
-import { Paths } from '../../../namespaces/paths';
 import { loggedApi } from '../middlewares/middlewares_api';
 import { privacy_router } from '../privacy/privacy';
 import { current_user_api } from './functions/current_user_api';

@@ -1,4 +1,3 @@
-import { trusted } from "mongoose";
 import { Schemas } from "../../namespaces/schemas";
 import { Token, TokenInterface } from "../database/models/token";
 import { MongoDbModelManagerInterface } from "../database/mongodbmodelmanager";

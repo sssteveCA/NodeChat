@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import { AccountType } from "../../../types/accounttype";
 import { DatabaseConnectionError } from "../../errors/databaseconnectionerror";
 import { DuplicateKeysError } from "../../errors/duplicatekeyserror";

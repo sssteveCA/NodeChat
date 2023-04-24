@@ -1,5 +1,4 @@
-import { rejects } from "assert";
-import mongoose, {Document, HydratedDocument, Model, Query, Schema } from "mongoose";
+import mongoose, {Model, Schema } from "mongoose";
 import {Environment} from '../../enums/environment';
 
 //Single document MongoDB manager

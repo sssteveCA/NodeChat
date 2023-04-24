@@ -1,6 +1,6 @@
 //Mongoose schemas
 
-import mongoose, {ObjectId, Schema } from "mongoose";
+import { Schema } from "mongoose";
 
 namespace SubSchemas{
     export const ACCOUNTS_CONTACTS: Schema = new Schema({

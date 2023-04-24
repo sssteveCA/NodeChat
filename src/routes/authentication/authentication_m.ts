@@ -1,8 +1,7 @@
 
-import express, { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { Messages } from '../../namespaces/messages';
 import { Regexs } from '../../namespaces/regex';
-import url from 'url';
 import { Account, AccountInterface } from '../../classes/database/models/account';
 import { MongoDbModelManagerInterface } from '../../classes/database/mongodbmodelmanager';
 import { Constants } from '../../namespaces/constants';

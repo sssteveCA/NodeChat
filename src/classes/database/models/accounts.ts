@@ -1,7 +1,6 @@
 import { Constants } from "../../../namespaces/constants";
 import { Schemas } from "../../../namespaces/schemas";
 import { DatabaseConnectionError } from "../../errors/databaseconnectionerror";
-import { General } from "../../general";
 import { MongoDbModelManagerInterface } from "../mongodbmodelmanager";
 import { MongoDbModelsManager, MongoDbModelsManagerInterface } from "../mongodbmodelsmanager";
 import { Account, AccountInterface } from "./account";

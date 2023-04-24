@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import multiparty from "multiparty";
-import { parse } from "path";
 import { SetCoverImageFolder, SetCoverImageFolderInterface } from "../../../../../../classes/account/upload/setcoverimagefolder";
 import { General } from "../../../../../../classes/general";
 import { Constants } from "../../../../../../namespaces/constants";

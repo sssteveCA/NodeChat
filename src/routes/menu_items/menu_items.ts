@@ -1,12 +1,7 @@
 //Menu items routes
 
 import express from 'express';
-import { Constants } from '../../namespaces/constants';
-import { Paths } from '../../namespaces/paths';
 import session from 'express-session';
-import CookiePolicy from '../../policies/cookiepolicy';
-import PrivacyPolicy from '../../policies/privacypolicy';
-import TermsAndConditions from '../../policies/termsandconditions';
 import { about_us } from './functions/about_us';
 import { contacts } from './functions/contacts';
 import { rules } from './functions/rules';
