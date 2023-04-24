@@ -13,6 +13,7 @@ import { Tokens } from '../../database/models/tokens';
 import { Photos } from '../../database/models/photos';
 import fs from 'fs/promises';
 import { Paths } from '../../../namespaces/paths';
+import FileDeletingError from '../../errors/filedeletingerror';
 
 export interface DeleteAccountInterface{
     token_key: string;
@@ -67,11 +68,18 @@ export class DeleteAccount{
         await General.getAccountId(this._token_key).then(accountId => {
             if(accountId != null) return this.checkPassword(accountId);
             else throw new AccountNotFoundError("");
-        }).then(cp_response => {
+        })
+        .then(cp_response => {
             if(cp_response['authorized'] == true){
-                return this.deleteRelatedPhotos(cp_response['accountId']);
+                return this.deletePhotoFiles(cp_response['accountId']);
             }
             else throw new InvalidCredentialsError("")
+        })
+        .then(dp_response => {
+            if(dp_response[Constants.KEY_DONE]){
+                return this.deleteRelatedPhotos(dp_response['accountId']);
+            }
+            else throw new FileDeletingError("")
         }).then(photos_deleted => {
             if(photos_deleted[Constants.KEY_DONE]){
                 return this.deleteRelatedTokens(photos_deleted['accountId']);
@@ -150,7 +158,9 @@ export class DeleteAccount{
     private async deletePhotoFiles(accountId: string): Promise<object>{
         let dp_response: object = {}
         await General.getAccountById(accountId).then(res => {
-            return fs.rm(`${Paths.STATIC_IMG_PHOTOS}/${res['result']['username']}`,{recursive: true, force: true});
+            if(res[Constants.KEY_DONE])
+                return fs.rm(`${Paths.STATIC_IMG_PHOTOS}/${res['result']['username']}`,{recursive: true, force: true});
+            else throw new InvalidCredentialsError("")
         }).then(res => {
             dp_response = { done: true }
         })
