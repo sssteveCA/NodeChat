@@ -11,6 +11,8 @@ import { Messages } from '../../../namespaces/messages';
 import { MongoDbModelsManagerInterface } from '../../database/mongodbmodelsmanager';
 import { Tokens } from '../../database/models/tokens';
 import { Photos } from '../../database/models/photos';
+import fs from 'fs/promises';
+import { Paths } from '../../../namespaces/paths';
 
 export interface DeleteAccountInterface{
     token_key: string;
@@ -138,6 +140,24 @@ export class DeleteAccount{
         return {
             accountId: accountId, done: delete_response[Constants.KEY_DONE]
         } 
+    }
+
+    /**
+     * Delete the photo files associated to the deleting account
+     * @param accountId the account id of the user to the delete
+     * @returns 
+     */
+    private async deletePhotoFiles(accountId: string): Promise<object>{
+        let dp_response: object = {}
+        await General.getAccountById(accountId).then(res => {
+            return fs.rm(`${Paths.STATIC_IMG_PHOTOS}/${res['result']['username']}`,{recursive: true, force: true});
+        }).then(res => {
+            dp_response = { done: true }
+        })
+        .catch(err => {
+            dp_response = { done: false }
+        })
+        return dp_response;
     }
 
     /**
