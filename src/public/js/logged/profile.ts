@@ -7,6 +7,7 @@ import { addImages } from "./functions/profile/addimages";
 import { setAccountSectionEvents } from "./functions/profile/setaccountsectionevents";
 import { setInformationSectionEvents } from "./functions/profile/setinformationsectionevents";
 import setPhotosSectionEvents from "./functions/profile/setphotossectionevents";
+import setVideosSectionEvents from "./functions/profile/setvideossectionevents";
 
 $(()=>{
     let cur_data: CurrentUserRequestInterface = {
@@ -52,6 +53,9 @@ $(()=>{
         }//
         else if(idTarget == SectionLiItems.PHOTOS){
             setPhotosSectionEvents();
+        }
+        else if(idTarget == SectionLiItems.VIDEOS){
+            setVideosSectionEvents();
         }
         else if(idTarget == SectionLiItems.ACCOUNT_SETTINGS){
             setAccountSectionEvents();
