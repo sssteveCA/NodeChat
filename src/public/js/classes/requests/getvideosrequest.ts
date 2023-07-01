@@ -30,4 +30,33 @@ export class GetVideosRequest{
         }
         return this._error;
     }
+
+    public async gtRequest(): Promise<object>{
+        let response: object = {}
+        try{
+            await this.gtRequestPromise().then(res => {
+                response = JSON.parse(res)
+            }).catch(err => {
+                throw err;
+            })
+        }catch(e){
+            response = { done: false, message: "Errore durante il caricamento dei tuoi video" }
+        }
+        return response
+    }
+
+    private async gtRequestPromise(): Promise<string>{
+        return await new Promise<string>((resolve,reject)=>{
+            fetch(GetVideosRequest.FETCH_URL,{
+                headers: {
+                    "Accept": "application/json",
+                    "NodeChatAuth": this._token_key
+                }
+            }).then(res => {
+                resolve(res.text())
+            }).catch(err =>{
+                reject(err)
+            })
+        })
+    }
 }
