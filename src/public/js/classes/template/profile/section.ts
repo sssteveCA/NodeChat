@@ -254,8 +254,10 @@ Fai click sul bottone 'ELIMINA' per cancellare definitivamente il tuo account. T
 <div class="sel-section-header">
         <h2 class="text-center">Video</h2>
 </div>
-<div class="sel-section-content mt-5">
-    <p class="fs-4 fw-bold text-center">Nessun video da mostrare</p>
+<div id="videos-list" class="sel-section-content mt-5 container-fluid">
+        <div class="row g-2">
+            <p class="fs-4 fw-bold text-center">Nessun video da mostrare</p>
+        </div>
 </div>
         `;
     }
