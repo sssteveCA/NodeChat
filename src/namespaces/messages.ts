@@ -20,6 +20,7 @@ export namespace Messages{
     export const ERROR_SERVER: string = "Siamo spiacenti, il server non è in grado di elaborare la tua richiesta. "+ADMIN_CONTACT;
     export const ERROR_SESSIONEXPIRED: string = "La tua sessione è scaduta";
     export const ERROR_USERNOTFOUND: string = "Utente non trovato";
+    export const ERROR_VIDEOS_GET: string = "Errore durante il caricamento dei tuoi video";
 
     
 
