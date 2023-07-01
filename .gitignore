@@ -1,3 +1,4 @@
+.vscode
 dist/public/bootstrap-icons
 node_modules
 *.css
