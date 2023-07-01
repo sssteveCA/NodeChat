@@ -1,3 +1,5 @@
+import { Schemas } from "../../../namespaces/schemas";
+import { MongoDbModelsManagerInterface } from "../../database/mongodbmodelsmanager";
 
 export interface GetVideosInterface{
     token_key: string;
