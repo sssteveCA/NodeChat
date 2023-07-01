@@ -26,6 +26,8 @@ export class AccountVideosSectionEvents{
             token_key: $('input[name=token_key]').val() as string
         }
         let gvr: GetVideosRequest = new GetVideosRequest(gvrData)
-        gvr.gtRequest().then(res => callback(res))
+        gvr.gtRequest().then(res => {
+            callback(res)
+        })
     }
 }

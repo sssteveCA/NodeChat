@@ -247,6 +247,10 @@ Fai click sul bottone 'ELIMINA' per cancellare definitivamente il tuo account. T
 
     private videosTemplate(): void{
         this._html = `
+<div class="sel-section-top-buttons d-flex justify-content-end">
+    <button id="upload-video-button" type="button" class="btn btn-primary">AGGIUNGI VIDEO</button>
+    <input id="upload-video-input" type="file" class="d-none" name="photo" accept="image/png, image/jpeg">
+</div>
 <div class="sel-section-header">
         <h2 class="text-center">Video</h2>
 </div>

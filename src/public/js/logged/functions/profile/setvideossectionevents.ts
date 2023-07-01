@@ -8,7 +8,6 @@ export default function setVideosSectionEvents(): void{
     }
     let avse: AccountVideosSectionEvents = new AccountVideosSectionEvents(avseData)
     avse.getVideos(response => {
-        
     })
 
 }
