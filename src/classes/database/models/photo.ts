@@ -74,7 +74,7 @@ export class Photo extends MongoDbModelManager{
     }
 
     /**
-     * Get the first token from the collection that match with a filter
+     * Get the first photo from the collection that match with a filter
      * @param filter the filter to search the first document to get
      * @returns 
      */
@@ -90,10 +90,7 @@ export class Photo extends MongoDbModelManager{
                 throw new DatabaseConnectionError(this.error as string);
             }
         }).then(res => {
-            response = {
-                done: true,
-                result: res
-            }
+            response = { done: true, result: res }
             if(res != null){
                 if(res["_id"])this._id = res["_id"];
                 if(res["accountId"])this._accountId = res["accountId"];
@@ -102,10 +99,7 @@ export class Photo extends MongoDbModelManager{
             }//if(res != null){
         }).catch(err => {
             console.warn(err);
-            response = {
-                done: false,
-                message: this.error
-            }
+            response = { done: false, message: this.error }
         }).finally(()=>{
             super.close();
         });
