@@ -34,6 +34,11 @@ export class Photos extends MongoDbModelsManager{
         return this._error;
     }
 
+    /**
+     * Delete multiple photos that match with a filter
+     * @param filter the filter to search the photos to delete
+     * @returns 
+     */
     public async deletePhotos(filter: object): Promise<object>{
         let response: object = {}
         this._errno = 0;
@@ -53,6 +58,11 @@ export class Photos extends MongoDbModelsManager{
         return response;
     }
 
+    /**
+     * Get multiple photos that match with a filter
+     * @param filter the filter to select the photos
+     * @returns 
+     */
     public async getPhotos(filter: object): Promise<object>{
         this._errno = 0;
         this._results = [];
