@@ -18,6 +18,11 @@ namespace SubSchemas{
         }]
     },{_id: false});
 
+    export const ACCOUNTS_VIDEO: Schema = new Schema({
+        url: {type: String, required: true},
+        uploadDate: {type: Date, default: Date.now}
+    });
+
     export const ACCOUNTS_OTHER_PERSONALS: Schema = new Schema({
         birthDate: {type:Date, default: null},
         birthPlace: {type: String, default: ""},
@@ -50,10 +55,7 @@ export namespace Schemas{
         employment: {type: String, default: ""},
         images : {type: SubSchemas.ACCOUNTS_IMAGE, default: {}},
         otherPersonals: {type: SubSchemas.ACCOUNTS_OTHER_PERSONALS, default: {}},
-        videos : [{
-            url: {type: String, required: true},
-            uploadDate: {type: Date, default: Date.now}
-        }]
+        videos : {type: SubSchemas.ACCOUNTS_VIDEO, default: []}
     });
 
     export const TOKENS: Schema = new Schema({
