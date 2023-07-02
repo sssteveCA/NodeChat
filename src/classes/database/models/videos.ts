@@ -71,7 +71,7 @@ export class Videos extends MongoDbModelsManager{
             if(Array.isArray(res) && res.length > 0){
                 let mmiData: MongoDbModelManagerInterface = {
                     collection_name: process.env.MONGODB_PHOTOS_COLLECTION as string,
-                    schema: Schemas.PHOTOS
+                    schema: Schemas.VIDEOS
                 }
                 res.forEach(video => {
                     let videoData: VideoInterface = {

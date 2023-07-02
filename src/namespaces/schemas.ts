@@ -69,4 +69,11 @@ export namespace Schemas{
         path: {type: String, required: true}
     });
 
+    export const VIDEOS: Schema = new Schema({
+        accountId: {type: Schema.Types.ObjectId, required: true, index: true},
+        creationDate: {type: Date, default: Date.now},
+        path: {type: String, required: true},
+        type: {type: String, required: true}
+    });
+
 }
