@@ -35,11 +35,13 @@ export class GetVideosRequest{
         let response: object = {}
         try{
             await this.gtRequestPromise().then(res => {
+                console.log(res)
                 response = JSON.parse(res)
             }).catch(err => {
                 throw err;
             })
         }catch(e){
+            console.log(e)
             response = { done: false, message: "Errore durante il caricamento dei tuoi video" }
         }
         return response
