@@ -48,10 +48,10 @@ export class GetPhotos{
         this._errno = 0;
         let accountId: string|null = await General.getAccountId(this._token_key);
         if(accountId != null){
-            let photos_list: object = await this.getUserPhotos(accountId);
-            if(photos_list[Constants.KEY_DONE] == false)
+            let photosList: object = await this.getUserPhotos(accountId);
+            if(photosList[Constants.KEY_DONE] == false)
                 this._errno = GetPhotos.ERR_GET_PHOTOS;
-            return photos_list;
+            return photosList;
         }//if(accountId != null){
         this._errno = GetPhotos.ERR_ACCOUNT_ID;
         return {done: false}
