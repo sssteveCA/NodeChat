@@ -65,7 +65,6 @@ export class Video extends MongoDbModelManager{
                 return super.delete(filter);
             }
             else{
-                this._errno = MongoDbModelManager.CONNECTION_ERROR;
                 throw new DatabaseConnectionError(this.error as string);
             }
         }).then(res => {
@@ -90,7 +89,6 @@ export class Video extends MongoDbModelManager{
                 return super.get(filter);
             }
             else{
-                this._errno = MongoDbModelManager.CONNECTION_ERROR;
                 throw new DatabaseConnectionError(this.error as string);
             }
         }).then(res => {
@@ -126,7 +124,7 @@ export class Video extends MongoDbModelManager{
                 await super.connect().then(conn => {
                     if(conn == true) return super.get({accountId: this._accountId})
                     else{
-                        this._errno = MongoDbModelManager.CONNECTION_ERROR;
+    
                         throw new DatabaseConnectionError(this.error as string);
                     }
                 }).then(result => {
@@ -170,7 +168,6 @@ export class Video extends MongoDbModelManager{
         await super.connect().then(conn => {
             if(conn == true) return super.replace(filter, document);
             else{
-                this._errno = MongoDbModelManager.CONNECTION_ERROR;
                 throw new DatabaseConnectionError(this.error as string);
             }
         }).then(res => {
@@ -180,6 +177,29 @@ export class Video extends MongoDbModelManager{
             response = { done: false, message: this.error }
         }).finally(() => {
             super.close();
+        })
+        return response;
+    }
+
+    /**
+     * Update the first video from the collection that match with a filter with the set data
+     * @param filter the filter to search the first document to update
+     * @param set the data to updated the matched document
+     * @returns 
+     */
+    public async updateVideo(filter: object, set: object): Promise<object>{
+        this._errno = 0;
+        let response: object = {};
+        await super.connect().then(conn => {
+            if(conn == true) return super.update(filter,set);
+            else{
+                throw new DatabaseConnectionError(this.error as string);
+            }
+        }).then(res => {
+            response = { done: true, result: res };
+        }).catch(err => {
+            console.warn(err);
+            response = { done: false, message: this.error };
         })
         return response;
     }

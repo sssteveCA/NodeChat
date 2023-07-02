@@ -61,7 +61,6 @@ export class Photo extends MongoDbModelManager{
                 return super.delete(filter);
             }
             else{
-                this._errno = MongoDbModelManager.CONNECTION_ERROR;
                 throw new DatabaseConnectionError(this.error as string);
             }
         }).then(res => {
@@ -86,7 +85,6 @@ export class Photo extends MongoDbModelManager{
                 return super.get(filter);
             }
             else{
-                this._errno = MongoDbModelManager.CONNECTION_ERROR;
                 throw new DatabaseConnectionError(this.error as string);
             }
         }).then(res => {
@@ -118,7 +116,7 @@ export class Photo extends MongoDbModelManager{
                 await super.connect().then(conn => {
                     if(conn == true) return super.get({accountId: this._accountId});
                     else{
-                        this._errno = MongoDbModelManager.CONNECTION_ERROR;
+    
                         throw new DatabaseConnectionError(this.error as string);
                     } 
                 }).then(result => {
@@ -169,20 +167,13 @@ export class Photo extends MongoDbModelManager{
         await super.connect().then(conn => {
             if(conn == true) return super.replace(filter, document);
             else{
-                this._errno = MongoDbModelManager.CONNECTION_ERROR;
                 throw new DatabaseConnectionError(this.error as string);
             }
         }).then(res => {
-            response = {
-                done: true,
-                result: res
-            }
+            response = { done: true, result: res }
         }).catch(err => {
             console.warn(err);
-            response = {
-                done: false,
-                message: this.error
-            }
+            response = { done: false, message: this.error }
         }).finally(()=>{
             super.close();
         });
@@ -201,20 +192,13 @@ export class Photo extends MongoDbModelManager{
         await super.connect().then(conn => {
             if(conn == true) return super.update(filter,set);
             else{
-                this._errno = MongoDbModelManager.CONNECTION_ERROR;
                 throw new DatabaseConnectionError(this.error as string);
             } 
         }).then(res => {
-            response = {
-                done: true,
-                result: res
-            };
+            response = { done: true, result: res };
         }).catch(err => {
             console.warn(err);
-            response = {
-                done: false,
-                message: this.error
-            };
+            response = { done: false, message: this.error };
         }).finally(()=>{
             super.close();
         });
