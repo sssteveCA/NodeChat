@@ -6,9 +6,11 @@ const distPath = join(__dirname,'dist')
 const srcCss = join(srcPath,'public','css')
 const srcJs = join(srcPath,'public','js')
 const srcImg = join(srcPath,'public','img')
+const srcVideos = join(srcPath, 'public','videos')
 const srcFonts = join(srcPath,'public','fonts')
 const srcImgDist = join(distPath,'public','img')
-const srcFontsDist = join(distPath,'public','fonts');
+const srcVideosDist = join(distPath,'public','videos')
+const srcFontsDist = join(distPath,'public','fonts')
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries')
@@ -95,6 +97,7 @@ module.exports = {
             patterns: [
                 { from: srcImg, to: srcImgDist },
                 { from: srcFonts, to: srcFontsDist},
+                { from: srcVideos, to: srcVideosDist},
                 { from: srcPath+'/public/favicon.ico', to: distPath+'/public/favicon.ico' },
                 { from: __dirname+'/node_modules/bootstrap-icons', to: distPath+'/public/bootstrap-icons'}
             ]
