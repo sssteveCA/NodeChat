@@ -1,5 +1,7 @@
+import { MessageDialogInterface } from "../../../classes/dialogs/messagedialog";
 import { AccountPhotosSectionEvents } from "../../../classes/template/profile/account_photos_section_events";
 import { AccountVideosSectionEvents, AccountVideosSectionEventsInterface } from "../../../classes/template/profile/account_videos_section_events";
+import { fMessageDialog } from "../../../functions/general";
 import { Constants } from "../../../namespaces/constants";
 
 export default function setVideosSectionEvents(): void{
@@ -27,6 +29,12 @@ export default function setVideosSectionEvents(): void{
             vl_row.append(row_content)
         }
         
+    })
+    avse.addVideoButtonClick(response => {
+        let mdData: MessageDialogInterface = {
+            title: "Nuova foto", message: response[Constants.KEY_MESSAGE]
+        }
+        fMessageDialog(mdData);
     })
 
 }
