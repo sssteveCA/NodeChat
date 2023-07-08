@@ -11,7 +11,7 @@ export default function setPhotosSectionEvents(): void{
     let apse: AccountPhotosSectionEvents = new AccountPhotosSectionEvents(apseData);
     apse.getPhotos(response => {
         if(response[Constants.KEY_DONE]){
-            getPhotos(response['result']);
+            printPhotos(response['result']);
         }  
     });
     apse.addPhotoButtonClick(response =>{
@@ -22,7 +22,11 @@ export default function setPhotosSectionEvents(): void{
     });
 }
 
-function getPhotos(result: object[]): void{
+/**
+ * Create HTML elements from photos list
+ * @param result the photos list
+ */
+function printPhotos(result: object[]): void{
     let pl_row: JQuery<HTMLDivElement> = $('#photos-list').find('.row') as JQuery<HTMLDivElement>;
     pl_row.html("");
     let row_content: string = "";
