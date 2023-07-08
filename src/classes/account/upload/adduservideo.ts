@@ -4,6 +4,10 @@ import fs from 'fs/promises'
 import { access } from "fs";
 import { FileAlreadyExistsError } from "../../errors/filealreadyexistserror";
 import { Constants } from "../../../namespaces/constants";
+import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager";
+import { Schemas } from "../../../namespaces/schemas";
+import { VideoInterface } from "../../database/models/video";
+import { Video } from "../../database/models/video";
 
 export interface AddUserVideoInterface{
     filename: string;
@@ -62,6 +66,29 @@ export class AddUserVideo{
                 break;
         }
         return this._error;
+    }
+
+    /**
+     * Add a new document to videos collection
+     * @param dest the filesystem path of the uploaded video
+     * @returns an object that contains the url of the uploaded video, or false if error
+     */
+    private async addVideoDocument(accountId: string, dest: string, username: string): Promise<object>{
+        let response = {absUrl:  "", done: false}
+        const videoIndex: number = dest.indexOf(`/videos/`);
+        const absoluteUrl: string = dest.substring(videoIndex);
+        let mmiData: MongoDbModelManagerInterface = {
+            collection_name: process.env.MONGODB_VIDEOS_COLLECTION as string,
+            schema: Schemas.VIDEOS
+        }
+        let videoData: VideoInterface = { accountId: accountId, path: absoluteUrl}
+        let video: Video = new Video(mmiData,videoData);
+        await video.insertVideo().then(res => {
+            if(res[Constants.KEY_DONE] == true){
+                response = {absUrl: absoluteUrl, done: true}
+            }
+        })
+        return response;
     }
 
     /**

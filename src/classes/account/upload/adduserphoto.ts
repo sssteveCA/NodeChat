@@ -134,7 +134,7 @@ export class AddUserPhoto{
     /**
      * Add a new document to photos collection
      * @param dest the filesystem path of the uploaded photo
-     * @returns an object that contains the url of the uploaded profile image, or false if error
+     * @returns an object that contains the url of the uploaded image, or false if error
      */
     private async addPhotoDocument(accountId: string, dest: string, username: string): Promise<object>{
         let response = {absUrl:  "", done: false}
