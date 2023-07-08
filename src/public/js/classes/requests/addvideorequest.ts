@@ -33,4 +33,38 @@ export class AddVideoRequest{
         }
         return this._error;
     }
+
+    public async addVideo(): Promise<object>{
+        let response: object = {}
+        this._errno = 0;
+        try{
+            await this.addVideoPromise().then(res => {
+                response = JSON.parse(res);
+            }).catch(err => {
+                throw err;
+            })
+        }catch(e){
+            this._errno = AddVideoRequest.ERR_FETCH;
+            response = {
+                done: false, message: this.error
+            }
+        }
+        return response;
+    }
+
+    private async addVideoPromise(): Promise<string>{
+        let fd: FormData = new FormData();
+        fd.append('video',this._video);
+        return await new Promise<string>((resolve, reject)=>{
+            fetch(AddVideoRequest.FETCH_URL,{
+                headers: {
+                    'NodeChatAuth': this._token_key
+                },
+                method: 'POST',
+                body: fd
+            }).then(res => resolve(res.text()))
+            .catch(err => reject(err))
+        })
+        
+    }
 }
