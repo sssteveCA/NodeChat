@@ -112,7 +112,7 @@ export class AddUserVideo{
             collection_name: process.env.MONGODB_VIDEOS_COLLECTION as string,
             schema: Schemas.VIDEOS
         }
-        let videoData: VideoInterface = { accountId: accountId, path: absoluteUrl}
+        let videoData: VideoInterface = { accountId: accountId, path: absoluteUrl, type: 'video/mp4'}
         let video: Video = new Video(mmiData,videoData);
         await video.insertVideo().then(res => {
             if(res[Constants.KEY_DONE] == true){

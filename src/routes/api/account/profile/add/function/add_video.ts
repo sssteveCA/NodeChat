@@ -24,8 +24,8 @@ export async function add_video(req: Request, res: Response){
 
     form.parse(req, (error, fields, files) => {
       tokenKey = General.getAuthToken(req);
-      videoPath = files["photo"][0]["path"];
-      fileName = files["photo"][0]["originalFilename"];
+      videoPath = files["video"][0]["path"];
+      fileName = files["video"][0]["originalFilename"];
       const auvData: AddUserVideoInterface = {
         filename: fileName, video_path: videoPath, token_key: tokenKey
       }
