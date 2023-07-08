@@ -40,6 +40,22 @@ export class General{
     }
 
     /**
+     * Get the username of the account with a certain id
+     * @param accountId the account Id
+     * @returns the username account
+     */
+    public static async getAccountUsername(accountId: string): Promise<string|null>{
+        let accountUsername: string|null = null;
+        let mmiData: MongoDbModelManagerInterface = {
+            collection_name: process.env.MONGODB_ACCOUNTS_COLLECTION as string,
+            schema: Schemas.ACCOUNTS
+        }
+        let account: Account = new Account(mmiData,{});
+        await account.getAccount({_id: accountId}).then(res => accountUsername = account.username);
+        return accountUsername;
+    }
+
+    /**
      * Get the user account id associated with the token
      * @param token_key the token key of the user logged
      * @returns the account id
