@@ -18,6 +18,6 @@ export namespace Paths{
     export const STATIC_IMG_DEFAULT = "/img/default";
     export const STATIC_IMG_PROFILES = "/img/profiles";
     export const STATIC_IMG_PHOTOS = "/img/photos";
-    export const STATIC_IMG_VIDEOS = "/videos";
+    export const STATIC_VIDEOS = "/videos";
     export const STATIC_UPLOAD = "/upload";
 }

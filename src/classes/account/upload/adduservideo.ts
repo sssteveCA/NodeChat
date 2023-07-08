@@ -1,3 +1,9 @@
+import { resolve } from "path";
+import { Paths } from "../../../namespaces/paths";
+import fs from 'fs/promises'
+import { access } from "fs";
+import { FileAlreadyExistsError } from "../../errors/filealreadyexistserror";
+import { Constants } from "../../../namespaces/constants";
 
 export interface AddUserVideoInterface{
     filename: string;
@@ -56,5 +62,35 @@ export class AddUserVideo{
                 break;
         }
         return this._error;
+    }
+
+    /**
+     * Move the uploaded file to the user videos list folder
+     * @param src the uploaded file path
+     * @param username the account username that has uploaded the video
+     * @returns true if the move operation was successfully done, false otherwise
+     */
+    private async moveFile(src: string, username: string): Promise<object>{
+        let response: object = {dest: null, done: false, exists: false}
+        let destDir: string = `${Paths.SRCPATH}public${Paths.STATIC_VIDEOS}/${username}`;
+        let dest: string = `${destDir}/${this._filename}`;
+        await fs.mkdir(destDir, {recursive: true}).then(makedir => {
+            return new Promise<boolean>((resolve, reject) => {
+                fs.access(dest).then(access => {
+                    reject(new FileAlreadyExistsError(""));
+                }).catch(not_exist => {
+                    resolve(true);
+                })
+            });
+        }).then(accessed => {
+            return fs.rename(src,dest);
+        }).then(renamed => {
+            response = {dest: dest, done: true};
+        }).catch(err => {
+            if(err instanceof FileAlreadyExistsError)
+                response['exists'] = true;
+            response[Constants.KEY_CODE] = false;
+        })
+        return response
     }
 }
