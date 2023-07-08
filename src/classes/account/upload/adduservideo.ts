@@ -8,6 +8,7 @@ import { MongoDbModelManagerInterface } from "../../database/mongodbmodelmanager
 import { Schemas } from "../../../namespaces/schemas";
 import { VideoInterface } from "../../database/models/video";
 import { Video } from "../../database/models/video";
+import { General } from "../../general";
 
 export interface AddUserVideoInterface{
     filename: string;
@@ -66,6 +67,36 @@ export class AddUserVideo{
                 break;
         }
         return this._error;
+    }
+
+    /**
+     * Add the video to the user videos list
+     */
+    public async addVideo(): Promise<object>{
+        this._errno = 0;
+        let response: object = {dest: null, done: false}
+        let accountId: string|null = await General.getAccountId(this._token_key);
+        if(accountId != null){
+            let accountUsername: string|null = await General.getAccountUsername(accountId);
+            if(accountUsername != null){
+                let moved: object = await this.moveFile(this._video_path,accountUsername);
+                if(moved[Constants.KEY_DONE] == true){
+                    let addVideo: object = await this.addVideoDocument(accountId,moved["dest"],accountUsername);
+                    if(addVideo[Constants.KEY_DONE] == true){
+                        response = {dest: addVideo["absUrl"], done: true}
+                    }
+                    else
+                        this._errno = AddUserVideo.ERR_ADD_VIDEO;
+                }//if(moved[Constants.KEY_DONE] == true){
+                else{
+                    if(moved['exists']) this._errno = AddUserVideo.ERR_FILE_EXISTS;
+                    else this._errno = AddUserVideo.ERR_MOVE_FILE;
+                }
+            }//if(accountUsername != null){
+        }//if(accountId != null){
+        else
+            this._errno = AddUserVideo.ERR_ACCOUNT_ID;
+        return response;
     }
 
     /**
