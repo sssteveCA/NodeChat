@@ -55,7 +55,7 @@ export namespace Schemas{
         employment: {type: String, default: ""},
         images : {type: SubSchemas.ACCOUNTS_IMAGE, default: {}},
         otherPersonals: {type: SubSchemas.ACCOUNTS_OTHER_PERSONALS, default: {}},
-        videos : {type: SubSchemas.ACCOUNTS_VIDEO, default: []}
+        videos : {type: [SubSchemas.ACCOUNTS_VIDEO], default: []}
     });
 
     export const TOKENS: Schema = new Schema({

@@ -5,7 +5,7 @@ export namespace Constants{
     export const CONTAINER: string = "my-container"; //Class of page content body
     export const BACKGROUND: string = "background"; //Class of site background image
     export const PORT: number = 3000;
-    export const HOSTNAME: string = 'localhost';
+    export const HOSTNAME: string = '0.0.0.0';
     const SCHEME:string = 'http';
     export const MAIN_URL: string = SCHEME+'://'+HOSTNAME+':'+PORT;
 
