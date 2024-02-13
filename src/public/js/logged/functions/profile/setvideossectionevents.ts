@@ -19,7 +19,7 @@ export default function setVideosSectionEvents(): void{
     })
     avse.addVideoButtonClick(response => {
         let mdData: MessageDialogInterface = {
-            title: "Nuova foto", message: response[Constants.KEY_MESSAGE]
+            title: "Nuovo video", message: response[Constants.KEY_MESSAGE]
         }
         fMessageDialog(mdData);
     })

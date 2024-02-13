@@ -32,6 +32,8 @@ export class AccountVideosSectionEvents{
                     video: e.target.files[0] as File,
                     token_key: $('input[name=token_key]').val() as string
                 }
+                /* console.log("avrData")
+                console.log(avrData) */
                 let avr: AddVideoRequest = new AddVideoRequest(avrData);
                 avr.addVideo().then(res => {
                     callback(res);

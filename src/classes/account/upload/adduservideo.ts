@@ -130,7 +130,7 @@ export class AddUserVideo{
      */
     private async moveFile(src: string, username: string): Promise<object>{
         let response: object = {dest: null, done: false, exists: false}
-        let destDir: string = `${Paths.SRCPATH}public${Paths.STATIC_VIDEOS}/${username}`;
+        let destDir: string = `${Paths.SRCPATH}../dist/public${Paths.STATIC_VIDEOS}/${username}`;
         let dest: string = `${destDir}/${this._filename}`;
         await fs.mkdir(destDir, {recursive: true}).then(makedir => {
             return new Promise<boolean>((resolve, reject) => {
@@ -141,8 +141,10 @@ export class AddUserVideo{
                 })
             });
         }).then(accessed => {
-            return fs.rename(src,dest);
-        }).then(renamed => {
+            return fs.copyFile(src,dest);
+        }).then(copied => {
+            return fs.unlink(src);
+        }).then(removed => {
             response = {dest: dest, done: true};
         }).catch(err => {
             if(err instanceof FileAlreadyExistsError)
